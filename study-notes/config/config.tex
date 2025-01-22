@@ -1,0 +1,105 @@
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{diagbox}
+\usepackage{makecell}
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{fontawesome5}
+\usepackage[svgnames]{xcolor}
+\usepackage{datetime2}
+\usepackage{amsthm}
+\usepackage{xfp}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage[type={CC},modifier={by},version={4.0}]{doclicense}
+\usepackage{imakeidx}
+\usepackage[style=apa]{biblatex}
+\usepackage{tikz}
+
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{cleveref}
+
+\addbibresource{bib/references.bib}
+
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{calligraphy}
+\usetikzlibrary{shapes}
+\usetikzlibrary{patterns}
+\usetikzlibrary{patterns.meta}
+\usetikzlibrary{external}
+
+\pgfplotsset{compat=1.18}
+
+\setenumerate[1]{label=\thesubsection.\arabic*~, ref=[\thesubsection.\arabic*]}
+
+\newcommand*{\prob}[1]{\mathbb{P}\qty(#1)}
+\newcommand*{\expv}[1]{\mathbb{E}\qty[#1]}
+\newcommand*{\vari}[1]{\operatorname{Var}\qty(#1)}
+\newcommand*{\cov}[2]{\operatorname{Cov}\qty(#1,#2)}
+\newcommand*{\indic}{\mathbf{1}}
+\newcommand*{\indicset}[1]{\mathbf{1}_{\left\{#1\right\}}}
+\newcommand*{\eqd}{\overset{d}=}
+\newcommand*{\apxsim}{\overset{\text{approx.}}\sim}
+\newcommand*{\ndist}[1]{\operatorname{N}\qty(#1)}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\vect}[1]{\vb*{#1}}
+\newcommand*{\pow}[1]{\mathcal{P}\qty(#1)}
+
+\newcommand*{\defn}[1]{\index[def]{#1}\textcolor{ForestGreen}{\textbf{#1}}}
+\newcommand*{\bu}[1]{\textbf{\underline{#1}}}
+\newcommand*{\cmark}{\gc{\faIcon{check}}}
+\newcommand{\xmark}{\textcolor{red}{\faIcon{times}}}
+\newcommand*{\ystar}{\textcolor{yellow}{\faIcon{star}}}
+\newcommand*{\warn}{\textcolor{red}{\faIcon{exclamation-triangle}}}
+
+\newcommand*{\vc}[1]{{\color{violet}#1}}
+\newcommand*{\mgc}[1]{{\color{magenta}#1}}
+\newcommand*{\gc}[1]{{\color{ForestGreen}#1}}
+\newcommand*{\blc}[1]{{\color{blue}#1}}
+\newcommand*{\brc}[1]{{\color{brown!70!black}#1}}
+\newcommand*{\orc}[1]{{\color{orange}#1}}
+\newcommand*{\rc}[1]{{\color{red}#1}}
+\newcommand*{\tec}[1]{{\color{teal}#1}}
+
+
+\newenvironment{remark}{\sffamily \underline{Remarks}:\begin{itemize}}{\end{itemize}}
+\newenvironment{note}{\sffamily\lbrack Note:}{\!\!\rbrack}
+\newenvironment{mnemonic}{\sffamily\lbrack Mnemonic {\color{pink!90!black}\faIcon{brain}}:}{\!\!\rbrack}
+\newenvironment{warning}{\sffamily\lbrack \warn\;\textcolor{red}{Warning}:}{\!\!\rbrack}
+\newenvironment{intuition}{\sffamily\lbrack Intuition \textcolor{yellow!80!black}{\faIcon{lightbulb}}:}{\!\!\rbrack}
+\newenvironment{pf}{\textit{Proof.}}{\qed}
+
+\theoremstyle{definition}
+\newtheorem{proposition}{Proposition}[subsection]
+\renewcommand*\theproposition{\thesubsection.\alph{proposition}}
+\newtheorem{corollary}[proposition]{Corollary}
+\newtheorem{theorem}[proposition]{Theorem}
+\newtheorem{lemma}[proposition]{Lemma}
+
+\urlstyle{tt}
+
+%For links in index page to link to line
+%https://tex.stackexchange.com/questions/405813/link-to-line-instead-of-page
+\makeatletter
+\AtBeginDocument{
+  \LetLtxMacro\egregs@index\index
+  \RenewDocumentCommand{\index}{o+m}{%
+    \begingroup
+    \phantomsection%
+    \IfValueTF{#1}{%
+      \imki@wrindexentry{#1}{#2|hyperlink{\@currentHref}}{\thepage}%
+    }{%
+      \imki@wrindexentry{\jobname}{#2|hyperlink{\@currentHref}}{\thepage}%
+    }%
+    \endgroup
+  }
+}
+\makeatother
+\makeindex[name=def, title=Concepts and Terminologies]
+\tikzexternalize[prefix=figures/]
