@@ -4,12 +4,15 @@
 \usepackage{amssymb}
 \usepackage{diagbox}
 \usepackage{makecell}
-\usepackage{physics}
+\usepackage{aligned-overset}
+\usepackage{derivative}
+\usepackage{mleftright}
 \usepackage{cancel}
 \usepackage{fontawesome5}
 \usepackage[svgnames]{xcolor}
 \usepackage{datetime2}
 \usepackage{amsthm}
+\usepackage{bm}
 \usepackage{xfp}
 \usepackage{pgfplots}
 \usepackage{booktabs}
@@ -35,21 +38,27 @@
 \pgfplotsset{compat=1.18}
 
 \setenumerate[1]{label=\thesubsection.\arabic*~, ref=[\thesubsection.\arabic*]}
+\mleftright
 
-\newcommand*{\prob}[1]{\mathbb{P}\qty(#1)}
-\newcommand*{\expv}[1]{\mathbb{E}\qty[#1]}
-\newcommand*{\vari}[1]{\operatorname{Var}\qty(#1)}
-\newcommand*{\cov}[2]{\operatorname{Cov}\qty(#1,#2)}
+\newcommand*{\prob}[1]{\mathbb{P}\left(#1\right)}
+\newcommand*{\expv}[1]{\mathbb{E}\left[#1\right]}
+\newcommand*{\vari}[1]{\operatorname{Var}\left(#1\right)}
+\newcommand*{\cov}[2]{\operatorname{Cov}\left(#1,#2\right)}
+\newcommand*{\pr}{\mathbb{P}}
 \newcommand*{\indic}{\mathbf{1}}
 \newcommand*{\indicset}[1]{\mathbf{1}_{\left\{#1\right\}}}
 \newcommand*{\eqd}{\overset{d}=}
 \newcommand*{\apxsim}{\overset{\text{approx.}}\sim}
-\newcommand*{\ndist}[1]{\operatorname{N}\qty(#1)}
+\newcommand*{\ndist}[1]{\operatorname{N}\left(#1\right)}
+\newcommand*{\supp}[1]{\operatorname{supp}\left(#1\right)}
+
 \newcommand*{\N}{\mathbb{N}}
 \newcommand*{\R}{\mathbb{R}}
 \newcommand*{\Q}{\mathbb{Q}}
-\newcommand*{\vect}[1]{\vb*{#1}}
-\newcommand*{\pow}[1]{\mathcal{P}\qty(#1)}
+\newcommand*{\eR}{\overline{\mathbb{R}}}
+\newcommand*{\vect}[1]{\bm{#1}}
+\newcommand*{\pow}[1]{\mathcal{P}\left(#1\right)}
+\newcommand*{\ran}[1]{\operatorname{ran}\left(#1\right)}
 
 \newcommand*{\defn}[1]{\index[def]{#1}\textcolor{ForestGreen}{\textbf{#1}}}
 \newcommand*{\bu}[1]{\textbf{\underline{#1}}}
@@ -63,7 +72,7 @@
 \newcommand*{\gc}[1]{{\color{ForestGreen}#1}}
 \newcommand*{\blc}[1]{{\color{blue}#1}}
 \newcommand*{\brc}[1]{{\color{brown!70!black}#1}}
-\newcommand*{\orc}[1]{{\color{orange}#1}}
+\newcommand*{\orc}[1]{{\color{orange!90!black}#1}}
 \newcommand*{\rc}[1]{{\color{red}#1}}
 \newcommand*{\tec}[1]{{\color{teal}#1}}
 
@@ -103,3 +112,4 @@
 \makeatother
 \makeindex[name=def, title=Concepts and Terminologies]
 \tikzexternalize[prefix=figures/]
+
