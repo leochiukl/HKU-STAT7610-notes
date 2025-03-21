@@ -13,7 +13,7 @@ notions that you may have encountered before.
 \item\label{it:meas-basic-terms} \textbf{Basic terminologies.}
 Let \(\mathcal{F}\) be a \(\sigma\)-algebra on \(\Omega\). Then the pair
 \((\Omega,\mathcal{F})\) is a \defn{measurable space} and every set in \(\mathcal{F}\) is called \defn{measurable set}.
-A \defn{measure} \(\mu\) on \(\mathcal{F}\) is a function such that:
+A \defn{measure} \(\mu\) on \((\Omega,\mathcal{F})\) is a function such that:
 \begin{enumerate}[label={(\arabic*)}]
 \item \emph{(nonnegativity)} \(\mu\) is a function from \(\mathcal{F}\) (domain) to \([0,\infty]\) (codomain).
 \item \(\mu(\varnothing)=0\).
@@ -691,7 +691,9 @@ A\setminus \biguplus_{i=1}^{k+1}A_i
 which is a finite disjoint union of sets in \(\mathcal{A}\), so the case
 \(n=k+1\) holds, completing the proof by induction.
 \end{pf}
-\item \textbf{Carath\'eodory extension theorem.}
+\item \textbf{Carath\'eodory extension theorem.} Now we are ready to prove the
+Carath\'eodory extension theorem. While the statement is short and easy to
+understand, the proof turns out to be very lengthy!
 \begin{theorem}[Carath\'eodory extension theorem]
 \label{thm:caratheodory}
 Let \(\mathcal{A}\) be a semiring on \(\Omega\) and \(\mu_0\) be a
@@ -1124,7 +1126,7 @@ be used in the construction. A function \(F:\R^d\to\R\) is:
 \item \defn{right-continuous} if \(F(\vect{x})=\lim_{\vect{h}\to
 \vect{0}^{+}}F(\vect{x}+\vect{h})=:F(\vect{x}+)\) for all \(\vect{x}\in\R^d\).
 \item \defn{grounded} if \(\lim_{x_j\to -\infty}F(\vect{x})=0\) (with
-\(\vect{x}=(x_1,\dotsc,x_n)\)) for all \(j=1,\dotsc,d\)
+\(\vect{x}=(x_1,\dotsc,x_n)\)) for all \(j=1,\dotsc,d\).
 \item \defn{\(d\)-increasing} if \(\Delta_{(\vect{a},\vect{b}]}F\ge 0\) for all
 \(\vect{a}\le\vect{b}\), where \(\Delta_{(\vect{a},\vect{b}]}F\) is the
 \defn{\(F\)-volume} (over \((\vect{a},\vect{b}]\)):
@@ -1516,7 +1518,7 @@ such that
 \(\lambda_{F}((\vect{a},\vect{b}])=\mu_0((\vect{a},\vect{b}])=\Delta_{(\vect{a},\vect{b}]}F\)
 for all \(\vect{a}\le\vect{b}\).
 \end{pf}
-\item \textbf{Lebesgue-Stieltjes measure.} As mentioned in
+\item \label{it:lebesgue-stieltjes-meas}\textbf{Lebesgue-Stieltjes measure.} As mentioned in
 \labelcref{it:meas-complete-wlog}, we shall assume the measure \(\lambda_{F}\)
 to be complete. Such complete measure \(\lambda_{F}\) is then known as the
 \defn{Lebesgue-Stieltjes measure} associated to \(F\).  Particularly, if
@@ -1526,26 +1528,35 @@ to be complete. Such complete measure \(\lambda_{F}\) is then known as the
 \defn{Lebesgue \(\sigma\)-algebra}. Every set in \(\bar{\mathcal{B}}(\R^d)\) is
 said to be \defn{Lebesgue measurable}, or a \defn{Lebesgue set}.
 
-\item \label{it:lebesgue-meas-prop} \textbf{Properties of Lebesgue measure.}
+By definition, every Borel set is a Lebesgue set since
+\(\mathcal{B}(\R^d)\subseteq \bar{\mathcal{B}}(\R^d)\). As one may expect, the
+converse does not hold and there is a Lebesgue set that is not a Borel set.
+But the construction of such set turns out to be somewhat tricky, and we will
+only do that in \labelcref{it:lebesgue-set-not-borel-set}.
+
+\item \label{it:lebesgue-meas-prop} \textbf{Properties of the Lebesgue measure.}
 \begin{enumerate}
 \item \emph{(agreeing with our usual notion of ``volume'')} The Lebesgue
 measure \(\lambda\) satisfies
 \(\lambda((\vect{a},\vect{b}])=\prod_{j=1}^{d}(b_j-a_j)\) for all
-\(\vect{a}\le\vect{b}\) (due to \labelcref{it:f-vol-prod-diff}).
+\(\vect{a}\le\vect{b}\).
 \begin{note}
 More generally, the Lebesgue-Stieltjes measure \(\lambda_{F}\) can be
 interpreted as assigning hypercubes their volumes that are \emph{distorted by \(F\)}.
 \end{note}
+
 \item The Lebesgue measure \(\lambda\) is invariant with respect to
-translations, rotations, and reflections. \begin{note}
-The proof is quite technical and thus omitted.
-\end{note}
+translations, rotations, and reflections.
+
 \item \emph{(coinciding with the product measure of Lebesgue measure on
 \(\R\))} The Lebesgue measure \(\lambda\) on \(\R^d\) coincides with the
 product measure of (\(d\) copies of) the Lebesgue measure on \(\R\).
-
+\end{enumerate}
 \begin{pf}
-Since \(\R^d=\prod_{j=1}^{d}\R\) is a product space, it can be equipped with
+\begin{enumerate}
+\item It follows from \labelcref{it:f-vol-prod-diff}.
+\item Omitted.
+\item Since \(\R^d=\prod_{j=1}^{d}\R\) is a product space, it can be equipped with
 the product \(\sigma\)-algebra \(\bigotimes_{j=1}^{d}\mathcal{B}(\R)
 \overset{\text{(\Cref{prp:prod-sig-alg-count-interpret})}}{=}
 \sigma(\prod_{j=1}^{d}B_j:B_j\in\mathcal{B}(\R))\). Then consider the product
@@ -1562,8 +1573,8 @@ for all \(\vect{-\infty}<\vect{a}\le\vect{b}<\vect{\infty}\), meaning that
 \(\mathcal{A}\) is a \(\pi\)-system and \(\lambda\) is \(\sigma\)-finite (as hinted
 from the proof of \Cref{thm:construct-borel-meas-rd}), by
 \Cref{prp:meas-unique}, we must have \(\lambda=\mu\).
-\end{pf}
 \end{enumerate}
+\end{pf}
 \item \textbf{Componentwise increasing does not imply \(d\)-increasing.} The
 construction of Borel measures on \(\R^d\) in
 \Cref{thm:construct-borel-meas-rd} requires the underlying function \(F\) to be
@@ -1583,7 +1594,7 @@ F\left((1/2)^{i_1}1^{1-i_1},(1/2)^{i_2}1^{1-i_2},(1/2)^{i_3}1^{1-i_3}\right) \\
 \end{align*}
 Therefore, we cannot apply \Cref{thm:construct-borel-meas-rd} on this function
 \(F\) to induce a Borel measure \(\lambda_{F}\).
-\item \textbf{Examples of Lebesgue null sets.} Considering the measure space
+\item\label{it:lebesgue-null-sets-eg} \textbf{Examples of Lebesgue null sets.} Considering the measure space
 \((\R^d,\bar{\mathcal{B}}(\R^d),\lambda)\), we know from
 \Cref{subsect:null-sets} that every set \(N\in\bar{\mathcal{B}}(\R^d)\) with
 \(\lambda(N)=0\) is a \(\lambda\)-null set, which is also called \defn{Lebesgue
@@ -1716,8 +1727,8 @@ The triple \((\Omega,\mathcal{F},\pr)\) is called a \defn{probability space},
 \item\label{it:prob-meas-prop} \textbf{Properties of probability measure.}
 \begin{enumerate}
 \item \emph{(probability measure is a measure)} We have
-\(\prob{\varnothing}=0\), so the probability measure \(\pr\) can be identified
-as a measure.
+\(\prob{\varnothing}=0\), so the probability measure \(\pr\) is indeed a
+measure.
 
 \begin{pf}
 Let \(A_1=\Omega\) and \(A_i=\varnothing\) for every \(i=2,3,\dotsc\). Then we
@@ -1736,15 +1747,14 @@ measure, all properties in \labelcref{it:meas-prop} hold.
 \item \textbf{Examples of probability measures.}
 \begin{enumerate}
 \item\label{it:comb-prob} \emph{(combinatorial probability)} Let \(\Omega\) be
-a finite sample space with \(\mathcal{F}=\mathcal{P}(\Omega)\).  Then we can
-define \(\prob{A}:=|A|/|\Omega|\) for all \(A\in\mathcal{F}\), which is indeed
-a probability measure on \(\mathcal{F}\).
+a nonempty finite sample space with \(\mathcal{F}=\mathcal{P}(\Omega)\).  Then
+we can define \(\prob{A}:=|A|/|\Omega|\) for all \(A\in\mathcal{F}\), which is
+indeed a probability measure on \(\mathcal{F}\).
 
 \begin{pf}
 \begin{enumerate}[label={(\arabic*)}]
-\item Since \(0\le |A|\le |\Omega|\), we have \(0\le\prob{A}\le 1\) for all
-\(A\in\mathcal{F}\), so \(\pr\) can be considered to be a function from
-\(\mathcal{F}\) to \([0,1]\).
+\item The nonnegativity follows from the fact that both \(|A|\) and
+\(|\Omega|\) are nonnegative.
 \item We have \(\prob{\Omega}=|\Omega|/|\Omega|=1\).
 \item Fix any pairwise disjoint \(A_1,A_2,\dotsc\in\mathcal{F}\). Noting that
 \(\left|\biguplus_{i=1}^{\infty}A_i\right|=\sum_{i=1}^{\infty}|A_i|\), we have
@@ -1799,12 +1809,13 @@ probability measures on \(\R^d\).
 Let \(\Omega=\R^d\). Then:
 \begin{enumerate}
 \item \emph{\(\pr\) induces \(F\):} If \(\pr\) is a probability measure on
-\(\bar{\mathcal{B}}(\R^d)\), then
+\(\mathcal{B}(\R^d)\), then
 \orc{\(F(\vect{x}):=\prob{(\vect{-\infty},\vect{x}]}\)} is a distribution function.
-Also, we have \vc{\(\lambda_F=\pr\)} for this \(F\).
+Also, we have \vc{\(\lambda_F=\pr\)} on \(\mathcal{B}(\R^d)\) for this \(F\).
 \item \emph{\(F\) induces \(\pr\):} If \(F\) is a distribution function, then
-\vc{\(\pr:=\lambda_{F}\)} is a probability measure on \(\bar{\mathcal{B}}(\R^d)\).
-Also, we have \orc{\(\prob{(\vect{-\infty},\vect{x}]}=F(\vect{x})\)} for all
+\vc{\(\pr:=\lambda_{F}\)} (with domain restricted to \(\mathcal{B}(\R^d)\)) is
+a probability measure on \(\mathcal{B}(\R^d)\).  Also, we have
+\orc{\(\prob{(\vect{-\infty},\vect{x}]}=F(\vect{x})\)} for all
 \(\vect{x}\in\R^d\) for this \(\pr\).
 \end{enumerate}
 \end{theorem}
@@ -1834,9 +1845,9 @@ correspondence between the probability measures and distribution functions.
 \item The distribution function
 \(F(\vect{x}):=\prob{(\vect{-\infty},\vect{x}]}\) is called the
 \defn{distribution function of \(\pr\) (or \(\lambda_{F}\))}.
-\item For every probability measure \(\pr\) on \(\bar{\mathcal{B}}(\R^d)\) with
+\item For every probability measure \(\pr\) on \(\mathcal{B}(\R^d)\) with
 distribution function \(F\), we have
-\(\prob{(\vect{a},\vect{b]}}=\lambda_{F}(\vect{a},\vect{b}]=\Delta_{(\vect{a},\vect{b}]}F\).
+\(\prob{(\vect{a},\vect{b]}}=\lambda_{F}((\vect{a},\vect{b}])=\Delta_{(\vect{a},\vect{b}]}F\).
 This gives rise to another interpretation of the \(F\)-volume
 \(\Delta_{(\vect{a},\vect{b}]}F\), namely that it is the probability of
 \((\vect{a},\vect{b}]\) under the distribution function \(F\).
@@ -1898,9 +1909,7 @@ for all \(\vect{x}\in\R^d\).  Changing \(\min_{j}\to\max_{j}\) above gives
 \(\lim_{\vect{h}\to\vect{0}^{+}}F(\vect{x}+\vect{h})= F(\vect{x})\) for all
 \(\vect{x}\in\R^d\).
 \end{enumerate}
-Next, we show that \(\lambda_{F}=\pr\). Here it suffices to show this equality
-on \(\mathcal{B}(\R^d)\) (rather than \(\bar{\mathcal{B}}(\R^d)\)) as
-completion of measure is done uniquely by \Cref{thm:complete-meas}. Also, by
+Next, we show that \(\lambda_{F}=\pr\) on \(\mathcal{B}(\R^d)\). By
 \Cref{prp:meas-unique}, it suffices to show that \(\lambda_{F}=\pr\) on the
 \(\pi\)-system \(\mathcal{A}=\{(\vect{-\infty},\vect{b}]:\vect{b}\in\R^d\}\)
 since \(\sigma(\mathcal{A})=\mathcal{B}(\R^d)\) by
@@ -1915,8 +1924,9 @@ for all \(\vect{b}\in\R^d\).
 \item By \Cref{thm:construct-borel-meas-rd}, we know there is a unique Borel
 measure \(\lambda_{F}\) such that
 \(\lambda_{F}(\vect{a},\vect{b}]=\Delta_{(\vect{a},\vect{b}]}F\) for all
-\(\vect{a}\le\vect{b}\). We now show that \(\lambda_{F}\) is a probability
-measure on \(\bar{\mathcal{B}}(\R^d)\).
+\(\vect{a}\le\vect{b}\). We now show that \(\lambda_{F}\) (with domain
+restricted to \(\mathcal{B}(\R^d)\)) is a probability measure on
+\(\mathcal{B}(\R^d)\).
 \begin{enumerate}[label={(\arabic*)}]
 \item The nonnegativity of \(\lambda_{F}\) follows from the fact that
 \(\lambda_{F}\) is a measure.
@@ -2049,6 +2059,11 @@ where \(p_{\mathrm{d}},p_{\mathrm{ac}},p_{\mathrm{cs}}\ge 0\) with
 \(p_{\mathrm{d}}+p_{\mathrm{ac}}+p_{\mathrm{cs}}=1\), and
 \(F_{\mathrm{d}},F_{\mathrm{ac}},F_{\mathrm{cs}}\) are discrete, absolutely
 continuous, and continuous singular distribution functions respectively.
+\begin{note}
+Distribution function with at least two of
+\(p_{\mathrm{d}},p_{\mathrm{ac}},p_{\mathrm{cs}}\) being positive is said be of
+\defn{mixed type}.
+\end{note}
 
 \begin{pf}
 Omitted.
@@ -2149,12 +2164,13 @@ Assume the margins \(F_1,\dotsc,F_d\) of \(F\) are all continuous. Then consider
 which implies that \(\lim_{\vect{h}\to
 \vect{0}}F(\vect{x}-\vect{h})=F(\vect{x})\), and hence \(F\) is continuous.
 \end{pf}
-\item\label{it:cts-df-not-abs-cts} \textbf{An example of continuous distribution function that is not
-absolutely continuous.}
-While we know from \labelcref{it:abs-cts-df-cts} that absolutely continuous
-distribution functions are always continuous, the converse does not hold. A
-standard counterexample is the \emph{Cantor distribution function}, a.k.a.\ the
-\emph{devil's staircase}.
+\item\label{it:cts-df-not-abs-cts} \textbf{An example of continuous
+distribution function that is not absolutely continuous.} While we know from
+\labelcref{it:abs-cts-df-cts} that absolutely continuous distribution functions
+are always continuous, the converse does not hold. A standard counterexample is
+the \emph{Cantor distribution function}, a.k.a.\ the \emph{devil's staircase}.
+(See \href{https://en.wikipedia.org/wiki/Cantor_function}{here} for a picture
+of its graph, which indeed looks like a staircase.)
 
 Recall the Cantor set \(\mathcal{C}=\{x\in[0,1]:x=\sum_{i=1}^{\infty}a_i3^{-i},
 a_i\in\{0,2\}~\forall i\in\N\}\). Then the \defn{Cantor distribution function} \(F\)
@@ -2252,16 +2268,16 @@ the generalized inverse \(F^{-1}\) coincides with the ordinary inverse of
 \(F\) on \(\ran{F}\).
 \item \emph{(behaviour of \(F^{-1}(F(\cdot))\))}
 \begin{enumerate}
-\item \emph{(``\(\leq\)'')} Generally, we have \(F^{-1}(F(x))\le x\).
-\item \emph{(``\(=\)'')} If \(F\) is \emph{strictly} increasing, then we have \(F^{-1}(F(x))=x\).
+\item \emph{(``\(\le x\)'')} Generally, we have \(F^{-1}(F(x))\le x\).
+\item \emph{(``\(=x\)'')} If \(F\) is \emph{strictly} increasing, then we have \(F^{-1}(F(x))=x\).
 \end{enumerate}
 \item \emph{(behaviour of \(F(F^{-1}(\cdot))\))} Suppose that \(F\) is
 right-continuous.
 \begin{enumerate}
-\item \emph{(``\(\ge\)'')} If \(F^{-1}(y)<\infty\), then \(F(F^{-1}(y))\ge y\).
-\item \emph{(``\(=\)'')} Furthermore, if \(y\in\ran{F}\cup\{\inf\ran{F},\sup\ran{F}\}\), then \(F(F^{-1}(y))=y\).
-\item \emph{(``\(>\)'')} If \(y<\inf\ran{F}\), then \(F(F^{-1}(y))>y\).
-\item \emph{(``\(<\)'')} If \(y>\sup\ran{F}\), then \(F(F^{-1}(y))<y\).
+\item \emph{(``\(\ge y\)'')} If \(F^{-1}(y)<\infty\), then \(F(F^{-1}(y))\ge y\).
+\item \emph{(``\(= y\)'')} If \(y\in\ran{F}\cup\{\inf\ran{F},\sup\ran{F}\}\), then \(F(F^{-1}(y))=y\).
+\item \emph{(``\(> y\)'')} If \(y<\inf\ran{F}\), then \(F(F^{-1}(y))>y\).
+\item \emph{(``\(< y\)'')} If \(y>\sup\ran{F}\), then \(F(F^{-1}(y))<y\).
 \end{enumerate}
 \item \emph{(inequalities about generalized inverse)}
 \begin{enumerate}
