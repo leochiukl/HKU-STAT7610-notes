@@ -448,7 +448,7 @@ certainly nonempty.
 However, whether a statement holds \defn{everywhere}/\defn{surely} (i.e., holds
 for all \(\omega\in\Omega\)) or \emph{almost} everywhere/surely often does not
 really matter, because we usually do not care much about the points inside a
-null set, which would not influence the measure in any way.
+null set, which would not impact the measure anyway.
 
 \item \textbf{Property of null sets.} The main property of null sets is that
 countable union of null sets is still a null set: Taking \emph{countable} union
@@ -972,16 +972,9 @@ A)+\mu^*(B\setminus A)\). As this holds for all \(B\subseteq \Omega\), we have
 both (i) \(\pi\)-system and (ii) Dynkin system.
 
 \begin{itemize}
-\item \emph{\(\pi\)-system:}
-\begin{enumerate}[label={(\arabic*)}]
-\item For all \(B\subseteq \Omega\), we have
-\(\mu^*(B\cap\varnothing)+\mu^*(B\cap\varnothing^c)
-=\mu^*(\varnothing)+\mu^*(B\cap\Omega)=\mu^*(B)\). Thus
-\(\varnothing\in\mathcal{A}^*\). This shows the nonemptyness.
-\item Fix any \(A_1,A_2\in\mathcal{A}^*\) and any \(B\subseteq \Omega\).
-Observe that \((\vc{A_1\cap A_2})^c
-=\mgc{(A_1^c\cap A_2)}\uplus \blc{(A_1\cap A_2^c)}\uplus \orc{(A_1^c\cap A_2^c)}
-\).
+\item \emph{\(\pi\)-system:} Fix any \(A_1,A_2\in\mathcal{A}^*\) and any
+\(B\subseteq \Omega\).  Observe that \((\vc{A_1\cap A_2})^c =\mgc{(A_1^c\cap
+A_2)}\uplus \blc{(A_1\cap A_2^c)}\uplus \orc{(A_1^c\cap A_2^c)} \).
 \begin{center}
 \begin{tikzpicture}
 \draw[fill, orange, opacity=0.2] (-2.5,-2.5) rectangle (4.5,2.5);
@@ -1014,7 +1007,6 @@ On the other hand, by finite subadditivity we have
 \(\mu^*(B\cap\gc{(A_1\cap A_2)})+\mu^*(B\cap\gc{(A_1\cap A_2)^{c}})\ge
 \mu(B)\).
 So the equality holds and \(A_1\cap A_2\in\mathcal{A}^*\).
-\end{enumerate}
 \item \emph{Dynkin system:}
 \begin{enumerate}[label={(\arabic*)}]
 \item We have shown that \(\varnothing\in\mathcal{A}^*\) above.
@@ -1575,7 +1567,7 @@ from the proof of \Cref{thm:construct-borel-meas-rd}), by
 \Cref{prp:meas-unique}, we must have \(\lambda=\mu\).
 \end{enumerate}
 \end{pf}
-\item \textbf{Componentwise increasing does not imply \(d\)-increasing.} The
+\item\label{it:comp-incr-not-imply-d-incr} \textbf{Componentwise increasing does not imply \(d\)-increasing.} The
 construction of Borel measures on \(\R^d\) in
 \Cref{thm:construct-borel-meas-rd} requires the underlying function \(F\) to be
 \emph{\(d\)-increasing}, and componentwise increasing is \emph{not enough}, as
@@ -1787,7 +1779,7 @@ subset of \(\R^d\) with \(\lambda(\Omega)<\infty\) and
 \labelcref{it:comb-prob}). Here, \((\Omega,\mathcal{F},\pr)\) is called
 \defn{geometric probability space}.
 \end{enumerate}
-\item \textbf{Characterization of probability measures on \(\R^d\).} In the
+\item\label{it:dist-fn} \textbf{Characterization of probability measures on \(\R^d\).} In the
 case where \(\Omega=\R^d\), there is a characterization of the probability
 measure through the \emph{distribution function}. It is indeed the one you have
 learnt in your first course in probability, but here we will define it in a way
@@ -1851,6 +1843,22 @@ distribution function \(F\), we have
 This gives rise to another interpretation of the \(F\)-volume
 \(\Delta_{(\vect{a},\vect{b}]}F\), namely that it is the probability of
 \((\vect{a},\vect{b}]\) under the distribution function \(F\).
+\item While the domain of a \(d\)-dimensional distribution function \(F\) is
+always \(\R^d\) by definition, sometimes a function \(F\) that satisfies all
+the three properties mentioned but with domain being a subset of \(\R^d\) is
+also called a distribution function; we shall adopt this convention throughout.
+To adapt with the definition above, we can view such function \(F\) as
+implicitly extended to a function \(\widetilde{F}\) with domain \(\R^d\), given
+by
+\[
+\widetilde{F}(\vect{x})
+=F(\min\{\max\{x_1,a_1\},b_1\},\dotsc,\min\{\max\{x_d,a_d\},b_d\}),
+\quad\text{for all \(\vect{x}\in\R^d\),}
+\]
+where \((a_1,\dotsc,a_d):=\inf\supp{F}\) and
+\((b_1,\dotsc,b_d):=\sup\supp{F}\). In words, the extension is done by setting
+\(1\) in the ``upper-right'' region and \(0\) in all other regions outside
+\(\supp{F}\).
 \end{remark}
 
 \begin{pf}

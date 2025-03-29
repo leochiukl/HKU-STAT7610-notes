@@ -1366,11 +1366,7 @@ system: It turns out that a Dynkin system that is also a \(\pi\)-system is
 equivalent to a \(\sigma\)-algebra (see \Cref{prp:dynkin-prop}).
 
 A family \(\mathcal{A}\subseteq\mathcal{P}(\Omega)\) is a \defn{\(\pi\)-system}
-on \(\Omega\) if
-\begin{enumerate}[label={(\arabic*)}]
-\item \(\mathcal{A}\) is nonempty.
-\item \emph{(closed under intersections)} \(A,B\in\mathcal{A}\implies A\cap B\in\mathcal{A}\).
-\end{enumerate}
+on \(\Omega\) if \(A,B\in\mathcal{A}\implies A\cap B\in\mathcal{A}\) \emph{(closed under intersections)}.
 \end{itemize}
 
 \item \textbf{Properties of Dynkin system.} The following result provides some
@@ -1764,8 +1760,8 @@ Here, the interval and inequality notations carry componentwise meaning:
 Omitted.
 \end{pf}
 \item \textbf{Borel \(\sigma\)-algebras on \(\R^d\), \(\eR{}^d\), and their subsets.}
-\begin{itemize}
-\item The Borel \(\sigma\)-algebra \(\mathcal{B}(\R^d)\) is the
+\begin{enumerate}
+\item\label{it:borel-rd-prod-sig} The Borel \(\sigma\)-algebra \(\mathcal{B}(\R^d)\) is the
 product \(\sigma\)-algebra \(\bigotimes_{i=1}^{d}\mathcal{B}(\R)\).
 \item Later in \Cref{sect:integration-expectation}, we will encounter the case
 \(\Omega=\eR:=\R\cup\{-\infty,\infty\}=:[-\infty,\infty]\), the extended real
@@ -1787,5 +1783,5 @@ For instance, if \(\Omega\subseteq \R^d\), then
 \(\mathcal{B}(\Omega)=\mathcal{B}(\R^d)|_{\Omega}
 =\{B\cap\Omega:B\in\mathcal{B}(\R^d)\}\).
 
-\end{itemize}
+\end{enumerate}
 \end{enumerate}

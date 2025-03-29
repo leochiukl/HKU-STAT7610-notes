@@ -161,8 +161,8 @@ following lemma will be helpful for the proof:
 \begin{lemma}[Commutativity of \(\sigma(\cdot)\) and \(X^{-1}(\cdot)\)]
 \label{lma:sig-alg-gen-preimg-comm}
 Let \((\Omega,\mathcal{F})\) and \((\Omega',\mathcal{F}')\) be measurable
-spaces, \(X:\Omega\to\Omega'\) be a measurable function, and
-\(\mathcal{A}'\subseteq \mathcal{P}(\Omega')\). Then we have
+spaces, \(X:\Omega\to\Omega'\) be a function, and \(\mathcal{A}'\subseteq
+\mathcal{P}(\Omega')\). Then we have
 \(\sigma(X^{-1}(\mathcal{A}'))=X^{-1}(\sigma(\mathcal{A}'))\).
 \begin{note}
 In particular, if \(\mathcal{F}'=\sigma(\mathcal{A}')\), then
@@ -814,8 +814,8 @@ x_2}=\prob{U\le\min\{x_1,x_2\}}=\min\{x_1,x_2\}\), where \(\min\{x_1,x_2\}\in
 \[
 \pdv{}{x_2,x_1}F_{\vect{X}}(\vect{x})=
 \begin{cases}
-\pdv{}{x_2,x_1}x_1=\pdv{}{x_2}1=0, \\
-\pdv{}{x_2,x_1}x_2=\pdv{}{x_2}0=0, \\
+\pdv{}{x_2,x_1}x_1=\pdv{}{x_2}1=0&\text{if \(x_1<x_2\),} \\
+\pdv{}{x_2,x_1}x_2=\pdv{}{x_2}0=0&\text{if \(x_1>x_2\),} \\
 \end{cases}
 \]
 which integrates to \(0\) rather than \(1\). This then implies that \(F\) is
@@ -940,10 +940,11 @@ distributions.
 \end{note}
 \end{enumerate}
 \subsection{Univariate Transforms}
+\label{subsect:univariate-trans}
 \begin{enumerate}
 \item To close \Cref{sect:meas-fn}, we will introduce some results about
 \emph{transformations} of random variables, which are helpful for
-performing \emph{simulations} (see \Cref{subsect:sampling}).
+performing \emph{simulations} (see \labelcref{it:sampling}).
 \item \textbf{Quantile transform.} The first results suggests the distribution
 of a \(\unif{0}{1}\) random variable after being transformed by a
 \underline{quantile} function \(F^{-1}\).
@@ -968,6 +969,13 @@ If \(X\sim F\) and \vc{\(F\) is continuous}, then \(F(X)\sim \unif{0}{1}\).
 \end{proposition}
 \begin{pf}
 Since \(F\) is continuous, the quantile function \(F^{-1}\) is strictly
-increasing on \([0,1]\) by \labelcref{it:gen-inv-prop}.
+increasing on \([0,1]\) by \labelcref{it:gen-inv-prop}. Therefore, we have
+\(F(X(\omega))\le u\) iff \(F^{-1}(F(X(\omega)))\le F^{-1}(u)\) for all \(\omega\in\Omega\).
+Now, note that the support of \(F\) is \(\supp{F}=\{x\in\R:F(x)-F(x-h)>0\text{
+for all \(h>0\)}\}\), and \(F\) is strictly increasing on \(\supp{F}\), because
+for all \(x,y\in\supp{F}\) with \(x<y\), by setting \(h=y-x\), we know
+\(F(y)-F(y-h)=F(y)-F(x)>0\).
+
+TODO
 \end{pf}
 \end{enumerate}

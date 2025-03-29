@@ -1,0 +1,1110 @@
+\section{Ordinary Conditional Probability, Independence, and Dependence}
+\label{sect:cond-prob-indep-dep}
+\begin{enumerate}
+\item In \Cref{sect:cond-prob-indep-dep}, we will delve into notions that are
+\emph{exclusive} to probability theory, namely ordinary conditional probability,
+independence, and dependence. The availability of these concepts is a main
+difference that separates the closely related \emph{measure theory} and \emph{probability
+theory}.
+\end{enumerate}
+\subsection{Ordinary Conditional Probability}
+\begin{enumerate}
+\item The \emph{ordinary conditional probability} is indeed just the
+conditional probability you have seen in your first probability course. We add
+the term ``ordinary'' here since we are going to introduce a much more general
+and abstract \faIcon[regular]{dizzy} concept of conditioning (see
+\Cref{sect:conditional-expectation}).
+
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(B\in\mathcal{F}\) be
+an event with \rc{\(\prob{B}>0\)}. Then, the \defn{(ordinary) conditional
+probability of \(A\) given \(B\)}, denoted by \(\prob{A|B}\), is given by
+\(\prob{A|B}=\prob{A\cap B}/\prob{B}\) for all \(A\in\mathcal{F}\).
+\begin{note}
+The requirement that \(\prob{B}>0\) is indeed somewhat restrictive, e.g., it
+would not permit us to condition on \(\{X=x\}\) where \(X\) is an absolutely
+continuous random variable, since \(\prob{X=x}=0\) always. However, often one
+wants to do such kind of conditioning. This issue leads to the development of
+the more general and abstract concept of conditioning mentioned above.
+\end{note}
+
+Let us verify that \(\prob{\cdot|B}\) is indeed a probability measure on
+\(\mathcal{F}\) in the following:
+
+\begin{pf}
+\begin{enumerate}[label={(\arabic*)}]
+\item The nonnegativity follows from the observation that both \(\prob{A\cap
+B}\) and \(\prob{B}\) are always nonnegative (the latter is always positive
+indeed).
+\item We have \(\prob{\Omega|B}=\prob{\Omega\cap B}/\prob{B}=\prob{B}/\prob{B}=1\).
+\item Fix any pairwise disjoint \(A_1,A_2,\dotsc\in\mathcal{F}\). Then,
+\begin{align*}
+\prob{\left.\biguplus_{i=1}^{\infty}A_i\right|B}
+&=\frac{\prob{\left(\biguplus_{i=1}^{\infty}A_i\right)\cap B}}{\prob{B}} \\
+&=\frac{\prob{\biguplus_{i=1}^{\infty}(A_i\cap B)}}{\prob{B}} \\
+&=\frac{\sum_{i=1}^{\infty}\prob{A_i\cap B}}{\prob{B}} \\
+&=\sum_{i=1}^{\infty}\frac{\prob{A_i\cap B}}{\prob{B}} \\
+&=\sum_{i=1}^{\infty}\prob{A_i|B}.
+\end{align*}
+\end{enumerate}
+\end{pf}
+\item \textbf{What would happen if \(\prob{B}=0\)?} From the definition of
+the ordinary conditional probability above, it is clear that \(\prob{A\cap
+B}/\prob{B}\) is \emph{undefined} if \(\prob{B}=0\). Consequently, we must not
+define the conditional probability \(\prob{A|B}\) using the ratio formula above.
+In this case, we would not define \(\prob{A|B}\) using a formulaic approach.
+Rather, we would just require it to satisfy \(\prob{A|B}\prob{B}=\prob{A\cap
+B}\) without actually providing an explicit definition of \(\prob{A|B}\).
+
+With this equality, we can then obtain that \(\prob{A|B}\prob{B}=0\).
+
+\begin{pf}
+Note that
+\(\prob{A|B}\prob{B}=\prob{A\cap B}\overset{\text{(monotonicity)}}{\le}\prob{B}=0\) and
+\(\prob{A|B}\prob{B}=\prob{A\cap B}\ge 0\).
+\end{pf}
+
+Of course, merely having the equality \(\prob{A|B}\prob{B}=\prob{A\cap B}\)
+still leaves a lot of room for discussions on what conditioning on such
+zero-probability event \(B\) means.  To deal with this somewhat complicated
+issue of ``conditioning on zero-probability events'', it is standard to utilize
+the machinery from \Cref{sect:conditional-expectation}.
+
+\item \textbf{Two main results about ordinary conditional probability.} You
+should have already learnt the following two properties about conditional
+probability in your first probability course, and they are stated and proved
+here again for reference. The first one is the \emph{law of total probability},
+which may be seen as a probability version of the \emph{law of total measure}.
+\begin{theorem}[Law of total probability]
+\label{thm:law-of-total-prob}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
+\(\{B_1,B_2,\dotsc\}\subseteq \mathcal{F}\) be a partition of \(\Omega\). Then
+\[
+\prob{A}=\sum_{i=1}^{\infty}\prob{A|B_i}\prob{B_i}.
+\]
+\begin{note}
+We have \(\prob{A|B_i}\prob{B_i}=0\) for every \(i\) where \(\prob{B_i}=0\).
+\end{note}
+\end{theorem}
+\begin{pf}
+By the law of total measure (\labelcref{it:meas-prop}), we have
+\[
+\prob{A}=\sum_{i=1}^{\infty}\prob{A\cap B_i}=\sum_{i=1}^{\infty}\prob{A|B_i}\prob{B_i}.
+\]
+\end{pf}
+
+The next one is the \emph{Bayes' theorem}, which illustrates a key idea used in
+the \emph{Bayesian methodology} in statistics.
+
+\begin{theorem}[Bayes' theorem]
+\label{thm:bayes}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
+\(A\in\mathcal{F}\) be an event with \(\prob{A}>0\). Then
+\[
+\prob{B|A}=\frac{\prob{A|B}\prob{B}}{\prob{A}}
+\]
+for all \(B\in\mathcal{F}\).
+Furthermore, if \(\{B_1,B_2,\dotsc\}\subseteq \mathcal{F}\) is a partition of
+\(\Omega\), then we have
+\[
+\prob{B_i|A}=\frac{\prob{A|B_i}\prob{B_i}}{\sum_{j=1}^{\infty}\prob{A|B_j}\prob{B_j}}.
+\]
+\end{theorem}
+\begin{pf}
+The second formula follows from the first by applying the law of total
+probability on the denominator \(\prob{A}\):
+\(\prob{A}=\sum_{j=1}^{\infty}\prob{A|B_j}\prob{B_j}\), so we will only prove
+the first:
+\[
+\prob{B|A}=\frac{\prob{B\cap A}}{\prob{A}}=\frac{\prob{A\cap B}}{\prob{A}}
+=\frac{\prob{A|B}\prob{B}}{\prob{A}}.
+\]
+\end{pf}
+\end{enumerate}
+\subsection{Independence}
+\label{subsect:independence}
+\begin{enumerate}
+\item \textbf{Definitions of independence.} The conditional probability
+\(\prob{A|B}\) can be viewed as the probability assessment of the event \(A\)
+when knowing that the event \(B\) occurs.  But if the event \(A\) does not in
+any way depend on the occurrence of event \(B\), the probability assessment
+should then be the same with or without the knowledge of the occurrence of
+\(B\): \(\prob{A|B}\overset{\text{(should be)}}{=}\prob{A}\), which can be
+rewritten as \(\prob{A\cap B}=\prob{A}\prob{B}\). This motivates the definition
+of \emph{independence} of two events, and we have more general definitions of
+independence in the following.
+
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and \(I\subseteq \R\)
+be an arbitrary index set. Then:
+\begin{enumerate}
+\item \emph{(independence of events)} The events \(A_1,\dotsc,A_n\in\mathcal{F}\) are \defn{independent} if
+\(\prob{\bigcap_{i\in I}^{}A_i}=\prod_{i\in I}^{}\prob{A_i}\) for
+\underline{every} subset \(I\subseteq \{1,\dotsc,n\}\). \begin{warning} Not
+just \(I=\{1,\dotsc,n\}\)!  \end{warning}
+
+\begin{note}
+Here we have \(\bigcap_{i\in \varnothing}^{}A_i:=\Omega\) and
+\(\prod_{i\in\varnothing}^{}\prob{A_i}:=1\).
+\end{note}
+\item \emph{(independence of a collection of events)} A collection
+\(\{A_i\}_{i\in I}\subseteq \mathcal{F}\) of events is \defn{independent} if
+\(A_{i_1},\dotsc,A_{i_n}\) are independent for all
+\(\{i_1,\dotsc,i_n\}\subseteq I\) with \(n\in\N\) being arbitrary.
+\item \emph{(independence of families)} The families
+\(\mathcal{A}_1,\dotsc,\mathcal{A}_n\subseteq \mathcal{F}\) of events are
+\defn{independent} if \(A_1,\dotsc,A_n\) are independent for all
+\(A_1\in\mathcal{A}_1,\dotsc,A_n\in\mathcal{A}_n\).
+\item \emph{(independence of a collection of families)} A collection
+\(\{\mathcal{A}_i\}_{i\in I}\) of families of events, with
+\(\mathcal{A}_i\subseteq \mathcal{F}\) for all \(i\in I\), is
+\defn{independent} if \(\mathcal{A}_{i_1},\dotsc,\mathcal{A}_{i_n}\) are
+independent for all \(\{i_1,\dotsc,i_n\}\subseteq I\) with \(n\in\N\) being
+arbitrary.
+\item \emph{(independence of measurable functions)} Measurable functions
+\(X_1,\dotsc,X_d\), all defined on the probability space
+\((\Omega,\mathcal{F},\pr)\), are \defn{independent}, if the families
+\(\sigma(X_{i_1}),\dotsc,\sigma(X_{i_d})\) are independent.
+\item \emph{(independence of a collection of measurable functions)} A
+collection \(\{X_i\}_{i\in I}\) of measurable functions, all defined on the
+probability space \((\Omega,\mathcal{F},\pr)\), is \defn{independent} if the
+collection \(\{\sigma(X_i)\}_{i\in I}\) is independent.
+
+Particularly:
+\begin{itemize}
+\item If \(X_i\) is a random variable for every \(i\in I\), then the collection
+is independent if \(X_{i_1}^{-1}(B_{i_1}),\dotsc,X_{i_n}^{-1}(B_{i_n})\) are
+independent
+\(\forall~B_{i_1},\dotsc,B_{i_n}\in\mathcal{B}(\R),\quad
+\forall~\{i_{1},\dotsc,i_{n}\}\subseteq I,\quad
+\forall~n\in\N\).
+\item If \(X_i:\Omega\to\R^{d_i}\) is a random vector (written as \(\vect{X}_i\) in the
+following) for every \(i\in I\), then the collection is independent if
+\(\vect{X}_{i_1}^{-1}(B_{i_1}),\dotsc,\vect{X}_{i_n}^{-1}(B_{i_n})\) are independent
+\(\forall~B_{i_1}\in\mathcal{B}(\R^{d_1}),\dotsc,B_{i_n}\in\mathcal{B}(\R^{d_n}),\quad
+\forall~\{i_{1},\dotsc,i_{n}\}\subseteq I,\quad
+\forall~n\in\N\).
+\end{itemize}
+\end{enumerate}
+\item \textbf{Results about independence.} The following results can simplify
+the process of verifying independence. Throughout, let
+\((\Omega,\mathcal{F},\pr)\) be a probability space.
+\begin{enumerate}
+\item \label{it:ind-via-gen} \emph{(independence via generators)} If
+\(\{\mathcal{A}_{i}\}_{i\in I}\) is a collection of independent \(\pi\)-systems
+on \(\Omega\), then the collection \(\{\sigma(\mathcal{A}_i)\}_{i\in I}\) is
+independent.
+\item \label{it:ind-comp} \emph{(independence of complements)} If \(\{A_{i}\}_{i\in I}\subseteq \mathcal{F}\)
+is independent, then so is \(\{A_{i}^c\}_{i\in I}\).
+\item \label{it:grouping-lma} \emph{(grouping lemma)} If \(\{\mathcal{A}_{i}\}_{i\in
+I}\subseteq \mathcal{F}\) is a collection of independent \(\pi\)-systems, and
+\(I=\biguplus_{j\in J}^{}I_j\), then the collection \(\{\sigma(\bigcup_{i\in
+I_j}^{}\mathcal{A}_i)\}_{j\in J}\) is independent.
+\begin{center}
+\begin{tikzpicture}
+\draw[fill, violet] (1,0) circle [radius=1mm];
+\draw[fill, violet] (2,0) circle [radius=1mm];
+\draw[fill, violet] (3,0) circle [radius=1mm];
+\draw[fill, orange] (4,0) circle [radius=1mm];
+\draw[fill, orange] (5,0) circle [radius=1mm];
+\draw[blue] (0.5,-0.5) rectangle (5.5,0.5);
+\node[] () at (3,1) {(independent)};
+\draw[very thick, decorate,decoration={mirror, calligraphic brace, amplitude=5pt, raise=5pt}] (1,0) -- (3,0);
+\draw[very thick, decorate,decoration={mirror, calligraphic brace, amplitude=5pt, raise=5pt}] (4,0) -- (5,0);
+\draw[-Latex] (2,-0.4) -- (2.8,-1);
+\draw[-Latex] (4.5,-0.4) -- (3.2,-1);
+\node[] () at (3,-1.3) {independent};
+\end{tikzpicture}
+\end{center}
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item Fix any \(n\in\N\), and any \(\{i_1,\dotsc,i_n\}\subseteq I\).  Then, fix
+any \(A_{i_k}\in\mathcal{A}_{i_k}\) for every \(k=2,\dotsc,n\). Let
+\(\mathcal{D}=\{A\in\mathcal{F}:\prob{A\cap A_{i_2}\cap\dotsb\cap
+A_{i_n}}=\prob{A}\prod_{k=2}^{n}\prob{A_{i_k}}\}\).
+
+\textbf{Showing that \(\mathcal{D}\) is a Dynkin system on \(\Omega\).}
+\begin{enumerate}[label={(\arabic*)}]
+\item By the definition of independence of a collection of families, we know that
+\(\mathcal{A}_{i_2},\dotsc,\mathcal{A}_{i_n}\) are independent. Hence, we have
+\[
+\prob{\vc{\Omega}\cap A_{i_2}\cap\dotsb\cap A_{i_n}}
+=\prob{A_{i_2}\cap\dotsb\cap A_{i_n}}
+\overset{\text{(independence)}}{=}\prod_{k=2}^{n}\prob{A_{i_k}}
+=\prob{\vc{\Omega}}\prod_{k=2}^{n}\prob{A_{i_k}},
+\]
+meaning that \(\Omega\in\mathcal{D}\).
+\item Fix any \(A\in\mathcal{D}\). Then we have
+\begin{align*}
+\prob{A^c\cap\bigcap_{k=2}^{n}A_{i_k}}
+&=\prob{\left.\bigcap_{k=2}^{n}A_{i_k}\right\backslash A}
+=\prob{\left.\bigcap_{k=2}^{n}A_{i_k}\right\backslash\left(A\cap\bigcap_{k=2}^{n}A_{i_k}\right)} \\
+&=\prob{\bigcap_{k=2}^{n}A_{i_k}}-\vc{\prob{A\cap\bigcap_{k=2}^{n}A_{i_k}}} \\
+\overset{\vc{(A\in\mathcal{D})}}
+&{=}
+\prod_{k=2}^{n}\prob{A_{i_k}}-\vc{\prob{A}\prod_{k=2}^{n}\prob{A_{i_k}}}
+=\prob{A^c}\prod_{k=2}^{n}\prob{A_{i_k}},
+\end{align*}
+thus \(A^c\in\mathcal{D}\).
+\item Fix any pairwise disjoint \(A_1,A_2,\dotsc\in\mathcal{D}\). Then we have
+\begin{align*}
+\prob{\left(\biguplus_{i=1}^{\infty}A_i\right)\cap\bigcap_{k=2}^{n}A_{i_k}}
+\overset{\text{(distributivity)}}&{=}
+\prob{\biguplus_{i=1}^{\infty}\left(A_i\cap\bigcap_{k=2}^{n}A_{i_k}\right)}
+=\sum_{i=1}^{\infty}\prob{A_i\cap\bigcap_{k=2}^{n}A_{i_k}} \\
+\overset{(A_1,A_2,\dotsc\in\mathcal{D})}&{=}
+\sum_{i=1}^{\infty}\left(\prob{A_i}\vc{\prod_{k=2}^{n}\prob{A_{i_k}}}\right)
+=\vc{\prod_{k=2}^{n}\prob{A_{i_k}}}\sum_{i=1}^{\infty}\prob{A_i} \\
+&=\prob{\biguplus_{i=1}^{\infty}A_i}\prod_{k=2}^{n}\prob{A_{i_k}},
+\end{align*}
+so \(\biguplus_{i=1}^{\infty}A_i\in\mathcal{D}\).
+\end{enumerate}
+
+\textbf{Applying Dynkin's \(\pi\)-\(\lambda\) theorem to show the independence
+of \(\sigma(\mathcal{A}_{i_1}),\mathcal{A}_{i_2},\dotsc,\mathcal{A}_{i_n}\).}
+By assumption, \(\mathcal{A}_{i_1},\dotsc,\mathcal{A}_{i_n}\) are independent.
+So, particularly, for all \(\vc{A_{i_1}}\in\mathcal{A}_{i_1}\), we have
+\(\prob{\vc{A_{i_1}}\cap A_{i_2}\cap\dotsb\cap
+A_{i_n}}=\prob{\vc{A_{i_1}}}\prod_{k=2}^{n}\prob{A_{i_k}}\), meaning that
+\(\vc{A_{i_1}}\in\mathcal{D}\). Therefore, we have \(\mathcal{A}_{i_1}\subseteq
+\mathcal{D}\). Since \(\mathcal{A}_{i_1}\) is a \(\pi\)-system, by Dynkin's
+\(\pi\)-\(\lambda\) theorem, we have \(\sigma(\mathcal{A}_{i_1})\subseteq
+\mathcal{D}\).  It follows that
+\(\sigma(\mathcal{A}_{i_1}),\mathcal{A}_{i_2},\dotsc,\mathcal{A}_{i_n}\) are
+independent.
+
+\textbf{Completing the proof by applying the argument repetitively.} By
+repeating the argument above (change
+\(\text{``\(\mathcal{A}_{i_1}\)''}\to\text{``\(\mathcal{A}_{i_2}\)}\)'' and
+\(\text{``\(\mathcal{A}_{i_2},\dotsc,\mathcal{A}_{i_n}\)''}
+\to\text{``\(\sigma(\mathcal{A}_{i_1}),\mathcal{A}_{i_3},\dotsc,\mathcal{A}_{i_n}\)''}\),
+...), we deduce that
+\(\sigma(\mathcal{A}_{i_1}),\sigma(\mathcal{A}_{i_2}),\dotsc,\sigma(\mathcal{A}_{i_n})\)
+are independent.
+\item Assume \(\{A_i\}_{i\in I}\subseteq \mathcal{F}\) is independent. Then,
+consider the family \(\{\mathcal{A}_i\}_{i\in I}\) with \(\mathcal{A}_i\) being
+the singleton \(\{A_i\}\) for all \(i\in I\). Note that
+\(\{\mathcal{A}_i\}_{i\in I}\) are independent \(\pi\)-systems, so
+\(\{\sigma(\mathcal{A}_i)\}_{i\in I}\) is independent by
+\labelcref{it:ind-via-gen}. Since
+\(A_i^c\in\sigma(\mathcal{A}_i)=\{\varnothing,A_i,A_i^c,\Omega\}\) for all
+\(i\in I\), it follows that \(\{A_i^c\}_{i\in I}\) is independent.
+\item For every \(j\in J\), let \(\mathcal{A}_{I_j}:=\{
+\bigcap_{i\in\widetilde{I}_{j}}^{}A_i:A_i\in \mathcal{A}_i~\forall i\in \widetilde{I}_{j},\quad
+\widetilde{I}_{j}\subseteq I_{j},\quad |\widetilde{I}_{j}|<\infty\}\), which is
+a \(\pi\)-system by construction. Since \(\{\mathcal{A}_{i}\}_{i\in I}\) is a
+collection of independent \(\pi\)-systems, by considering the definition we
+deduce that \(\{\mathcal{A}_{I_j}\}_{j\in J}\) is also a collection of
+independent \(\pi\)-systems. Then, by \labelcref{it:ind-via-gen}, the
+collection \(\{\sigma(\mathcal{A}_{I_j})\}_{j\in J}\) is independent.
+
+Now, to complete the proof, we are going to show that \(\sigma(\bigcup_{i\in
+I_j}^{}\mathcal{A}_i)=\sigma(\mathcal{A}_{I_j})\):
+\begin{itemize}
+\item ``\(\subseteq\)'': Fix any \(i\in I_j\). Note that
+\[\mathcal{A}_i=\{A_i:A_i\in\mathcal{A}_i\}
+=\left\{\bigcap_{i\in\widetilde{I}_{j}}^{}A_i:A_i\in \mathcal{A}_i~\forall i\in \widetilde{I}_{j},\quad \widetilde{I}_{j}=\{i\}\right\}
+\subseteq \mathcal{A}_{I_j}
+\subseteq \sigma(\mathcal{A}_{I_j}),\]
+thus \(\bigcup_{i\in I_j}^{}\mathcal{A}_i\subseteq \sigma(\mathcal{A}_{I_j})\).
+Then, by the minimality we have \(\sigma\left(\bigcup_{i\in
+I_j}^{}\mathcal{A}_i\right)\subseteq \sigma(\mathcal{A}_{I_j})\).
+\item ``\(\supseteq\)'': Fix any \(\widetilde{I}_{j}\subseteq I_j\) with \(|\widetilde{I}_{j}|<\infty\),
+and any \(A_i\in\mathcal{A}_i\) for all \(i\in\widetilde{I}_{j}\). Then, we have
+\(A_i\in\bigcup_{i\in I_j}^{}\mathcal{A}_i\subseteq \sigma(\bigcup_{i\in I_j}^{}\mathcal{A}_i)\)
+for all \(i\in\widetilde{I}_{j}\). Hence, by the closedness under intersections
+for \(\sigma(\bigcup_{i\in I_j}^{}\mathcal{A}_i)\), we have \(
+\bigcap_{i\in\widetilde{I}_{j}}^{}A_i\in\sigma(\bigcup_{i\in I_j}^{}\mathcal{A}_i)\).
+
+This implies that \(\mathcal{A}_{I_j}\subseteq \sigma(\bigcup_{i\in
+I_j}^{}\mathcal{A}_i)\), and hence
+\(\sigma(\mathcal{A}_{I_j})\subseteq \sigma(\bigcup_{i\in
+I_j}^{}\mathcal{A}_i)\) by the minimality.
+\end{itemize}
+\end{enumerate}
+\end{pf}
+\item \textbf{Zero-one laws.} Generally, a \defn{zero-one law} refers to any
+result which asserts that the probability of an event has to be
+\underline{zero} or \underline{one}, under certain conditions. Here we will go
+through some popular zero-one laws, namely \emph{Borel-Cantelli lemmas} and
+\emph{Kolmogorov's zero-one law}.
+
+\begin{theorem}[Borel-Cantelli lemmas]
+\label{thm:bc-lma}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
+\(\{A_i\}_{i\in\N}\subseteq \mathcal{F}\) be a collection of events.
+\begin{enumerate}[label={(\arabic*)}]
+\item \emph{(first Borel-Cantelli lemma)} If \(\sum_{i=1}^{\infty}\prob{A_i}<\infty\), then
+\(\prob{\{\omega\in A_n\text{ io}\}}=0\).
+\item \emph{(second Borel-Cantelli lemma)} If \(\{A_i\}_{i\in\N}\) is
+independent and \(\sum_{i=1}^{\infty}\prob{A_i}=\infty\), then
+\(\prob{\{\omega\in A_n\text{ io}\}}=1\).
+\end{enumerate}
+\end{theorem}
+\begin{pf}
+\begin{enumerate}
+\item Note that
+\[
+\prob{\{\omega\in A_n\text{ io}\}}
+\overset{\text{\labelcref{it:liminfsup-interpret}}}{=}
+\prob{\limsup_{n\to \infty}A_n}
+=\prob{\bigcap_{n=1}^{\infty}\bigcup_{k=n}^{\infty}A_k}
+\overset{\text{(monotonicity)}}{\le}\prob{\bigcup_{k=n}^{\infty}A_k}
+\overset{\text{(\(\sigma\)-subadditivity)}}{\le}\sum_{k=n}^{\infty}\prob{A_k}.
+\]
+By assumption, we have \(\sum_{k=1}^{\infty}\prob{A_k}=S<\infty\), and hence
+\[
+\lim_{n\to \infty}\sum_{k=n}^{\infty}\prob{A_k}
+=\lim_{n\to \infty}\left(S-\sum_{k=1}^{n-1}\prob{A_k}\right)
+=S-S=0.
+\]
+So, taking the limit \(n\to\infty\) on the inequality above yields
+\(\prob{\{\omega\in A_n\text{ io}\}}\le 0\). Together with the
+nonnegativity of \(\pr\), we must have \(\prob{\{\omega\in A_n\text{
+io}\}}=0\).
+\item With \(\sum_{i=1}^{\infty}\prob{A_i}=\infty\), we also have
+\(\vc{\sum_{k=n}^{\infty}\prob{A_k}=\infty}\) for all \(n\in\N\). Hence,
+\begin{align*}
+\prob{\{\omega\in A_n\text{ io}\}}
+\overset{\text{\labelcref{it:liminfsup-interpret}}}&{=}
+\prob{\limsup_{n\to \infty}A_n}
+\overset{\text{\labelcref{it:liminfsup-relate}}}{=}1-\prob{\liminf_{n\to \infty}A_n^c} \\
+\overset{\text{\labelcref{it:lim-mono-sets}}}&{=}1-\prob{\lim_{n\to\infty}\inf_{k\ge n}A_k^c}
+=1-\prob{\lim_{n\to\infty}\bigcap_{k=n}^{\infty}A_k^c} \\
+\overset{\text{(continuity from below)}}&{=}1-\lim_{n\to\infty}\prob{\bigcap_{k=n}^{\infty}A_k^c}
+\underset{\text{(\(\{A_k\}_{k=n}^{\infty}\) are independent)}}
+{\overset{\text{\labelcref{it:ind-comp}}}{=}}1-\lim_{n\to\infty}\prod_{k=n}^{\infty}\prob{A_k^c} \\
+\overset{(1-x\le e^{-x})}&{\ge}1-\lim_{n\to\infty}\prod_{k=n}^{\infty}e^{-\prob{A_k}}
+=1-\lim_{n\to\infty}\underbrace{e^{-\vc{\sum_{k=n}^{\infty}\prob{A_k}}}}_{0}
+=1.
+\end{align*}
+\end{enumerate}
+\end{pf}
+
+The next result will be Kolmogorov's zero-one law. But before stating that, we
+first introduce a preliminary concept: \emph{tail \(\sigma\)-algebra}. Let
+\((\Omega,\mathcal{F})\) be a measurable space and
+\(\{\mathcal{A}_n\}_{n\in\N}\subseteq \mathcal{P}(\mathcal{F})\) be a
+collection of \(\pi\)-systems. Then, the \defn{tail \(\sigma\)-algebra (of
+\(\{\mathcal{A}_n\}_{n\in\N}\))} , denoted by \(\mathcal{T}\) or \(\mathcal{T}(\{\mathcal{A}_n\}_{n\in\N})\), is given by
+\(\mathcal{T}=\bigcap_{n=1}^{\infty}\sigma(\bigcup_{k=n}^{\infty}\mathcal{A}_k)
+=\bigcap_{n=1}^{\infty}\sigma(\mathcal{A}_n,\mathcal{A}_{n+1},\dotsc)\) (check
+that it is a \(\sigma\)-algebra on \(\Omega\)!). Every event in \(\mathcal{T}\)
+is said to be a \defn{tail event}.
+\begin{intuition}
+For the \underline{tail} \(\sigma\)-algebra
+\(\mathcal{T}=\bigcap_{n=1}^{\infty}\sigma(\mathcal{A}_n,\mathcal{A}_{n+1},\dotsc)\),
+it is obtained by intersecting the \(\sigma\)-algebras generated by the
+``\underline{tails}'' from \(\{\mathcal{A}_n\}_{n\in\N}\).
+\end{intuition}
+\begin{theorem}[Kolmogorov's zero-one law]
+\label{thm:kolmogorov-zero-one}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space,
+\(\{\mathcal{A}_n\}_{n\in\N}\subseteq \mathcal{P}(\mathcal{F})\) be a
+collection of independent \(\pi\)-systems, and \(\mathcal{T}\) be the tail
+\(\sigma\)-algebra of \(\{\mathcal{A}_n\}_{n\in\N}\). Then,
+\(\prob{A}=0\text{ or }1\) for all \(A\in\mathcal{T}\).
+\end{theorem}
+\begin{pf}
+Let \(\mathcal{T}_n:=\sigma(\bigcup_{k=1}^{n-1}\mathcal{A}_k)\) for every \(n\in\N\), with
+\(\mathcal{T}_{\infty}:=\sigma(\bigcup_{k=1}^{\infty}\mathcal{A}_k)\).
+
+\textbf{Showing the independence of \(\bigcup_{n=1}^{\infty}\mathcal{T}_n\) and \(\mathcal{T}\).}
+Since \(\{\mathcal{A}_{n}\}\) is independent, by \labelcref{it:grouping-lma},
+\(\vc{\mathcal{T}_n}=\sigma(\bigcup_{k=1}^{n-1}\mathcal{A}_k)\) and
+\orc{\(\sigma(\bigcup_{k=n}^{\infty}\mathcal{A}_k)\)} are independent
+\(\sigma\)-algebras for all \(n\in\N\).
+
+Noting that \(\mathcal{T}=\bigcap_{n=1}^{\infty}\sigma(\bigcup_{k=n}^{\infty}\mathcal{A}_k)
+\subseteq\orc{\sigma(\bigcup_{k=n}^{\infty}\mathcal{A}_k)}\) for all \(n\in\N\),
+we conclude that \vc{\(\mathcal{T}_n\)} and \(\mathcal{T}\) are independent for all \(n\in\N\).
+Thus, by considering the definition we have the independence of
+\(\bigcup_{n=1}^{\infty}\mathcal{T}_n\) and \(\mathcal{T}\).
+
+\textbf{Showing the independence of \(\sigma\left(\bigcup_{n=1}^{\infty}\mathcal{T}_n\right)\) and \(\mathcal{T}\).}
+Next, we will show that \(\bigcup_{n=1}^{\infty}\mathcal{T}_n\) is a
+\(\pi\)-system: Fix any \(A_1,A_2\in\bigcup_{n=1}^{\infty}\mathcal{T}_n\). Then
+we know \(A_1\in\mathcal{T}_{n_1}\) and \(A_2\in\mathcal{T}_{n_2}\) for some \(n_1,n_2\in\N\).
+With \(\mathcal{T}_n\nearrow\), we then have \(A_1,A_2\in\mathcal{T}_{\max\{n_1,n_2\}}\).
+By the closedness under intersections for for the \(\sigma\)-algebra \(\mathcal{T}_{\max\{n_1,n_2\}}\),
+\(A_1\cap A_2\in\mathcal{T}_{\max\{n_1,n_2\}}\subseteq \bigcup_{n=1}^{\infty}\mathcal{T}_n\).
+
+Of course, \(\mathcal{T}\) is also a \(\pi\)-system, since it is closed under
+intersections.  Hence, by \labelcref{it:ind-via-gen},
+\(\sigma\left(\bigcup_{n=1}^{\infty}\mathcal{T}_n\right)\) and
+\(\sigma(\mathcal{T})\) are independent, which implies the independence of
+\(\sigma\left(\bigcup_{n=1}^{\infty}\mathcal{T}_n\right)\) and \(\mathcal{T}\subseteq \sigma(\mathcal{T})\).
+
+\textbf{Showing the independence of \(\mathcal{T}_{\infty}\) and
+\(\mathcal{T}\).} We first note the following result: \(\mathcal{A}\subseteq
+\mathcal{B}\implies \sigma(\mathcal{A})\subseteq \sigma(\mathcal{B})\). This
+holds because with \(\mathcal{A}\subseteq \mathcal{B}\subseteq
+\sigma(\mathcal{B})\), by the minimality we would have
+\(\sigma(\mathcal{A})\subseteq \sigma(\mathcal{B})\). Using this result, we will
+show that \(\sigma(\bigcup_{n=1}^{\infty}\mathcal{T}_n)=\mathcal{T}_{\infty}\),
+and hence establish the independence of \(\mathcal{T}_{\infty}\) and
+\(\mathcal{T}\).
+\begin{itemize}
+\item ``\(\subseteq\)'': Since \(\mathcal{T}_n\subseteq \mathcal{T}_{\infty}\) for every \(n\in\N\),
+we have \(\bigcup_{n=1}^{\infty}\mathcal{T}_n\subseteq \mathcal{T}_{\infty}\), thus
+\(\sigma(\bigcup_{n=1}^{\infty}\mathcal{T}_n)\subseteq \mathcal{T}_{\infty}\).
+\item ``\(\supseteq\)'': For every \(n\in\N\), we have \(\mathcal{A}_n\subseteq
+\sigma(\bigcup_{k=1}^{n}\mathcal{A}_n)=\mathcal{T}_{n+1}\). Thus,
+\(\bigcup_{n=1}^{\infty}\mathcal{A}_n\subseteq
+\bigcup_{n=1}^{\infty}\mathcal{T}_{n}\), which implies that
+\(\mathcal{T}_{\infty}=\sigma(\bigcup_{n=1}^{\infty}\mathcal{A}_n) \subseteq
+\sigma(\bigcup_{n=1}^{\infty}\mathcal{T}_n)\) by the result above.
+\end{itemize}
+\textbf{Showing that every \(A\in\mathcal{T}\) is independent of itself.}
+Note that \(\mathcal{T}=\bigcap_{n=1}^{\infty}\sigma(\bigcup_{k=n}^{\infty}\mathcal{A}_k)
+\subseteq \overset{(n=1)}{\sigma(\bigcup_{k=1}^{\infty}\mathcal{A}_k)}
+=\mathcal{T}_{\infty}\). So, the independence of \(\mathcal{T}_{\infty}\) and
+\(\mathcal{T}\) implies that every \(\mathcal{A}\in\mathcal{T}\) is independent of itself,
+which means that \(\prob{A}=\prob{A\cap A}=\prob{A}\prob{A}=\prob{A}^{2}\), or
+\(\prob{A}=0\text{ or }1\), for every \(A\in\mathcal{T}\).
+\end{pf}
+\begin{remark}
+\item \emph{(application of Kolmogorov's zero-one law to independent events)}
+By taking \(\mathcal{A}_n=\{A_n\}\) for every \(n\in\N\), we know that given a
+collection \(\{A_n\}_{n\in\N}\subseteq \mathcal{F}\) of independent events, we have
+\(\prob{A}=0\text{ or }1\) for every \(A\in\mathcal{T}=\bigcap_{n=1}^{\infty}\sigma(\{A_n,A_{n+1},\dotsc\})\).
+\item \emph{(application of Kolmogorov's zero-one law to independent random
+variables)} Suppose we are given a collection \(\{X_n\}_{n\in\N}\) of
+independent random variables, all defined on \((\Omega,\mathcal{F},\pr)\).
+Then, by taking \(\mathcal{A}_n=\sigma(X_n)\) for every \(n\in\N\), we have
+\(\prob{A}=0\text{ or }1\) for every
+\(A\in\mathcal{T}=\bigcap_{n=1}^{\infty}\vc{\sigma(\sigma(X_n),\sigma(X_{n+1}),\dotsc)}\).
+
+Particularly, we can indeed write \(\vc{\sigma(\sigma(X_n),\sigma(X_{n+1}),\dotsc)}
+=\mgc{\sigma(X_n,X_{n+1},\dotsc)}\), where the latter is the \(\sigma\)-algebra
+generated by \(\{X_k\}_{k=n}^{\infty}\), defined by
+\(\sigma(\bigcup_{k=n}^{\infty}\sigma(X_k))\), which is the same as
+\(\sigma(\sigma(X_n),\sigma(X_{n+1}),\dotsc)\).
+\end{remark}
+\item \textbf{Characterization of independence of random variables.} By
+definition, to verify the independence of a collection \(\{X_i\}_{i\in I}\) of
+random variables, we need to check that
+\(X_{i_1}^{-1}(B_{i_1}),\dotsc,X_{i_n}^{-1}(B_{i_n})\) are independent
+\(\forall~B_{i_1},\dotsc,B_{i_n}\in\mathcal{B}(\R),\quad
+\forall~\{i_{1},\dotsc,i_{n}\}\subseteq I,\quad \forall~n\in\N\), which can
+take quite a lot of work. The following result provides us an alternative and
+often more convenient route for showing such independence:
+
+\begin{theorem}[Characterization of independence of random variables]
+\label{thm:char-rv-ind}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
+\(X_i:\Omega\to\R\) be a random variable for every \(i\in I\). Then, the
+collection \(\{X_i:i\in I\}\) is independent iff for all \(n\in\N\) and \(\{i_1,\dotsc,i_n\}\subseteq I\),
+\(\prob{X_{i_1}\le x_{i_1},\dotsc,X_{i_n}\le x_{i_n}}=\prod_{k=1}^{n}\prob{X_{i_k}\le x_{i_k}}\).
+\end{theorem}
+\begin{pf}
+``\(\Rightarrow\)'': Assume \(\{X_i:i\in I\}\) is independent. Then by
+definition, \(\{\sigma(X_i)\}_{i\in I}\) is independent. This implies that
+\(\forall~i_1,\dotsc,i_n\in\R\quad\forall~n\in\N\), the events
+\(X_{i_1}^{-1}((-\infty,x_{i_1}]),\dotsc,X_{i_n}^{-1}((-\infty,x_{i_n}])\) are
+independent, and thus
+\[
+\prob{X_{i_1}\le x_{i_1},\dotsc,X_{i_n}\le x_{i_n}}
+=\prob{\bigcap_{k=1}^{n}X_{i_k}^{-1}((-\infty,x_{i_k}])}
+=\prod_{k=1}^{n}\prob{X_{i_k}^{-1}((-\infty,x_{i_k}]}
+=\prod_{k=1}^{n}\prob{X_{i_k}\le x_{i_k}}.
+\]
+``\(\Leftarrow\)'': For every \(k=1,\dotsc,n\), let
+\(\mathcal{A}_{i_k}:=\{X_{i_k}^{-1}((-\infty,x])\}_{x\in\R}\).  By the property
+of preservation of intersection for preimages (\labelcref{it:preimg-prop}),
+\(\mathcal{A}_{i_k}\)'s are all \(\pi\)-systems.  By assumption, we know
+\(\mathcal{A}_{i_1},\dotsc,\mathcal{A}_{i_n}\) are independent, thus
+\(\sigma(\mathcal{A}_{i_1}),\dotsc,\sigma(\mathcal{A}_{i_n})\) are independent
+by \labelcref{it:ind-via-gen}.
+
+Noting that for every \(k=1,\dotsc,n\),
+\begin{align*}
+\sigma(\mathcal{A}_{i_k})&=\sigma(\vc{\{X_{i_k}^{-1}((-\infty,x])\}_{x\in\R}})
+\overset{\text{(notation)}}{=}\sigma(\vc{X_{i_k}^{-1}(\{(-\infty,x]\}_{x\in\R})}) \\
+\overset{\text{(\Cref{lma:sig-alg-gen-preimg-comm})}}&{=}
+X_{i_k}^{-1}(\sigma(\{(-\infty,x]\}_{x\in\R}))
+\overset{\text{(\Cref{prp:borel-rd-generators})}}{=}X_{i_k}^{-1}(\mathcal{B}(\R))
+=\sigma(X_{i_k}),
+\end{align*}
+we conclude that \(\sigma(X_{i_1}),\dotsc,\sigma(X_{i_n})\) are independent.
+Hence, by definition, \(\{X_i\}_{i\in I}\) is independent.
+\end{pf}
+
+\begin{remark}
+\item \emph{(special case for finitely many random variables --- factorization
+of distribution function)} With \(I=\{1,\dotsc,d\}\), random variables
+\(X_1,\dotsc,X_d\) with \(\vect{X}=(X_1,\dotsc,X_d)\sim F\) and margins
+\(F_1,\dotsc,F_d\) are independent iff \[
+\vc{F(\vect{x})}=\prob{\vect{X}\le\vect{x}}=
+\prod_{j=1}^{d}\prob{X_j\le x_j}\vc{=\prod_{j=1}^{d}F_j(x_j)},\quad\text{for all \(\vect{x}\in\R^d\)}.
+\]
+(This condition indeed implies that \(\prob{X_{i_1}\le
+x_{i_1},\dotsc,X_{i_n}\le x_{i_n}}=\prod_{k=1}^{n}\prob{X_{i_k}\le x_{i_k}}\)
+for every \(\{i_1,\dotsc,i_n\}\subseteq I\), by letting some components of
+\(\vect{x}\) to \(\infty\).)
+\item \emph{(special case for finitely many random variables --- factorization
+of density function)} Assuming further that \(F\) has continuous partial
+derivatives with respect to each component in \(\supp{F}\), we know that \(F\) is
+absolutely continuous with density given by
+\(f(\vect{x})=\frac{\partial^{d}}{\partial x_d\cdots\partial x_1}F(\vect{x})\). In such case,
+\(X_1,\dotsc,X_d\) are independent iff
+\[
+f(\vect{x})=\frac{\partial^{d}}{\partial x_d\cdots\partial x_1}F(\vect{x})
+=\prod_{j=1}^{d}\pdv{}{x_j}F_j(x_j)
+=\prod_{j=1}^{d}f_j(x_j),\quad\text{for all \(\vect{x}\in\supp{F}\)}.
+\]
+(For discrete \(\vect{X}=(X_1,\dotsc,X_d)\), we have similarly that
+\(X_1,\dotsc,X_d\) are independent iff the joint mass function is
+\(f(\vect{x})=\prod_{j=1}^{d}f_j(x_j)\) for all
+\(\vect{x}\in\prod_{j=1}^{d}\supp{F_j}\).)
+
+\item \emph{(survival function version of the result)} We indeed also have a
+``survival function version'' of the result: \(\{X_i:i\in I\}\) is independent
+iff for all \(n\in\N\) and \(\{i_1,\dotsc,i_n\}\subseteq I\),
+\(\prob{X_{i_1}>x_{i_1},\dotsc,X_{i_n}>x_{i_n}}=\prod_{k=1}^{n}\prob{X_{i_k}>x_{i_k}}\).
+This can be shown by adapting the proof slightly: change
+\((-\infty,x_{i_k}]\to (x_{i_k},\infty)\) for every \(k\) and \((-\infty,x]\to
+(x,\infty)\).
+\end{remark}
+\item \textbf{Functions of independent random variables are also independent.}
+An important result regarding the independence of random variable is that
+\emph{functions of (disjoint sets of) independent random variables are also
+independent}, which can simplify the checking of independence of random
+variables a lot. The precise formulation of this statement is as
+follows.
+
+\begin{theorem}[Functions of independent random variables are also independent]
+\label{thm:fun-ind-rv-ind}
+If \(\{X_{ij}\}_{j=1,i=1}^{d_i,\infty}\) is a collection of independent random variables,
+and \(h_i:\R^{d_i}\to\R\) is
+\((\mathcal{B}(\R^{d_i}),\mathcal{B}(\R))\)-measurable for every \(i\in\N\),
+then the collection \(\{Y_i\}\) of random variables, with
+\(Y_i:=h_i(X_{i1},\dotsc,X_{id_i})\) for every \(i\in\N\), is independent.
+\end{theorem}
+\begin{pf}
+By assumption, the collection \(\{\sigma(X_{ij})\}_{j=1,i=1}^{d_i,\infty}\) of
+\(\sigma\)-algebras is independent, so by \labelcref{it:grouping-lma} the
+collection \(\left\{\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right)\right\}_{i\in\N}\) 
+is independent.
+
+\textbf{Showing that \(\mathcal{F}_i\) is a \(\sigma\)-algebra.} Fix any
+\(i\in\N\). Let \(\vect{X}_i=(X_{i1},\dotsc,X_{id_i})\). Then, we will show
+that \[\mathcal{F}_i:=\left\{B\in\mathcal{B}(\R^{d_i}):\vect{X}_i^{-1}(B)
+\in\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right)\right\}\] is a
+\(\sigma\)-algebra:
+\begin{enumerate}[label={(\arabic*)}]
+\item For \(\varnothing\in\mathcal{B}(\R^{d_i})\), we have \(\vect{X}_i^{-1}(\varnothing)=\varnothing\in
+\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right)\), thus \(\varnothing\in\mathcal{F}_i\).
+\item Fix any \(B\in\mathcal{F}_i\). Then, by the closedness under complements, we
+have \(B^c\in \mathcal{B}(\R^{d_i})\), and also
+\[
+\vect{X}_i^{-1}(B^c)
+\overset{\text{\labelcref{it:preimg-prop}}}{=}(\vect{X}_i^{-1}(B))^{c}
+\in\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right).
+\]
+Hence, \(B^c\in\mathcal{F}_i\).
+\item Fix any \(B_1,B_2,\dotsc,\in\mathcal{F}_i\). Then by the closedness under
+countable unions, we have \(\bigcup_{n=1}^{\infty}B_n\in \mathcal{B}(\R^{d_i})\)
+and also
+\[
+\vect{X}_i^{-1}\left(\bigcup_{n=1}^{\infty}B_n\right)
+\overset{\text{\labelcref{it:preimg-prop}}}{=}\bigcup_{n=1}^{\infty}\vect{X}_i^{-1}(B_n)
+\in\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right).
+\]
+\end{enumerate}
+\textbf{Showing that \(\mathcal{F}_i=\mathcal{B}(\R^{d_i})\).}
+By \labelcref{it:borel-rd-prod-sig}, \(\mathcal{B}(\R^{d_i})\) is the product
+\(\sigma\)-algebra \(\bigotimes_{j=1}^{d_i}\mathcal{B}(\R)=
+\sigma(\{\prod_{j=1}^{d_i}B_j:B_j\in\mathcal{B}(\R)~\forall
+j=1,\dotsc,d_i\})\). Using this, we will then show that
+\(\mathcal{F}_i=\mathcal{B}(\R^{d_i})\):
+\begin{itemize}
+\item ``\(\subseteq\)'': It is immediate by the definition of \(\mathcal{F}_i\).
+\item ``\(\supseteq\)'': Fix any \(B=\prod_{j=1}^{d_i}B_j\) where
+\(B_j\in\mathcal{B}(\R)\) for every \(j=1,\dotsc,d_i\). Then,
+\(\vect{X}_i^{-1}(B) =\bigcap_{j=1}^{d_i}X_{ij}^{-1}(B_j)\). Since
+\(X_{ij}^{-1}(B_j)\in X_{ij}^{-1}(\mathcal{B}(\R)) =\sigma(X_{ij})\subseteq
+\sigma(\bigcup_{j=1}^{d_i}\sigma(X_{ij}))\) for every \(j=1,\dotsc,d_i\), by
+the closedness under intersections we have \(\vect{X}_i^{-1}(B)\in
+\sigma(\bigcup_{j=1}^{d_i}\sigma(X_{ij}))\). By definition of \(\mathcal{F}_i\), this means
+\(B\in\mathcal{F}_i\). 
+
+Hence, we have \(\{\prod_{j=1}^{d_i}B_j:B_j\in\mathcal{B}(\R)~\forall
+j=1,\dotsc,d_i\}\subseteq \mathcal{F}_i\). By the minimality, we then have
+\(\mathcal{B}(\R^{d_i})=\bigotimes_{j=1}^{d_i}\mathcal{B}(\R)\subseteq\mathcal{F}_i\).
+\end{itemize}
+\textbf{Showing that \(Y_i\) is a random variable (with \(\mathcal{F}=\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right)\)).}
+Since \(\vect{X}_i^{-1}(\mathcal{B}(\R^{d_i}))=\vect{X}_{i}^{-1}(\mathcal{F}_i)
+\subseteq \sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right)\), we know \(\vect{X}_i\) is
+\(\left(\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right),\mathcal{B}(\R^{d_i})\right)\)-measurable.
+So, by \labelcref{it:meas-compo-meas}, \(Y_i=h_i\circ \vect{X}_i\) is
+\(\left(\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right),\mathcal{B}(\R)\right)\)-measurable,
+implying that \(Y_i\) is a random variable.
+
+\textbf{Showing the independence of \(\{Y_i\}_{i\in\N}\).}
+For every \(i\in\N\), we have
+\begin{align*}
+\sigma(Y_i)&=Y_i^{-1}(\mathcal{B}(\R))
+\overset{\text{(similar to the proof of \labelcref{it:meas-compo-meas})}}{=}
+\vect{X}_{i}^{-1}\left(h_i^{-1}(\mathcal{B}(\R))\right)
+\overset{\text{\labelcref{it:preimg-prop}}}{\subseteq}\vect{X}_{i}^{-1}(\mathcal{B}(\R^{d_i}))
+\subseteq \sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right).
+\end{align*}
+As shown previously, the collection
+\(\left\{\sigma\left(\bigcup_{j=1}^{d_i}\sigma(X_{ij})\right)\right\}_{i\in\N}\)
+is independent. Hence, this subset inclusion implies that the collection
+\(\{\sigma(Y_i)\}_{i\in\N}\) is independent also, which means that
+\(\{Y_i\}_{i\in\N}\) is independent.
+\end{pf}
+\item \textbf{Mathematical construction of independent random variables.} In
+probability theory and statistics, we often work with independent random
+variables. Particularly, in statistics we talk about \emph{independent and
+identically distributed} (iid) random variables a lot. An implicit assumption
+made here is that we can always construct \emph{independent} random variables,
+regardless of their underlying (marginal) distributions. While this is quite
+reasonable and intuitive, it does take some work to mathematically show that
+such construction is possible:
+
+\begin{proposition}[Construction of independent random variables]
+\label{prp:construct-ind-rvs}
+Let \(F_1,\dotsc,F_d\) be arbitrary distribution functions on \(\R\). Then
+there exist a probability space \((\Omega,\mathcal{F},\pr)\), and independent
+random variables \(X_1\sim F_1,\dotsc,X_d\sim F_d\) defined on this probability
+space.
+\end{proposition}
+\begin{pf}
+Since \(F_1,\dotsc,F_d\) are distribution functions,
+\((\Omega,\mathcal{F},\pr)=(\R^{d},\mathcal{B}(\R^{d}),\prod_{j=1}^{d}\lambda_{F_j})\)
+is a probability space, by \Cref{thm:dist-fn-char-prob-meas-rd}. Now fix any
+\(j=1,\dotsc,d\). Since the projection \(\pi_{j}\) is continuous, and thus
+measurable by \labelcref{it:cts-fn-meas}, the function \(X_j:\Omega\to\R\) given by
+\(X_j(\vect{\omega}):=\pi_j(\vect{\omega})=\omega_j\quad\forall~
+\vect{\omega}\in\R^d\) is a random variable.  Hence, by
+\labelcref{it:ran-vec-vec-rvs}, the function \(\vect{X}:\Omega\to\R^d\) given by
+\(\vect{X}(\vect{\omega}):=(X_1(\vect{\omega}),\dotsc,X_d(\vect{\omega}))
+=\vect{\omega}\quad\forall~\vect{\omega}\in\R^d\) is a
+random vector.
+
+Now, since we have
+\begin{align*}
+F(\vect{x})&=\prob{\vect{X}\le\vect{x}}=\prob{\{\vect{\omega}\in\Omega:\vect{\omega}\le\vect{x}\}}
+=\prob{\bigcap_{j=1}^{d}\{\omega_j\in\R:\omega_j\le x_j\}} \\
+&=\prob{\prod_{j=1}^{d}(-\infty,x_j]}
+\overset{(\pr=\prod_{j=1}^{d}\lambda_{F_j})}{=}\prod_{j=1}^{d}
+\underbrace{\lambda_{F_j}((-\infty,x_j])}_{\Delta_{(-\infty,x_j]}F_j=F_j(x_j)}
+=\prod_{j=1}^{d}F_j(x_j)
+\end{align*}
+for all \(\vect{x}\in\R^d\), we conclude by \Cref{thm:char-rv-ind} that
+\(X_1,\dotsc,X_d\) are independent.
+
+Furthermore, letting \(x_k\to\infty\) for every \(k\ne j\) on the equation
+above gives \(\prob{X_j\le x_j}=F_j(x_j)\). Thus, \(X_j\sim F_j\) for every
+\(j=1,\dotsc,d\).
+\end{pf}
+
+\begin{remark}
+\item \emph{(independent and identically distributed random variables)} If
+\(F_1=\dotsb=F_d=F\), then \(X_1,\dotsc,X_d\) are said to be \defn{independent
+and identically distributed (iid)} from \(F\), or \defn{independent copies of \(X\sim F\)}.
+This is denoted by \(X_1,\dotsc,X_d\iid F\).
+\item \emph{(infinite sequence of independent random variables)} Using
+\emph{Kolmogorov's extension theorem}, we can also construct infinite sequences
+of independent random variables.
+\end{remark}
+\item \textbf{Mixture distributions.} In actuarial science, apart from working
+with independent random variables, often we deal with \emph{mixture
+distributions}, e.g., aggregate loss \(S:=\sum_{i=1}^{N}X_i\), where each
+\(X_i\) represents a loss amount, and \(N\) is the (random) number of losses, taking
+values in \(\N\). Here \(S\) possesses a mixture distribution: a distribution
+that is created by ``mixing'' two sources of randomness, one from \(X_i\)'s and
+another from \(N\).  To be more precise, \(S\) should be interpreted as the sum
+of random variables \(\sum_{i=1}^{n}X_i\) \emph{given} \(N=n\), for every \(n\in\N\);
+from here the relationship between mixture distribution and \emph{conditioning}
+becomes more transparent.
+
+In general, let \(I\sim F_I\) be a random variable with \(\supp{F_I}=\N\),
+and \(\vect{X}_i\sim F_i\) for every \(i\in\N\). Suppose that
+\(I,\vect{X}_1,\vect{X}_2,\dotsc\) are independent. Then,
+\(\vect{X}=\vect{X}_{I}\) (interpreted as \(\vect{X}_i\) given \(I=i\)),
+follows the \defn{mixture distribution} of \(F_1,F_2,\dotsc\) with respect to
+\(F_{I}\).
+
+\begin{note}
+It is indeed possible to define mixture distribution in a similar way when
+\(\supp{F_I}\) is uncountable (e.g., \(I\sim U(0,1)\)), but some technicalities
+are involved so we would not discuss it in details here.
+\end{note}
+
+\item\label{it:mixture-df} \textbf{Distribution function for mixture distribution.}
+For \(\vect{X}\) following the mixture distribution of \(F_1,F_2,\dotsc\) with
+respect to \(F_{I}\), its distribution function admits a ``weighted average''
+form:
+\[
+F(\vect{x})=\sum_{i=1}^{\infty}p_iF_i(\vect{x}),\quad\text{for all \(\vect{x}\in\R^d\)}
+\]
+where \(p_i:=\prob{I=i}\) for every \(i\in\N\).
+
+\begin{pf}
+For all \(\vect{x}\in\R^d\), we have
+\[
+F(\vect{x})=\prob{\vect{X}\le\vect{x}}
+=\prob{\vect{X}_{I}\le\vect{x}}
+=\sum_{i=1}^{\infty}p_i\prob{\vect{X}_{I}\le\vect{x}|I=i}
+\overset{\text{(independence)}}{=}\sum_{i=1}^{\infty}p_i\prob{\vect{X}_i\le\vect{x}}
+=\sum_{i=1}^{\infty}p_iF_i(\vect{x}).
+\]
+\end{pf}
+\item \label{it:sampling} \textbf{Sampling.} Recall from
+\Cref{subsect:univariate-trans} that some results concerning transformations of
+random variables are discussed, and there we mentioned that they are helpful
+for performing simulations. After learning about the concept of
+\emph{independence}, we can study more details about it.
+
+A collection of iid random vectors \(\vect{X}_1,\dotsc,\vect{X}_n\iid F\) is called a
+\defn{random sample} from \(F\), which is often encountered in statistical
+inference. Besides, for conducting simulation studies, we would need to
+generate \emph{realizations} (something observable \faIcon{eye}) of
+\(\vect{X}_1,\dotsc,\vect{X}_n\). One famous technique is known as the \emph{inversion
+method}, which utilizes the quantile transform in \Cref{prp:quantile-trans}.
+
+The \defn{inversion method} for sampling from a random variable \(X\sim F\) is
+to first obtain (independent) realizations from \(U\sim \unif{0}{1}\) (many
+algorithms are available for this), and then evaluate the quantile function
+\(F^{-1}\) on each of them. This is theoretically justified because \(F^{-1}(U)\sim F\), 
+so the resulting values \(F^{-1}(u)\)'s can be seen as realizations from the
+distribution specified by \(F\).
+
+To sample from the iid random variables \(X_1,\dotsc,X_n\), we can use the
+inversion method and consider \(F^{-1}(U_1),\dotsc,F^{-1}(U_n)\iid F\) with
+\(U_1,\dotsc,U_n\iid \unif{0}{1}\). Realizations of each \(U_i\) are first
+obtained, and then transformed by the quantile function \(F^{-1}\).
+
+\begin{note}
+There are also some other (more efficient) methods for sampling, often equipped
+with a \emph{variance reduction} component, which can increase the ``precision'' in
+the sampling (details omitted here).
+\end{note}
+\item \textbf{Empirical distribution functions.} Given a random sample
+\(\vect{X}_1,\dotsc,\vect{X}_n\), the \defn{empirical distribution
+function} \(\widehat{F}_n\) is defined by
+\(\widehat{F}_n(\vect{x})=\sum_{i=1}^{n}\frac{1}{n}\indic_{[\vect{X}_i,\vect{\infty})}(\vect{x})\),
+which jumps by \(1/n\) at each \(\vect{X}_i\). Here
+\(\vect{X}_1,\dotsc,\vect{X}_n\) are considered to be \underline{empirical} data,
+and the empirical distribution function \(\widehat{F}_n\) can be viewed as an
+estimation of the true underlying distribution function that generate such
+\(\vect{X}_1,\dotsc,\vect{X}_n\). We also note that the empirical distribution
+function indeed corresponds to a mixture distribution function, with
+\(p_i=1/n\) and \(F_i(\vect{x})=\indic_{[\vect{X}_i,\vect{\infty})}(\vect{x})\)
+for every \(i=1,\dotsc,n\).
+
+Sampling can also be done on an empirical distribution function.
+Let \(U\sim\unif{0}{1}\) and we write \(I=\lceil nU\rceil\), which follows the
+discrete uniform distribution with support \(\{1,\dotsc,n\}\). Then, based on
+the mixture distribution we have \(\vect{X}_{\lceil nU\rceil}\sim
+\widehat{F}_n\). This hints a method for sampling from the empirical
+distribution function \(\widehat{F}_n\) as follows. Given
+\(\vect{X}_1,\dotsc,\vect{X}_n\):
+\begin{enumerate}[label={(\arabic*)}]
+\item Obtain realizations of \(U\).
+\item Based on them, obtain realizations of \(I=\lceil nU\rceil\).
+\item For each realization of \(I\), return \(\vect{X}_i\) if the realization
+is \(i\) (\(\vect{X}_i\) is known after being observed \faIcon{eye}).
+\end{enumerate}
+\end{enumerate}
+\subsection{Dependence}
+\label{subsect:dependence}
+\begin{enumerate}
+\item After discussing \emph{independence} in \Cref{subsect:independence}, it
+is natural to consider another related concept: \emph{dependence}.  While the
+concept of independence can be mathematically defined, the idea of
+``dependence'' is much more unclear: When we speak of ``dependent'' random
+variables, often we are unclear about how they actually depend on each other.
+In \Cref{subsect:dependence}, we will study a way to describe the dependence
+clearly and mathematically, through the usage of \emph{copula}.
+\item \textbf{Copula and its characterization.} A \defn{(\(d\)-dimensional)
+copula} \(C\) is a distribution function on \([0,1]^{d}\) with \(\unif{0}{1}\)
+margins (oftentimes, we consider the case with \(d\ge 2\) so that we can
+meaningfully talk about ``dependence''). This can be viewed as a
+``probabilistic'' definition of copula, and the following provides an
+``analytic'' characterization of it:
+\begin{proposition}
+\label{prp:copula-char}
+A function \(C:[0,1]^{d}\to [0,1]\) is a \(d\)-dimensional copula iff
+\begin{enumerate}[label={(\arabic*)}]
+\item \emph{(groundedness)} \(C(\vect{u})=0\) if \(u_j=0\) for some \(j=1,\dotsc,d\).
+\item \emph{(\(\unif{0}{1}\) margins)} \(C(1,\dotsc,1,u_j,1,\dotsc,1)=u_j\) for
+all \(u_j\in [0,1]\), for all \(j=1,\dotsc,d\).
+\item \emph{(\(d\)-increasingness)} \(\Delta_{(\vect{a},\vect{b}]}C\ge 0\) for
+all \({}_{d}0\le\vect{a}\le\vect{b}\le{}_{d}1\).
+\end{enumerate}
+\end{proposition}
+\begin{pf}
+``\(\Rightarrow\)'': It follows by the definition of distribution function.
+
+``\(\Leftarrow\)'': The groundedness and \(d\)-increasingness properties for
+being a distribution function are immediate; we only need to establish the
+normalization and right-continuous properties for \(C\) to be a distribution
+function (after being extended in the way mentioned in \labelcref{it:dist-fn}):
+\begin{itemize}
+\item \emph{normalization:} We have \(\lim_{\vect{x}\to\vect{\infty}}C(\vect{x})
+=C(1,\dotsc,1)\overset{\text{(\(\unif{0}{1}\) margins)}}{=}1\).
+\item \emph{right-continuity:} Applying \Cref{lma:lipschitz-ineq} to the
+function \(C\) with \(\unif{0}{1}\) margins here, we have
+\(|C(\vect{b})-C(\vect{a})| \le\sum_{j=1}^{d}|b_j-a_j|\), which implies the
+uniform continuity of \(C\), and hence its right-continuity.
+\end{itemize}
+The function \(C\) also has \(\unif{0}{1}\) margins by assumption, so \(C\) is
+a \(d\)-dimensional copula.
+\end{pf}
+\item \textbf{Sklar's theorem.} From the definition of copula alone, it is not
+too clear why it can serve for describing dependence. Mathematically, this
+function of copula is established by the \emph{Sklar's theorem}, which is
+considered to be the foundational result that drives the study of copula:
+\begin{theorem}[Sklar's theorem]
+\label{thm:sklar}
+\hfill
+\begin{enumerate}
+\item \emph{(decomposition)} Given any distribution function \(F\) with margins \(F_1,\dotsc,F_d\),
+there exists a copula \(C\) such that
+\begin{equation}
+\label{eq:copula-link}
+F(\vect{x})=C(F_1(x_1),\dotsc,F_d(x_d))\quad\text{for all \(\vect{x}\in\R^d\)}.
+\end{equation}
+Furthermore, \(C\) is uniquely defined on \(\prod_{j=1}^{d}\ran{F_j}\), and is
+given by \(C(\vect{u})=F\left(F_1^{-1}(u_1),\dotsc,F_d^{-1}(u_d)\right)\) for all
+\(\vect{u}\in\prod_{j=1}^{d}\ran{F_j}\), where \(\ran{F_j}\) denotes the
+\emph{range} of \(F_j\), namely \(\{F_j(x):x\in\R\}\) for all \(j=1,\dotsc,d\).
+\item \emph{(combination)} Given any copula \(C\) and univariate distribution
+functions \(F_1,\dotsc,F_d\), the function \(F\) as defined in
+\Cref{eq:copula-link} is a distribution function with margins
+\(F_1,\dotsc,F_d\).
+\end{enumerate}
+\end{theorem}
+\begin{pf}
+We shall only prove for the case where \(F_1,\dotsc,F_d\) are continuous.
+\begin{enumerate}
+\item Let \(\vect{X}=(X_1,\dotsc,X_d)\sim F\) and
+\(\vect{U}=(U_1,\dotsc,U_d):=(F_1(X_1),\dotsc,F_d(X_d))\). By probability transform, we know
+\(\vect{U}\) has \(\unif{0}{1}\) margins, so the distribution function of \(U\)
+is indeed a copula, which we denote by \(C\).
+
+On \(\supp{F_j}\), we know \(F_j\) is strictly increasing, so by
+\labelcref{it:gen-inv-prop} we have \(X_j=F_j^{-1}(F_j(X_j))=F_j^{-1}(U_j)\)
+for all \(j=1,\dotsc,d\). (TODO: explain why ``on \(\supp{F_j}\)'' is enough)
+Thus, the distribution function \(F\) of \(X\) is
+\begin{align*}
+F(\vect{x})&=\prob{X_j\le x_j\text{ for all \(j=1,\dotsc,d\)}} \\
+&=\prob{F_j^{-1}(U_j)\le x_j\text{ for all \(j=1,\dotsc,d\)}} \\
+\overset{\text{\labelcref{it:gen-inv-prop}}}&{=}
+\prob{U_j\le F_j(x_j)\text{ for all \(j=1,\dotsc,d\)}} \\
+&=C(F_1(x_1),\dotsc,F_d(x_d)).
+\end{align*}
+This establishes \Cref{eq:copula-link}. Next, note that for all
+\(\vect{u}\in\prod_{j=1}^{d}\ran{F_j}\) (which equals \([0,1]^{d}\) indeed due
+to the continuous, groundedness, and normalization properties of each \(F_j\)),
+we have
+\[
+C(\vect{u})\overset{\text{\labelcref{it:gen-inv-prop}}}{=}
+C(F_1(\vc{F_1^{-1}(u_1)}),\dotsc,F_d(\vc{F_d^{-1}(u_d)})
+=F(\vc{F_1^{-1}(u_1)},\dotsc,\vc{F_d^{-1}(u_d)}).
+\]
+\item Let \(\vect{U}=(U_1,\dotsc,U_d)\sim C\) and
+\(\vect{X}:=(F_{1}^{-1}(U_1),\dotsc,F_d^{-1}(U_d))\). Observe that
+\[
+\prob{\vect{X}\le\vect{x}}\overset{\text{\labelcref{it:gen-inv-prop}}}{=}
+\prob{U_1\le F_1(x_1),\dotsc,U_d\le F_d(x_d)}
+=C(F_1(x_1),\dotsc,F_d(x_d))
+\]
+for all \(\vect{x}\in\R^d\), so the function \(F\) as defined in
+\Cref{eq:copula-link} is a distribution function (of \(\vect{X}\)) with margins
+\(F_1,\dotsc,F_d\) by quantile transform.
+\end{enumerate}
+\end{pf}
+
+\begin{remark}
+\item \emph{(role of copula)} The decomposition property suggests that a
+joint distribution function can always be decomposed into two parts: (i) its
+margins \(F_1,\dotsc,F_d\) and (ii) a copula. From this, we can see that a
+copula indeed reflects the dependence inherit in the joint distribution
+function \(F\).
+\item \emph{(construction of distribution functions via copula)} The
+combination property provides a method to construct joint distribution
+functions flexibly, according to dependence structures we want.
+\item We say that \(\vect{X}\sim F\) \defn{has copula \(C\)} if
+\Cref{eq:copula-link} holds, where \(F_1,\dotsc,F_d\) are the margins of \(F\).
+In case the margins are all continuous, we know by \Cref{thm:sklar} that such
+copula \(C\) would be uniquely determined (on \([0,1]^{d}\)).
+\end{remark}
+\item \textbf{Invariance principle.} Apart from Sklar's theorem, another
+important result about copula is the \emph{invariance principle}, which asserts
+that the copula is invariant upon strictly increasing transformations; this is
+natural since such transformations do not change the ``ordering'' and hence
+should not influence the dependence. This is stated more precisely below.
+
+\begin{theorem}[Invariance principle]
+\label{thm:invariance}
+Consider a random vector \(\vect{X}=(X_1,\dotsc,X_d)\sim F\) with continuous
+margins \(F_1,\dotsc,F_d\) and copula \(C\). If \(T_j\) is strictly increasing on
+\(\supp{F_j}\) for every \(j=1,\dotsc,d\), then \((T_1(X_1),\dotsc,T_d(X_d))\)
+has the copula \(C\) as well, which is also uniquely determined.
+\end{theorem}
+\begin{pf}
+Fix any \(j=1,\dotsc,d\). On \(\supp{F_j}\), the function \(T_j\) is strictly
+increasing, so it has at most countably many discontinuities, because at each
+discontinuity (jump in this case) there is a rational number in between.
+
+Also, by changing the values of \(T_j(X_j)\) at its discontinuities if
+necessary (which only leads to a change on a \(\pr\)-null set as
+\(\prob{X_j=x}=0\) for all \(x\in\R\) and there are at most countably many
+discontinuities), we may further assume that \(T_j\) is right-continuous at its
+discontinuities.
+
+Now, by the right-continuity of \(T_j\), we have
+\(T_j(T_j^{-1}(x_j))\overset{\text{\labelcref{it:gen-inv-prop}}}{=}x_j\) for
+all \(x_j\in\ran{T_j}\). Hence, the distribution function \(G_j\) of
+\(T_j(X_j)\) is given by
+\begin{align*}
+G_j(x_j)&=\prob{T_j(X_j)\le \vc{x_j}}
+\overset{\text{\labelcref{it:gen-inv-prop}}}{=}
+\prob{T_j(X_j)\le \vc{T_j(T_j^{-1}(x_j))}} \\
+\overset{\text{(\(T_j\) strictly increasing)}}&{=}
+\prob{X_j\le T_j^{-1}(x_j)}
+=F_j(T_j^{-1}(x_j))
+\end{align*}
+for all \(x_j\in\ran{T_j}\). Since \(T_j(X_j)\) cannot possibly take values
+outside \(\ran{T_j}\), the equation indeed holds for all \(x_j\in\R\).
+
+Since \(T_j\) is strictly increasing
+\end{pf}
+
+\item \textbf{Copula from probability transforms.} By applying probability
+transforms and the invariance principle, we can obtain the following result,
+which justifies the practice of exploring the dependence between the samples
+after applying the respective distribution function on each of them (to
+``scale'' the data appropriately and ensure a ``fair'' comparison).
+\begin{corollary}
+\label{cor:prob-trans-copula}
+Let \(\vect{X}=(X_1,\dotsc,X_d)\) be a random vector with continuous margins
+\(F_1,\dotsc,F_d\). Then \(\vect{X}\) has a unique copula \(C\) iff
+we have \((F_1(X_1),\dotsc,F_d(X_d))\sim C\).
+\end{corollary}
+\begin{pf}
+Let \(\vect{U}=(U_1,\dotsc,U_d):=(F_1(X_1),\dotsc,F_d(X_d))\).
+
+``\(\Rightarrow\)'': Knowing that \(F_j\) is strictly increasing on
+\(\supp{F_j}\) for every \(j=1,\dotsc,d\), the invariance principle suggests
+that \(\vect{U}\) has the unique copula \(C\). Also, by the probability
+transform, the margins of \(\vect{U}\) are all \(\unif{0}{1}\). Hence, by
+Sklar's theorem (combination), the distribution function of \(\vect{U}\) is
+\(C\).
+
+``\(\Leftarrow\)'': By \labelcref{it:gen-inv-prop}, we have
+\(\vect{X}=\left(F_1^{-1}(F_1(X_1)),\dotsc,F_d^{-1}(F_d(X_d))\right)
+=(F_{1}^{-1}(U_1),\dotsc,F_{d}^{-1}(U_d))\).
+\end{pf}
+\item \textbf{Three common copulas.} Three particular types of dependence
+structures are often of interest, namely \emph{independence}, \emph{extremely
+positive dependence (comonotonicity)}, and \emph{extremely negative dependence
+(countermonotonicity)}. They are described by the following three copulas
+respectively:
+\begin{enumerate}
+\item \defn{independence copula}:
+\(C(\vect{u})=\Pi(\vect{u}):=\prod_{j=1}^{d}u_j\) for all
+\(\vect{u}\in[0,1]^{d}\).
+\item \defn{comonotone copula}:
+\(C(\vect{u})=M(\vect{u}):=\min\{u_1,\dotsc,u_d\}\) for all
+\(\vect{u}\in[0,1]^{d}\).
+\item \defn{countermonotone copula} (when \(d=2\)):
+\(C(\vect{u})=W(\vect{u}):=\max\{(\sum_{j=1}^{d}u_j-d+1,0\}\) for all
+\(\vect{u}\in[0,1]^{d}\).
+\begin{note}
+Using a similar argument as in \labelcref{it:comp-incr-not-imply-d-incr}, one
+can show that \(W\) is never a valid copula for every \(d\ge 3\).
+\end{note}
+\end{enumerate}
+To prove that they are indeed valid copulas (only \(d=2\) for the
+countermonotone copula), consider the following:
+
+\begin{pf}
+\begin{enumerate}
+\item We have \(\vect{U}\sim \Pi\) for \(\vect{U}=(U_1,\dotsc,U_d)\) with
+\(U_1,\dotsc,U_d\iid \unif{0}{1}\), since:
+\[
+\prob{\vect{U}\le\vect{u}}=\prod_{j=1}^{d}\prob{U_j\le u_j}
+=\prod_{j=1}^{d}u_j=\Pi(\vect{u})
+\]
+for all \(\vect{u}\in[0,1]^{d}\).
+\item We have \(\vect{U}\sim M\) for \(\vect{U}=(U,,\dotsc,U)\) with
+\(U\sim\unif{0}{1}\), since:
+\[
+\prob{\vect{U}\le\vect{u}}=\prob{U\le u_1,\dotsc,U\le u_d}
+=\prob{U\le\min\{u_1,\dotsc,u_d\}}
+=\min\{u_1,\dotsc,u_d\}=M(\vect{u})
+\]
+for all \(\vect{u}\in[0,1]^{d}\).
+\item When \(d=2\), we have \(\vect{U}\sim W\) for \(\vect{U}=(U,1-U)\) with
+\(U\sim\unif{0}{1}\), since:
+\[
+\prob{\vect{U}\le\vect{u}}=\prob{U\le u_1,1-U\le u_2}
+=\prob{1-u_2\le U\le u_1}
+\overset{\text{(by cases)}}{=}
+\max\{u_1-(1-u_2),0\}
+=W(\vect{u})
+\]
+for all \(\vect{u}\in[0,1]^{2}\).
+\end{enumerate}
+\end{pf}
+
+\item\label{it:indp-comono-countermono-cop-interpret} \textbf{Interpretations
+of independence, comonotone, and countermonotone copulas.} For
+\((X_1,\dotsc,X_d)\sim F\) with continuous margins \(F_1,\dotsc,F_d\) and
+copula \(C\), we can interpret the previously introduced independence,
+comonotone, and countermonotone copulas as follows:
+\begin{itemize}
+\item \emph{(independence copula)} \(C=\Pi\) iff \(X_1,\dotsc,X_d\) are
+\underline{independent}, by \Cref{thm:char-rv-ind}.
+\item \emph{(comonotone copula)} \(C=M\) iff \(X_j\eqas T_j(X_1)\), where
+\(T_j=F_j^{-1}\circ F_1\) is strictly increasing on \(\supp{F_1}\), for all
+\(j=2,\dotsc,d\), by the invariance principle.
+\item \emph{(countermonotone copula)} \(C=W\) iff \(X_2\eqas T(X_1)\), where
+\(T=F_2^{-1}\circ (1-F_1)\) is strictly decreasing on \(\supp{F_1}\), by the
+invariance principle.
+\end{itemize}
+\item \textbf{Fr\'echet-Hoeffding bounds.} For the comonotone copula \(M\) and
+countermonotone copula \(W\), apart from describing the extremely positive
+dependence and extremely negative dependence, they also serve for bounds on
+\emph{any} copula:
+\begin{theorem}[Fr\'echet-Hoeffding bounds]
+\label{thm:frechet-hoeffding-bounds}
+For every \(d\)-dimensional copula \(C\), we have \(W(\vect{u})\le
+C(\vect{u})\le M(\vect{u})\) for all \(\vect{u}\in[0,1]^{d}\).
+\end{theorem}
+\begin{pf}
+Fix any \(\vect{u}\in[0,1]^{d}\) and any \(d\)-dimensional copula \(C\).
+
+We first show the inequality \(W\le C\). Note that
+\[
+1-C(\vect{u})=C({}_{d}1)-C(\vect{u})\overset{\text{(\Cref{lma:lipschitz-ineq})}}{\le}
+\sum_{j=1}^{d}(1-u_j)=d-\sum_{j=1}^{d}u_j,
+\]
+and thus \(C(\vect{u})\ge \vc{(\sum_{j=1}^{d}u_j)-d+1}\). Since
+\(C(\vect{u})\ge 0\) (as a distribution function), this implies
+\(C(\vect{u})\ge \max\{\vc{(\sum_{j=1}^{d}u_j)-d+1},0\}=W(\vect{u})\).
+
+Next, we show the inequality \(C\le M\). Since \(C\) is \(d\)-increasing, it is
+also componentwise increasing by \labelcref{it:f-vol-nonneg}. Thus, applying
+this increasingness for every component except the \(j\)th one gives
+\[
+C(\vect{u})\le C(1,u_2,\dotsc,u_d)\le\dotsb\le C(1,\dotsc,1,u_j,1,\dotsc,1)
+\overset{\text{(\(\unif{0}{1}\) margins)}}{=}u_j
+\]
+for every \(j=1,\dotsc,d\). This then implies that
+\(C(\vect{u})\le\min\{u_1,\dotsc,u_d\}=M(\vect{u})\).
+\end{pf}
+
+\begin{remark}
+\item In view of this result, \(M\) and \(W\) are called the \defn{Fr\'echet-Hoeffding upper bound}
+and \defn{Fr\'echet-Hoeffding lower bound} respectively.
+\item Even if \(W\) is not a valid copula for every \(d\ge 3\), it can still
+serve as a lower bound, as this result suggests.
+\end{remark}
+\end{enumerate}
