@@ -1,0 +1,2213 @@
+\section{Integration and Expectation}
+\label{sect:integration-expectation}
+\begin{enumerate}
+\item Apart from working with probability measures, often we would like to
+compute \emph{expectations} in probability theory. In your first probability
+course, you should have learnt some formulas for computing expectations like
+below:
+\[
+\expv{X}=\begin{cases}
+\sum_{k}^{}x_kf(x_k)&\text{if \(X\) is discrete, taking countably many values \(x_1,x_2,\dotsc\)}, \\
+\int_{-\infty}^{\infty}xf(x)\odif{x}&\text{if \(X\) is continuous}
+\end{cases}
+\]
+where \(f\) denotes the mass function (for discrete case) or the density
+function (for continuous case). However, we will face difficulties when \(X\)
+is \emph{neither discrete nor continuous} (this is possible; the definition
+for \(X\) to be continuous is not ``\(X\) is not discrete''\warn{}).
+
+While these formulas are relatively easy to work with, they are not flexible
+enough for working with general random variables. Hence, in
+\Cref{sect:integration-expectation} we will introduce a more general (yet more
+abstract) definition of expectation, which is closely related to the notion of
+\emph{Lebesgue integral}; let us start by studying the construction of Lebesgue
+integrals in \Cref{subsect:construct-lebesgue-int}, to better understand this
+concept.
+\end{enumerate}
+\subsection{Construction of Lebesgue integrals}
+\label{subsect:construct-lebesgue-int}
+\begin{enumerate}
+\item \textbf{Motivation.} The formulas of expectations mentioned above are
+both capturing the idea of ``weighted average''; the expectation is considered
+to be an average weighted according to the probabilities. This idea is
+preserved in the general and abstract definition of expectation.
+
+Consider the special case where the sample space \(\Omega\) is countable, which
+forces all random variables defined on \(\Omega\) to be discrete. Hence, we can
+express the expectation of a random variable \(X\) as follows:
+\[
+\expv{X}=\sum_{\omega\in\Omega}^{}X(\omega)\prob{\{\omega\}}
+\overset{\text{(in words)}}{=}
+\sum_{\text{all outcomes}}^{}\text{outcome}\times \text{probability of having that outcome}
+\]
+which is an alternative expression of the discrete expectation formula above.
+To extend this idea to the general case, we need to make sense of ``weighted
+average'' in the case where \(\Omega\) is \emph{uncountable} also. One natural
+idea is to replace ``\(\sum\)'' by ``\(\int\)'' in such case, and consider
+something like ``\(\int_{\Omega}^{}X(\omega)\odif{\prob{\omega}}\)'' or
+``\(\int_{\Omega}^{}X\odif{\pr}\)'', just like the development of Riemann
+integral.  Our goal here is to make sense of this kind of integral in a more
+general setting, where a general measure \(\mu\) is considered.
+\item \textbf{Steps for the construction.} Let \((\Omega,\mathcal{F},\mu)\) be
+a measure space and \(X:\Omega\to\R\) be a measurable function. Write
+\(\bar{\R}_{+}:=[0,\infty]\) and \(\bar{\R}:=[-\infty,\infty]\).  Then, the
+\emph{Lebesgue integral of \(X\) with respect to \(\mu\)}, denoted by
+\(\int_{\Omega}^{}X(\omega)\odif{\mu(\omega)}\) or
+\(\int_{\Omega}^{}X\odif{\mu}\), can be constructed in the following three-step
+process:
+\begin{enumerate}[label={(\arabic*)}]
+\item Define \(\int_{\Omega}^{}X\odif{\mu}\) for every \emph{simple function} \(X:\Omega\to\R\).
+\item Extends the notion of \(\int_{\Omega}^{}X\odif{\mu}\) to every
+\emph{nonnegative} \((\mathcal{F},\mathcal{B}(\bar{\R}_{+}))\)-measurable function
+\(X:\Omega\to\bar{\R}_{+}\).
+\item Extends the notion of \(\int_{\Omega}^{}X\odif{\mu}\) to every
+\((\mathcal{F},\mathcal{B}(\bar{\R}))\)-measurable function
+\(X:\Omega\to\bar{\R}\).
+
+\end{enumerate}
+More generally, in many measure theoretic proofs, this kind of procedure is
+also utilized, which is known as the \defn{standard argument}:
+\begin{enumerate}[label={(\arabic*)}]
+\item Show that the target result holds for every \emph{simple function} \(X:\Omega\to\R\).
+\item Show that the target result holds for every
+\emph{nonnegative} \((\mathcal{F},\mathcal{B}(\bar{\R}_{+}))\)-measurable function
+\(X:\Omega\to\bar{\R}_{+}\).
+\item Show that the target result holds for every
+\((\mathcal{F},\mathcal{B}(\bar{\R}))\)-measurable function
+\(X:\Omega\to\bar{\R}\).
+\end{enumerate}
+Very often, step 2 is the step that takes the most work. The steps 1 and 3 are
+usually quite easy.
+\begin{remark}
+\item Sometimes we may replace \(\eR_{+}\) and \(\eR\) by \(\R_{+}\) and \(\R\)
+respectively, depending on the result we are trying to prove.
+\item For an illustration of the standard argument, see the proof of \Cref{thm:change-of-var}.
+\end{remark}
+\subsubsection*{Lebesgue integrals of simple functions}
+\item \textbf{Definition.} Let
+(\(\Omega,\mathcal{F},\mu)\) be a measure space. Recall that a function
+\(X:\Omega\to\R\) is said to be simple if it takes the form
+\(X=\sum_{i=1}^{n}x_i\indic_{A_i}\), where \(x_1,\dotsc,x_n\in\R\), \(n\in\N\),
+and \(A_1,\dotsc,A_n\in\mathcal{F}\) are pairwise disjoint.
+
+Now consider a simple function \(X=\sum_{i=1}^{n}x_i\indic_{A_i}\). The
+\defn{Lebesgue integral of \(X\) with respect to \(\mu\)} is
+\[
+\int_{\Omega}^{}X\odif{\mu}:=\sum_{i=1}^{n}x_i\mu(A_i),
+\]
+with the convention that \(0\cdot \infty=0\) (i.e., \(x_i\mu(A_i)=0\) if
+\(x_i=0\) and \(\mu(A_i)=\infty\) for some \(i\)). Also, we write
+\(\int_{A}^{}X\odif{\mu}:=\int_{\Omega}^{}X\indic_{A}\odif{\mu}\) for every \(A\in\mathcal{F}\).
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=0:5, xmin=-0.5, xmax=4.5, ymax=19, ymin=-5.5, axis y
+line=middle, axis x line=none, xlabel={\(x\)}, ylabel={\(X(\omega)\)}, xlabel
+style={anchor=west}, ylabel style={anchor=south}, xtick={1,4},
+xticklabels={\(a\),\(b\)}, ytick={2,5,10,14}, yticklabels={\(x_1\), \(x_2\),
+\(x_3\), \(x_4\)}, samples=50]
+\addplot[blue, thick, domain=0:0.7]{2};
+\addplot[blue, thick, domain=1.7:2]{2};
+\draw[green, fill, opacity=0.2] (0,2) rectangle (0.7,0);
+\draw[green, fill, opacity=0.2] (1.7,2) rectangle (2,0);
+\draw[-Latex, ForestGreen] (1,-2) -- (0.35,0);
+\draw[-Latex, ForestGreen] (1,-2) -- (1.85,0);
+\node[ForestGreen] () at (1,-3) {\(x_1\mu(A_1)\)};
+\addplot[blue, thick, domain=0.7:1.7]{5};
+\draw[orange, fill, opacity=0.2] (0.7,5) rectangle (1.7,0);
+\draw[-Latex, orange] (2,-2) -- (1.2,0);
+\node[orange] () at (2,-3) {\(x_2\mu(A_2)\)};
+\addplot[blue, thick, domain=2:2.5]{10};
+\addplot[blue, thick, domain=3.5:5]{10};
+\draw[violet, fill, opacity=0.2] (2,10) rectangle (2.5,0);
+\draw[violet, fill, opacity=0.2] (3.5,10) rectangle (5,0);
+\draw[-Latex, violet] (3.5,-2) -- (2.25,0);
+\draw[-Latex, violet] (3.5,-2) -- (4.25,0);
+\node[violet] () at (3.5,-3) {\(x_3\mu(A_3)\)};
+\addplot[blue, thick, domain=2.5:3.5]{14};
+\draw[magenta, fill, opacity=0.2] (2.5,14) rectangle (3.5,0);
+\draw[-Latex, magenta] (2.75,-3) -- (3,0);
+\node[magenta] () at (2.75,-4.5) {\(x_4\mu(A_4)\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Writing \(\sum_{i=1}^{n}x_i\mu(A_i)\) as \(\sum_{i=1}^{n}x_i\mu(X=x_i)\), we
+can see that it aligns with the formula of expectation of discrete random
+variable \(X\) taking values \(x_1,\dotsc,x_n\) (when \(\mu\) is a probability
+measure).  Furthermore, from a geometric point of view, the integral
+\(\int_{\Omega}^{}X\odif{\mu}\) also captures the notion of ``area under
+curve'', like the Riemann integral.
+
+\item \label{it:simp-leb-int-prop} \textbf{Properties.} Let
+\(X,Y:\Omega\to\R\) be simple functions, say \(X=\sum_{i=1}^{n}x_i\mu(A_i)\)
+and \(Y=\sum_{j=1}^{m}y_j\mu(B_j)\). Then:
+\begin{enumerate}
+\item \emph{(nonnegativity)} \(X\ge 0\implies \int_{\Omega}^{}X\odif{\mu}\ge 0\).
+\item \emph{(linearity)}
+\(\int_{\Omega}^{}aX+bY\odif{\mu}=a\int_{\Omega}^{}X\odif{\mu}+b\int_{\Omega}^{}Y\odif{\mu}\),
+for all \(a,b\in\R\).
+\item \emph{(monotonicity)} \(X\le Y\implies
+\int_{\Omega}^{}X\odif{\mu}\le\int_{\Omega}^{}Y\odif{\mu}\).
+\item If \(X\ge 0\), then the function \(\nu\) given by
+\(\nu(A):=\int_{A}^{}X\odif{\mu}~\forall A\in\mathcal{F}\) is a measure on \((\Omega,\mathcal{F})\).
+\item \(\int_{\Omega}^{}\indic_{A}\odif{\mu}=\mu(A)\) for every \(A\in\mathcal{F}\).
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item Since \(X\ge 0\), we have \(x_i\ge 0\) for every \(i=1,\dotsc,n\), and hence
+\(\int_{\Omega}^{}X\odif{\mu}=\sum_{i=1}^{n}x_i\mu(A_i)\ge 0\).
+\item Note that \(aX+bY=\sum_{i,j}^{}(ax_i+by_j)\indic_{A_i\cap B_j}\) is still
+simple, so
+\begin{align*}
+\int_{\Omega}^{}aX+bY\odif{\mu}
+&=\sum_{i,j}^{}(ax_i+by_j)\mu(A_i\cap B_j)
+=a\sum_{i=1}^{n}x_i\vc{\sum_{j=1}^{m}\mu(A_i\cap B_j)}
++b\sum_{j=1}^{m}y_j\orc{\sum_{i=1}^{n}\mu(A_i\cap B_j)} \\
+\overset{\text{(law of total measure)}}&{=}a\sum_{i=1}^{n}x_i\vc{\mu(A_i)}
++b\sum_{j=1}^{m}y_j\orc{\mu(B_j)}=a\int_{\Omega}^{}X\odif{\mu}+b\int_{\Omega}^{}Y\odif{\mu}.
+\end{align*}
+\item Note that \(Y-X\ge 0\) is still simple, and thus
+\[
+\int_{\Omega}^{}Y\odif{\mu}
+\overset{\text{(linearity)}}{=}\int_{\Omega}^{}Y-X\odif{\mu}+\int_{\Omega}^{}X\odif{\mu}
+\overset{\text{(monotonicity)}}{\ge}\int_{\Omega}^{}X\odif{\mu}.
+\]
+\item \begin{enumerate}[label={(\arabic*)}]
+\item For every \(A\in\mathcal{F}\), we have \(X\ge 0\implies X\indic_{A}\ge
+0\implies \mu(A)\ge 0\).
+\item Note that \(\nu(\varnothing)=\int_{\Omega}^{}X\indic_{\varnothing}\odif{\mu}
+=\int_{\Omega}^{}0\odif{\mu}\overset{\text{(simple integrand)}}{=}0\mu(\Omega)=0\)
+(even if \(\mu(\Omega)=\infty\)).
+\item Fix any pairwise disjoint \(C_1,C_2,\dotsc\in\mathcal{F}\). Then,
+\begin{align*}
+\mu\left(\biguplus_{k=1}^{\infty}C_k\right)
+&=\int_{\Omega}^{}X\indic_{\biguplus_{k=1}^{\infty}C_k}\odif{\mu}
+=\int_{\Omega}^{}\sum_{i=1}^{n}x_i\indic_{A_i\cap \biguplus_{k=1}^{\infty}C_k}\odif{\mu}
+\overset{\text{(simple integrand)}}{=}
+\sum_{i=1}^{n}x_i\mu\left(A_i\cap \biguplus_{k=1}^{\infty}C_k\right) \\
+\overset{\text{(\(\sigma\)-additivity)}}&{=}
+\sum_{i=1}^{n}x_i\sum_{k=1}^{\infty}\mu(A_i\cap c_k)
+\underset{\text{(Riemann series theorem)}}{\overset{\text{(reordering)}}{=}}
+=\sum_{k=1}^{\infty}\sum_{i=1}^{n}x_i\mu(A_i\cap C_k) \\
+&=\sum_{i=1}^{\infty}\int_{\Omega}^{}X\indic_{C_k}\odif{\mu}=\sum_{i=1}^{\infty}\nu(C_i).
+\end{align*}
+\end{enumerate}
+\item Note that \(\int_{\Omega}^{}\indic_{A}\odif{\mu}
+\underset{(\indic_{A}=1\cdot \indic_{A}+0\cdot
+\indic_{A^c})}{\overset{\text{(simple integrand)}}{=}}
+1\cdot \mu(A)+0\cdot \mu(A^c) =\mu(A)\).
+\end{enumerate}
+\end{pf}
+\subsubsection*{Lebesgue integrals of nonnegative measurable functions}
+\item \textbf{Definition.} The key idea to extend the notion of
+\(\int_{\Omega}^{}X\odif{\mu}\) to every \emph{nonnegative} measurable function
+\(X\) is to approach the nonnegative measurable function \(X\) ``from below'',
+through nonnegative \emph{simple functions} (for which the Lebesgue integral
+has been defined). We define the Lebesgue integral by taking the supremum over
+the Lebesgue integrals of all the nonnegative simple functions that ``lie
+below'' the nonnegative measurable function.
+
+Let \(X:\Omega\to\bar{\R}_{+}\) be a
+\((\mathcal{F},\mathcal{B}(\bar{\R}_{+}))\)-measurable function. Then the
+\defn{Lebesgue integral of \(X\) with respect to \(\mu\)} is
+\[
+\int_{\Omega}^{}X\odif{\mu}:=
+\sup_{\substack{0\le Y\le X,\\ \text{\(Y\) simple}}}
+\int_{\Omega}^{}Y\odif{\mu}.
+\]
+Also, we write
+\(\int_{A}^{}X\odif{\mu}:=\int_{\Omega}^{}X\indic_{A}\odif{\mu}\) for every
+\(A\in\mathcal{F}\).  The set of all
+\((\mathcal{F},\mathcal{B}(\bar{\R}_{+}))\)-measurable functions on \(\Omega\)
+(i.e., all functions for which this kind of Lebesgue integral is defined) is
+denoted by \(L_{+}\) or \(L_{+}(\Omega,\mathcal{F},\mu)\).
+
+\begin{note}
+In case \(X\) is itself simple, say \(X=\sum_{i=1}^{n}x_i\indic_{A_i}\), we
+would have \(\int_{\Omega}^{}Y\odif{\mu}\le\sum_{i=1}^{n}x_i\mu(A_i)\) for
+every simple function \(Y\) with \(0\le Y\le X\)  by
+\labelcref{it:simp-leb-int-prop}. This then implies that
+\(\sup_{\substack{0\le Y\le X,\\ \text{\(Y\)
+simple}}}\int_{\Omega}^{}Y\odif{\mu} =\max_{\substack{0\le Y\le X,\\
+\text{\(Y\) simple}}}\int_{\Omega}^{}Y\odif{\mu} =\sum_{i=1}^{n}x_i\mu(A_i)\),
+so the Lebesgue integral here indeed coincides with the one defined for simple
+function in this case.
+\end{note}
+\item \textbf{Some lemmas.} The following lemmas are helpful for proving
+properties of Lebesgue integral of this kind.
+\begin{lemma}[Approximating sequence]
+\label{lma:apx-seq}
+A function \(X:\Omega\to\bar{\R}_{+}\) is in \(L_{+}\) iff there exists a
+sequence \(\{X_n\}\), with \(X_n:\Omega\to\R_{+}:=[0,\infty)\) being
+nonnegative and simple for every \(n\in\N\), such that
+\(X_n\nearrow X\) pointwisely, with the convergence being also uniform on
+every set where \(X\) is bounded.
+\end{lemma}
+\begin{remark}
+\item Such sequence \(\{X_n\}\) is said to be an \defn{approximating sequence} to
+\(X\).
+\item The notation \(X_n\nearrow X\) means \(X_n\to X\) with the extra
+emphasis that \(\{X_n\}\) is increasing (denoted by \(X_n\nearrow\)), i.e.,
+\(X_1\le X_2\le\dotsb\); we shall use similar notations for real-valued
+sequences also.
+\end{remark}
+\begin{pf}
+``\(\Leftarrow\)'': Since \(X_n\) is simple and hence measurable for every
+\(n\in\N\), one can show in a similar way as in \labelcref{it:seq-rvs-meas}
+that \(X\) is measurable as a limit.
+
+``\(\Rightarrow\)'': For every \(n\in\N\), let
+\[
+X_n:=\min\left\{\frac{\lfloor 2^nX\rfloor}{2^n},n\right\}
+=\sum_{k=1}^{n2^{n}}\frac{k-1}{2^{n}}\indic_{X^{-1}\left((\frac{k-1}{2^{n}},\frac{k}{2^{n}}]\right)}
++n\indic_{X^{-1}(n,\infty]}.
+\]
+\begin{intuition}
+The expression \(\frac{\lfloor 2^nX\rfloor}{2^n}\) gives us a value that is
+``slightly'' smaller than \(X\), and taking the minimum with \(n\) avoids
+\(X_n\) to be ``too large''. Also, the final expression is related to a
+certain ``partition'' on the \(y\)-axis: each indicator
+\(\indic_{X^{-1}\left((\frac{k-1}{2^{n}},\frac{k}{2^{n}}]\right)}\) corresponds
+to a certain region in the \(y\)-axis.
+\end{intuition}
+
+Since \(X\) is measurable, the sets involved in the indicators are all in
+\(\mathcal{F}\), thus each \(X_n\) is simple. It is also clear that each
+\(X_n\) is nonnegative.
+
+First, we show that \(X_n\nearrow\).
+For every \(n\in\N\), note that \(\lfloor 2^nX\rfloor/2^n=
+2\lfloor 2^nX\rfloor/2^{n+1}\le \lfloor 2^{n+1}X\rfloor/2^{n+1}\). Thus,
+\[
+X_n=\min\left\{\frac{\lfloor 2^nX\rfloor}{2^n},n\right\}
+\overset{\text{(by case)}}{\le}\min\left\{\frac{\lfloor 2^{n+1}X\rfloor}{2^{n+1}},n+1\right\}
+=X_{n+1}.
+\]
+
+Next, we show the uniform convergence.  On every set where \(X\) is bounded, we
+would have \(X\le N\) for some \(N\in\N\). Hence, for all \(n\ge N\), we have
+\(X\in (\frac{k-1}{2^{n}},\frac{k}{2^{n}}]\) and \(X_n=(k-1)/2^{n}\) for some
+\(k=1,\dotsc,n2^{n}\), which means that \(|X_n-X|\le 1/2^{n}\). This would then
+assert the uniform convergence on such set.
+
+Finally, we show the pointwise convergence. This uniform convergence implies
+the pointwise convergence for every \(\omega\in\Omega\) with
+\(X(\omega)<\infty\) (for such \(\omega\), the singleton \(\{\omega\}\) would
+be a set where \(X\) is bounded). So, it remains to show the pointwise
+convergence for every \(\omega\in\Omega\) where \(X(\omega)=\infty\). For every
+such \(\omega\), we have \(X_n(\omega)=n\) for all \(n\in\N\), hence
+\(\{X_n(\omega)\}=\{n\}\to\infty\), establishing the pointwise convergence
+(which includes the possibility of ``\(\infty\)'').
+\end{pf}
+
+\begin{lemma}[Monotonicity and scaling]
+\label{lma:leb-int-nonneg-mono-scal}
+Let \(X,Y\in L_{+}\). Then:
+\begin{enumerate}
+\item \emph{(monotonicity)} \(X\le Y\implies \int_{\Omega}^{}X\odif{\mu}\le\int_{\Omega}^{}Y\odif{\mu}\).
+\item \emph{(scaling)} \(\int_{\Omega}^{}cX\odif{\mu}=c\int_{\Omega}^{}X\odif{\mu}\) for all \(c\ge 0\).
+\end{enumerate}
+\end{lemma}
+\begin{pf}
+\begin{enumerate}
+\item With \(X\le Y\), the integral \(\int_{\Omega}^{}Y\odif{\mu}\) is a
+supremum over a larger set than \(\int_{\Omega}^{}X\odif{\mu}\). Hence, the
+former must be at least as large as the latter.
+\item If \(c=0\), then the result is immediate as we have
+\(\int_{\Omega}^{}0\odif{\mu}=0\). So assume henceforth that \(c>0\), and
+consider:
+\begin{align*}
+\int_{\Omega}^{}cX\odif{\mu}
+&=\sup_{\substack{0\le \vc{Y}\le cX,\\ \text{\vc{\(Y\)} simple}}}
+\int_{\Omega}^{}\vc{Y}\odif{\mu}
+=\sup_{\substack{0\le \vc{cZ}\le cX,\\ \text{\vc{\(cZ\)} simple}}}
+\int_{\Omega}^{}\vc{cZ}\odif{\mu} \\
+&=\sup_{\substack{0\le Z\le X,\\ \text{\(Z\) simple}}}
+c\int_{\Omega}^{}Z\odif{\mu}
+=c\cdot \sup_{\substack{0\le Z\le X,\\ \text{\(Z\) simple}}}
+\int_{\Omega}^{}Z\odif{\mu}
+=c\int_{\Omega}^{}X\odif{\mu}.
+\end{align*}
+\end{enumerate}
+\end{pf}
+\item \textbf{Monotone convergence theorem.} One important theorem concerning
+Lebesgue integrals of nonnegative measurable functions is the \emph{monotone
+convergence theorem (MCT)}, which provides conditions under which the integral
+\(\int_{\Omega}^{}X\odif{\mu}\) can be computed as a \emph{limit} of
+\underline{monotone} sequence instead of taking the supremum. It can also be
+viewed as a result that provides a sufficient condition that permits the
+\emph{interchange of limit and integral}.
+
+Apart from being an important result on its own, it is also used for proving
+many properties of Lebesgue integral of this kind.
+
+\begin{theorem}[Monotone convergence theorem (MCT)]
+\label{thm:mct}
+Let \(X_n\) be a function on \(\Omega\) in \(L_{+}\) for every \(n\in\N\). If
+we have \(X_n\nearrow X\) pointwisely, then \(X\in L_{+}\) and
+\(\int_{\Omega}^{}X_n\odif{\mu}\nearrow\int_{\Omega}^{}X\odif{\mu}\).
+\end{theorem}
+\begin{note}
+For the convergence of Lebesgue integrals, we can also write
+\(\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}=\int_{\Omega}^{}\lim_{n\to\infty}X_n\odif{\mu}\),
+from which an interchange of limit and integral can be clearly seen.
+\end{note}
+
+\begin{pf}
+Since \(X\) is the limit of nonnegative measurable functions \(X_n\)'s, we know
+that \(X\ge 0\) and \(X\) is measurable (like
+\labelcref{it:seq-rvs-meas}), and hence \(X\in L_{+}\). Also, with \(X_n\nearrow\),
+by \Cref{lma:leb-int-nonneg-mono-scal} we have
+\(\int_{\Omega}^{}X_n\odif{\mu}\nearrow\), and so the limit
+\(\lim_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu}\) exists (but may possibly be
+\(\infty\)).
+
+It then remains to establish that \(\lim_{n\to
+\infty}\int_{\Omega}^{}X_n\odif{\mu}=\int_{\Omega}^{}X\odif{\mu}\):
+\begin{itemize}
+\item ``\(\le\)'': From \(X_n\nearrow X\), we have \(X=\sup_{n\in\N}X_n\ge
+X_n\) for every \(n\in\N\). So, by \Cref{lma:leb-int-nonneg-mono-scal} we know
+\(\int_{\Omega}^{}X_n\odif{\mu}\le\int_{\Omega}^{}X\odif{\mu}\) for every
+\(n\in\N\). Thus, \(\lim_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu} \le
+\int_{\Omega}^{}X\odif{\mu}\).
+\item ``\(\ge\)'': Fix any simple function \(Y\) with \(0\le Y\le X\), and any
+\(\alpha\in(0,1)\). Let \(A_n:=\{\omega\in\Omega:X_n(\omega)\ge \alpha
+Y(\omega)\}\) for every \(n\in\N\). Since each \(X_n-\alpha Y\) is measurable,
+each \(A_n\) is in \(\mathcal{F}\). Also, with \(X_n\nearrow\), we have
+\(A_n\nearrow\) and
+\[
+\lim_{n\to\infty}A_n=\bigcup_{k=1}^{\infty}A_k
+=\{\omega\in\Omega:X_k(\omega)\ge \alpha Y(\omega)\text{ for some \(k\in\N\)}\}.
+\]
+This set equals \(\Omega\), since we have \(\lim_{n\to\infty}X_n(\omega)=X(\omega)\ge
+Y(\omega)\ge \alpha Y(\omega)\), which implies that \(X_k(\omega)\ge \alpha
+Y(\omega)\) must hold for sufficiently large \(k\in\N\). So we can write
+\(A_n\nearrow \Omega\).
+
+By \Cref{lma:leb-int-nonneg-mono-scal}, we have
+\(\int_{\Omega}^{}X_n\odif{\mu}\ge \int_{\Omega}^{}X_n\indic_{A_n}\odif{\mu}
+\ge \alpha\int_{\Omega}^{}Y\indic_{A_n}\odif{\mu}
+=\alpha\int_{A_n}^{}Y\odif{\mu}
+\) for all \(n\in\N\). Taking limit then gives
+\[
+\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}
+\ge \lim_{n\to\infty}\alpha\vc{\int_{A_n}^{}Y\odif{\mu}}
+\overset{\labelcref{it:simp-leb-int-prop}}{=}
+\alpha\lim_{n\to\infty}\vc{\nu(A_n)}
+\overset{\text{(continuity from below)}}{=}
+\alpha\nu(\Omega)
+\overset{\text{(definition of \(\nu\))}}{=}
+\alpha\int_{\Omega}^{}Y\odif{\mu}.
+\]
+Letting \(\alpha\to 1^{-}\), we have
+\(\vc{\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}} \ge
+\int_{\Omega}^{}Y\odif{\mu}\), so
+\vc{\(\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}\)} serves as an upper bound
+of \(\left\{\int_{\Omega}^{}Y\odif{\mu}:0\le Y\le X,\quad \text{\(Y\) simple}
+\right\}\). Thus, by the definition of supremum, we have
+\(\vc{\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}}\ge
+\int_{\Omega}^{}X\odif{\mu}\).
+\end{itemize}
+\end{pf}
+\item\label{it:nonneg-leb-int-prop} \textbf{Properties.} Now we are ready to prove more properties of
+Lebesgue integral of nonnegative measurable function. Let \(X,Y\in L_{+}\) and
+\(X_n\in L_{+}\) for each \(n\in\N\). Then:
+\begin{enumerate}
+\item \(\int_{\Omega}^{}X\odif{\mu}=0\) iff \(X\eqae 0\).
+\item \emph{(linearity)} 
+\(\int_{\Omega}^{}aX+bY\odif{\mu}=a\int_{\Omega}^{}X\odif{\mu}+b\int_{\Omega}^{}Y\odif{\mu}\)
+for all \(a,b\ge 0\).
+\item \emph{(commutativity of integral and countable
+sum)} \(\sum_{n=1}^{\infty}X_n\in L^{+}\) and
+\(\int_{\Omega}^{}\sum_{n=1}^{\infty}X_n\odif{\mu}=\sum_{n=1}^{\infty}
+\int_{\Omega}^{}X_n\odif{\mu}\).
+\item \emph{(``a.e.\ version'' of MCT)} \(X_n\nearrow X\text{ a.e.}\implies
+\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}=\int_{\Omega}^{}X\odif{\mu}\).
+\begin{note}
+``\(X_n\nearrow X\text{ a.e.}\)'' means that we have \(X_n(\omega)\nearrow
+X(\omega)\) for all \(\omega\in\Omega\setminus N\) where \(N\) is a null set.
+\end{note}
+\item If \(\int_{\Omega}^{}X\odif{\mu}<\infty\), then \(\mu(X=\infty)=0\),
+i.e., \(X\) is finite a.e.
+\item The function \(\nu\) given by \(\nu(A):=\int_{A}^{}X\odif{\mu}~\forall
+A\in\mathcal{F}\) is a measure on \((\Omega,\mathcal{F})\).
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item We first consider the case where \(X\) is simple. Write
+\(X=\sum_{i=1}^{n}x_i\indic_{A_i}\) where \(x_1,\dotsc,x_n\ge 0\). Then, we
+have
+\begin{align*}
+\int_{\Omega}^{}X\odif{\mu}&=\sum_{i=1}^{n}x_i\mu(A_i)=0 \\
+\iff x_i&=0\text{ or }\mu(A_i)=0\text{ for all \(i=1,\dotsc,n\)} \\
+\iff \mu(X>0)&=0 \\
+\iff X&\eqae 0,
+\end{align*}
+which establishes the result for this case.
+
+Next, consider the general case where \(X\in L_{+}\).
+
+``\(\Leftarrow\)'': Assume \(X\eqae 0\). Fix any simple \(Y\) with \(0\le Y\le
+X\). Since \(X\eqae 0\), we have \(Y\eqae 0\). Hence, by the result for simple
+function, we have \(\int_{\Omega}^{}Y\odif{\mu}=0\). Therefore,
+\[\int_{\Omega}^{}X\odif{\mu} =\sup_{\substack{0\le Y\le X,\\ \text{\(Y\)
+simple}}} \underbrace{\int_{\Omega}^{}Y\odif{\mu}}_{0} =0.\]
+
+``\(\Rightarrow\)'': Assume \(\int_{\Omega}^{}X\odif{\mu}=0\). Let
+\(A_n:=\{\omega\in\Omega:X(\omega)\ge 1/n\}\) for every \(n\in\N\). Then,  we
+have \(X\ge \indic_{A_n}/n\) for all \(n\in\N\) and
+\(\mu(\bigcup_{n=1}^{\infty}A_n)=\mu(\{\omega\in\Omega:X(\omega)>0\}
+=\mu(X>0)\). So, it suffices to show that \(\mu(\bigcup_{n=1}^{\infty}A_n)=0\).
+
+Assume to the contrary that \(\mu(\bigcup_{n=1}^{\infty}A_n)>0\). Then there
+exists \(n_0\in\N\) such that \vc{\(\mu(A_{n_0})>0\)}; otherwise we would have
+\(\mu(A_{n})>0\) for all \(n\in\N\), so
+\(\mu(\bigcup_{n=1}^{\infty}A_n)\le\sum_{n=1}^{\infty}\mu(A_n)=0\), which is
+impossible. Hence, we have
+\(\int_{\Omega}^{}X\odif{\mu}\ge\int_{\Omega}^{}\frac{1}{n_0}\indic_{A_{n_0}}\odif{\mu}
+\overset{\text{(simple integrand)}}{=}\frac{1}{n_0}\mu(A_{n_0})\vc{>0}\), contradiction.
+\item Due to the scaling property, it suffices to show the result with
+\(a=b=1\). By \Cref{lma:apx-seq}, there exist sequences \(\{X_{n}\}\) and
+\(\{Y_{n}\}\) of nonnegative simple functions such that \(X_n\nearrow X\) and
+\(Y_n\nearrow Y\).  From this, we know \(\{X_n+Y_n\}\) is a sequence of
+nonnegative simple functions with \(X_n+Y_n\nearrow X+Y\). Thus,
+\begin{align*}
+\int_{\Omega}^{}X+Y\odif{\mu}
+\overset{\text{(MCT)}}&{=}\lim_{n\to\infty}\int_{\Omega}^{}X_n+Y_n\odif{\mu}
+\overset{\text{(linearity for simple functions)}}{=}
+\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}+\lim_{n\to\infty}\int_{\Omega}^{}Y_n\odif{\mu} \\
+\overset{\text{(MCT)}}&{=}\int_{\Omega}^{}X\odif{\mu}+\int_{\Omega}^{}Y\odif{\mu}.
+\end{align*}
+\item Note that we have \(\sum_{n=1}^{\infty}X_n\in L^{+}\) by MCT, and
+\[
+\int_{\Omega}^{}\sum_{n=1}^{\infty}X_n\odif{\mu}
+\overset{\text{(MCT)}}{=}
+\lim_{N\to\infty}\int_{\Omega}^{}\underbrace{\sum_{n=1}^{N}X_n}_{\nearrow}\odif{\mu}
+\overset{\text{(b)}}{=}
+\lim_{N\to\infty}\sum_{n=1}^{N}\int_{\Omega}^{}X_n\odif{\mu}
+=\sum_{n=1}^{\infty}\int_{\Omega}^{}X_n\odif{\mu}.
+\]
+\item By assumption, we have \(X_n(\omega)\nearrow X(\omega)\) for all
+\(\omega\in\Omega\setminus N\) where \(N\) is a null set. Since
+\(X_n-X_n\indic_{N^c}\eqae 0\) for all \(n\in\N\) and \(X-X\indic_{N^c}\eqae
+0\), by (a) we have \(\int_{\Omega}^{}X_n-X_n\indic_{N^c}\odif{\mu}=0\) for all \(n\in\N\)
+and \(\int_{\Omega}^{}X-X\indic_{N^c}\odif{\mu}=0\), which implies by (b) that
+\(\int_{\Omega}^{}X_n\odif{\mu}=\int_{\Omega}^{}X_n\indic_{N^c}\odif{\mu}\) for
+all \(n\in\N\) and \(\int_{\Omega}^{}X\odif{\mu}=\int_{\Omega}^{}X\indic_{N^c}\odif{\mu}\).
+
+Therefore,
+\[
+\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}
+=\lim_{n\to\infty}\int_{\Omega}^{}X_n\indic_{N^c}\odif{\mu}
+\underset{(X_n\indic_{N^c}\nearrow X\indic_{N^c}\text{ pointwisely})}{\overset{\text{(MCT)}}{=}}
+\int_{\Omega}^{}X\indic_{N^c}\odif{\mu}
+=\int_{\Omega}^{}X\odif{\mu}.
+\]
+\item Let \(A_n:=\{X\ge n\}\) for all \(n\in\N\cup\{\infty\}\). Assume to the
+contrary that \(\mu(X=\infty)=\mu(A_{\infty})>0\). Then, we have
+\[
+\int_{\Omega}^{}X\odif{\mu}=\int_{\Omega}^{}X\indic_{A_n}\odif{\mu}
+\ge\int_{\Omega}^{}n\indic_{A_n}\odif{\mu}
+\overset{\text{(simple integrand)}}{=}
+n\mu(A_n)\overset{(A_n\supseteq A_{\infty})}{\ge}
+n\mu(A_{\infty})\to\infty\text{ as \(n\to\infty\),}
+\]
+contradiction.
+\item \begin{enumerate}[label={(\arabic*)}]
+\item For every \(A\in\mathcal{F}\), we have
+\(\nu(A)=\int_{\Omega}^{}\underbrace{X\indic_{A}}_{\ge
+0}\odif{\mu}\overset{\text{(monotonicity)}}{\ge} 0\).
+\item We have \(\nu(\varnothing)=\int_{\Omega}^{}\underbrace{X\indic_{\varnothing}}_{0}\odif{\mu}
+=0\).
+\item Fix any pairwise disjoint \(A_1,A_2,\dotsc\in\mathcal{F}\). Then
+\(\nu(\biguplus_{i=1}^{\infty}A_i)
+=\int_{\Omega}^{}X\indic_{\biguplus_{i=1}^{\infty}A_i}\odif{\mu}
+=\int_{\Omega}^{}\sum_{i=1}^{\infty}X\indic_{A_i}\odif{\mu}
+\overset{\text{(c)}}{=}\sum_{i=1}^{\infty}\int_{\Omega}^{}X\indic_{A_i}\odif{\mu}
+=\sum_{i=1}^{\infty}\nu(A_i)\).
+\end{enumerate}
+\end{enumerate}
+\end{pf}
+\subsubsection*{Lebesgue integrals of measurable functions}
+\item \textbf{Definition.} The last step in the construction of Lebesgue
+integral is to extend the notion of \(\int_{\Omega}^{}X\odif{\mu}\) to every
+\((\mathcal{F},\mathcal{B}(\bar{\R}))\)-measurable function
+\(X:\Omega\to\bar{\R}\). The key idea is to write such function \(X\) as the
+difference \(X=X^{+}-X^{-}\) where \(X^{+}:=\max\{X,0\}\ge 0\) and
+\(X^{-}:=\max\{-X,0\}\ge 0\) are the \defn{positive part} and \defn{negative
+part} of \(X\) respectively. Note also that we have \(|X|=X^{+}+X^{-}\), and
+that \(X\) is measurable iff \(X^{+}\) and \(X^{-}\) both are (by
+\labelcref{it:meas-fn-ran-vec}).
+
+
+Let \(X:\Omega\to\bar{\R}\) be
+\((\mathcal{F},\mathcal{B}(\bar{\R}))\)-measurable. If
+\(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\) \underline{or}
+\(\int_{\Omega}^{}X^{-}\odif{\mu}<\infty\), then \(X\) is said to be
+\defn{quasi-integrable} and the \defn{Lebesgue integral of \(X\) with respect
+to \(\mu\)} is
+\[
+\int_{\Omega}^{}X\odif{\mu}:=\int_{\Omega}^{}X^{+}\odif{\mu}-\int_{\Omega}^{}X^{-}\odif{\mu}.
+\]
+Also, we write \(\int_{A}^{}X\odif{\mu}:=\int_{\Omega}^{}X\indic_{A}\odif{\mu}\).
+Furthermore, if \(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\) \underline{and}
+\(\int_{\Omega}^{}X^{-}\odif{\mu}<\infty\), then \(X\) is said to be \defn{integrable};
+if \(\int_{\Omega}^{}X^{+}\odif{\mu}=\infty\) \underline{and}
+\(\int_{\Omega}^{}X^{-}\odif{\mu}=\infty\), then \(X\) is said to be
+\defn{non-integrable}. \begin{warning}
+Here, ``non-integrable'' is not the same as ``not integrable''! The latter
+covers the possibility of quasi-integrable also.
+\end{warning}
+
+The set of all integrable and \((\mathcal{F},\mathcal{B}(\vc{\R}))\)-measurable
+functions is denoted by \(L^1\) or \(L^1(\Omega,\mathcal{F},\mu)\); note that
+here we only functions with codomain \vc{\(\R\)} rather than \(\bar{\R}\)
+so that the values taken by such functions are always finite, for mathematical
+tractability. (To be compatible with the definition above, we may still view
+such functions as having the codomain \(\bar{\R}\) notionally, but they are not
+allowed to take the values \(\pm\infty\).)
+
+\begin{remark}
+\item \emph{(more on quasi-integrability)} If \(\int_{\Omega}^{}X^{+}\odif{\mu}=\infty\) and
+\(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\), then \(\int_{\Omega}^{}X\odif{\mu}=\infty\).
+If \(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\) and \(\int_{\Omega}^{}X^{+}\odif{\mu}=\infty\), then
+\(\int_{\Omega}^{}X\odif{\mu}=-\infty\).
+\item \emph{(more on integrability)} Since \(|X|=X^{+}+X^{-}\), we have
+\(\int_{\Omega}^{}|X|\odif{\mu}<\infty\iff
+(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\text{ and
+}\int_{\Omega}^{}X^{-}\odif{\mu}<\infty)\). Thus, we know \(X\) is integrable iff
+\(\int_{\Omega}^{}|X|\odif{\mu}<\infty\), which gives us a helpful criterion
+for determining integrability.
+
+\item \emph{(Lebesgue integral of complex-valued function)} Lebesgue integral
+of a \emph{complex-valued} function can be constructed by handling its real and
+imaginary parts separately. For a complex-valued
+function \(X:\Omega\to\C\) that is \((\mathcal{F},\mathcal{B}(\C))\)-measurable
+(note that we have \(\mathcal{B}(\C)=\mathcal{B}(\R^2)\)), it is
+\defn{integrable} if \(\int_{\Omega}^{}|\re{X}|\odif{\mu}<\infty\) and
+\(\int_{\Omega}^{}|\im{X}|\odif{\mu}<\infty\) where \(\re{X}\) and \(\im{X}\)
+denote the real and imaginary parts of \(X\) respectively. If it is integrable,
+then we define
+\(\int_{\Omega}^{}X\odif{\mu}:=\int_{\Omega}^{}\re{X}\odif{\mu}+i\int_{\Omega}^{}\im{X}\odif{\mu}\).
+
+Since \(|X|\overset{\text{(triangle inequality)}}{\le}|\re{X}|+|\im{X}|
+\overset{\text{(Pythagorean theorem)}}{\le}|X|+|X|=2|X|\), we have
+\(\int_{\Omega}^{}|X|\odif{\mu}<\infty\) iff (\(\int_{\Omega}^{}|\re{X}|\odif{\mu}<\infty\)
+and \(\int_{\Omega}^{}|\im{X}|\odif{\mu}<\infty\)), we again have \(X\) is
+integrable iff \(\int_{\Omega}^{}|X|\odif{\mu}<\infty\) here (where \(|X|\)
+denotes the modulus of \(X\)).
+\end{remark}
+\item \label{it:quasi-int-prop}\textbf{Properties of quasi-integrable functions.} Let
+\(X,Y:\Omega\to\bar{\R}\) be quasi-integrable (and measurable) functions. Then:
+\begin{enumerate}
+\item \emph{(additivity)} If we have (\(\int_{\Omega}^{}X^{-}\odif{\mu}<\infty\) and
+\(\int_{\Omega}^{}Y^{-}\odif{\mu}<\infty\)) or
+(\(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\) and
+\(\int_{\Omega}^{}Y^{+}\odif{\mu}<\infty\)), then \(\int_{\Omega}^{}X+Y\odif{\mu}
+=\int_{\Omega}^{}X\odif{\mu}+\int_{\Omega}^{}Y\odif{\mu}\).
+\item \emph{(scaling)} \(\int_{\Omega}^{}cX\odif{\mu}=c\int_{\Omega}^{}X\odif{\mu}\).
+\item \emph{(nonnegativity)} \(X\ge 0\implies \int_{\Omega}^{}X\odif{\mu}\ge 0\).
+\item \emph{(monotonicity)} \(X\le Y\implies \int_{\Omega}^{}X\odif{\mu}\le\int_{\Omega}^{}Y\odif{\mu}\).
+\item \emph{(triangle inequality)} \(|\int_{\Omega}^{}X\odif{\mu}|\le\int_{\Omega}^{}|X|\odif{\mu}\).
+\item \emph{(integral over null set is always zero)}
+\(\int_{A}^{}X\odif{\mu}=0\) for every \(A\in\mathcal{F}\) with \(\mu(A)=0\).
+\end{enumerate}
+\begin{note}
+If \(X\) and \(Y\) are \emph{integrable}, then combining (a) and (b) would
+yield the \emph{linearity}:
+\(\int_{\Omega}^{}aX+bY\odif{\mu}=a\int_{\Omega}^{}X\odif{\mu}+b\int_{\Omega}^{}Y\odif{\mu}\)
+for all \(a,b\in\R\).
+\end{note}
+
+\begin{pf}
+\begin{enumerate}
+\item First note that
+\[
+\begin{cases}
+X+Y=\vc{(X+Y)^{+}}-\orc{(X+Y)^{-}}, \\
+X+Y=\orc{X^{+}}-\vc{X^{-}}+\orc{Y^{+}}-\vc{Y^{-}},
+\end{cases}
+\]
+thus we have \(\vc{(X+Y)^{+}+X^{-}+Y^{-}}
+=\orc{(X+Y)^{-}+X^{+}+Y^{+}}\). As all the functions here are nonnegative, by
+\labelcref{it:nonneg-leb-int-prop} we have
+\begin{equation}
+\label{eq:leb-int-sum-eq}
+\int_{\Omega}^{}\vc{(X+Y)^{+}}\odif{\mu}
++\int_{\Omega}^{}\vc{X^{-}}\odif{\mu}
++\int_{\Omega}^{}\vc{Y^{-}}\odif{\mu}
+=\int_{\Omega}^{}\orc{(X+Y)^{-}}\odif{\mu}
++\int_{\Omega}^{}\orc{X^{+}}\odif{\mu}
++\int_{\Omega}^{}\orc{Y^{+}}\odif{\mu}.
+\end{equation}
+WLOG, assume we are in the case where \(\int_{\Omega}^{}\vc{X^{-}}\odif{\mu}<\infty\) and
+\(\int_{\Omega}^{}\vc{Y^{-}}\odif{\mu}<\infty\). Since we have
+\(\orc{(X+Y)^{-}}\le\vc{X^{-}}+\vc{Y^{-}}\), by monotonicity we get
+\(\int_{\Omega}^{}\orc{(X+Y)^{-}}\odif{\mu}\le\int_{\Omega}^{}\vc{X^{-}}\odif{\mu}
++\int_{\Omega}^{}\vc{Y^{-}}\odif{\mu}<\infty\). Therefore, subtracting
+\(\int_{\Omega}^{}\vc{X^{-}}\odif{\mu}+
+\int_{\Omega}^{}\vc{Y^{-}}\odif{\mu}+
+\int_{\Omega}^{}\orc{(X+Y)^{-}}<\infty\) from both sides of \Cref{eq:leb-int-sum-eq}
+yields
+\[
+\int_{\Omega}^{}\vc{(X+Y)^{+}}\odif{\mu}
+-\int_{\Omega}^{}\orc{(X+Y)^{-}}\odif{\mu}
+=\int_{\Omega}^{}\orc{X^{+}}\odif{\mu}
+-\int_{\Omega}^{}\vc{X^{-}}\odif{\mu}
++\int_{\Omega}^{}\orc{Y^{+}}\odif{\mu}
+-\int_{\Omega}^{}\vc{Y^{-}}\odif{\mu},
+\]
+which implies that \(\int_{\Omega}^{}X+Y\odif{\mu}
+=\int_{\Omega}^{}X\odif{\mu}+\int_{\Omega}^{}Y\odif{\mu}\).
+\item 
+\begin{itemize}
+\item \emph{Case 1: \(c\ge 0\).} We have
+\begin{align*}
+\int_{\Omega}^{}cX\odif{\mu}
+&=\int_{\Omega}^{}(cX)^{+}\odif{\mu}-\int_{\Omega}^{}(cX)^{-}\odif{\mu}
+\overset{\text{(by case)}}{=}\int_{\Omega}^{}c(X^{+})\odif{\mu}-\int_{\Omega}^{}c(X^{-})\odif{\mu} \\
+&=c\int_{\Omega}^{}X^{+}\odif{\mu}-c\int_{\Omega}^{}X^{-}\odif{\mu}
+=c\int_{\Omega}^{}X\odif{\mu}.
+\end{align*}
+\item \emph{Case 2: \(c<0\).} We have
+\begin{align*}
+\int_{\Omega}^{}cX\odif{\mu}
+&=\int_{\Omega}^{}\vc{(cX)^{+}}\odif{\mu}-\int_{\Omega}^{}\orc{(cX)^{-}}\odif{\mu}
+\overset{\text{(by case)}}{=}\int_{\Omega}^{}\vc{-c(X^{-})}\odif{\mu}
+-\int_{\Omega}^{}\orc{-c(X^{+})}\odif{\mu} \\
+&=-c\int_{\Omega}^{}X^{-}\odif{\mu}+c\int_{\Omega}^{}X^{+}\odif{\mu}
+=c\int_{\Omega}^{}X\odif{\mu}.
+\end{align*}
+\end{itemize}
+\item With \(X\ge 0\), we know \(X=X^{+}\), so by the monotonicity for Lebesgue
+integral of nonnegative measurable function, we have
+\(\int_{\Omega}^{}X\odif{\mu}=\int_{\Omega}^{}X^{+}\odif{\mu}\ge 0\).
+\item Since \(Y-X\ge 0\), we have
+\(\int_{\Omega}^{}(Y-X)^{-}\odif{\mu}=\int_{\Omega}^{}0\odif{\mu}=0<\infty\).
+Thus, \(Y-X\) is quasi-integrable. With \(X\) and \(Y-X\) being
+quasi-integrable, we can apply (a) and (c) to get
+\[
+\int_{\Omega}^{}Y\odif{\mu}
+\overset{\text{(a)}}{=}\int_{\Omega}^{}Y-X\odif{\mu}+\int_{\Omega}^{}X\odif{\mu}
+=\int_{\Omega}^{}Y-X\odif{\mu}+\int_{\Omega}^{}X\odif{\mu}
+\overset{\text{(c)}}{\ge}\int_{\Omega}^{}X\odif{\mu}.
+\]
+\item We have
+\begin{align*}
+\left|\int_{\Omega}^{}X\odif{\mu}\right|
+&=\left|\int_{\Omega}^{}X^{+}\odif{\mu}-\int_{\Omega}^{}X^{-}\odif{\mu}\right|
+\overset{\text{(triangle inequality for real numbers)}}{\le}
+=\left|\int_{\Omega}^{}X^{+}\odif{\mu}\right|+\left|\int_{\Omega}^{}X^{-}\odif{\mu}\right| \\
+\overset{(X^{+},X^{-}\ge 0)}&{=}\int_{\Omega}^{}X^{+}\odif{\mu}+\int_{\Omega}^{}X^{-}\odif{\mu}
+=\int_{\Omega}^{}X^{+}+X^{-}\odif{\mu}
+=\int_{\Omega}^{}|X|\odif{\mu}.
+\end{align*}
+\item First consider the special case where \(X\ge 0\), which implies
+\(X\indic_{A}\ge 0\). Fix any simple function
+\(Y=\sum_{i=1}^{n}y_i\indic_{B_i}\) with \(0\le Y\le X\indic_{A}\), where
+\(y_1,\dotsc,y_n\ge 0\). For all \(i=1,\dotsc,n\), we have \(y_i\indic_{B_i}\le
+X\indic_{A}\), and consider the following two cases:
+\begin{itemize}
+\item \emph{Case 1: \(B_i\subseteq A\).} By monotonicity of \(\mu\), we have
+\(\mu(B_i)\le\mu(A)=0\), forcing that \(\mu(B_i)=0\).
+\item \emph{Case 2: \(B_i\not\subseteq A\).} In this case, there exists
+\(\omega\in B_i\) such that \(\omega\notin A\). For this \(\omega\), the
+inequality asserts that \(y_i=y_i\indic_{B_i}(\omega)\le
+X(\omega)\indic_{A}(\omega)=0\), which forces that \(y_i=0\).
+\end{itemize}
+Therefore, in either case we have \(y_i\indic_{B_i}=0\). It follows that
+\(\int_{\Omega}^{}Y\odif{\mu}=\sum_{i=1}^{n}y_i\mu(B_i)=0\). Hence, we have
+\(\int_{A}^{}X\odif{\mu}=\int_{\Omega}^{}X\indic_{A}\odif{\mu}
+=\sup_{\substack{0\le Y\le X,\\ \text{\(Y\) simple}}}\int_{\Omega}^{}Y\odif{\mu}
+=0\).
+
+Now, consider the general case. Using the result proven for the special case
+above, we get \(\int_{\Omega}^{}X\indic_{A}\odif{\mu}=\int_{\Omega}^{}X^{+}\indic_{A}\odif{\mu}
+-\int_{\Omega}^{}X^{-}\indic_{A}\odif{\mu}=0-0=0\).
+\end{enumerate}
+\end{pf}
+\item \textbf{More properties of Lebesgue integrals.}
+\begin{enumerate}
+\item\label{it:leb-int-sig-add} \emph{(\(\sigma\)-additivity of Lebesgue integral)} Let
+\(A_1,A_2,\dotsc\in\mathcal{F}\) be pairwise disjoint and let
+\(A:=\biguplus_{i=1}^{\infty}A_i\). Let \(Z:\Omega\to\bar{\R}\) be a measurable
+function such that \(Z\indic_{A}\in L^{1}\). Then, we have
+\[
+\int_{A}^{}Z\odif{\mu}=\sum_{i=1}^{\infty}\int_{A_i}^{}Z\odif{\mu}.
+\]
+\item\label{it:leb-int-ae-fin} \emph{(a.e.\ finiteness of integrable functions)} If \(X\) is integrable,
+then \(\mu(X=\pm\infty)=0\), i.e., \(X\) is finite a.e.
+\item\label{it:equiv-ae-equal-int-fn} \emph{(equivalent criteria for a.e.\
+equality of integrable functions)} Let \(X,Y\) be integrable functions. Then
+the following are equivalent:
+\begin{enumerate}
+\item \(X\eqae Y\).
+\item \(\int_{A}^{}X\odif{\mu}=\int_{A}^{}Y\odif{\mu}\) for all \(A\in\mathcal{F}\).
+\item \(\int_{\Omega}^{}|X-Y|\odif{\mu}=0\).
+\end{enumerate}
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item First, note that \(\int_{\Omega}^{}|Z|\indic_{A}\odif{\mu}= \int_{\Omega}^{}|Z\indic_{A}|\odif{\mu}
+\overset{(Z\indic_{A}\in L^{1})}{<}\infty\). Thus, \(\int_{\Omega}^{}Z^{+}\indic_{A}\odif{\mu}
+\le\int_{\Omega}^{}|Z|\indic_{A}\odif{\mu}<\infty\) and
+\(\int_{\Omega}^{}Z^{-}\indic_{A}\odif{\mu}
+\le\int_{\Omega}^{}|Z|\indic_{A}\odif{\mu}<\infty\). So, we can write
+\[
+\int_{\Omega}^{}Z\indic_{A}\odif{\mu}=\int_{\Omega}^{}(Z^{+}-Z^{-})\indic_{A}\odif{\mu}
+=\int_{\Omega}^{}Z^{+}\indic_{A}\odif{\mu}-\int_{\Omega}^{}Z^{-}\indic_{A}\odif{\mu}.
+\]
+By \labelcref{it:nonneg-leb-int-prop}, the function \(\nu\) given by
+\(\nu(B)=\int_{\Omega}^{}Z^{+}\indic_{B}\odif{\mu}~\forall B\in\mathcal{F}\) is
+a measure, so by its \(\sigma\)-additivity we have
+\(
+\int_{\Omega}^{}Z^{+}\indic_{A}\odif{\mu}
+=\nu(A)=\nu(\biguplus_{i=1}^{\infty}A_i)
+=\sum_{i=1}^{\infty}\nu(A_i)
+=\sum_{i=1}^{\infty}\int_{\Omega}^{}Z^{+}\indic_{A_i}\odif{\mu}
+\), and similarly,
+\(\int_{\Omega}^{}Z^{-}\indic_{A}\odif{\mu}=\sum_{i=1}^{\infty}\int_{\Omega}^{}Z^{-}\indic_{A_i}\odif{\mu}
+\). Hence,
+\begin{align*}
+\int_{A}^{}Z\odif{\mu}
+&=\int_{\Omega}^{}Z\indic_{A}\odif{\mu}
+\overset{\text{(above)}}{=}
+\int_{\Omega}^{}Z^{+}\indic_{A}\odif{\mu}-\int_{\Omega}^{}Z^{-}\indic_{A}\odif{\mu}
+=\sum_{i=1}^{\infty}\int_{\Omega}^{}Z^{+}\indic_{A_i}\odif{\mu}
+-\sum_{i=1}^{\infty}\int_{\Omega}^{}Z^{-}\indic_{A_i}\odif{\mu} \\
+&=\sum_{i=1}^{\infty}\left(\int_{\Omega}^{}Z^{+}\indic_{A_i}\odif{\mu}
+-\int_{\Omega}^{}Z^{-}\indic_{A_i}\odif{\mu}\right)
+=\sum_{i=1}^{\infty}\int_{\Omega}^{}(Z^{+}-Z^{-})\indic_{A_i}\odif{\mu} \\
+&=\sum_{i=1}^{\infty}\int_{\Omega}^{}Z\indic_{A_i}\odif{\mu}
+=\sum_{i=1}^{\infty}\int_{A_i}^{}Z\odif{\mu}.
+\end{align*}
+\item Since \(X\) is integrable, we have
+\(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\) and
+\(\int_{\Omega}^{}X^{-}\odif{\mu}<\infty\), thus
+\(\mu(X^{+}=\infty)=\mu(X^{-}=\infty)=0\). This implies that
+\(\mu(X=\pm\infty)=\mu(\{X^{+}=\infty\}\uplus\{X^{-}=\infty\})
+=\mu(X^{+}=\infty)+\mu(X^{-}=\infty)=0+0=0\).
+\item 
+\begin{itemize}
+\item \(\text{(i)}\implies \text{(iii)}\): From \(X\eqae Y\), we know
+\(|X-Y|\eqae 0\). Hence, by \labelcref{it:nonneg-leb-int-prop} we have
+\(\int_{\Omega}^{}|X-Y|\odif{\mu}=0\).
+\item \(\text{(iii)}\implies \text{(ii)}\): Assume
+\(\int_{\Omega}^{}|X-Y|\odif{\mu}=0\). Then, we have
+\begin{align*}
+0\le \left|\int_{A}^{}X\odif{\mu}-\int_{A}^{}Y\odif{\mu}\right|
+&=\left|\int_{\Omega}^{}(X-Y)\indic_{A}\odif{\mu}\right|
+\overset{\text{(triangle inequality)}}{\le}
+\int_{\Omega}^{}|X-Y|\indic_{A}\odif{\mu} \\
+&\le\int_{\Omega}^{}|X-Y|\odif{\mu}=0,
+\end{align*}
+so \(\int_{A}^{}X\odif{\mu}=\int_{A}^{}Y\odif{\mu}\).
+\item \(\text{(ii)}\implies \text{(i)}\): Assume
+\(\int_{A}^{}X\odif{\mu}=\int_{A}^{}Y\odif{\mu}\) for all \(A\in\mathcal{F}\).
+Let \(Z:=X-Y\). Assume to the contrary that \(\mu(Z\ne 0)=\mu(X\ne Y)>0\).
+Then, we have \(\mu(Z^{+}>0)>0\) or \(\mu(Z^{-}>0)>0\). WLOG, suppose that
+the former is the case, and let \(A:=\{Z^{+}>0\}\).
+
+On \(A\) we have \(Z>0\), so \(Z\indic_{A}=Z^{+}\indic_{A}\). Hence,
+\[0=\int_{A}^{}X\odif{\mu}-\int_{A}^{}Y\odif{\mu}
+=\int_{\Omega}^{}Z\indic_{A}\odif{\mu}
+=\int_{\Omega}^{}Z^{+}\indic_{A}\odif{\mu},
+\]
+which implies by \labelcref{it:nonneg-leb-int-prop} that \(Z^{+}\indic_{A}\eqae
+0\), leading to a contradiction since we have \(\mu(Z^{+}\indic_{A}>0)
+=\mu(\{Z^{+}>0\}\cap A)=\mu(A)>0\).
+\end{itemize}
+\end{enumerate}
+\end{pf}
+\item \textbf{Dominated convergence theorem.} Apart from \emph{monotone
+convergence theorem}, another important result about Lebesgue integral is the
+\emph{dominated convergence theorem (DCT)}, which provides another sufficient
+condition (involving a certain ``\underline{domination}'') that allows the
+interchange of limit and integral. To prove DCT, we would need the
+\emph{Fatou's lemma}, which suggests that interchanging limit inferior and
+integral would lead to an inequality in general, for nonnegative measurable
+functions.
+
+\begin{lemma}[Fatou's lemma]
+\label{lma:fatou}
+Let \(X_n\in L_{+}\) for every \(n\in\N\). Then
+\[
+\int_{\Omega}^{}\liminf_{n\to \infty}X_n\odif{\mu}
+\le\liminf_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu}.
+\]
+\begin{note}
+The limit inferior \(\liminf_{n\to \infty}X_n\) can be defined as
+\(\lim_{n\to\infty}\inf_{k\ge n}X_k\) (pointwise).
+\end{note}
+\end{lemma}
+\begin{pf}
+First, note that \(\inf_{k\ge n}X_k\) is in \(L_{+}\) for all \(n\in\N\).
+Also, notice that the sequence \(\{\inf_{k\ge n}X_k\}_{n\in\N}\) is increasing.
+Hence, by monotone convergence theorem, we have
+\begin{align*}
+\int_{\Omega}^{}\liminf_{n\to \infty}X_n\odif{\mu}
+&=\int_{\Omega}^{}\lim_{n\to\infty}\inf_{k\ge n}X_k\odif{\mu}
+\overset{\text{(MCT)}}{=}
+\lim_{n\to\infty}\int_{\Omega}^{}\inf_{k\ge n}X_k\odif{\mu} \\
+&=\liminf_{n\to\infty}\int_{\Omega}^{}\vc{\inf_{k\ge n}X_k}\odif{\mu}
+\underset{\text{(monotonicity)}}{\overset{(\vc{\inf_{k\ge n}X_k}\le \orc{X_n})}{\le}}
+\liminf_{n\to \infty}\int_{\Omega}^{}\orc{X_n}\odif{\mu}.
+\end{align*}
+\end{pf}
+\begin{theorem}[Dominated convergence theorem (DCT)]
+\label{thm:dct}
+Let \(X_n\in L^{1}\) for every \(n\in\N\), and \(X:\Omega\to\R\) be measurable.
+If \(X_n\to X\) a.e.\ and \(|X_n|\le Y\) a.e.\ for all \(n\in\N\), for some
+\(Y\in L^{1}\) \emph{(domination)}, then \(X\in L^{1}\) and
+\(\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}=\int_{\Omega}^{}X\odif{\mu}\).
+\end{theorem}
+\begin{pf}
+By assumption, we have \(\lim_{n\to\infty}X_n(\omega)=X(\omega)\) for all
+\(\omega\in\Omega\setminus N_X\), and for each \(n\in\N\), \(|X_n(\omega)|\le
+Y(\omega)\) for all \(\omega\in\Omega\setminus N_n\), where \(N_X\) and
+\(N_n\)'s are null sets. Now let \(N:=N_X\cup \bigcup_{n=1}^{\infty}N_n\),
+which is also a null set.
+
+By construction, we have \(|X_n|\indic_{N^c}\le Y\indic_{N^c}\) for every
+\(n\in\N\), and thus letting \(n\to\infty\) gives \(|X|\indic_{N^c}\le
+Y\indic_{N^c}\). Hence,
+\begin{align*}
+\int_{\Omega}^{}|X|\odif{\mu}
+&=\underbrace{\int_{\Omega}^{}|X|\indic_{N}\odif{\mu}}_{0\text{ by \labelcref{it:quasi-int-prop}}}+\int_{\Omega}^{}|X|\indic_{N^c}\odif{\mu} \\
+\overset{\text{(monotonicity)}}&{\le}
+\int_{\Omega}^{}Y\indic_{N^c}\odif{\mu}
+\underset{(Y\indic_{N^c}\eqae Y)}{\overset{\text{\labelcref{it:equiv-ae-equal-int-fn}}}{=}}
+\int_{\Omega}^{}Y\odif{\mu}
+\overset{\text{(monotonicity)}}{\le}
+\int_{\Omega}^{}|Y|\odif{\mu}
+<\infty,
+\end{align*}
+which implies that \(X\in L^1\). It then remains to show that
+\(\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}=\int_{\Omega}^{}X\odif{\mu}\).
+
+For every \(n\in\N\), since \(|X_n|\indic_{N^c}\le Y\indic_{N^c}\), we have
+\((Y+X_n)\indic_{N^c}\ge 0\) and \((Y-X_n)\indic_{N^c}\ge 0\), which means that
+\((Y+X_n)\indic_{N^c},(Y-X_n)\indic_{N^c}\in L_{+}\). Therefore, we get
+\begin{align*}
+\int_{\Omega}^{}Y\odif{\mu}+\int_{\Omega}^{}X\odif{\mu}
+\overset{\text{\labelcref{it:equiv-ae-equal-int-fn}}}&{=}
+\int_{\Omega}^{}(Y+X)\indic_{N^c}\odif{\mu}
+=\int_{\Omega}^{}\liminf_{n\to \infty}(Y+X_n)\indic_{N^c}\odif{\mu} \\
+\overset{\text{(Fatou's lemma)}}&{\le}
+\liminf_{n\to \infty}\int_{\Omega}^{}(Y+X_n)\indic_{N^c}\odif{\mu}
+\overset{\text{\labelcref{it:equiv-ae-equal-int-fn}}}{=}
+\int_{\Omega}^{}Y\odif{\mu}+\liminf_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu},
+\end{align*}
+which implies that \(\int_{\Omega}^{}X\odif{\mu}\vc{\le}\liminf_{n\to
+\infty}\int_{\Omega}^{}X_n\odif{\mu}\).
+
+Similarly, we have
+\begin{align*}
+\int_{\Omega}^{}Y\odif{\mu}-\int_{\Omega}^{}X\odif{\mu}
+\overset{\text{\labelcref{it:equiv-ae-equal-int-fn}}}&{=}
+\int_{\Omega}^{}(Y-X)\indic_{N^c}\odif{\mu}
+=\int_{\Omega}^{}\liminf_{n\to \infty}(Y-X_n)\indic_{N^c}\odif{\mu} \\
+\overset{\text{(Fatou's lemma)}}&{\le}
+\liminf_{n\to \infty}\int_{\Omega}^{}(Y-X_n)\indic_{N^c}\odif{\mu}
+\overset{\text{\labelcref{it:equiv-ae-equal-int-fn}}}{=}
+\int_{\Omega}^{}Y\odif{\mu}+\liminf_{n\to \infty}\left(-\int_{\Omega}^{}X_n\odif{\mu}\right) \\
+\overset{(\liminf_{n\to \infty}-f_n=-\limsup_{n\to \infty}f_n)}&{=}
+\int_{\Omega}^{}Y\odif{\mu}-\limsup_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu},
+\end{align*}
+which implies that \(\int_{\Omega}^{}X\odif{\mu}\orc{\ge}\limsup_{n\to
+\infty}\int_{\Omega}^{}X_n\odif{\mu}\).
+
+So, altogether we have
+\[\limsup_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu}\ge
+\liminf_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu}
+\vc{\ge} \int_{\Omega}^{}X\odif{\mu}\orc{\ge} \limsup_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu}
+\ge\liminf_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu},\]
+which implies that \(\int_{\Omega}^{}X\odif{\mu}=\liminf_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu}
+=\limsup_{n\to \infty}\int_{\Omega}^{}X_n\odif{\mu}=\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}\).
+\end{pf}
+
+\begin{remark}
+\item \emph{(necessity of domination)} To illustrate the necessity of
+domination, consider the following example where domination fails and the DCT
+does not apply. Let \((\Omega,\mathcal{F},\mu)=([0,1],\mathcal{B}([0,1]),\lambda)\).
+Let \(X_n:=n^{2}\indic_{(0,1/n)}\ge 0\) for every \(n\in\N\) and \(X:=0\). Note
+that \(X_n\to X\) pointwise (so a.e.), but \(\lim_{n\to\infty}\int_{\Omega}^{}X_n\odif{\mu}
+=\lim_{n\to\infty}n^{2}\mu((0,1/n))=\lim_{n\to\infty}n=\infty\), which is
+definitely not equal to \(\int_{\Omega}^{}X\odif{\mu}=0\).
+\item \emph{(a simple corollary)} Under the conditions in DCT, we can also
+deduce that \(\lim_{n\to\infty}\int_{\Omega}^{}|X-X_n|\odif{\mu}=0\), which can
+be shown by noting that \(|X-X_n|\to 0\) a.e., and \(|X-X_n|\le
+|X|+|X_n|\underset{\text{(a.e.)}}{\le}|X|+|Y|\in L^{1}\).
+\end{remark}
+We have previously shown the commutativity of integral and countable sum for
+Lebesgue integral of nonnegative measurable function. Using DCT, we can extend
+this result to Lebesgue integral of general measurable function (but with some
+extra condition).
+\begin{corollary}[Commutativity of integral and countable sum]
+\label{cor:leb-int-sum-commu}
+Let \(X_n\in L^{1}\) for each \(n\in\N\). If
+\(\sum_{n=1}^{\infty}\int_{\Omega}^{}|X_n|\odif{\mu}<\infty\), then
+\(\sum_{n=1}^{\infty}X_n\in L^{1}\) and
+\(\int_{\Omega}^{}\sum_{n=1}^{\infty}X_n\odif{\mu}=\sum_{n=1}^{\infty}\int_{\Omega}^{}X_n\odif{\mu}\).
+\end{corollary}
+\begin{pf}
+We first verify the conditions for applying DCT: (i) \(\sum_{k=1}^{n}X_k\in L^{1}\) for each
+\(n\in\N\), (ii) \(\sum_{k=1}^{n}X_k\to \sum_{k=1}^{\infty}X_k\) a.e., and
+(iii) \(|\sum_{k=1}^{n}X_k|\le Y\) a.e.\ for every \(n\in\N\), for some \(Y\in L^{1}\):
+\begin{enumerate}[label={(\roman*)}]
+\item For each \(n\in\N\), note that \(\sum_{k=1}^{n}X_k\) is measurable and
+\(\int_{\Omega}^{}|\sum_{k=1}^{n}X_k|\odif{\mu}
+\le\int_{\Omega}^{}\sum_{k=1}^{n}|X_k|\odif{\mu}
+=\sum_{k=1}^{n}\int_{\Omega}^{}|X_k|\odif{\mu}<\infty
+\). Hence \(\sum_{k=1}^{n}X_k\in L^{1}\).
+\item It suffices to show that \(\sum_{k=1}^{\infty}X_k\) converges a.e., which
+would then imply by definition that \(\sum_{k=1}^{n}X_k\to \sum_{k=1}^{\infty}X_k\) a.e.
+
+Note that \(\int_{\Omega}^{}\sum_{k=1}^{\infty}|X_k|\odif{\mu}\overset{(|X_k|\in L_{+}~\forall k\in\N)}{=}
+\sum_{k=1}^{\infty}\int_{\Omega}^{}|X_k|\odif{\mu}\overset{\text{(assumption)}}{<}\infty\),
+and \(\sum_{k=1}^{\infty}|X_k|\) is nonnegative.
+So, we have \(Y:=\sum_{k=1}^{\infty}|X_k|\in L^{1}\). By
+\labelcref{it:leb-int-ae-fin}, we have
+\(Y(\omega)=\sum_{k=1}^{\infty}|X_k(\omega)|<\infty\) for all \(\omega\in
+N^c\) where \(N\) is a null set. This means that \(\sum_{k=1}^{\infty}X_k\)
+converges absolutely (and hence converges) a.e.
+\item We consider the \(Y\in L^{1}\) above. The domination follows by noting that
+for all \(n\in\N\), we have
+\(|\sum_{k=1}^{n}X_k|\le \sum_{k=1}^{n}|X_k|\le Y\).
+\end{enumerate}
+Now, we apply the DCT to get \(\sum_{k=1}^{\infty}X_k\in L^{1}\) and
+\[
+\int_{\Omega}^{}\sum_{k=1}^{\infty}X_k\odif{\mu}
+=\lim_{n\to\infty}\int_{\Omega}^{}\sum_{k=1}^{n}X_k\odif{\mu}
+\overset{\text{(additivity)}}{=}\lim_{n\to\infty}\sum_{k=1}^{n}\int_{\Omega}^{}X_k\odif{\mu}
+=\sum_{k=1}^{\infty}\int_{\Omega}^{}X_k\odif{\mu}.
+\]
+\end{pf}
+\item \textbf{\(L^{p}\) spaces.} In the definition of Lebesgue integral of
+measurable function, we have seen the notation \(L^{1}\), which denotes the set
+of all integrable functions. Knowing that \(X\) is integrable iff
+\(\int_{\Omega}^{}|X|\odif{\mu}<\infty\), we can express it as
+\(L^{1}(\Omega,\mathcal{F},\mu)=\{\vc{X:\Omega\to\R}:\text{\(X\) is
+\((\mathcal{F},\mathcal{B}(\R))\)-measurable and \(\int_{\Omega}^{}|X|\odif{\mu}<\infty\)}\}\).
+
+More generally, we can define \emph{\(L^p\) space} in the following. For all
+\(p\in (0,\infty)\), let
+\(\|X\|_{p}:=(\int_{\Omega}^{}|X|^{p}\odif{\mu})^{1/p}\) be the \defn{\(L^p\)
+norm}, and then the \defn{\(L^{p}\) space} is given by
+\[
+L^p=L^p(\Omega,\mathcal{F},\mu):=\{\vc{X:\Omega\to\R}:\text{\(X\) is
+\((\mathcal{F},\mathcal{B}(\R))\)-measurable and \(\|X\|_{p}<\infty\)}\}.
+\]
+\begin{remark}
+\item \emph{(relationship between \(L^p\) and \(L^1\) spaces)} For a
+\((\mathcal{F},\mathcal{B}(\R))\)-measurable function \(X\), we have \(X\in L^{p}\) 
+iff \(\left(\int_{\Omega}^{}|X|^{p}\odif{\mu}\right)^{1/p}<\infty\)
+iff \(\int_{\Omega}^{}|\orc{|X|^{p}}|\odif{\mu}<\infty\)
+iff \(\orc{|X|^{p}}\in L^{1}\).
+\item \emph{(Banach and Hilbert spaces)} For every \(p\ge 1\), \(L^p\) can be
+shown to be a \emph{Banach space}. Also, \(L^2\) can be shown to be a
+\emph{Hilbert space}.  These spaces are important in the subject of
+\emph{functional analysis} (but we shall not discuss them in details here).
+\item \emph{(\(L^{\infty}\) space)} For \(p=\infty\), we define the
+\defn{\(L^{\infty}\) norm} by \(\|X\|_{\infty}:=\esssup |X|\), where
+\(\esssup |X|\) is the \defn{essential supremum} of \(|X|\) which is given by
+\(\esssup |X|:=\inf\{x\ge 0:\mu(|X|>x)=0\}\). For every \(x\ge 0\) with
+\(\mu(|X|>x)=0\), it is an ``essential'' upper bound for \(|X|\) in the sense
+that we have \(|X|\le x\) a.e. The essential supremum is then the least
+``essential'' upper bound for \(|X|\); it also has the property that
+\(|X|\le\esssup{|X|}\) a.e.
+
+The \defn{\(L^{\infty}\) space} is then defined by
+\[
+L^{\infty}=L^{\infty}(\Omega,\mathcal{F},\mu):=\{\vc{X:\Omega\to\R}:\text{\(X\) is
+\((\mathcal{F},\mathcal{B}(\R))\)-measurable and \(\|X\|_{\infty}<\infty\)}\}.
+\]
+It can be shown that \(X\in L^{\infty}\) iff \(X\) is bounded a.e.
+\end{remark}
+\item \textbf{Properties for \(L^{p}\) spaces.}
+\begin{enumerate}
+\item\label{it:holder-cs-ineq} \emph{(H\"older inequality)} Let \(p,q\in [1,\infty]\) with \(1/p+1/q=1\)
+(with the convention that \(1/\infty:=0\)) be \emph{conjugate indices}. Then,
+\(\|XY\|_{1}\le \|X\|_{p}\|Y\|_{q}\) for all measurable functions \(X,Y:\Omega\to\R\).
+
+Furthermore, if we have \(p,q\in (1,\infty)\), \(X\in L^{p}\), and \(Y\in
+L^{q}\), then the equality holds iff \(\alpha|X|^{p}\eqae \beta|Y|^{q}\) for
+some \(\alpha,\beta\ge 0\).
+
+\begin{note}
+The special case with \(p=q=2\) is known as the \emph{Cauchy-Schwarz
+inequality}.
+\end{note}
+\item\label{it:minkowski-ineq} \emph{(Minkowski's inequality)} Let \(p\in [1,\infty]\). Then
+\(\|X+Y\|_{p}\le \|X\|_{p}+\|Y\|_{p}\) for all \(X,Y\in L^{p}\).
+\item\label{it:jensen-ineq} \emph{(Jensen's inequality)} Let
+\((\Omega,\mathcal{F},\mu)\) be a \vc{probability} space, \(X:\Omega\to\R\) be
+a function in \(L^{1}\), and \(\varphi\) be a convex function
+on \(\R\). Then, \(\varphi(\int_{\Omega}^{}X\odif{\mu})\le
+\int_{\Omega}^{}\varphi(X)\odif{\mu}\).
+\begin{note}
+In case \(\varphi\) is concave, we can apply the Jensen's inequality to
+\(-\varphi\) which is convex. This would then yield the inequality
+\(\varphi(\int_{\Omega}^{}X\odif{\mu})\ge
+\int_{\Omega}^{}\varphi(X)\odif{\mu}\).
+\end{note}
+\item\label{it:lp-sp-norm-relate} \emph{(relationship between \(L^{p}\) spaces
+and norms)} If \(\mu(\Omega)<\infty\) (i.e., \(\mu\) is finite) and
+\(0<p<q\le\infty\), then \(\|X\|_{p}\le
+\|X\|_{q}\cdot \mu(\Omega)^{1/p-1/q}\) (and hence \(L^{q}\subseteq L^{p}\)).
+
+\begin{remark}
+\item If we have \(\mu(\Omega)=1\) (e.g., in a probability space), then this inequality
+gets simplified to \(\|X\|_{p}\le\|X\|_{q}\).
+\item With this inequality, we know that \(\|X\|_{q}<\infty\implies
+\|X\|_{p}<\infty\) (as \(\mu(\Omega)^{1/p-1/q}\) must be finite), so
+\(L^q\subseteq L^{p}\).
+\end{remark}
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item Omitted.
+\item Omitted.
+\item By the convexity of \(\varphi\), for all \(x_0\in\R\), there
+exists a \emph{supporting line} \(x\mapsto \varphi(x_0)+m(x-x_0)\) of the graph
+of \(\varphi\), satisfying that \(\varphi(x)\ge\varphi(x_0)+m(x-x_0)\) for all
+\(x\in\R\).
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=1:4, ymin=0, xtick={2.5}, ytick={1.25}, xticklabel={\(x_0\)}, yticklabel={\(\varphi(x_0)\)}]
+\addplot[blue]{(x-2)^2+1};
+\node[blue] () at (2,1.5) {\(\varphi\)};
+\addplot[ForestGreen]{x-1.25};
+\draw[violet, fill] (2.5,1.25) circle [radius=0.7mm];
+\node[ForestGreen] () at (2.7,0.5) {\(\varphi(x_0)+m(x-x_0)\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+Let \(\expv{X}:=\int_{\Omega}^{}X\odif{\mu}\) (this is indeed how we define
+\emph{expectation}; see \Cref{subsect:expectation}).  By setting
+\(x_0=\expv{X}\), we have \(\varphi(x)\ge \varphi(\expv{X})+m(x-\expv{X})\) for
+all \(x\in\R\). Thus, we have \(\varphi(X)\ge
+\varphi(\expv{X})+m(X-\expv{X})\). By monotonicity, we then get
+\[
+\int_{\Omega}^{}\varphi(X)\odif{\mu}\ge \int_{\Omega}^{}\varphi(\expv{X})
++m(X-\expv{X})\odif{\mu}
+=\varphi(\expv{X})\cdot \underbrace{\mu(\Omega)}_{1}
++m\underbrace{\left(\int_{\Omega}^{}X\odif{\mu}-\expv{X}\right)}_{0}
+=\varphi\left(\int_{\Omega}^{}X\odif{\mu}\right).
+\]
+\item For the case where \(q=\infty\), the inequality
+translates into \(\|X\|_{p}\le\|X\|_{\infty}\cdot \mu(\Omega)^{1/p}\), which can
+be proven as follows:
+\[
+\|X\|_{p}=\left(\int_{\Omega}^{}|X|^{p}\odif{\mu}\right)^{1/p}
+\underset{\text{\labelcref{it:equiv-ae-equal-int-fn}}}{\overset{\text{(monotonicity)}}{\le}}
+\left(\int_{\Omega}^{}\|X\|_{\infty}^{p}\odif{\mu}\right)^{1/p}
+=\|X\|_{\infty}\cdot \mu(\Omega)^{1/p}.
+\]
+Next, for the case where \(q<\infty\), we apply H\"older inequality with
+conjugate indices \(q/p\) and \(q/(q-p)\) to get
+\begin{align*}
+\|X\|_{p}&=\left(\int_{\Omega}^{}\vc{|X|^{p}}\cdot \orc{1}\odif{\mu}\right)^{1/p}
+=\|\vc{|X|^{p}}\cdot \orc{1}\|_{1}^{1/p}
+\overset{\text{(H\"older)}}{\le}
+\left(\|\vc{|X|^{p}}\|_{q/p}\|\orc{1}\|_{q/(q-p)}\right)^{1/p} \\
+&=\left(\int_{\Omega}^{}|X|^{q}\odif{\mu}\right)^{p/q\cdot 1/p}
+\left(\int_{\Omega}^{}1\odif{\mu}\right)^{(q-p)/q\cdot 1/p}
+=\|X\|_{q}\cdot \mu(\Omega)^{1/p-1/q}.
+\end{align*}
+\end{enumerate}
+\end{pf}
+\end{enumerate}
+\subsection{Expectation}
+\label{subsect:expectation}
+\begin{enumerate}
+\item After studying Lebesgue integrals in
+\Cref{subsect:construct-lebesgue-int}, we now apply the concept in defining and
+computing expectations. Let \(X:\Omega\to\bar{\R}\) be
+\((\mathcal{F},\mathcal{B}(\bar{\R}))\)-measurable. Then, the
+\defn{expectation} or \defn{mean} of \(X\) is given by \(\expv{X}:=\int_{\Omega}^{}X\odif{\mu}\),
+provided that the Lebesgue integral is defined (being finite or \(\pm\infty\)).
+\begin{note}
+If we want to emphasize the underlying measure \(\mu\), we may write
+\(\expvmu{\mu}{X}\) instead.
+\end{note}
+
+\item \textbf{Change of variables formula.} Although many general properties of
+expectations are derived based on this abstract form of expectation, in
+practice we rarely use such abstract formula for computing expectations. Rather
+than, we often utilize formulas involving the \emph{mass function} or
+\emph{density function}, which can be seen as special cases of the
+following \emph{change of variables} formula.
+
+\begin{theorem}[Change of variables]
+\label{thm:change-of-var}
+Let \((\Omega,\mathcal{F},\mu)\) be a measure space, \((\Omega',\mathcal{F}')\)
+be a measurable space, \(X:\Omega\to\Omega'\) be measurable, and
+\(h:\Omega'\to\R\) be measurable. If \(\expv{|h(X)|}<\infty\) (i.e., \(h(X)\)
+is integrable), then we have
+\[
+\int_{\Omega}^{}h(X)\odif{\mu}=\int_{\Omega'}^{}h\odif{\mu_{X}}
+\]
+where \(\mu_X\) denotes the push-forward measure of \(\mu\) with respect to \(X\).
+\end{theorem}
+\begin{pf}
+We apply the standard argument to \(h\) here.
+\begin{enumerate}[label={(\arabic*)}]
+\item Fix any indicator function \(h(\omega')=\indic_{A'}(\omega')\),
+where \(A'\in\mathcal{F}\). Since \(\indic_{A'}(X(\omega))=1\iff X(\omega)\in
+A'\iff \omega\in X^{-1}(A')\iff \indic_{X^{-1}(A')}(\omega)=1\), we have
+\vc{\(\indic_{A'}(X)=\indic_{X^{-1}(A')}\)}. Hence,
+\[
+\int_{\Omega}^{}h(X)\odif{\mu}
+=\int_{\Omega}^{}\vc{\indic_{A'}(X)}\odif{\mu}
+\vc{=}\int_{\Omega}^{}\vc{\indic_{X^{-1}(A')}}\odif{\mu}
+=\mu(X^{-1}(A'))
+=\mu_X(A')
+=\int_{\Omega'}^{}\indic_{A'}\odif{\mu_X}
+=\int_{\Omega'}^{}h\odif{\mu_X}.
+\]
+Then, by linearity, the equality also holds for every simple function \(h\).
+
+\item Fix any \(h\in L_{+}\). By \Cref{lma:apx-seq}, there exists a sequence
+\(\{h_n\}\) of nonnegative simple functions on \(\Omega'\) such that
+\(h_n\nearrow h\) (pointwisely), which implies \(h_n(X)\nearrow h(X)\). Thus,
+\[
+\int_{\Omega}^{}h(X)\odif{\mu}
+\overset{\text{(MCT)}}{=}\lim_{n\to\infty}\int_{\Omega}^{}h_n(X)\odif{\mu}
+\overset{(1)}{=}\lim_{n\to\infty}\int_{\Omega'}^{}h_n\odif{\mu_X}
+\overset{\text{(MCT)}}{=}
+\int_{\Omega}^{}h\odif{\mu_X}.
+\]
+\item Fix any \(h\in L^{1}\), and we have
+\[
+\int_{\Omega}^{}h(X)\odif{\mu}=
+\int_{\Omega}^{}h^{+}(X)\odif{\mu}
+-\int_{\Omega}^{}h^{-}(X)\odif{\mu}
+\overset{(2)}{=}
+\int_{\Omega'}^{}h^{+}\odif{\mu_X}
+-\int_{\Omega'}^{}h^{-}\odif{\mu_X}
+=\int_{\Omega'}^{}h\odif{\mu_X}.
+\]
+\end{enumerate}
+\end{pf}
+\item \textbf{Implications of change of variables formula.}
+\begin{enumerate}
+\item \emph{(expectation as a Lebesgue-Stieltjes integral)}
+\label{it:lebesgue-stieljes-int} When applying the change of variables formula,
+often we are in the case where \(\mu=\pr\) is a \emph{probability measure} and
+\((\Omega',\mathcal{F}')=(\R^{d},\mathcal{B}(\R^d))\) (we then change the
+notation \(X\to\vect{X}\), as it is a random vector). Based on
+\Cref{thm:dist-fn-char-dist}, sometimes we write \(\odif{F}\) in place of
+\(\odif{\pr_{\vect{X}}}\), so the change of variables formula in this case
+would become
+\[
+\expv{h(\vect{X})}=\int_{\R^d}^{}h\odif{F}\overset{\text{(notation)}}{=}\int_{\R^d}^{}h(\vect{x})\odif{F(\vect{x})},
+\]
+which takes a form that is more familiar to us. The integral
+\(\int_{\R^d}^{}h(\vect{x})\odif{F(\vect{x})}\) is known as the
+\defn{Lebesgue-Stieltjes integral} of \(h\) with respect to \(F\).
+
+From this expression, it is also clear that if we have \(\vect{X}_1\eqd
+\vect{X}_2\) (so both share the same distribution function \(F\)), then
+\(\expv{h(\vect{X}_1)}=\expv{h(\vect{X}_2)}\) for every measurable function
+\(h:\R^d\to\R\).
+\item \emph{(interpretations of Lebesgue-Stieltjes integral)}
+Based on the standard argument, one can derive the following expressions of
+\(\expv{h(\vect{X})}\):
+\begin{itemize}
+\item \emph{(in terms of mass function)} If \(F\) is discrete with mass
+function \(f\) and countable support
+\(\{\vect{x}_1,\vect{x}_2,\dotsc\}\subseteq \R^d\), then
+\[
+\expv{h(\vect{X})}=\sum_{i=1}^{\infty}h(\vect{x}_i)f(\vect{x}_i).
+\]
+\item \emph{(in terms of density function)} If \(F\) is absolutely continuous
+with density function \(f\), then
+\[
+\expv{h(\vect{X})}=\int_{\R^d}^{}h(\vect{x})f(\vect{x})\odif{\vect{x}}.
+\]
+\end{itemize}
+These suggest the interpretations of the Lebesgue-Stieltjes integral
+\(\int_{\R^d}^{}h(\vect{x})\odif{F(\vect{x})}\) in the cases above.
+\end{enumerate}
+\item \textbf{Relationship between Riemann-Stieltjes and Lebesgue-Stieltjes integrals.}
+The notation \(\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{F(\vect{x})}\) is
+also used for the \emph{Riemann-Stieltjes integral} with integrand
+\(h:[\vect{a},\vect{b}]\to\R\) and integrator \(F:[\vect{a},\vect{b}]\to\R\).
+This is because such Riemann-Stieltjes integral indeed always coincides with the
+corresponding Lebesgue-Stieltjes integral, provided that the former exists.
+
+The \defn{Riemann-Stieltjes integral}
+\(\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{F(\vect{x})}\) is defined as
+the limit of the \emph{Riemann-Stieltjes sums}:
+\[
+\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{F(\vect{x})}:=\lim_{\vect{n}\to\vect{\infty}}
+\sum_{\vect{i}={}_{d}1}^{\vect{n}}h(\vect{\xi}_{\vect{i}})
+\Delta_{(\vect{x}_{\vect{i}-{}_{d}1},\vect{x}_{\vect{i}}]}F
+\]
+TODO
+\item \textbf{Fubini-Tonelli theorem.} The main tool for computing multivariate
+integrals is the \emph{Fubini-Tonelli theorem}; perhaps you have seen some
+special cases of this result in your previous multivariable calculus course.
+
+\begin{theorem}[Fubini-Tonelli]
+\label{thm:fubini-tonelli}
+Let \((\Omega_1,\mathcal{F}_1,\mu_1)\) and \((\Omega_2,\mathcal{F}_2,\mu_2)\)
+be two measure spaces where \(\mu_1\) and \(\mu_2\) are \(\sigma\)-finite, and
+consider the product space \((\Omega,\mathcal{F},\mu)=(\Omega_1\times
+\Omega_2,\mathcal{F}_1\otimes\mathcal{F}_2,\mu_1\times \mu_2)\). Let
+\(h:\Omega\to\eR\) be a
+\((\mathcal{F}_1\otimes\mathcal{F}_2,\mathcal{B}(\eR))\)-measurable function.
+
+If \(h\in L_{+}\) \emph{(Tonelli)} or \(h\in L^{1}\) \emph{(Fubini)}, then
+\(\omega_1\mapsto\vc{\int_{\Omega_2}^{}h(\omega_1,\omega_2)\odif{\mu_2(\omega_2)}}\)
+and \(\omega_2\mapsto\orc{\int_{\Omega_1}^{}h(\omega_1,\omega_2)\odif{\mu_1(\omega_1)}}\)
+are \(\mathcal{F}_1\)-measurable and \(\mathcal{F}_2\)-measurable respectively, and
+\[
+\int_{\Omega}^{}h\odif{\mu}
+=\int_{\Omega_1}^{}
+\left(\vc{\int_{\Omega_2}^{}h(\omega_1,\omega_2)\odif{\mu_2(\omega_2)}}\right)\odif{\mu_1(\omega_1)}
+=\int_{\Omega_2}^{}
+\left(\orc{\int_{\Omega_1}^{}h(\omega_1,\omega_2)\odif{\mu_1(\omega_1)}}\right)\odif{\mu_2(\omega_2)}.
+\]
+\end{theorem}
+\begin{pf}
+Omitted.
+\end{pf}
+
+\begin{remark}
+\item \emph{Tonelli's theorem} refers to the result with condition \(h\in
+L_{+}\), and \emph{Fubini's theorem} refers to the result with \(h\in L_1\).
+The result above is a combination of these two theorems.
+\item The Fubini-Tonelli theorem gives us conditions under which changing the
+order of integration is allowed. The result can be extended to the case where
+finitely many (not just two) integrals are involved by induction. 
+\item A typical procedure in applying the Fubini-Tonelli theorem is as follows:
+\begin{enumerate}[label={(\arabic*)}]
+\item Apply \emph{Tonelli's theorem} to \(|h|\in L_{+}\) for calculating
+\(\int_{\R^d}^{}|h(\vect{x})|\odif{F(\vect{x})}\).
+\item If \(\int_{\R^d}^{}|h(\vect{x})|\odif{F(\vect{x})}<\infty\), then \(h\in L^{1}\).
+After that, apply \emph{Fubini's theorem} to \(h\in L^{1}\) for calculating
+\(\int_{\R^d}^{}h(\vect{x})\odif{F(\vect{x})}\) (the actual integral of interest).
+\end{enumerate}
+\end{remark}
+\item \textbf{Expectation of products under independence.}
+With the Fubini-Tonelli theorem, we can establish the following result which
+can often substantially simplify the calculations of expectations under
+independence.
+
+\begin{proposition}
+\label{prp:expv-prod-indp}
+Let \(X_1,\dotsc,X_d\in L^{1}\) be independent. Then, we have \(\expv{X_1\dotsb
+X_d}=\expv{X_1}\dotsb\expv{X_d}\).
+\end{proposition}
+\begin{pf}
+We follow the typical procedure in applying the Fubini-Tonelli theorem
+suggested above.
+\begin{enumerate}[label={(\arabic*)}]
+\item By \emph{Tonelli's theorem}, we have
+\begin{align*}
+\expv{|X_1\dotsb X_d|}&=\expv{|X_1|\dotsb|X_d|}
+=\int_{\R^d}^{}|x_1|\dotsb|x_d|\odif{F(\vect{x})}
+\overset{\text{(Tonelli)}}{=}
+\int_{\R}\dotsi\int_{\R}^{}|x_1|\dotsb|x_d|\odif{F_1(x_1)}\dotsb\odif{F_d(x_d)} \\
+\overset{\text{(taking out constants)}}&{=}\prod_{j=1}^{d}\int_{\R}^{}|x_j|\odif{F_j(x_j)}=
+\expv{|X_1|}\dotsb\expv{|X_d|}\overset{(X_1,\dotsc,X_d\in L^1)}{<}\infty.
+\end{align*}
+Hence, \(X_1\dotsb X_d\in L^{1}\).
+\item Applying Fubini's theorem gives
+\begin{align*}
+\expv{X_1\cdots X_d}&=\int_{\R^d}^{}x_1\dotsb x_d\odif{F(\vect{x})}
+\overset{\text{(Fubini)}}{=}
+\int_{\R}\dotsi\int_{\R}^{}x_1\dotsb x_d\odif{F_1(x_1)}\dotsb\odif{F_d(x_d)} \\
+&=\prod_{j=1}^{d}\int_{\R}^{}x_j\odif{F_j(x_j)}=
+\expv{X_1}\dotsb\expv{X_d}.
+\end{align*}
+\end{enumerate}
+\end{pf}
+\item \textbf{Expectation formula in terms of quantile/survival function.}
+While the change of variables formula in \Cref{thm:change-of-var} is a common
+tool for computing expectations, it is not the only one. Below, we will provide
+two alternative methods for computing expectations: one is based on \emph{quantile
+function} and another is based on \emph{survival function}.
+
+\begin{proposition}
+\label{prp:expv-quant-surv}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(X\sim F\), and
+\(X\in L^1\). Then,
+\(\expv{X}=\int_{0}^{1}F^{-1}(u)\odif{u}=\int_{0}^{\infty}\bar{F}(x)\odif{x}
+-\int_{-\infty}^{0}F(x)\odif{x}\), where \(F^{-1}\) and \(\bar{F}\) denote
+quantile function and survival function respectively.
+\end{proposition}
+\begin{note}
+In the special case where \(X\) is nonnegative, we can simplify the formula in
+terms of survival function to \(\expv{X}=\int_{0}^{\infty}\bar{F}(x)\odif{x}\),
+which is very useful in \emph{survival analysis} (e.g., \(X\) represents
+lifetime).
+\end{note}
+
+\begin{pf}
+By quantile transform, we have \(X\eqd F^{-1}(U)\) with \(U\sim\unif{0}{1}\).
+Hence, \(\expv{X}=\expv{F^{-1}(U)}=\int_{0}^{1}F^{-1}(u)\odif{u}\),
+establishing the formula in terms of quantile function. The formula in
+terms of survival function can be shown analytically through integration by
+parts, but is best understood geometrically as follows:
+\begin{center}
+\begin{tikzpicture}[scale=0.9,
+declare function={
+f(\x)=(\x<=\fpeval{0.2*exp(2)})*ln(\x/0.2)
++and(x>\fpeval{0.2*exp(2)},x<=4)*2
++and(x>4, x<=5)*(-5+2*x);
+}
+]
+\begin{axis}[domain=-0.5:5, axis lines=middle, samples=200, xmax=5.5,
+ymax=5.5, ymin=-0.5, xtick={5}, xticklabels={1}, xticklabel style={yshift=0.6cm},
+ytick=\empty, ylabel={\(x\)},xlabel={\(y\)},
+xlabel style={anchor=west},
+ylabel style={anchor=south},
+]
+\addplot[draw=none, name path=A]{0};
+\addplot[draw=none, name path=B]{f(x)};
+\addplot[ForestGreen, domain=4:5]{-5+2*x};
+\addplot[ForestGreen, domain=\fpeval{0.2*exp(2)}:4]{2};
+\addplot[ForestGreen, domain=0:\fpeval{0.2*exp(2)}]{ln(x/0.2)};
+\addplot[violet, opacity=0.2] fill between[of=A and B, soft clip={domain=0.2:5}];
+\addplot[brown, opacity=0.3] fill between[of=A and B, soft clip={domain=0:0.2}];
+\draw[ForestGreen, fill] (4,2) circle [radius=0.8mm];
+\node[ForestGreen] () at (1,2.5) {\(x=F^{-1}(y)\)};
+\draw[dashed, ForestGreen] (4,2) -- (4,3);
+\addplot[magenta, dotted]{x};
+\node[magenta] () at (3,3) {\(y=x\)};
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.9,
+declare function={
+f(\x)=(\x<=2)*(0.2*exp(x))
++and(x>2,x<=3)*4
++and(x>3, x<=5)*(2.5+x/2);
+}
+]
+\begin{axis}[domain=-0.5:5, axis lines=middle, samples=200,
+ymax=5.5, ytick={5}, yticklabels={1},
+xtick=\empty, ylabel={\(y\)},xlabel={\(x\)},
+xlabel style={anchor=west},
+ylabel style={anchor=south},
+]
+\addplot[draw=none, name path=A]{0};
+\addplot[draw=none, name path=B]{5};
+\addplot[draw=none, name path=C]{f(x)};
+\addplot[violet, opacity=0.2] fill between[of=B and C, soft clip={domain=0:5}];
+\addplot[brown, opacity=0.3] fill between[of=A and C, soft clip={domain=-0.5:0}];
+\addplot[blue, domain=-0.5:2]{0.2*exp(x)};
+\addplot[blue, domain=3:5]{2.5+x/2};
+\draw[blue, fill] (2,4) circle [radius=0.8mm];
+\addplot[blue, domain=2:3]{4};
+\node[blue] () at (2.5,1) {\(y=F(x)\)};
+\draw[dashed, blue] (2,\fpeval{0.2*exp(2)}) -- (2,4);
+\addplot[magenta, dotted]{x};
+\node[magenta] () at (3,3) {\(y=x\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+For the graph of distribution function (right), the \vc{violet} area
+corresponds to the integral
+\(\int_{0}^{\infty}\bar{F}(x)\odif{x}=\int_{0}^{\infty}1-F(x)\odif{x}\), while
+the \brc{brown} area corresponds to the integral
+\(\int_{-\infty}^{0}F(x)\odif{x}\).
+\end{pf}
+\end{enumerate}
+\subsection{Variance, Covariance, and Correlation}
+\begin{enumerate}
+\item Apart from expectation, you should have also learnt other kinds of
+probabilistic quantities like \emph{variance}, \emph{covariance}, and
+\emph{correlation} in your first probability course. Here, we will briefly
+review them and study some related results.
+\item \textbf{Definitions.} Let \((\Omega,\mathcal{F},\pr)\) be a probability
+space and \(X,Y\in L^2\). Then the \defn{variance} and \defn{standard
+deviation} of \(X\) are \(\vari{X}:=\expv{(X-\expv{X})^{2}}\) and
+\(\sd{X}:=\sqrt{\vari{X}}\) respectively. The \defn{covariance} and \defn{correlation}
+of \(X\) and \(Y\) are \(\cov{X,Y}:=\expv{(X-\expv{X})(Y-\expv{Y})}\) and
+\(\corr{X,Y}:=\frac{\cov{X,Y}}{\sqrt{\vari{X}}\vari{Y}}\) respectively.
+
+\begin{note}
+The correlation \(\corr{X,Y}\) serves as a measure of \emph{linear} dependence
+between \(X\) and \(Y\). Some other measures of dependence between \(X\) and
+\(Y\) are available, such as the \defn{Kendall's tau} \\
+\(\tau=\corr{\indicset{F_X(X)\le F_X(X')},\indicset{F_X(X)\le F_X(X')}}\)
+and the \defn{Spearman's rho} \(\rho_S=\corr{F_X(X),F_Y(Y)}\), where \(F_X\)
+and \(F_Y\) are distribution functions of \(X\) and \(Y\) respectively, and
+\(X',Y'\) are \emph{independent copies} of \(X,Y\) respectively, i.e.,
+\(X,X'\iid F_X\) and \(Y,Y'\iid F_Y\). These measures can also capture some
+nonlinear dependence between \(X\) and \(Y\).
+
+While the expression of Kendall's tau is more complicated, it turns out to be
+easier to compute than Spearman's rho.
+\end{note}
+\item\label{it:var-cov-corr-prop} \textbf{Properties of variance, covariance,
+and correlation.} Let \((\Omega,\mathcal{F},\pr)\) be a probability space and
+\(X,Y\in L^2\).
+\begin{enumerate}
+\item \emph{(well-known formula for variance)} \(\vari{X}=\expv{X^{2}}-\expv{X}^{2}\).
+\item \emph{(well-known formula for covariance)} \(\cov{X,Y}=\expv{XY}-\expv{X}\expv{Y}\).
+\item \(\cov{X,X}=\vari{X}\).
+\item \emph{(symmetry)} \(\cov{Y,X}=\cov{X,Y}\).
+\item \(\cov{X,c}=0\) for all \(c\in\R\).
+\item \emph{(criterion for zero variance)} \(\vari{X}=0\) iff \(X\eqas \expv{X}\).
+\item \(\vari{aX+bY}=a^{2}\vari{X}+b^{2}\vari{Y}+2ab\cov{X,Y}\) for all \(a,b\in\R\).
+
+\begin{note}
+If we have \(Y\equiv 1\), then this formula reduces to \(\vari{aX+b}=a^{2}\vari{X}\).
+\end{note}
+\item \emph{(independence implies uncorrelated)} If \(X\) and \(Y\) are
+independent, then \(\cov{X,Y}=\corr{X,Y}=0\) (in this case we say that \(X\)
+and \(Y\) are \defn{uncorrelated}).
+
+\begin{warning}
+It should be well known that the converse does \underline{not} hold. For
+instance, if we have \(X\sim\unif{-1}{1}\) and \(Y=X^2\), then
+\(\cov{X,Y}=\expv{X^{3}}-\expv{X}\expv{X^{2}}=0-0=0\) (and also
+\(\corr{X,Y}=0\)) but definitely \(X\) and \(Y\) are not independent.
+\end{warning}
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item \(\vari{X}=\expv{(X-\expv{X})^{2}}=\expv{\orc{X^{2}}-2X\vc{\expv{X}}+\mgc{\expv{X}^{2}}}
+=\expv{\orc{X^{2}}}-2\vc{\expv{X}}\expv{X}+\mgc{\expv{X^{2}}}=\expv{X^{2}}-\expv{X}^{2}\).
+\item \(\cov{X,Y}=\expv{(X-\expv{X})(Y-\expv{Y})}=\expv{XY-\expv{X}Y-X\expv{Y}+\expv{X}\expv{Y}}
+=\expv{XY}-2\expv{X}\expv{Y}+\expv{X}\expv{Y}=\expv{XY}-\expv{X}\expv{Y}\).
+\item \(\cov{X,X}\overset{\text{(b)}}{=}\expv{X^{2}}-\expv{X}^{2}\overset{\text{(a)}}{=}\vari{X}\).
+\item \(\cov{Y,X}\overset{\text{(b)}}{=}\expv{YX}-\expv{Y}\expv{X}
+=\expv{XY}-\expv{X}\expv{Y}\overset{\text{(b)}}{=}\cov{X,Y}\).
+\item \(\cov{X,c}\overset{\text{(b)}}{=}\expv{cX}-\expv{c}\expv{X}=c\expv{X}-c\expv{X}=0\).
+\item \(\vari{X}=\expv{(X-\expv{X})^{2}}=0\overset{\text{\labelcref{it:nonneg-leb-int-prop}}}{\iff}
+(X-\expv{X})^{2}\eqas 0\iff X\eqas \expv{X}\).
+\item \(\vari{aX+bY}=\expv{\bigl((aX+bY)-\expv{aX+bY}\bigr)^{2}}
+=\expv{\big(a(X-\expv{X})+b(Y-\expv{Y})\big)^{2}}
+=\expv{a^{2}(X-\expv{X})^{2}}
++\expv{2ab(X-\expv{X})(Y-\expv{Y})}
++\expv{b^{2}(Y-\expv{Y})^{2}}
+=a^{2}\vari{X}+2ab\cov{X,Y}+b^{2}\vari{Y}
+\).
+\item Since \(X\) and \(Y\) are independent, \(\expv{XY}=\expv{X}\expv{Y}\) by
+\Cref{prp:expv-prod-indp}. Hence,
+\(\cov{X,Y}\overset{\text{(b)}}{=}\expv{XY}-\expv{X}\expv{Y}=0\), which
+implies by definition that \(\corr{X,Y}=0\).
+\end{enumerate}
+\end{pf}
+\item \textbf{Cauchy-Schwarz inequality.} We have already mentioned
+the \emph{Cauchy-Swartz inequality} in \labelcref{it:holder-cs-ineq}, as a special
+case of the H\"older inequality. Now, we will express it in terms of the
+probabilistic quantities introduced here and prove the inequality, together
+with an associated result about correlation.
+
+\begin{proposition}[Cauchy-Swartz inequality and bounds on correlation]
+\label{prp:cs-ineq-corr-bound}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space and \(X,Y\in L^{2}\). Then,
+\begin{enumerate}
+\item \emph{(Cauchy-Swartz inequality)}
+\(|\expv{XY}|\le(\expv{X^{2}}\expv{Y^{2}})^{1/2}\) where the equality holds iff
+\(Y\eqas mX\) for some \(m\in\R\).
+\item \emph{(bounds on correlation)} \(-1\le\corr{X,Y}\le 1\), and we have
+\(\corr{X,Y}=1\) (\(-1\) resp.)\ iff \(Y\eqas mX+c\) where \(m>0\) (\(m<0\)
+resp.).
+\end{enumerate}
+\end{proposition}
+\begin{pf}
+\begin{enumerate}
+\item Let \(Z_t:=tX+Y\) for every \(t\in\R\). Then, we have
+\(0\le\expv{Z_t^{2}}=t^{2}\expv{X^{2}}+2t\expv{XY}+\expv{Y^{2}}=:at^{2}+bt+c\).
+So \(at^{2}+bt+c\) is a polynomial in \(t\) with at most one root (as it is
+always nonnegative). Hence, its discriminant satisfies \(\Delta=b^{2}-4ac\le
+0\), which implies that \(4\expv{XY}^{2}-4\expv{X^{2}}\expv{Y^{2}}\le 0\), and
+hence \(|\expv{XY}|\le(\expv{X^{2}}\expv{Y^{2}})^{1/2}\).
+
+Also, we have
+\begin{align*}
+\text{the equality holds}&\iff b^2-4ac=0 \\
+&\iff at^{2}+bt+c=0\text{ for some unique \(t\in\R\)} \\
+&\iff \expv{Z_{t}^{2}}=0\text{ for such \(t\in\R\)} \\
+\overset{\text{\labelcref{it:nonneg-leb-int-prop}}}&{\iff} Z_t\eqas 0\text{ for such \(t\in\R\)} \\
+&\iff Y\eqas -tX\text{ for such \(t\in\R\)}.
+\end{align*}
+\item Applying the Cauchy-Swartz inequality to \(\widetilde{X}:=X-\expv{X}\)
+and \(\widetilde{Y}:=Y-\expv{Y}\) yields
+\[
+|\cov{X,Y}|\overset{\text{(by construction)}}{=}
+\left|\expv{\widetilde{X}\widetilde{Y}}\right|
+\overset{\text{(Cauchy-Swartz)}}{\le}\left(\expv{\widetilde{X}^{2}}\expv{\widetilde{Y}^{2}}\right)^{1/2}
+\overset{\text{(by construction)}}{=}
+(\vari{X}\vari{Y})^{1/2},
+\]
+where the equality holds iff \(\widetilde{Y}\eqas m\widetilde{X}\) for some
+\(m\in\R\) iff \(Y\eqas mX+c\) for such \(m\in\R\), with \(c=\expv{Y}-m\expv{X}\).
+
+This implies that
+\(|\corr{X,Y}|=\frac{|\cov{X,Y}|}{\sqrt{\vari{X}\vari{Y}}}\le 1\), and the
+equality holds (i.e., \(\corr{X,Y}=\pm 1\)) iff \(Y\eqas mX+c\); in such case,
+we have \(\corr{X,Y}=\frac{\cov{X}{mX+c}}{\sqrt{\vari{X}\vari{mX+c}}}
+=\frac{m\vari{X}}{\sqrt{m^{2}\vari{X}^{2}}}=\frac{m}{|m|}\), which equals \(1\)
+(\(-1\) resp.)\ iff \(m>0\) (\(m<0\) resp.).
+\end{enumerate}
+\end{pf}
+\item \textbf{Hoeffding's lemma.} Another less well-known result about
+covariance is the \emph{Hoeffding's lemma}, which can be used to determine the
+maximum/minimum possible values of correlations given the two marginals (it
+turns out that some values of correlation \emph{are not attainable} for
+certain margins!).
+
+\begin{lemma}[Hoeffding's lemma]
+\label{lma:hoeffding}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space,
+and let \((X_1,X_2)\sim F\) with margins \(F_1,F_2\) respectively and
+\(X_1,X_2\in L^2\). Then,
+\[\cov{X_1,X_2}=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+F(x_1,x_2)-F_1(x_1)F_2(x_2)\odif{x_1}\odif{x_2}.\]
+\end{lemma}
+\begin{pf}
+Let \((X_1',X_2')\) be an \emph{independent copy} of \((X_1,X_2)\), i.e.,
+\((X_1,X_2),(X_1',X_2')\iid F\). The result then follows from the following
+chain of equalities:
+\begin{align*}
+2\cov{X_1,X_2}&=\expv{(X_1-\expv{X_1})(X_2-\expv{X_2})}+\expv{(X_1'-\expv{X_1'})(X_2'-\expv{X_2'})} \\
+\overset{\text{(independence)}}&{=}
+\expv{\bigl((X_1-\expv{X_1})-(X_1'-\expv{X_1'})\bigr)
+\cdot\bigl((X_2-\expv{X_2})-(X_2'-\expv{X_2'})\bigr)} \\
+\overset{(\expv{X_j}=\expv{X_j'})}&{=}\expv{\vc{(X_1-X_1')}\orc{(X_2-X_2')}} \\
+&=\expv{\vc{\left(\int_{-\infty}^{\infty}
+\indicset{X_1'\le x_1}-\indicset{X_1\le x_1}\odif{x_1}\right)}
+\orc{\left(\int_{-\infty}^{\infty}\indicset{X_2'\le x_2}-\indicset{X_2\le x_2}\odif{x_1}\right)}
+} \\
+&=\expv{\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+\vc{\left(\indicset{X_1'\le x_1}-\indicset{X_1\le x_1}\right)}
+\orc{\left(\indicset{X_2'\le x_2}-\indicset{X_2\le x_2}\right)}
+\odif{x_1}\odif{x_2}} \\
+\overset{\text{(Fubini)}}&{=}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+\expv{
+\vc{\left(\indicset{X_1'\le x_1}-\indicset{X_1\le x_1}\right)}
+\orc{\left(\indicset{X_2'\le x_2}-\indicset{X_2\le x_2}\right)}
+}
+\odif{x_1}\odif{x_2} \\
+&=2\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+F(\vc{x_1},\orc{x_2})-\vc{F_1(x_1)}\orc{F_2(x_2)}
+-\vc{F_1(x_1)}\orc{F_2(x_2)}+F(\vc{x_1},\orc{x_2})
+\odif{x_2} \\
+&=2\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+F(x_1,x_2)-F_1(x_1)F_2(x_2)\odif{x_1}\odif{x_2}.
+\end{align*}
+\end{pf}
+
+\begin{note}
+To apply Hoeffding's lemma for determining the maximum/minimum possible values
+of correlations given two marginals, we can use the Sklar's theorem
+(\Cref{thm:sklar}) in conjunction with the Fr\'echet-Hoeffding bounds
+(\Cref{thm:frechet-hoeffding-bounds}), which provide bounds for \(F(x_1,x_2)\),
+namely \(W(F_1(x_1),F_2(x_2))\le F(x_1,x_2)\le M(F_1(x_1),F_2(x_2))\),
+by writing \(F(x_1,x_2)=C(F_1(x_1),F_2(x_2))\) where \(C\) is a copula of
+\(F\). 
+
+Once the margins are fixed, the upper and lower bounds here are fixed (so do
+the variances of \(X_1\) and \(X_2\)). Hence, we can then bound the covariance
+(and thus also correlation) by the Hoeffding lemma as follows:
+\begin{align*}
+\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+W(F_1(x_1),F_2(x_2))-F_1(x_1)F_2(x_2)\odif{x_1}\odif{x_2}
+&\le\cov{X_1,X_2} \\
+&\le
+\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+M(F_1(x_1),F_2(x_2))-F_1(x_1)F_2(x_2)\odif{x_1}\odif{x_2}.
+\end{align*}
+\end{note}
+\end{enumerate}
+\subsection{Multivariate versions of probabilistic quantities}
+\label{subsect:multivar-prob-quant}
+\begin{enumerate}
+\item After studying some probabilistic quantities, here we are going to study
+their \emph{multivariate versions} (serving as generalizations of the concepts
+to higher dimensions), which may have been discussed in your previous linear
+regression course.
+\item \textbf{Definitions.} Let \(X_1,\dotsc,X_d\in L^{1}\). Then,
+\(\expv{\vect{X}}:=(\expv{X_1},\dotsc,\expv{X_d})\) is the \defn{mean vector}
+or \defn{expectation} of \(\vect{X}\).
+
+Let \(X_1,\dotsc,X_d,Y_1,\dotsc,Y_p\in L^{2}\). Then,
+\(\cov{\vect{X},\vect{Y}}
+:=\begin{bmatrix}\cov{X_i,Y_j}\end{bmatrix}_{i,j=1}^{d,p}\) is the
+\defn{cross-variance matrix} of \(\vect{X}=(X_1,\dotsc,X_d)\) and
+\(\vect{Y}=(Y_1,\dotsc,Y_p)\). The \defn{covariance matrix} of \(\vect{X}\) is
+\(\cov{\vect{X}}:=\cov{\vect{X},\vect{X}}\) and the \defn{correlation matrix} of \(\vect{X}\)
+is \(\corr{\vect{X}}:=\begin{bmatrix}\corr{X_i,Y_j}\end{bmatrix}_{i,j=1}^{d,d}\).
+\begin{note}
+Here the notation \(\begin{bmatrix}a_{ij}\end{bmatrix}_{i,j=1}^{m,n}\) denotes
+the \(m\times n\) matrix \(\begin{bmatrix}
+a_{11}&\cdots&a_{1n}\\
+\vdots&\ddots&\vdots\\
+a_{m1}&\cdots&a_{mn}\\
+\end{bmatrix}\).
+\end{note}
+\item\label{it:mult-var-prob-quant-prop} \textbf{Properties of multivariate
+probabilistic quantities.}
+\begin{enumerate}
+\item\label{it:mean-vec-linearity} \emph{(linearity)} Let \(\vect{X}=(X_1,\dotsc,X_d)\)
+with \(X_1,\dotsc,X_d\in L^{1}\).
+Then, \(\expv{A\vect{X}+\vect{b}}=A\expv{\vect{X}}+\vect{b}\), for all \(A\) and
+\(\vect{b}\) such that the matrix-vector operations are defined.
+\item\label{it:lin-cross-cov} \emph{(effects of linear operations on cross-covariance matrix)} Let
+\(\vect{X}=(X_1,\dotsc,X_d)\) and \(\vect{Y}=(Y_1,\dotsc,Y_p)\) with
+\(X_1,\dotsc,X_d,Y_1,\dotsc,Y_p\in L^{2}\). Then,
+\(\cov{A\vect{X}+\vect{b},C\vect{Y}+\vect{d}}=A\cov{\vect{X},\vect{Y}}C^{T}\)
+for all \(A,\vect{b},C,\vect{d}\) such that the matrix-vector operations are
+defined.
+
+\item\label{it:cov-sums} \emph{(covariance matrix of a sum)} \(\vect{X}=(X_1,\dotsc,X_{\vc{d}})\)
+and \(\vect{Y}=(Y_1,\dotsc,Y_{\vc{d}})\) with
+\(X_1,\dotsc,X_d,Y_1,\dotsc,Y_d\in L^{2}\). Then,
+\(\cov{\vect{X}+\vect{Y}}=\cov{\vect{X}}+\cov{\vect{Y}}
++\cov{\vect{X},\vect{Y}}+\cov{\vect{X},\vect{Y}}^{T}\).
+\end{enumerate}
+\begin{pf}
+We shall use the notations \(\vect{a}_j\) and \(A_{ij}\) to denote the \(j\)th
+entry of the vector \(\vect{a}\) and the \((i,j)\)th entry of the matrix \(A\)
+respectively.
+\begin{enumerate}
+\item Entrywise, we have
+\[
+\expv{A\vect{X}+\vect{b}}_{j}=\expv{\sum_{k=1}^{d}a_{jk}X_k+b_j}
+=\sum_{k=1}^{d}a_{jk}\expv{X_k}+b_j
+=(A\expv{\vect{X}}+\vect{b})_{j}.
+\]
+\item Entrywise, we have
+\begin{align*}
+\cov{A\vect{X}+\vect{b},C\vect{Y}+\vect{d}}_{ij}
+&=\cov{(A\vect{X}+\vect{b})_{i},(C\vect{Y}+\vect{d})_{j}}
+=\cov{\sum_{k=1}^{d}a_{ik}X_k+b_i,\sum_{\ell=1}^{p}c_{j\ell}Y_{\ell}+d_j} \\
+&=\expv{\left(\sum_{k=1}^{d}\vc{a_{ik}(X_k-\expv{X_k})}\right)
+\left(\sum_{\ell=1}^{p}\orc{c_{j\ell}(Y_{\ell}-\expv{Y_{\ell}})}\right)} \\
+&=\expv{\sum_{k=1}^{d}\sum_{\ell=1}^{p}\vc{a_{ik}(X_k-\expv{X_k})}
+\orc{c_{j\ell}(Y_{\ell}-\expv{Y_{\ell}}})} \\
+&=\sum_{k=1}^{d}\sum_{\ell=1}^{p}a_{ik}c_{j\ell}
+\expv{\vc{(X_k-\expv{X_k})}\orc{(Y_{\ell}-\expv{Y_{\ell}}})}
+=\sum_{k=1}^{d}\sum_{\ell=1}^{p}a_{ik}c_{j\ell}\cov{X_k,Y_{\ell}} \\
+&=(A\cov{\vect{X},\vect{Y}}C^{T})_{ij}.
+\end{align*}
+
+\item Entrywise, we have
+\begin{align*}
+\cov{\vect{X}+\vect{Y}}_{ij}&=\cov{(\vect{X}+\vect{Y})_{i},(\vect{X}+\vect{Y})_{j}}
+=\cov{X_i+Y_i,X_j+Y_j} \\
+&=\expv{\left(X_i+Y_i-\expv{X_i+Y_i}\right)\left(X_j+Y_j-\expv{X_j+Y_j}\right)} \\
+&=\expv{\left(X_i-\expv{X_i}+Y_i-\expv{Y_i}\right)\left(X_j-\expv{X_j}+Y_j\expv{Y_j}\right)} \\
+&=\expv{(X_i-\expv{X_i})(X_j-\expv{X_j})}+\expv{(X_i-\expv{X_i})(Y_j-\expv{Y_j})} \\
+&\quad+\expv{(Y_i-\expv{Y_i})(X_j-\expv{X_j})}+\expv{(Y_i-\expv{Y_i})(Y_j-\expv{Y_j})} \\
+&=(\cov{\vect{X},\vect{X}})_{ij}+(\cov{\vect{X},\vect{Y}})_{ij}+(\cov{\vect{Y},\vect{X}})_{ij}
++(\cov{\vect{Y},\vect{Y}})_{ij} \\
+&=(\cov{\vect{X}})_{ij}+(\cov{\vect{X},\vect{Y}})_{ij}+(\cov{\vect{X},\vect{Y}})_{\vc{ji}}
++(\cov{\vect{Y}})_{ij} \\
+&=(\cov{\vect{X}}+\cov{\vect{Y}}
++\cov{\vect{X},\vect{Y}}+\cov{\vect{X},\vect{Y}}^{T})_{ij}.
+\end{align*}
+\end{enumerate}
+\end{pf}
+\item \textbf{Implications of the properties.} The properties in
+\labelcref{it:mult-var-prob-quant-prop} are quite general and can be used to
+derive some more familiar properties as special cases:
+\begin{enumerate}
+\item \emph{(\labelcref{it:mean-vec-linearity} with \(A=\vect{a}^{T}\))}
+\(\expv{\vect{a}^{T}\vect{X}}=\vect{a}^{T}\expv{\vect{X}}\).
+\item \emph{(\labelcref{it:lin-cross-cov} with \(C=A\) and \(\vect{d}=\vect{b}\))}
+\(\cov{A\vect{X}+\vect{b}}=A\cov{\vect{X}}A^{T}\)
+\item \emph{(\labelcref{it:lin-cross-cov} with \(C=A=\vect{a}^{T}\) and \(\vect{d}=\vect{b}=\vect{0}\))}
+\(\vari{\vect{a}^{T}\vect{X}}=\vect{a}^{T}\cov{\vect{X}}\vect{a}\) (a scalar).
+\begin{enumerate}
+\item Setting \(\vect{a}=(1,\dotsc,1)\) gives the \emph{variance of sum} formula:
+\[
+\vari{\sum_{i=1}^{d}X_i}=\sum_{i=1}^{d}\sum_{j=1}^{d}\cov{X_i,X_j}
+=\sum_{i=1}^{d}\vari{X_i}+2\sum_{1\le i<j\le d}^{}\cov{X_{i},X_{j}}.
+\]
+If we have further that \(X_i\) and \(X_j\) are uncorrelated for all
+\(i\ne j\), then it reduces to \(\vari{\sum_{i=1}^{d}X_i}=\sum_{i=1}^{d}\vari{X_i}\).
+\item Setting \(\vect{a}=(1/d,\dotsc,1/d)\) and assuming that \(X_i\) and \(X_j\)
+are uncorrelated for all \(i\ne j\), we have \(\vari{(\sum_{i=1}^{d}X_i)/d}
+=(\sum_{i=1}^{d}\vari{X_i})/d^{2}\).
+
+If we have further that \(X_1,\dotsc,X_d\) are identically distributed, then
+it reduces to \(\vari{(\sum_{i=1}^{d}X_i)/d}=(\vari{X_1})/d\).
+\end{enumerate}
+\end{enumerate}
+\item \textbf{Characterization of covariance matrix.} To close
+\Cref{subsect:multivar-prob-quant}, we introduce a characterization of
+covariance matrix. To prove such characterization, the following result from
+linear algebra is helpful.
+\begin{lemma}[Cholesky decomposition]
+\label{lma:cholesky-decomp}
+Let \(\Sigma\in\R^{d\times d}\) be a symmetric and positive semi-definite
+matrix.  Then, we can write \(\Sigma=AA^{T}\) for some unique \(A\in\R^{d\times
+d}\), which is a lower triangular matrix with nonnegative diagonal elements
+(which are further positive if \(\Sigma\) is \emph{positive definite}); such
+\(A\) is known as the \defn{Cholesky factor}.
+\end{lemma}
+\begin{note}
+A symmetric matrix \(\Sigma\in\R^{d\times d}\) is \defn{positive semi-definite}
+if \(\vect{x}^{T}\Sigma\vect{x}\ge 0\) for all \(\vect{x}\in\R^d\), and is
+\defn{positive definite} if \(\vect{x}^{T}\Sigma\vect{x}>0\) for all
+\(\vect{x}\in\R^d\setminus \{\vect{0}\}\). From these definitions, it should be
+clear that a positive definite matrix is always positive semi-definite also,
+but not vice versa.
+\end{note}
+\begin{proposition}[Characterization of covariance matrix]
+\label{prp:cov-matx-char}
+A real symmetric matrix \(\Sigma\in\R^{d\times d}\) is a covariance matrix iff
+it is positive semi-definite.
+\end{proposition}
+\begin{pf}
+``\(\Rightarrow\)'': Assume \(\Sigma\) is the covariance matrix of a random
+vector \(\vect{X}\). Then for all \(\vect{a}\in\R^d\) we have
+\(\vect{a}^{T}\Sigma\vect{a}=\vari{\vect{a}^{T}\vect{X}}\ge 0\), so \(\Sigma\)
+is positive definite.
+
+``\(\Leftarrow\)'': Assume \(\Sigma\) is positive semi-definite with the
+Cholesky factor \(A\). Let \(\vect{X}=(X_1,\dotsc,X_d)\) with
+\(X_1,\dotsc,X_d\iid\ndist{0,1}\).\footnote{Indeed, any other random variables
+that are pairwise uncorrelated and have unit variance each would also work.} Then,
+its covariance matrix is \(\cov{\vect{X}}=I_d\), and thus
+\(\cov{A\vect{X}}=A\cov{\vect{X}}A^{T}=AA^{T}=\Sigma\). This means that
+\(\Sigma\) is the covariance matrix of \(A\vect{X}\).
+\end{pf}
+
+\begin{note}
+This result also implies a characterization of \emph{correlation matrix},
+namely that a real symmetric matrix \(P\) is a correlation matrix iff it is
+positive semi-definite \vc{with every diagonal entry being \(1\)}. This is
+because the correlation matrix of \((X_1,\dotsc,X_d)\) is the same as the
+covariance matrix of \((X_1/\sd{X_1},\dotsc,X_d/\sd{X_d})\), whose diagonal
+entries are always \(1\).
+\end{note}
+\end{enumerate}
+\subsection{The Lebesgue-Radon-Nikodym theorem}
+\label{subsect:leb-rn}
+\begin{enumerate}
+\item In \Cref{subsect:leb-rn}, we will explore results about \emph{changes of
+measures}, which are applied in \emph{importance sampling} in statistics (see
+\labelcref{it:rn-deriv-prop}) and \emph{risk-neutral pricing} in financial
+economics. To start with, we shall study the three types of relationships
+between different measures, namely \emph{dominating}, \emph{equivalent}, and
+\emph{singular}.
+\item \textbf{Dominating, equivalent, and singular.} Let \(\mu\) and \(\nu\) be
+measures on a measurable space \((\Omega,\mathcal{F})\). Then:
+\begin{itemize}
+\item \(\mu\) \defn{dominates} \(\nu\) (or \(\nu\) is \defn{absolutely
+continuous} with respect to \(\mu\)), denoted by \(\nu\ll\mu\), if
+\(\mu(A)=0\implies \nu(A)=0\) for all \(A\in\mathcal{F}\).
+\item \(\mu\) and \(\nu\) are \defn{equivalent} if \(\nu\ll\mu\) and
+\(\mu\ll\nu\), i.e., \(\mu(A)=0\iff \nu(A)=0\) for all \(A\in\mathcal{F}\)
+\emph{(sharing the same null sets)}
+\item \(\mu\) and \(\nu\) are \defn{singular}, denoted by \(\mu\perp\nu\), if
+there exists \(A\in\mathcal{F}\) such that \(\mu(A)=0\) \emph{(\(\mu\) lives on
+\(A^{c}\))} and \(\nu(A^{c})=0\) \emph{(\(\nu\) lives on \(A\))}.
+
+\begin{note}
+The singularity \(\mu\perp\nu\) implies that for every \(B\in\mathcal{F}\) with
+\(\mu(B)>0\) (from here we deduce that \(B\subseteq A^c\)), we have
+\(\nu(B)=0\) (since \(0\le\nu(B)\le\nu(A^c)=0\)), and vice versa. Symbolically,
+we can write \(\mu(B)>0\implies \nu(B)=0\) and \(\nu(B)>0\implies \mu(B)=0\) for
+all \(B\in\mathcal{F}\).
+\end{note}
+\end{itemize}
+\item \textbf{Some lemmas.} To prove the \emph{Lebesgue-Radon-Nikodym theorem},
+the following lemmas are needed.
+\begin{lemma}[Preservation of domination/singularity upon summation]
+\label{lma:meas-sum-dom-sing}
+Let \(\nu_n\) be a measure on a measurable space \((\Omega,\mathcal{F})\) for
+each \(n\in\N\). For the measure \(\nu:=\sum_{n=1}^{\infty}\nu_n\) on
+\((\Omega,\mathcal{F})\) (check that it is indeed a measure!), we have:
+\begin{enumerate}
+\item \emph{(preserving domination)} If \(\nu_n\ll \mu\) for every \(n\in\N\), then \(\nu\ll\mu\).
+\item \emph{(preserving singularity)} If \(\nu_n\perp\mu\) for every
+\(n\in\N\), then \(\nu\perp\mu\).
+\end{enumerate}
+\end{lemma}
+\begin{pf}
+\begin{enumerate}
+\item For every \(A\in\mathcal{F}\) with \(\mu(A)=0\), we have \(\nu(A)=\sum_{n=1}^{\infty}\mu_n(A)=
+\sum_{n=1}^{\infty}0=0\) since \(\nu_n\ll\mu\) for every \(n\in\N\). Thus, \(\nu\ll\mu\).
+\item For each \(n\in\N\), since \(\nu_n\perp\mu\), there exists
+\(A_n\in\mathcal{F}\) such that \(\nu_n(A_n)=0\) and \(\mu(A_n^{c})=0\). Now
+let \(A:=\bigcap_{n=1}^{\infty}A_n\in\mathcal{F}\). Then, we have
+\[
+0\le\nu(A)=\sum_{n=1}^{\infty}\nu_n(A)\overset{\text{(monotonicity)}}{\le}
+\sum_{n=1}^{\infty}\nu_n(A_n)=0
+\]
+and
+\[
+0\le\mu(A^{c})\underset{(A^c=\bigcup_{n=1}^{\infty}A_n^{c})}{\overset{\text{(\(\sigma\)-subadditivity)}}{\le}}
+\sum_{n=1}^{\infty}\mu(A_n^c)=0.
+\]
+Hence, \(\nu\perp\mu\).
+\end{enumerate}
+\end{pf}
+\begin{lemma}[Relationship between finite measures]
+\label{lma:fin-meas-relate}
+Let \(\mu\) and \(\nu\) be \vc{finite} measures on \((\Omega,\mathcal{F})\).
+Then we have either \(\mu\perp\nu\) or \(\nu|_{A}\ge\varepsilon\mu|_{A}\) for
+some \(\varepsilon>0\) and \(A\in\mathcal{F}\) where \(\mu(A)>0\).
+\end{lemma}
+\begin{pf}
+It follows from applying the \emph{Hahn's decomposition theorem}
+\parencite[Theorem~3.3]{folland1999real} on the \emph{signed measure}
+\(\nu-(1/n)\mu\). For more details, see \textcite[Lemma~3.7]{folland1999real}.
+\end{pf}
+\item \textbf{The Lebesgue-Radon-Nikodym theorem.}
+\begin{theorem}[Lebesgue-Radon-Nikodym theorem]
+\label{thm:leb-rn}
+Let \(\mu\) and \(\nu\) be \(\sigma\)-finite measures on a measurable space
+\((\Omega,\mathcal{F})\). Then:
+\begin{enumerate}
+\item \emph{(Lebesgue decomposition)} There exists unique \(\sigma\)-finite
+measures \(\nu_a\) and \(\nu_s\) on \((\Omega,\mathcal{F})\) such that
+\(\nu=\nu_a+\nu_s\) where \(\nu_a\ll\mu\) \emph{(\underline{a}bsolutely
+continuous with respect to \(\mu\))} and \(\nu_s\perp\mu\) \emph{(\underline{s}ingular with \(\mu\))}.
+\item \emph{(Radon-Nikodym theorem)} There exists a \(\mu\)-a.e.\ unique and
+integrable (wrt \(\mu\)) \(f:\Omega\to[0,\infty)\) such that
+\(\nu_a(A)=\int_{A}^{}f\odif{\mu}\) for all \(A\in\mathcal{F}\).
+
+\begin{note}
+In such case, we say that \(\nu_a\) has \defn{density} \(f\) with respect to
+\(\mu\), denoted by \(\odif{\nu_a}=f\odif{\mu}\), or \(f=\odv{\nu_a}{\mu}\)
+(inspired by the formula
+\(\nu_a(A)=\vc{\int_{A}^{}\odif{\nu_a}=\int_{A}^{}f\odif{\mu}}\)).  Such
+density \(f\) is also known as the \defn{Radon-Nikodym derivative} of \(\nu_a\)
+with respect to \(\mu\).
+\end{note}
+\end{enumerate}
+\end{theorem}
+\begin{pf}
+We will prove both results together.
+\subsubsection*{Step 1}
+We start by proving the special case where \(\mu\) and \(\nu\) are
+\emph{finite} (so \(\mu(\Omega)<\infty\) and \(\nu(\Omega)<\infty\)).  The
+first step is to consider the collection
+\(\mathcal{A}:=\{\vc{g:\Omega\to[0,\infty]}: \text{\(g\) is integrable wrt
+\(\mu\), \(\int_{A}^{}g\odif{\mu}\le\nu(A)\) for all \(A\in\mathcal{F}\)}\}\).
+
+\textbf{Showing that \(\mathcal{A}\) is nonempty and closed under finite maxima.}
+\begin{itemize}
+\item \emph{Nonempty:} Since \(\mathcal{A}\) contains the zero function, it is nonempty.
+\item \emph{Closed under finite maxima:} Fix any \(g_1,g_2\in\mathcal{A}\). We
+want to show that \(\max\{g_1,g_2\}\in\mathcal{A}\) (which would then imply by
+induction that \(g_1,\dotsc,g_n\in\mathcal{A}\implies \max\{g_1,\dotsc,g_n\}\in\mathcal{A}\)).
+
+Let \(B:=\{\omega\in\Omega:g_1(\omega)<g_2(\omega)\}\in\mathcal{F}\). Since
+\begin{align*}
+\int_{A}^{}\max\{g_1,g_2\}\odif{\mu}
+&=\int_{A}^{}\max\{g_1,g_2\}\indic_{B}\odif{\mu}+\int_{A}^{}\max\{g_1,g_2\}\indic_{B^c}\odif{\mu} \\
+&=\int_{A\cap B}^{}g_2\odif{\mu}+\int_{A\cap B^c}^{}g_1\odif{\mu} \\
+\overset{(g_1,g_2\in\mathcal{A})}&{\le}\nu(A\cap B)+\nu(A\cap B^c)
+=\nu(A),
+\end{align*}
+we have \(\max\{g_1,g_2\}\in\mathcal{A}\).
+\end{itemize}
+\textbf{Constructing the density \(f\).}
+Let \(s:=\sup_{g\in\mathcal{A}}\int_{\Omega}^{}g\odif{\mu}\). For every
+\(g\in\mathcal{A}\), we have
+\(\int_{\vc{\Omega}}^{}g\odif{\mu}\le\nu(\vc{\Omega})\), so \(s\le \nu(\Omega)<\infty\).
+By definition of supremum, there exists a sequence \(\{g_n\}\subseteq \mathcal{A}\) such that
+\(\int_{\Omega}^{}g_n\odif{\mu}\to s\) as \(n\to\infty\).
+
+Now, for each \(n\in\N\), let
+\(f_n:=\max\{g_1,\dotsc,g_n\}\overset{\text{(closed under
+maxima)}}{\in}\in \mathcal{A}\), and let \(f:=\sup_{n\in\N}g_n\). Then by
+construction we have \(f_n\nearrow f\) pointwisely. Since each \(g_n\) is
+nonnegative, we have \(f_n\in L_{+}\) for every \(n\in\N\). Thus, by MCT,
+\(\int_{\Omega}^{}f\odif{\mu}=\lim_{n\to\infty}\int_{\Omega}^{}f_n\odif{\mu}\)
+and \(f\) is integrable since \(s<\infty\).
+
+Moreover, we can establish the following properties of \(f\):
+\begin{itemize}
+\item \underline{\(f\in \mathcal{A}\)}: Fix any \(A\in\mathcal{F}\). Since
+\(f_n\in\mathcal{A}~\forall n\in\N\), we have
+\(\int_{A}^{}f_n\odif{\mu}\le\nu(A)~\forall n\in\N\). Thus,
+\[
+\int_{A}^{}f\odif{\mu}=\int_{\Omega}^{}f\indic_{A}\odif{\mu}
+\overset{\text{(MCT)}}{=}\lim_{n\to\infty}\int_{\Omega}^{}f_n\indic_{A}\odif{\mu}
+=\lim_{n\to\infty}\int_{A}^{}f_n\odif{\mu}\le\nu(A),
+\]
+which means that \(f\in \mathcal{A}\).
+\item \underline{\(\int_{\Omega}^{}f\odif{\mu}=s\)}: Note that
+\[
+\int_{\Omega}^{}f\odif{\mu}=\lim_{n\to\infty}\int_{\Omega}^{}f_n\odif{\mu}\overset{(f_n\ge
+g_n)}{\ge}\lim_{n\to\infty}\int_{\Omega}^{}g_n\odif{\mu}=s
+\]
+and
+\[
+\int_{\Omega}^{}f\odif{\mu}=\lim_{n\to\infty}\int_{\Omega}^{}f_n\odif{\mu}
+\underset{(\int_{\Omega}^{}f_n\odif{\mu}\le s~\forall n\in\N)}
+{\overset{(f_n\in\mathcal{A}~\forall n\in\N)}{\le}}s.
+\]
+Thus, \(\int_{\Omega}^{}f\odif{\mu}=s\).
+\item \underline{\(f:\Omega\to[0,\infty)\)}: Since \(f_n\nearrow f\)
+pointwisely, we already know that \(f\) is a function from \(\Omega\) to
+\([0,\infty]\).  Also, \(f\) is integrable, so we have \(f<\infty\) a.e.\ by
+\labelcref{it:leb-int-ae-fin}. Hence by redefining \(f\) to take nonnegative
+real values (say \(0\)) on a null set (where \(f\) takes the value \(\infty\) originally)
+if needed, we may assume that \(f\) is a function from \(\Omega\) to
+\([0,\infty)\). Due to this redefinition, such density \(f\) can at most be
+\(\mu\)-a.e.\ unique (we will show that \(f\) is indeed a.e.\ unique below).
+\end{itemize}
+\textbf{Showing the existence of such \(\sigma\)-finite \(\nu_a\) and \(\nu_s\).}
+We define \(\nu_a(A):=\int_{A}^{}f\odif{\mu}~\forall A\in\mathcal{F}\) and
+\(\nu_s(A):=\nu(A)-\nu_a(A)\overset{(f\in \mathcal{A})}{\ge}0\). By
+\labelcref{it:nonneg-leb-int-prop}, \(\nu_a\) is a measure on
+\((\Omega,\mathcal{F})\). It is also straightforward to show that \(\nu_s\) is
+a measure on \((\Omega,\mathcal{F})\). Regarding their \(\sigma\)-finiteness, consider:
+\begin{itemize}
+\item \(\nu_a\): Since \(f\) is integrable, we have
+\(\nu_a(\Omega)=\int_{\Omega}^{}f\odif{\mu}<\infty\), so \(\nu_a\) is
+finite, hence \(\sigma\)-finite.
+\item \(\nu_s\): Since \(\nu(\Omega)<\infty\) and \(\nu_a(\Omega)\), we have
+\(\mu_s(\Omega)<\infty\), and so \(\nu_s\) is again finite, hence \(\sigma\)-finite.
+\end{itemize}
+It then remains to show that \(\nu_a\ll\mu\) and \(\nu_s\perp\mu\):
+\begin{itemize}
+\item \underline{\(\nu_a\ll\mu\)}: For every \(A\in\mathcal{F}\) with \(\mu(A)=0\),
+by \labelcref{it:quasi-int-prop} we know \(\nu_a(A)=0\). Thus, \(\nu_a\ll\mu\).
+\item \underline{\(\nu_s\perp\mu\)}: Assume to the contrary that
+\(\nu_s\not\perp\mu\). Then by \Cref{lma:fin-meas-relate}, there must exist
+\(\varepsilon>0\) and \(A\in\mathcal{F}\) with \(\mu(A)>0\) such that
+\(\nu_s|_{A}\ge\varepsilon\mu|_{A}\). This implies that for all \(B\in\mathcal{F}\) we have
+\[
+\int_{B}^{}\varepsilon\indic_{A}\odif{\mu}=\varepsilon\mu(\underbrace{A\cap B}_{\subseteq A})
+=\varepsilon\mu|_{A}(A\cap B)
+\le\nu_s(A\cap B)\le\overset{\text{(monotonicity)}}{\le}\nu_s(B)=\nu(B)-\int_{B}^{}f\odif{\mu}.
+\]
+Rearranging this inequality then gives
+\(\int_{B}^{}(f+\varepsilon\indic_{A})\odif{\mu}\le\mu(B)\), which implies that
+\(f+\varepsilon\indic_{A}\in\mathcal{A}\), and therefore
+\(\int_{\Omega}^{}f+\varepsilon\indic_{A}\odif{\mu}\le s\).
+
+But on the other hand, we have \(\int_{\Omega}^{}f\odif{\mu}=s\) as shown
+previously, so
+\(\int_{\Omega}^{}f+\varepsilon\indic_{A}\odif{\mu}=s+\varepsilon\mu(A)>s\),
+contradiction.
+\end{itemize}
+\textbf{Showing the uniqueness of \(\nu_a\) and \(\nu_s\), and the a.e.\ uniqueness of \(f\).}
+Suppose that we have \(\nu=\nu_a'+\nu_s'\) with \(\nu_a'(A)=\int_{A}^{}f'\odif{\mu
+}~\forall A\in\mathcal{F}\), where \(\nu_a',\nu_s',f'\) satisfy the conditions
+mentioned in the result.
+
+Then, rearranging \(\nu_a+\nu_s=\nu=\nu_a'+\nu_s\) gives
+\(\nu_s-\nu_s'=\nu_a'-\nu_a\), so we can write
+\(\vc{\nu_s(B)=\nu_s'(B)}=\int_{B}^{}f'-f\odif{\mu}=\orc{\nu_a'(B)-\nu_a(B)}\)
+for all \(B\in\mathcal{F}\). Next, consider two cases:
+\begin{itemize}
+\item \emph{Case 1: \(\mu(B)>0\).} Since \(\nu_s\perp\mu\) and
+\(\nu_s'\perp\mu\), we have \(\vc{\nu_s(B)-\nu_s'(B)}=0-0=0\), so
+\(\orc{\nu_a'(B)-\nu_a(B)}=0\) also.
+\item \emph{Case 2: \(\mu(B)=0\).} By \labelcref{it:quasi-int-prop}, we know
+\(\int_{B}^{}f'-f\odif{\mu}=0\), so \(\vc{\nu_s(B)-\nu_s'(B)}=\orc{\nu_a'(B)-\nu_a(B)}=0\).
+\end{itemize}
+Therefore, we have \(\vc{\nu_s(B)=\nu_s'(B)}\) and \(\orc{\nu_a'(B)=\nu_a(B)}\)
+for all \(B\in\mathcal{F}\), establishing the uniqueness of \(\nu_a\) and
+\(\nu_s\).  Furthermore, since \(\int_{B}^{}f'-f\odif{\mu}=0\) for all
+\(B\in\mathcal{F}\), by \labelcref{it:equiv-ae-equal-int-fn} we know \(f'=f\)
+\(\mu\)-a.e., establishing the a.e.\ uniqueness of \(f\).
+
+\subsubsection*{Step 2}
+We have completed the proof for the case where \(\mu\) and \(\nu\) are finite.
+Next, we are going to extend it to the case where they are \(\sigma\)-finite.
+
+\textbf{Constructing pairwise disjoint \(A_1,A_2,\dotsc\in\mathcal{F}\) that ``simultaneously
+satisfy'' the \(\sigma\)-additivity of \(\mu\) and \(\nu\).}
+Our goal here is to construct pairwise disjoint
+\(A_1,A_2,\dotsc\in\mathcal{F}\) such that
+\(\biguplus_{n=1}^{\infty}A_n=\Omega\) with \(\mu(A_n)<\infty\) and
+\(\nu(A_n)<\infty\) for each \(n\in\N\). This can be done by intersecting the
+sets arising respectively from the \(\sigma\)-additivity of \(\mu\) and \(\nu\).
+
+Due to the \(\sigma\)-additivity of \(\mu\) and \(\nu\), there exist
+\(A_{\mu,1},A_{\mu,2},\dotsc\in\mathcal{F}\) and \(A_{\nu,1},A_{\nu,2},\dotsc\in\mathcal{F}\)
+such that \(\bigcup_{m=1}^{\infty}A_{\mu,m}=\Omega\) and
+\(\bigcup_{\ell=1}^{\infty}A_{\nu,\ell}=\Omega\) with \(\mu(A_{\mu,m})<\infty\) and
+\(\nu(A_{\nu,\ell})<\infty\) for all \(m,n\in\N\). WLOG (by performing
+\emph{disjointification} on them if needed), we may assume that
+\(A_{\mu,1},A_{\mu,2},\dotsc\in\mathcal{F}\) and \(A_{\nu,1},A_{\nu,2},\dotsc\in\mathcal{F}\)
+are respectively pairwise disjoint.
+
+Now, consider
+\(\Omega=\Omega\cap\Omega=(\biguplus_{m=1}^{\infty}A_{\mu,m})\cap(\biguplus_{\ell=1}^{\infty}A_{\nu,\ell})=\biguplus_{m=1}^{\infty}\biguplus_{\ell=1}^{\infty}(A_{\mu,m}\cap
+A_{\nu,\ell})\). Note that there are countably many \((A_{\mu,m}\cap
+A_{\nu,\ell})\)'s, so after relabelling them to \(A_1,A_2,\dotsc\in\mathcal{F}\), we
+have constructed the desired sets.
+
+\textbf{Constructing finite measures and applying the result from step 1 to them.}
+Fix any \(n\in\N\). Define \(\mu_n(B):=\mu(B\cap A_n)\) and
+\(\nu_n(B):=\nu(B\cap A_n)\) for all \(B\in\mathcal{F}\). By construction of
+\(A_n\)'s, \(\mu_n\) and \(\nu_n\) are both finite. Hence, applying the result
+from step 1 to them gives
+\[
+\nu_n(B)=\nu_{n,a}(B)+\nu_{n,s}(B)=\int_{B}^{}f_n\odif{\mu_n}+\nu_{n,s}(B)
+\quad\forall B\in\mathcal{F},
+\]
+where \(\nu_{n,a},\nu_{n,s},f_n\) satisfy the conditions mentioned in the result,
+and particularly we know from step 1 that \(\nu_{n,a}\) and \(\nu_{n,s}\) are
+indeed \emph{finite}.
+
+\textbf{Showing the existence of such \(\nu_a\), \(\nu_s\), and \(f\).} By
+construction of \(\mu_n\) and \(\nu_n\), we have
+\(\mu_n(A_n^c)=\nu_n(A_n^c)=0\). So, we have
+\(\int_{A_n^c}^{}f_n\odif{\mu_n}=0\) by \labelcref{it:quasi-int-prop}, and hence
+\(\nu_{n,s}(A_n^c)=\nu_n(A_n^c)-\int_{A_n^c}^{}f_n\odif{\mu_n}=0-0=0\).
+Furthermore, we may, without affecting the \(\mu_n\)-a.e.\ uniqueness, assume
+that \(f_n|_{A_n^c}=0\) since \(\mu_n(A_n^c)=0\).
+
+Now, let \(\nu_a(B):=\int_{B}^{}f\odif{\mu}~\forall B\in\mathcal{F}\) with
+\(f:=\sum_{n=1}^{\infty}f_n\), after redefining on a null set where it is
+originally \(\infty\) if needed), and let
+\(\nu_s:=\sum_{n=1}^{\infty}\nu_{n,s}\).  We then establish the target
+properties as follows:
+\begin{itemize}
+\item \emph{\(f\) is integrable:} TODO
+
+Similar to step 1, we can show that \(f\) is a function from \(\Omega\) to
+\([0,\infty)\) by redefining on a null set where it originally takes the value
+\(\infty\) if needed.
+\item \emph{\(\nu_a\ll\mu\) and \(\nu_s\perp\mu\):} By
+\Cref{lma:meas-sum-dom-sing}, since \(\nu_{n,s}\perp\mu~\forall n\in\N\), we
+have \(\nu_s\perp\mu\). Also, we know by \labelcref{it:quasi-int-prop} that
+\(\nu_a\ll\mu\).
+\item \emph{\(\nu_a\) and \(\nu_s\) are \(\sigma\)-finite:} TODO
+\item \emph{\(\nu(B)=\nu_a(B)+\nu_s(B)~\forall B\in\mathcal{F}\):} Consider
+\begin{align*}
+\nu(B)&=\nu\left(B\cup\biguplus_{n=1}^{\infty}A_n\right)
+=\nu\left(\biguplus_{n=1}^{\infty}B\cap A_n\right)
+=\sum_{n=1}^{\infty}\nu(B\cap A_n)
+=\sum_{n=1}^{\infty}\nu_n(B) \\
+&=\sum_{n=1}^{\infty}\left(\int_{B}^{}f_n\odif{\mu_n}+\nu_{n,s}(B)\right)
+\underset{(f_{n}|_{A_n^c}=0)}{\overset{(\mu_n|_{A_n}=\mu|_{A_{n}})}{=}}
+\sum_{n=1}^{\infty}\int_{B}^{}f_n\odif{\mu}+\nu_{s}(B) \\
+\overset{\text{(Tonelli, counting measure)}}&{=}
+\int_{B}^{}\sum_{n=1}^{\infty}f_n\odif{\mu}+\nu_{s}(B)
+=\int_{B}^{}f\odif{\mu}+\nu_{s}(B)
+=\nu_a(B)+\nu_s(B).
+\end{align*}
+\end{itemize}
+\textbf{Showing the uniqueness of \(\nu_a\) and \(\nu_s\), and the a.e.\ uniqueness of \(f\).}
+The argument is exactly the same as the one in step 1.
+\end{pf}
+
+Sometimes the following result, which is a corollary of the
+Lebesgue-Radon-Nikodym theorem, is referred to as the \emph{Radon-Nikodym
+theorem}.  For studying changes of measures, quite often this special case is
+utilized instead of the more general Lebesgue-Radon-Nikodym theorem.
+\begin{corollary}[Radon-Nikodym theorem]
+\label{cor:rn-thm}
+If \(\mu\) and \(\nu\) are \(\sigma\)-finite measures on a measurable space
+\((\Omega,\mathcal{F})\) with \(\nu\ll\mu\), then there exists a \(\mu\)-a.e.\
+unique and integrable (wrt \(\mu\)) \(f:\Omega\to[0,\infty)\) such that
+\(\nu(A)=\int_{A}^{}f\odif{\mu}\) for all \(A\in\mathcal{F}\) (which is the
+Radon-Nikodym derivative \(\odv{\nu}{\mu}\)).
+\end{corollary}
+\begin{pf}
+With \(\nu\ll\mu\), we know from the Lebesgue-Radon-Nikodym theorem that the
+Lebesgue decomposition must be given by \(\nu=\nu_a\) (\(\nu_s=0\)), and so the
+result follows.
+\end{pf}
+\item\label{it:rn-deriv-prop} \textbf{Properties of Radon-Nikodym derivatives.}
+Here, we are going to show some properties of Radon-Nikodym derivatives, which
+are quite consistent with the notation \(\odv{\nu}{\mu}\).
+
+Let \(\mu\), \(\nu\), \(\lambda\) be \(\sigma\)-finite measures on
+\((\Omega,\mathcal{F})\) with \(\nu\ll\mu\) and \(\mu\ll\lambda\). Then:
+\begin{enumerate}
+\item\label{it:rn-deriv-int-sub} \emph{(``integration by substitution'')} If \(g\in
+L^{1}(\Omega,\mathcal{F},\nu)\), then \(g\odv{\nu}{\mu}\in
+L^{1}(\Omega,\mathcal{F},\mu)\) and
+\(\int_{\Omega}^{}g\odif{\nu}=\int_{\Omega}^{}g\odv{\nu}{\mu}\odif{\mu}\).
+\item\label{it:rn-deriv-chain-rule} \emph{(``chain rule'')} \(\nu\ll\lambda\) and
+\(\odv{\nu}{\vc{\lambda}}=\odv{\nu}{\mu}\odv{\mu}{\vc{\lambda}}\) \(\vc{\lambda}\)-a.e.
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item We apply the standard argument on \(g\).
+\begin{enumerate}[label={(\arabic*)}]
+\item Fix any indicator function \(g=\indic_{A}\) where \(A\in\mathcal{F}\). We
+then have
+\[
+\int_{\Omega}^{}g\odif{\nu}\overset{\text{(simple)}}{=}\nu(A)\underset{(\nu\ll\mu)}{\overset{\text{(Radon-Nikodym)}}{=}}
+=\int_{A}^{}\odv{\nu}{\mu}\odif{\mu} =\int_{\Omega}^{}g\odv{\nu}{\mu}\odif{\mu}
+\]
+By the linearity of integral, the equation also holds for all simple functions.
+\item Fix any \(g\in L_{+}\). By \Cref{lma:apx-seq}, there exists a sequence
+\(\{g_n\}\) of nonnegative simple functions on \(\Omega'\) such that
+\(g_n\nearrow g\), so
+\[
+\int_{\Omega}^{}g\odif{\mu}\overset{\text{(MCT)}}{=}
+\lim_{n\to\infty}\int_{\Omega}^{}g_n\odif{\mu}
+\overset{(1)}{=}\lim_{n\to\infty}\int_{\Omega}^{}g_n\odv{\nu}{\mu}\odif{\mu}
+\overset{\text{(MCT)}}{=}\int_{\Omega}^{}g\odv{\nu}{\mu}\odif{\mu}.
+\]
+\item Fix any \(g\in L^{1}\). Then we have
+\[
+\int_{\Omega}^{}g\odif{\mu}=\int_{\Omega}^{}g^{+}\odif{\mu}-\int_{\Omega}^{}g^{-}\odif{\mu}
+\overset{(2)}{=}\int_{\Omega}^{}g^{+}\odv{\nu}{\mu}\odif{\mu}
+-\int_{\Omega}^{}g^{-}\odv{\nu}{\mu}\odif{\mu}
+=\int_{\Omega}^{}g\odv{\nu}{\mu}\odif{\mu}.
+\]
+\end{enumerate}
+TODO: show that \(g\odv{\nu}{\mu}\in L^{1}(\Omega,\mathcal{F},\mu)\).
+\item For all \(A\in\mathcal{F}\), we have
+\(\lambda(A)=0\overset{(\mu\ll\lambda)}{\implies }\mu(A)=0
+\overset{(\nu\ll\lambda)}{\implies }\nu(A)=0\), and hence \(\nu\ll\lambda\).
+
+Next, we have
+\[
+\int_{A}^{}\odv{\nu}{\lambda}\odif{\lambda}
+\overset{\text{(Radon-Nikodym)}}{=}\nu(A)
+\overset{\text{(Radon-Nikodym)}}{=}\int_{A}^{}\odv{\nu}{\mu}\odif{\mu}
+=\int_{\Omega}^{}\vc{\indic_{A}\odv{\nu}{\mu}}\odif{\orc{\mu}}
+\overset{\text{(a)}}{=}\int_{\Omega}^{}\vc{\indic_{A}\odv{\nu}{\mu}}\odv{\orc{\mu}}{\lambda}\odif{\mu}
+=\int_{A}^{}\odv{\nu}{\mu}\odv{\mu}{\lambda}\odif{\lambda}
+\]
+for all \(A\in\mathcal{F}\), so the result follows by
+\labelcref{it:equiv-ae-equal-int-fn}.
+\end{enumerate}
+\end{pf}
+
+\begin{remark}
+\item \emph{(relationship between Radon-Nikodym derivative and density function)}
+Consider a probability space \((\R^d,\mathcal{B}(\R^d),\pr_{\vect{X}})\). If
+the distribution \(\pr_{\vect{X}}\) or \(F\) is absolutely continuous with
+respect to the Lebesgue measure \(\lambda\), then by Radon-Nikodym theorem we have
+\(F(B)=\int_{B}^{}\odif{F}=\int_{B}^{}f\odif{\lambda}\) for all \(B\in\mathcal{B}(\R^d)\),
+where \(f=\odv{F}{\lambda}\) is the Radon-Nikodym derivative.
+
+Particularly, setting \(B=(\vect{-\infty},\vect{x}]\) gives
+\(F(\vect{x})=F((\vect{-\infty},\vect{x}]=\int_{(\vect{-\infty},\vect{x}]}^{}f\odif{\lambda}
+\overset{\text{(notation)}}{=}\int_{(\vect{-\infty},\vect{x}]}^{}f(\widetilde{\vect{x}})\odif{\widetilde{\vect{x}}}\),
+which suggests that the Radon-Nikodym derivative is indeed the density function
+of \(F\). In such case, recall that \(F\) is said to be \emph{absolutely
+continuous} --- this relates with the terminology here. Indeed, a distribution
+function \(F\) is absolutely continuous iff its corresponding distribution
+(also denoted by \(F\)) is absolutely continuous wrt the Lebesgue measure \(\lambda\).
+
+Applying \labelcref{it:rn-deriv-int-sub}, we also obtain
+\(\int_{\R^d}^{}g(\vect{x})\odif{F(\vect{x})}=\int_{\R^d}^{}g(\vect{x})f(\vect{x})\odif{\vect{x}}\),
+if \(g\in L^{1}(\R^d,\mathcal{B}(\R^d),F)\).
+\item \emph{(importance sampling)}
+\labelcref{it:rn-deriv-int-sub} can be expressed more succinctly as
+``\(\expvmu{\nu}{g}=\expvmu{\mu}{g\odv{\nu}{\mu}}\) if \(\nu\ll\mu\)''.  This
+formula is applied in \emph{importance sampling} in statistics. To see this,
+consider \(\vect{X}\sim F\) and \(\widetilde{\vect{X}}\sim H\), with \(f\) and
+\(h\) being the densities of \(F\) and \(H\) (interpreted as distribution
+functions/distributions) respectively. Then the formula suggests that, for
+every density \(h\) satisfying that \(h(\vect{x})=0\implies f(\vect{x})=0\),
+\[
+\expvmu{F}{g(\vect{X})}=\int_{\R^d}^{}g(\vect{x})f(\vect{x})\odif{\vect{x}}
+=\int_{\R^d}^{}\underbrace{\frac{g(\vect{x})f(\vect{x})}{h(\vect{x})}h(\vect{x})}
+_{:=0\text{ if \(h(\vect{x})=0\)}}
+\odif{\vect{x}}
+=\expvmu{H}{\frac{g(\widetilde{\vect{X}})f(\widetilde{\vect{X}})}{h(\widetilde{\vect{X}})}},
+\]
+which is utilized in importance sampling.
+\end{remark}
+\end{enumerate}

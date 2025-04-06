@@ -721,12 +721,13 @@ of random variables \(\sum_{i=1}^{n}X_i\) \emph{given} \(N=n\), for every \(n\in
 from here the relationship between mixture distribution and \emph{conditioning}
 becomes more transparent.
 
-In general, let \(I\sim F_I\) be a random variable with \(\supp{F_I}=\N\),
-and \(\vect{X}_i\sim F_i\) for every \(i\in\N\). Suppose that
+In general, let \(I\sim F_I\) be a random variable with \(\supp{F_I}=\N\), and
+\(\vect{X}_i\sim F_i\) for every \(i\in\N\). Suppose that
 \(I,\vect{X}_1,\vect{X}_2,\dotsc\) are independent. Then,
-\(\vect{X}=\vect{X}_{I}\) (interpreted as \(\vect{X}_i\) given \(I=i\)),
-follows the \defn{mixture distribution} of \(F_1,F_2,\dotsc\) with respect to
-\(F_{I}\).
+\(\vect{X}=\vect{X}_{I}\) (interpreted as \(\vect{X}_i\) given \(I=i\), or more
+explicitly, \(\vect{X}_{I}(\omega):=\vect{X}_{I(\omega)}(\omega)\) for all
+\(\omega\in\Omega\)), follows the \defn{mixture distribution} of
+\(F_1,F_2,\dotsc\) with respect to \(F_{I}\).
 
 \begin{note}
 It is indeed possible to define mixture distribution in a similar way when
@@ -887,10 +888,11 @@ We shall only prove for the case where \(F_1,\dotsc,F_d\) are continuous.
 \(\vect{U}\) has \(\unif{0}{1}\) margins, so the distribution function of \(U\)
 is indeed a copula, which we denote by \(C\).
 
-On \(\supp{F_j}\), we know \(F_j\) is strictly increasing, so by
-\labelcref{it:gen-inv-prop} we have \(X_j=F_j^{-1}(F_j(X_j))=F_j^{-1}(U_j)\)
-for all \(j=1,\dotsc,d\). (TODO: explain why ``on \(\supp{F_j}\)'' is enough)
-Thus, the distribution function \(F\) of \(X\) is
+By \Cref{lma:strict-incr-support}, we know \(F_j\) is strictly increasing on
+\(\supp{F_j}\), so by \labelcref{it:gen-inv-prop} we have
+\(X_j=F_j^{-1}(F_j(X_j))=F_j^{-1}(U_j)\) on \(\supp{F_j}\) for all
+\(j=1,\dotsc,d\). Therefore, using a similar argument as in the proof
+\Cref{prp:prob-trans}, the distribution function \(F\) of \(X\) is
 \begin{align*}
 F(\vect{x})&=\prob{X_j\le x_j\text{ for all \(j=1,\dotsc,d\)}} \\
 &=\prob{F_j^{-1}(U_j)\le x_j\text{ for all \(j=1,\dotsc,d\)}} \\
@@ -950,15 +952,15 @@ has the copula \(C\) as well, which is also uniquely determined.
 \begin{pf}
 Fix any \(j=1,\dotsc,d\). On \(\supp{F_j}\), the function \(T_j\) is strictly
 increasing, so it has at most countably many discontinuities, because at each
-discontinuity (jump in this case) there is a rational number in between.
+discontinuity (jump in this case) there is a rational number in between. Hence,
+we have that \(T_j\) is right-continuous on the set \(\supp{F_j}\) with at most
+countably many discontinuities removed. Since \(\prob{X_j\in \supp{F_j}}=1\)
+and there are only at most countably discontinuities, the probability that
+\(X_j\) takes values in the resulting set after such removal would still be \(1\).
+So, we may assume \(T_j\) is strictly increasing and right-continuous in the
+following probabilistic argument.
 
-Also, by changing the values of \(T_j(X_j)\) at its discontinuities if
-necessary (which only leads to a change on a \(\pr\)-null set as
-\(\prob{X_j=x}=0\) for all \(x\in\R\) and there are at most countably many
-discontinuities), we may further assume that \(T_j\) is right-continuous at its
-discontinuities.
-
-Now, by the right-continuity of \(T_j\), we have
+By the right-continuity of \(T_j\), we have
 \(T_j(T_j^{-1}(x_j))\overset{\text{\labelcref{it:gen-inv-prop}}}{=}x_j\) for
 all \(x_j\in\ran{T_j}\). Hence, the distribution function \(G_j\) of
 \(T_j(X_j)\) is given by
@@ -973,7 +975,31 @@ G_j(x_j)&=\prob{T_j(X_j)\le \vc{x_j}}
 for all \(x_j\in\ran{T_j}\). Since \(T_j(X_j)\) cannot possibly take values
 outside \(\ran{T_j}\), the equation indeed holds for all \(x_j\in\R\).
 
-Since \(T_j\) is strictly increasing
+Since \(T_j\) is strictly increasing, by \labelcref{it:gen-inv-prop}
+\(T_j^{-1}\) is continuous on \(\ran{T_j}\). Also, by assumption \(F_j\) is
+continuous, so the composition \(G_j=F_j\circ T_j^{-1}\) is continuous on
+\(\ran{T_j}\). Since \(G_j\) remains constant outside
+\(\supp{G_j}=\supp{T_j(X_j)}\subseteq \ran{T_j}\), we conclude that \(G_j\) is continuous
+on \(\R\).
+
+Therefore, the joint distribution function of \((T_1(X_1),\dotsc,T_d(X_d))\) is
+\begin{align*}
+\prob{T_j(X_j)\le x_j\text{ for all }j=1,\dotsc,d}
+\overset{\text{(\(G_j\) continuous)}}&{=}
+\prob{T_j(X_j)<x_j\text{ for all }j=1,\dotsc,d} \\
+\overset{\text{(\(T_j\) right-continuous, \labelcref{it:gen-inv-prop})}}&{=}
+\prob{X_j<T_j^{-1}(x_j)\text{ for all }j=1,\dotsc,d} \\
+\overset{\text{(\(F_j\) continuous)}}&{=}
+\prob{X_j\le T_j^{-1}(x_j)\text{ for all }j=1,\dotsc,d} \\
+\overset{\text{(Sklar's theorem)}}&{=}
+C(F_{1}(T_{1}^{-1}(x_1)),\dotsc,F_{d}(T_{d}^{-1}(x_d))
+=C(G_{1}(x_1),\dotsc,G_d(x_d))
+\end{align*}
+for all \(\vect{x}\in\R^d\).
+
+Since \(T_j(X_j)\sim G_j\) for all \(j=1,\dotsc,d\), by definition we know
+\((T_1(X_1),\dotsc,T_d(X_d))\) has copula \(C\). Furthermore, by Sklar's
+theorem it is uniquely determined since \(G_1,\dotsc,G_d\) are all continuous.
 \end{pf}
 
 \item \textbf{Copula from probability transforms.} By applying probability

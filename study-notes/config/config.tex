@@ -34,6 +34,7 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{patterns.meta}
 \usetikzlibrary{external}
+\usepgfplotslibrary{fillbetween}
 
 \pgfplotsset{compat=1.18}
 
@@ -54,8 +55,11 @@
 
 \newcommand*{\prob}[1]{\mathbb{P}\left(#1\right)}
 \newcommand*{\expv}[1]{\mathbb{E}\left[#1\right]}
+\newcommand*{\expvmu}[2]{\mathbb{E}_{#1}\left[#2\right]}
+\newcommand*{\sd}[1]{\operatorname{SD}\left(#1\right)}
 \newcommand*{\vari}[1]{\operatorname{Var}\left(#1\right)}
-\newcommand*{\cov}[2]{\operatorname{Cov}\left(#1,#2\right)}
+\newcommand*{\cov}[1]{\operatorname{Cov}\left(#1\right)}
+\newcommand*{\corr}[1]{\operatorname{Corr}\left(#1\right)}
 \newcommand*{\pr}{\mathbb{P}}
 \newcommand*{\indic}{\mathbf{1}}
 \newcommand*{\indicset}[1]{\mathbf{1}_{\left\{#1\right\}}}
@@ -70,11 +74,17 @@
 
 \newcommand*{\N}{\mathbb{N}}
 \newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
 \newcommand*{\Q}{\mathbb{Q}}
-\newcommand*{\eR}{\overline{\mathbb{R}}}
+\newcommand*{\eR}{\bar{\mathbb{R}}}
 \newcommand*{\vect}[1]{\bm{#1}}
 \newcommand*{\pow}[1]{\mathcal{P}\left(#1\right)}
 \newcommand*{\ran}[1]{\operatorname{ran}\left(#1\right)}
+
+\newcommand*{\re}[1]{\operatorname{Re}\left(#1\right)}
+\newcommand*{\im}[1]{\operatorname{Im}\left(#1\right)}
+
+\newcommand*{\inner}[2]{\left\langle #1,#2\right\rangle}
 
 \newcommand*{\defn}[1]{\index[def]{#1}\textcolor{ForestGreen}{\textbf{#1}}}
 \newcommand*{\bu}[1]{\textbf{\underline{#1}}}
@@ -92,7 +102,7 @@
 \newcommand*{\rc}[1]{\mcolor{red}{#1}}
 \newcommand*{\tec}[1]{\mcolor{teal}{#1}}
 
-
+\DeclareMathOperator*{\esssup}{ess\,sup}
 \newenvironment{remark}{\sffamily \underline{Remarks}:\begin{itemize}}{\end{itemize}}
 \newenvironment{note}{\sffamily\lbrack Note:}{\!\!\rbrack}
 \newenvironment{mnemonic}{\sffamily\lbrack Mnemonic {\color{pink!90!black}\faIcon{brain}}:}{\!\!\rbrack}

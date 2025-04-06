@@ -143,7 +143,7 @@ since \(A\in\mathcal{F}\).
 measurable space, and \(A_1,\dotsc,A_n\in\mathcal{F}\) be pairwise disjoint
 sets.  Then, \(X:\Omega\to\R\) with \(X=\sum_{i=1}^{n}x_i\indic_{A_i}\) for
 some \(x_1,\dotsc,x_n\in\R\) is \(\mathcal{F}\)-measurable. \begin{note}
-Such function \(X\) is known as a \defn{simple random variable}, which is
+Such function \(X\) is known as a \defn{simple function}, which is
 essential for the construction of \emph{Lebesgue integral} (see
 \Cref{sect:integration-expectation}).
 \end{note}
@@ -726,9 +726,26 @@ determines the distribution function \(F\), sometimes we also write
 function \(f\) exists. This applies similarly to other expressions that uniquely
 characterize \(F\) also, e.g., we write ``\(X\sim\ndist{\mu,\sigma^2}\)'' as
 the expression ``\(\ndist{\mu,\sigma^2}\)'' refers to a unique distribution function.
+\item When we have \(\vect{X}\sim F\), sometimes we call
+\(\supp{F}=\{\vect{x}\in\R^d:\Delta_{(\vect{x}-\vect{h},\vect{x}]}F>0\text{ for
+all }\vect{h}>\vect{0}\}\) as the \defn{support} of \(\vect{X}\), denoted by
+\(\supp{\vect{X}}\). There are some other alternative definitions of the
+support of \(\vect{X}\), including:
+\begin{itemize}
+\item the \emph{smallest closed set \(C\subseteq \R^d\)} such that
+\(\prob{\vect{X}\in C}=1\), and
+\item the set \(\{\vect{x}\in\R^d:\pr_{\vect{X}}(B(\vect{x},r))>0\text{ for
+all }r>0\}\) where \(B(\vect{x},r)\) denotes the open ball in \(\R^d\) with
+center \(\vect{x}\) and radius \(r\).
+\end{itemize}
+It can be shown that all these definitions are equivalent; see
+\url{https://math.stackexchange.com/q/846011} for a related discussion on this
+matter.
 \item Sometimes one abuses the notation of \(F\) and writes
-\(F(B):=\pr_{\vect{X}}(B)\). Also, the terms ``distribution'' and ``distribution
-function'' are used interchangeably sometimes.
+\(F(B):=\pr_{\vect{X}}(B)\). In view of this, the notations \(F\) and
+\(\pr_{\vect{X}}\) are sometimes used interchangeably (see e.g.,
+\labelcref{it:lebesgue-stieljes-int}). Also, the terms ``distribution'' and
+``distribution function'' are used interchangeably sometimes.
 \end{remark}
 \item \textbf{Preservation of equality in distribution after applying
 measurable functions.} Intuitively, given two random vectors that are equal in
@@ -961,7 +978,20 @@ Note that \(\prob{F^{-1}(U)\le x}
 \end{pf}
 \item \textbf{Probability transform.} Apart from the quantile transform, there
 is also a result that works another way round, but it requires a continuity
-assumption.
+assumption. The following lemma is used for proving the result.
+
+\begin{lemma}[Strict increasingness of an univariate distribution function on its support]
+\label{lma:strict-incr-support}
+Let \(F\) be a distribution function on \(\R\). Then, \(F\) is strictly
+increasing on its support \(\supp{F}=\{x\in\R:F(x)-F(x-h)>0\text{ for all
+}h>0\}\), i.e., for all \(x,y\in\supp{F}\) with \(x<y\), we have
+\(F(x)<F(y)\).
+\end{lemma}
+\begin{pf}
+Fix any \(x,y\in\supp{F}\) with \(x<y\), and set \(h=y-x>0\). Then, by the
+definition of support we have \(F(y)-F(x)=F(y)-F(y-h)>0\), so the strict
+increasingness follows.
+\end{pf}
 
 \begin{proposition}[Probability transform]
 \label{prp:prob-trans}
@@ -970,12 +1000,22 @@ If \(X\sim F\) and \vc{\(F\) is continuous}, then \(F(X)\sim \unif{0}{1}\).
 \begin{pf}
 Since \(F\) is continuous, the quantile function \(F^{-1}\) is strictly
 increasing on \([0,1]\) by \labelcref{it:gen-inv-prop}. Therefore, we have
-\(F(X(\omega))\le u\) iff \(F^{-1}(F(X(\omega)))\le F^{-1}(u)\) for all \(\omega\in\Omega\).
-Now, note that the support of \(F\) is \(\supp{F}=\{x\in\R:F(x)-F(x-h)>0\text{
-for all \(h>0\)}\}\), and \(F\) is strictly increasing on \(\supp{F}\), because
-for all \(x,y\in\supp{F}\) with \(x<y\), by setting \(h=y-x\), we know
-\(F(y)-F(y-h)=F(y)-F(x)>0\).
-
-TODO
+\(F(X(\omega))\le u\) iff \(F^{-1}(F(X(\omega)))\le F^{-1}(u)\) for all
+\(\omega\in\Omega\). Thus, we have
+\begin{align*}
+\prob{F(X)\le u}&=\prob{F^{-1}(F(X))\le F^{-1}(u)} \\
+&=\underbrace{\prob{\{F^{-1}(F(X))\le F^{-1}(u)\}\cap \{X\in\supp{F}\}}}
+_{\overset{\text{\labelcref{it:gen-inv-prop}}}{=}\prob{\{X\le F^{-1}(u)\}
+\cap \{X\in\supp{F}\}}
+}
++\underbrace{\prob{\{F^{-1}(F(X))\le F^{-1}(u)\}\cap
+\{X\notin\supp{F}\}}}_{=0\text{ as \(\prob{X\in\supp{F}}=1\)}} \\
+&=\prob{\{X\le F^{-1}(u)\} \cap \{X\in\supp{F}\}}+
+\underbrace{\prob{\{X\le F^{-1}(u)\} \cap \{X\notin\supp{F}\}}}_{0} \\
+&=\prob{X\le F^{-1}(u)}=F(F^{-1}(u)),
+\end{align*}
+which equals \(u\) for all \(u\in\ran{F}\cup\{0,1\}\overset{\text{(\(F\)
+continuous)}}{=}[0,1]\) by \labelcref{it:gen-inv-prop}. This implies that
+\(F(X)\sim\unif{0}{1}\).
 \end{pf}
 \end{enumerate}
