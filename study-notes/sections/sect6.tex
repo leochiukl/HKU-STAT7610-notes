@@ -1,0 +1,1481 @@
+\section{Modes of Convergence}
+\label{sect:mode-conv}
+\begin{enumerate}
+\item In \Cref{sect:mode-conv}, we will explore the different notions of
+\emph{convergence} in probability theory. These concepts are crucial for
+developments of asymptotic methods, and also for many important
+results like \emph{laws of large numbers} and \emph{central limit theorem}.
+\end{enumerate}
+\subsection{Almost Sure Convergence and Convergence in Probability}
+\label{subsect:conv-as-ip}
+\begin{enumerate}
+\item Two modes of convergence that are commonly studied and have wide
+applicability are \emph{almost sure convergence} and \emph{convergence in
+probability}. There is also another less common mode of convergence, known as
+\emph{complete convergence}, which is stronger than both of them and is mainly
+of theoretical interest.  Now, we shall start by defining these three types of
+convergence.
+\item \textbf{Definitions.} Let \((\Omega,\mathcal{F},\pr)\) be a probability
+space, \(\vect{X}\) be a random vector, and \(\{\vect{X}_n\}\) be a sequence of
+random vectors, where \(\vect{X}\) and all \(\vect{X}_n\)'s are defined on
+\((\Omega,\mathcal{F},\pr)\). Then:
+\begin{itemize}
+\item \(\{\vect{X}_n\}\) \defn{converges completely} to \(\vect{X}\), denoted by
+\(\vect{X}_n\tocc \vect{X}\), if for all \(\varepsilon>0\), we have \\
+\(\sum_{n=1}^{\infty}\prob{\|\vect{X}_n-\vect{X}\| >\varepsilon}<\infty\).
+\item \(\{\vect{X}_n\}\) \defn{converges almost surely} to \(\vect{X}\), denoted by
+\(\vect{X}_n\toas \vect{X}\), if \(\prob{\lim_{n\to\infty}\vect{X}_n=\vect{X}}=1\).
+\begin{note}
+More explicitly, we can write
+\(\prob{\{\omega\in\Omega:\lim_{n\to\infty}\vect{X}_n(\omega)=\vect{X}(\omega)\}}=1\);
+here for each fixed \(\omega\in\Omega\), \(\{\vect{X}_n(\omega)\}_{n\in\N}\) is
+a real-valued sequence.
+\end{note}
+\item \(\{\vect{X}_n\}\) \defn{converges in probability} to \(\vect{X}\), denoted by
+\(\vect{X}_n\topr \vect{X}\), if for all \(\varepsilon>0\), we have
+\(\lim_{n\to\infty}\prob{\|\vect{X}_n-\vect{X}\|>\varepsilon}=0\).
+
+\begin{note}
+More explicitly, we have that for all \(\varepsilon>0\) and \(\varepsilon'>0\),
+there exists \(m\in\N\) such that
+\(\prob{\|\vect{X}_{n}-\vect{X}\|>\varepsilon}<\varepsilon'\) for all \(n\ge
+m\).
+\end{note}
+\end{itemize}
+\item \textbf{Characterization of almost sure convergence by convergence in probability.}
+One important result about almost sure convergence and convergence in
+probability is the characterization of the former in terms of the latter. To
+show such characterization, we need the following lemma.
+\begin{lemma}[Interchanges of (limit) supremum with other operations]
+\label{lma:interchange-limsup}
+For all \(\varepsilon>0\), we have:
+\begin{enumerate}
+\item \(\sup_{k\ge n}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+=\{\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+\) and
+\(\limsup_{n\to\infty}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+=\{\limsup_{n\to\infty}\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+\).
+\item \(\lim_{n\to\infty}\prob{\sup_{k\ge n}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}}
+=\prob{\limsup_{n\to\infty}\{\|\vect{X}_n-\vect{X}\|>\varepsilon\}}
+\).
+\end{enumerate}
+\end{lemma}
+\begin{pf}
+\begin{enumerate}
+\item Note that
+\begin{align*}
+\omega&\in\sup_{k\ge n}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+=\bigcup_{k\ge n}^{}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\} \\
+\iff&\|\vect{X}_k(\omega)-\vect{X}(\omega)\|>\varepsilon\text{ for some \(k\ge n\)} \\
+\iff&\sup_{k\ge n}\|\vect{X}_k(\omega)-\vect{X}(\omega)\|>\varepsilon
+\end{align*}
+and
+\begin{align*}
+\omega&\in\limsup_{n\to\infty}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+=\bigcap_{n=1}^{\infty}\bigcup_{k\ge n}^{}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\} \\
+\iff&\|\vect{X}_k(\omega)-\vect{X}(\omega)\|>\varepsilon\text{ for some \(k\ge n\), for all \(n\in\N\)} \\
+\iff&\limsup_{n\to\infty}\|\vect{X}_k(\omega)-\vect{X}(\omega)\|>\varepsilon.
+\end{align*}
+\item Let \(A_{n,\varepsilon}:=\sup_{k\ge
+n}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}\) and
+\(A_{\infty,\varepsilon}:=\lim_{n\to\infty}A_{n,\varepsilon}
+=\limsup_{n\to\infty}\{\|\vect{X}_n-\vect{X}\|>\varepsilon\}\). The result then
+follows from the equality
+\(\lim_{n\to\infty}\prob{A_{n,\varepsilon}}=\prob{A_{\infty,\varepsilon}}\).
+\end{enumerate}
+\end{pf}
+\begin{theorem}[Characterization of almost sure convergence by convergence in probability]
+\label{thm:as-conv-char-ip}
+We have \(\vect{X}_n\toas \vect{X}\) iff \(\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|\topr 0\).
+\end{theorem}
+\begin{pf}
+``\(\Rightarrow\)'': Assume \(\vect{X}_n\toas \vect{X}\), so we have
+\(\lim_{n\to\infty}\vect{X}_n(\omega)=\vect{X}(\omega)\) for all \(\omega\in
+N^c\) where \(N\in\mathcal{F}\) with \(\prob{N}=0\). Fix any \(\varepsilon>0\).
+By the definition of limit, for all \(\omega\in N^c\), there exists
+\(m\in\N\) such that \(\|\vect{X}_n(\omega)-\vect{X}(\omega)\|<\varepsilon\) for all \(n\ge m\).
+
+Let \(A_{n,\varepsilon}:=\bigcup_{k\ge n}^{}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+=\sup_{k\ge n}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}
+\)
+and \(A_{\infty,\varepsilon}:=\bigcap_{n=1}^{\infty}A_{n,\varepsilon}
+=\lim_{n\to\infty}A_{n,\varepsilon}
+=\limsup_{n\to\infty}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}\).
+By construction, we know for all \(\omega\in N^c\), there exists \(n\in\N\)
+such that \(\omega\notin A_{n,\omega}\), and thus \(\omega\notin A_{\infty,\varepsilon}\).
+Hence, \(A_{\infty,\varepsilon}\subseteq N\).
+
+This implies that
+\begin{align*}
+0&\le\lim_{n\to\infty}\prob{\left|\vc{\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|}-0\right|>\varepsilon}
+=\lim_{n\to\infty}\prob{\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|>\varepsilon} \\
+\overset{\text{(\Cref{lma:interchange-limsup})}}&{=}
+\lim_{n\to\infty}\prob{\sup_{k\ge n}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}}
+=\prob{\limsup_{n\to\infty}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}}
+=\prob{A_{\infty,\varepsilon}}\le\prob{N}=0,
+\end{align*}
+and thus \(\vc{\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|}\topr 0\).
+
+``\(\Leftarrow\)'': Assume \(\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|\topr 0\). Then, we have
+\begin{align*}
+\prob{\lim_{n\to\infty}\vect{X}_n\ne \vect{X}}
+\overset{\text{(definition of limit)}}&{=}\prob{\lim_{n\to\infty}\|\vect{X}_n-\vect{X}\|>0}
+=\prob{\limsup_{n\to\infty}\|\vect{X}_n-\vect{X}\|>0} \\
+&=\prob{\bigcup_{m=1}^{\infty}\left\{\limsup_{n\to\infty}\|\vect{X}_n-\vect{X}\|>1/m\right\}} \\
+\overset{\text{(\(\sigma\)-subadditivity)}}&{\le}
+\sum_{m=1}^{\infty}\prob{\left\{\limsup_{n\to\infty}\|\vect{X}_n-\vect{X}\|>1/m\right\}} \\
+\overset{\text{(\Cref{lma:interchange-limsup})}}&{=}
+\sum_{m=1}^{\infty}\prob{\limsup_{n\to\infty}\left\{\|\vect{X}_n-\vect{X}\|>1/m\right\}} \\
+\overset{\text{(\Cref{lma:interchange-limsup})}}&{=}
+\sum_{m=1}^{\infty}\lim_{n\to\infty}\prob{\sup_{k\ge n}\left\{\|\vect{X}_n-\vect{X}\|>1/m\right\}} \\
+\overset{\text{(\Cref{lma:interchange-limsup})}}&{=}
+\sum_{m=1}^{\infty}\lim_{n\to\infty}\prob{\sup_{k\ge n}\|\vect{X}_n-\vect{X}\|>1/m}
+\overset{\text{(assumption)}}{=}\sum_{m=1}^{\infty}0=0,
+\end{align*}
+which implies that \(\vect{X}_n\toas \vect{X}\).
+\end{pf}
+\item \textbf{Properties of these modes of convergence.}
+By \Cref{thm:as-conv-char-ip}, we can derive the following properties about the
+modes of convergence discussed here fairly easily:
+\begin{enumerate}
+\item\label{it:cc-imp-as} \(\vect{X}_n\tocc\vect{X}\implies \vect{X}_n\toas\vect{X}\).
+\item\label{it:as-imp-ip} \(\vect{X}_n\toas\vect{X}\implies \vect{X}_n\topr\vect{X}\).
+\item\label{it:mono-ip-imp-as} \(\vect{X}_n\netopr\vect{X}\text{ or
+}\vect{X}_n\setopr\vect{X}\implies \vect{X}_n\toas\vect{X}\). 
+
+\begin{note}
+Here \(\vect{X}_n\netopr\vect{X}\) means \(\vect{X}_n\topr\vect{X}\) and
+\(\vect{X}_n\nearrow\) (similar for \(\vect{X}_n\setopr\vect{X}\)).
+\end{note}
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item Assume \(\vect{X}_n\tocc\vect{X}\). Fix any \(\varepsilon>0\).
+Since \vc{\(\sum_{n=1}^{\infty}\prob{\|\vect{X}_n-\vect{X}\| >\varepsilon}<\infty\)}, we have
+\begin{align*}
+\lim_{n\to\infty}\prob{\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|>\varepsilon}
+\overset{\text{(\Cref{lma:interchange-limsup})}}&{=}
+\lim_{n\to\infty}\prob{\sup_{k\ge n}\{\|\vect{X}_k-\vect{X}\|>\varepsilon\}} \\
+\overset{\text{(\Cref{lma:interchange-limsup})}}&{=}
+\prob{\limsup_{n\to\infty}\{\|\vect{X}_n-\vect{X}\|>\varepsilon\}}
+\vc{\overset{\text{(first Borel-Cantelli lemma)}}{=}}0.
+\end{align*}
+Thus by \Cref{thm:as-conv-char-ip} we have \(\vect{X}_n\toas\vect{X}\).
+\item Assume \(\vect{X}_n\toas\vect{X}\). By \Cref{thm:as-conv-char-ip}, we
+have \(\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|\topr 0\), which means that
+\(\lim_{n\to\infty}\prob{\sup_{k\ge n}\|\vect{X}_k-\vect{X}\| >\varepsilon}=0\)
+for all \(\varepsilon>0\). For every \(n\in\N\), since
+\(\|\vect{X}_n-\vect{X}\|\le\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|\), we have
+\(\prob{\|\vect{X}_n-\vect{X}\| >\varepsilon} \le\prob{\sup_{k\ge
+n}\|\vect{X}_k-\vect{X}\| >\varepsilon}~\forall \varepsilon>0\), forcing that
+\(\lim_{n\to\infty}\prob{\|\vect{X}_n-\vect{X}\| >\varepsilon}=0~\forall
+\varepsilon>0\). Therefore, \(\vect{X}_n\topr\vect{X}\).
+\item Note that \(\vect{X}_n\topr\vect{X}\implies \|\vect{X}_n-\vect{X}\|\topr
+0\).  Also, by the monotonicity of \(\{\vect{X}_n\}\) we have \(\sup_{k\ge
+n}\|\vect{X}_k-\vect{X}\| =\|\vect{X}_n-\vect{X}\|\topr 0\). TODO: why? Hence,
+by \Cref{thm:as-conv-char-ip} we have \(\vect{X}_n\toas\vect{X}\).
+\end{enumerate}
+\end{pf}
+\item \textbf{Subsequence principle.} A remarkable result that relates the
+three modes of convergence is the \emph{subsequence principle}, which involves
+``subsequence of subsequence''.
+
+\begin{theorem}[Subsequence principle]
+\label{thm:subseq-principle}
+The following are equivalent.
+\begin{enumerate}
+\item \(\vect{X}_n\topr\vect{X}\).
+\item For every subsequence \(\{\vect{X}_{n_{k}}\}_{k\in\N}\subseteq \{\vect{X}_n\}_{n\in\N}\),
+there exists a \emph{further} subsequence
+\(\{\vect{X}_{n_{k_{\ell}}}\}_{\ell\in\N}\subseteq \{\vect{X}_{n_{k}}\}_{k\in\N}\)
+such that \(\vect{X}_{n_{k_{\ell}}}\tox{\ell}{\text{c.c.}}\vect{X}\).
+\item For every subsequence \(\{\vect{X}_{n_{k}}\}_{k\in\N}\subseteq \{\vect{X}_n\}_{n\in\N}\),
+there exists a \emph{further} subsequence
+\(\{\vect{X}_{n_{k_{\ell}}}\}_{\ell\in\N}\subseteq \{\vect{X}_{n_{k}}\}_{k\in\N}\)
+such that \(\vect{X}_{n_{k_{\ell}}}\tox{\ell}{\text{a.s.}}\vect{X}\).
+\end{enumerate}
+\end{theorem}
+\begin{pf}
+\begin{itemize}
+\item \(\text{(a)}\implies \text{(b)}\): By (a), for every
+subsequence \(\{\vect{X}_{n_{k}}\}_{k\in\N}\subseteq \{\vect{X}_n\}_{n\in\N}\), 
+we have \(\vect{X}_{n_k}\tox{k}{\text{p}}\vect{X}\). By definition of convergence in
+probability, for all \(\varepsilon>0\) and \(\varepsilon'>0\), there exists \(K\in\N\)
+such that \(\prob{\|\vect{X}_{n_k}-\vect{X}\|>\varepsilon}<\varepsilon'\) for
+all \(k\ge K\). Thus, for every \(\ell\in\N\), by setting
+\(\varepsilon=\varepsilon'=2^{-\ell}\), we can choose \(k_{\ell}\in\N\) such that
+\(\prob{\|\vect{X}_{n_{k_{\ell}}}-\vect{X}\|>2^{-\ell}}<2^{-\ell}\).
+
+Hence, for all \(\varepsilon>0\) we have
+\[
+\sum_{\ell=1}^{\infty}\prob{\|\vect{X}_{n_{k_{\ell}}}-\vect{X}\|>\varepsilon}
+=\underbrace{\sum_{\ell\in\N:2^{-\ell}>\varepsilon}^{}
+\prob{\|\vect{X}_{n_{k_{\ell}}}-\vect{X}\|>\varepsilon}}_{\text{finitely many summands}}
++\underbrace{\sum_{\ell\in\N:2^{-\ell}\le\varepsilon}^{}
+\underbrace{\prob{\|\vect{X}_{n_{k_{\ell}}}-\vect{X}\|>\varepsilon}}_{
+\le\prob{\|\vect{X}_{n_{k_{\ell}}}-\vect{X}\|>2^{-\ell}}<2^{-\ell}}}
+_{<\sum_{\ell\in\N}^{}2^{-\ell}=1}
+<\infty,
+\]
+which means by definition that
+\(\vect{X}_{n_{k_{\ell}}}\tox{\ell}{\text{c.c.}}\vect{X}\).  \item
+\(\text{(b)}\implies \text{(c)}\): It follows from \labelcref{it:cc-imp-as}.
+\item \(\text{(c)}\implies \text{(a)}\): We prove by contrapositive. Assume
+that \(\vect{X}_n\cancel{\topr}\vect{X}\). Then by negating the definition, we
+know that there exist \(\varepsilon,\varepsilon'>0\) such that
+\(\prob{\|\vect{X}_{n}-\vect{X}\|>\varepsilon}\ge\varepsilon'\) for infinitely
+many \(n\)'s. So we can form a subsequence
+\(\{\vect{X}_{n_{k}}\}_{k\in\N}\subseteq \{\vect{X}_n\}_{n\in\N}\) such that
+\(\prob{\|\vect{X}_{n_{k}}-\vect{X}\|>\varepsilon}\ge\varepsilon'\) for all
+\(k\in\N\). Therefore, for every further subsequence
+\(\{\vect{X}_{n_{k_{\ell}}}\}_{\ell\in\N}
+\subseteq\{\vect{X}_{n_{k}}\}_{k\in\N}\), we have
+\(\vect{X}_{n_{k_{\ell}}}\cancel{\tox{\ell}{\text{p}}}\vect{X}\), and so
+\(\vect{X}_{n_{k_{\ell}}}\cancel{\tox{\ell}{\text{a.s.}}}\vect{X}\) by
+\labelcref{it:as-imp-ip}, which means (c) does not hold.
+\end{itemize}
+\end{pf}
+\item \textbf{Dominated convergence theorem for convergence in probability.}
+Under a probability space, we can apply \Cref{thm:subseq-principle} to
+extend the dominated convergence theorem by replacing the almost sure
+convergence by the convergence in probability in its conditions, thereby
+widening its applicability.
+\begin{corollary}[Dominated convergence theorem (convergence in probability)]
+\label{cor:dct-ip-version}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space.  Let \(X_n\in
+L^{1}(\Omega,\mathcal{F},\pr)\) for every \(n\in\N\), and \(X:\Omega\to\R\) be
+measurable.  If \(X_n\topr X\) and \(|X_n|\le Y\) a.s.\ for all \(n\in\N\), for
+some \(Y\in L^{1}\) \emph{(domination)}, then \(X\in L^{1}\) and
+\(\lim_{n\to\infty}\expv{X_n}=\expv{X}\).
+\end{corollary}
+\begin{pf}
+Since \(X_n\topr X\), by subsequence principle we know
+for every subsequence \(\{\vect{X}_{n_{k}}\}_{k\in\N}\subseteq \{\vect{X}_n\}_{n\in\N}\),
+there exists a further subsequence
+\(\{\vect{X}_{n_{k_{\ell}}}\}_{\ell\in\N}\subseteq \{\vect{X}_{n_{k}}\}_{k\in\N}\)
+such that \(\vect{X}_{n_{k_{\ell}}}\tox{\ell}{\text{a.s.}}\vect{X}\).
+Applying the original dominated convergence theorem (\Cref{thm:dct})
+on \(\{\vect{X}_{n_{k_{\ell}}}\}_{\ell\in\N}\), we get \(X\in L^{1}\) and
+\(\lim_{\ell\to\infty}\expv{X_{n_{k_{\ell}}}}=\expv{X}\).
+
+\textbf{Claim:} We also have the subsequence principle for real-valued sequence,
+i.e., \(a_n\to a\) iff for every subsequence \(\{a_{n_{k}}\}_{k\in\N}\subseteq \{a_n\}_{n\in\N}\),
+there exists a \emph{further} subsequence
+\(\{a_{n_{k_{\ell}}}\}_{\ell\in\N}\subseteq \{a_{n_{k}}\}_{k\in\N}\)
+such that \(a_{n_{k_{\ell}}}\to a\).
+
+\begin{pf}
+\begin{itemize}
+\item ``\(\Rightarrow\)'': It follows by considering the definition of sequence.
+\item ``\(\Leftarrow\)'': We prove by contrapositive. Assume that \(a_n\not\to
+a\). Then there exists \(\varepsilon>0\) such that for all \(k\in\N\),
+\(|a_{n_k}-a|>\varepsilon\) for some \(n_k\ge k\). From this we can construct a
+subsequence \(\{a_{n_k}\}\subseteq \{a_n\}\) such that
+\(|a_{n_k}-a|>\varepsilon\) for all \(k\in\N\). The result then follows by
+noting that it does not contain any further subsequence that converges to \(a\).
+\end{itemize}
+\end{pf}
+
+By the subsequence principle for real-valued sequence, we then have
+\(\lim_{n\to\infty}\expv{X_n}=\expv{X}\).
+\end{pf}
+\item\label{it:cmt-ip-as} \textbf{Continuous mapping theorem for almost sure convergence and
+convergence in probability.} When working with modes of convergence, a nice and
+useful result is the
+\emph{continuous mapping theorem} (CMT), which suggests that some modes of
+convergence are preserved after applying continuous function. Here, we will
+state and prove the CMT for almost sure convergence and convergence in
+probability, but it actually also holds for \emph{convergence in distribution};
+see \Cref{thm:cmt-id}.
+
+\begin{theorem}[Continuous mapping theorem for almost sure convergence and convergence in probability]
+\label{thm:cmt-ip-as}
+Let \(\vect{h}:\R^d\to\R^k\) be continuous. Then:
+\begin{enumerate}
+\item \(\vect{X}_n\toas\vect{X}\implies \vect{h}(\vect{X}_n)\toas\vect{h}(\vect{X})\).
+\item \(\vect{X}_n\topr\vect{X}\implies \vect{h}(\vect{X}_n)\topr\vect{h}(\vect{X})\).
+\end{enumerate}
+\end{theorem}
+\begin{pf}
+\begin{enumerate}
+\item Assume \(\vect{X}_n\toas\vect{X}\). Then
+\(\lim_{n\to\infty}\vect{X}_n(\omega)=\vect{X}(\omega)\) for all \(\omega\in
+N^c\) for some \(N\in\mathcal{F}\) with \(\prob{N}=0\). Hence, we have for all
+\(\omega\in N^c\),
+\(\lim_{n\to\infty}\vect{h}(\vect{X}_n(\omega))\overset{\text{(\(\vect{h}\)
+continuous)}}{=}\vect{h}(\lim_{n\to\infty}\vect{X}_n(\omega))=\vect{h}(\vect{X}(\omega))\).
+This shows that \(\{\omega\in N^c:\lim_{n\to\infty}\vect{X}_n(\omega)=\vect{X}(\omega)\}
+\subseteq \{\omega\in N^c:\lim_{n\to\infty}\vect{h}(\vect{X}_n(\omega))=\vect{h}(\vect{X}(\omega))\}
+\).
+
+Hence, we have
+\begin{align*}
+\prob{\lim_{n\to\infty}\vect{h}(\vect{X}_n)=\vect{h}(\vect{X})}
+&=\prob{\left\{\omega\in\Omega:\lim_{n\to\infty}\vect{h}(\vect{X}_n)=\vect{h}(\vect{X})\right\}} \\
+\overset{(\prob{N}=0)}&{=}
+\prob{\left\{\omega\in N^c:\lim_{n\to\infty}\vect{h}(\vect{X}_n)=\vect{h}(\vect{X})\right\}} \\
+\overset{\text{(monotonicity)}}&{\ge}
+\prob{\left\{\omega\in N^c:\lim_{n\to\infty}\vect{X}_n=\vect{X}\right\}} \\
+\overset{(\prob{N}=0)}&{=}
+\prob{\left\{\omega\in\Omega:\lim_{n\to\infty}\vect{X}_n=\vect{X}\right\}} \\
+&=\prob{\lim_{n\to\infty}\vect{X}_n=\vect{X}}=1.
+\end{align*}
+\item For this part we will provide two proofs:
+\begin{enumerate}
+\item \emph{Method 1: using subsequence principle.} Since \(\vect{X}_n\topr
+\vect{X}\), by the subsequence principle we know for every subsequence
+\(\{\vect{X}_{n_{k}}\}_{k\in\N}\subseteq \{\vect{X}_n\}_{n\in\N}\) (or
+\(\{\vect{h}(\vect{X}_{n_{k}})\}_{k\in\N} \subseteq
+\{\vect{h}(\vect{X}_n)\}_{n\in\N}\)), there exists a further subsequence
+\(\{\vect{X}_{n_{k_{\ell}}}\}_{\ell\in\N}\subseteq
+\{\vect{X}_{n_{k}}\}_{k\in\N}\) (or
+\(\{\vect{h}(\vect{X}_{n_{k_{\ell}}})\}_{\ell\in\N})\subseteq
+\{\vect{h}(\vect{X}_{n_{k}})\}_{k\in\N}\)) such that
+\(\vect{X}_{n_{k_{\ell}}}\tox{\ell}{\text{a.s.}}\vect{X}\), which implies by
+(a) that
+\(\vect{h}(\vect{X}_{n_{k_{\ell}}})\tox{\ell}{\text{a.s.}}\vect{h}(\vect{X})\).
+Hence, applying the subsequence principle on
+\(\{\vect{h}(\vect{X}_n)\}_{n\in\N}\) gives \(\vect{h}(\vect{X}_n)\topr
+\vect{h}(\vect{X})\).
+\item \emph{Method 2: arguing by definition.} Fix any \(\varepsilon>0\). For
+each \(m\in\N\), let \(E_{m}:=\{\vect{x}\in\R^d:\text{there exists
+\(\vect{y}\in\R^d\) such that \(\|\vect{y}-\vect{x}\|<1/m\) and
+\(\|\vect{h}(\vect{y})-\vect{h}(\vect{x})\|>\varepsilon\)}\}\).
+Observe that \(E_m\searrow\) and since \(\vect{h}\) is continuous,
+\(\lim_{n\to\infty}E_{m}=\bigcap_{m=1}^{\infty}E_m=\varnothing\) by considering
+the definition of continuity. Thus, by the continuity from above of
+\(\pr_{\vect{X}}\), we have \(\lim_{m\to\infty}\prob{\vect{X}\in
+E_m}=\prob{\vect{X}\in\varnothing}=0\).
+
+Therefore, for all \(m,n\in\N\),
+\begin{align*}
+\prob{\|\vect{h}(\vect{X}_n)-\vect{h}(\vect{X})\|>\varepsilon}
+&=\prob{\|\vect{h}(\vect{X}_n)-\vect{h}(\vect{X})\|>\varepsilon, \|\vect{X}_n-\vect{X}\|<1/m} \\
+&\quad+\prob{\|\vect{h}(\vect{X}_n)-\vect{h}(\vect{X})\|>\varepsilon,
+\|\vect{X}_n-\vect{X}\|\ge 1/m} \\
+&\le\prob{\vect{X}\in E_n}+\prob{\|\vect{X}_n-\vect{X}\|>1/m}.
+\end{align*}
+By assumption, we know
+\(\lim_{n\to\infty}\prob{\|\vect{X}_n-\vect{X}\|>1/m}=0\) for every \(m\in\N\).
+Hence, taking \(n\to\infty\) gives
+\(0\le \lim_{n\to\infty}\prob{\|\vect{h}(\vect{X}_n)-\vect{h}(\vect{X})\|>\varepsilon}
+=\lim_{n\to\infty}\prob{\vect{X}\le E_n}+0
+=0\), implying that \(\vect{h}(\vect{X}_n)\topr\vect{h}(\vect{X})\).
+\end{enumerate}
+\end{enumerate}
+\end{pf}
+\end{enumerate}
+\subsection{Convergence in \(L^p\)}
+\label{subsect:conv-lp}
+\begin{enumerate}
+\item \textbf{Definition.} Let \((\Omega,\mathcal{F},\pr)\) be a probability
+space, \(X\) be a random variable, and \(\{X_n\}\) be a sequence of
+random variables, where \(X\) and all \(X_n\)'s are in
+\(L^p=L^p(\Omega,\mathcal{F},\pr)\), for some \(p\in \vc{[1,\infty]}\). Then
+\(\{X_n\}\) \defn{converges to \(X\) in \(L^p\) (or in the \(p\)th mean)},
+denoted by \(X_n\tolp X\), if \(\lim_{n\to\infty}\|X_n-X\|_{p}=0\).
+
+\begin{note}
+It is customary to exclude the case where \(p\in (0,1)\) since for such \(p\) the \(L^p\)
+norm does not define a valid norm (in mathematical sense).
+\end{note}
+\item\label{it:conv-lp-prop} \textbf{Properties of convergence in \(L^p\).}
+Now, we will consider some properties of the convergence in \(L^p\). In the
+proof, the following lemma that bounds tail probabilities is utilized:
+\begin{lemma}[Tail probability bounds]
+\label{lma:tail-prob-bounds}
+Let \(h:[0,\infty)\to[0,\infty)\) be a strictly increasing function and \(X\)
+be a random variable. Then, \(\prob{|X|\ge x}\le\expv{h(|X|)}/h(x)\)
+for all \(x>0\).
+\end{lemma}
+\begin{pf}
+For all \(x>0\), we have
+\begin{align*}
+\prob{|X|\ge x}\overset{\text{(\(h\) strictly increasing)}}&{=}\prob{h(|X|)\ge h(x)} \\
+&=\expv{\indicset{h(|X|)\ge h(x)}}
+\underset{\vc{h(|X|)/h(x)}\ge 1 \text{ if }h(|X|)\ge h(x)}
+{\overset{\text{(monotonicity)}}{\le}}
+\expv{\vc{\frac{h(|X|)}{h(x)}}\indicset{h(|X|)\ge h(x)}} \\
+\overset{\text{(monotonicity)}}&{\le}
+\expv{\frac{h(|X|)}{h(x)}}=\frac{\expv{h(|X|)}}{h(x)}.
+\end{align*}
+Here, note that \(h(x)>h(0)\ge 0\), so the division by \(h(x)\) is
+well-defined.
+\end{pf}
+
+\begin{note}
+By taking \(h(x)=x\), the inequality reduces to \(\prob{|X|\ge
+x}\le\expv{|X|}/x\), which is known as the \emph{Markov's inequality}. Also,
+taking \(h(x)=x^2\) gives \(\prob{|X|\ge x}\le\expv{X^2}/x^2\), which is known
+as the \emph{Chebyshev's inequality}.
+\end{note}
+\begin{proposition}
+\label{prp:conv-lp-prop}
+\hfill
+\begin{enumerate}
+\item \emph{(higher order convergence implies lower order convergence)} For all \(1\le
+p<q\le \infty\), we have \(X_n\tox{n}{L^q}X\implies X_n\tolp X\).
+\item \emph{(stronger than convergence in probability)} For all \(p\in
+[1,\infty]\), we have \(X_n\tolp X\implies X_n\topr X\).
+\item \emph{(convergence of \(L^p\) norms)} For all \(p\in [1,\infty]\), we
+have \(X_n\tolp X\implies \lim_{n\to\infty}\|X_n\|_{p}=\|X\|_{p}\).
+\end{enumerate}
+\end{proposition}
+\begin{pf}
+\begin{enumerate}
+\item Assume \(X_n\tox{n}{L^q}X\). By definition we have
+\(\lim_{n\to\infty}\|X_n-X\|_{q}=0\). So, by \labelcref{it:lp-sp-norm-relate},
+we have \(0\le
+\lim_{n\to\infty}\|X_n-X\|_{p}\le\lim_{n\to\infty}\|X_n-X\|_{q}=0\) and thus
+the result follows.
+\item
+\begin{itemize}
+\item \emph{Case 1: \(p\in [1,\infty)\).} Fix any \(\varepsilon>0\). For every
+\(n\in\N\), by \Cref{lma:tail-prob-bounds} we know
+\(\prob{|X_n-X|>\varepsilon}\le\expv{|X_n-X|^{p}}/\varepsilon^{p}\). Since
+\(X_n\tolp X\implies
+\lim_{n\to\infty}\|X_n-X\|_{p}^p=\lim_{n\to\infty}\expv{|X_n-X|^{p}}=0\), we have
+\(0\le\lim_{n\to\infty}\prob{|X_n-X|>\varepsilon}\le\lim_{n\to\infty}\expv{|X_n-X|^{p}}=0
+\), implying that \(X_n\topr X\).
+\item \emph{Case 2: \(p=\infty\).} Since
+\(|X_n-X|\overset{\text{a.s.}}{\le}\esssup|X_n-X|=\|X_n-X\|_{\infty}\), i.e.,
+\(|X_n(\omega)-X(\omega)|\le\|X_n-X\|_{\infty}\) for all \(\omega\in N^c\) for
+some null set \(N\).  Hence, for all \(\varepsilon>0\), we have
+\(\prob{|X_n-X|>\varepsilon}=
+\prob{\{|X_n-X| >\varepsilon\}\cap N^c}
+\le\prob{\{\|X_n-X\|_{\infty}>\varepsilon\}\cap N^c}
+=\prob{\|X_n-X\|_{\infty}>\varepsilon}\)
+for every \(n\in\N\).
+
+It then follows that \(0\le\lim_{n\to\infty}\prob{|X_n-X|>\varepsilon}
+\le\lim_{n\to\infty}\prob{\|X_n-X\|_{\infty}>\varepsilon}\overset{\text{(assumption)}}{=}0\),
+and so \(X_n\topr X\).
+\end{itemize}
+\item Note first that
+\[
+\begin{cases}
+\|X_n\|_{p}=\|X_n-X+X\|_{p}\overset{\text{(Minkowski)}}{\le}\vc{\|X_n-X\|_{p}}+\|X\|_{p}, \\
+\|X_n\|_{p}=\|X-X_n+X_n\|_{p}\overset{\text{(Minkowski)}}{\le}\vc{\|X_n-X\|_{p}}+\|X_n\|_{p},
+\end{cases}
+\]
+which implies that
+\[
+-\vc{\|X_n-X\|_{p}}\le \|X_{n}\|_{p}-\|X\|_{p}\le \vc{\|X_{n}-X\|_{p}},
+\]
+or \(0\le \bigl|\|X_{n}\|_{p}-\|X\|_{p}\bigr|\le\vc{\|X_{n}-X\|_{p}}\). By
+assumption, \(\lim_{n\to\infty}\vc{\|X_{n}-X\|_{p}}=0\), so we have
+\(\lim_{n\to\infty}\bigl|\|X_{n}\|_{p}-\|X\|_{p}\bigr|=0\), and hence
+\(\lim_{n\to\infty}\|X_{n}\|_{p}=\|X\|_{p}\) by the definition of limit.
+\end{enumerate}
+\end{pf}
+\end{enumerate}
+\subsection{Convergence in Distribution}
+\begin{enumerate}
+\item \textbf{Definition.} Let \((\Omega,\mathcal{F},\pr)\) be a probability
+space, \(\vect{X}\) be a random vector, and \(\{\vect{X}_n\}\) be a sequence of
+random vectors, where \(\vect{X}\) and all \(\vect{X}_n\)'s are from
+\(\Omega\) to \(\R^d\). Let \(\vect{X}_n\sim F_n\) for every \(n\in\N\) and
+\(\vect{X}\sim F\). Then, \(\{\vect{X}_n\}\) \defn{converges to \(\vect{X}\) in
+distribution (or weakly)}, denoted by \(\vect{X}_n\tod\vect{X}\), if
+\(\lim_{n\to\infty}F_n(\vect{x})=F(\vect{x)}\) for all \(\vect{x}\in
+C(F):=\{\vect{x}\in\R^d:F\text{ is continuous at \(\vect{x}\)}\}\), which is
+the set of all continuity points of \(F\).
+
+\begin{remark}
+\item Since \(F\) is increasing, there are at most countably many
+discontinuities (jumps), so \(C(F)^{c}\) is countable, and hence a Lebesgue
+null set. Therefore, with \(\vect{X}_n\tod\vect{X}\), we have
+\(\lim_{n\to\infty}F_n(\vect{x})=F(\vect{x)}\) a.e. (wrt Lebesgue measure
+\(\lambda\)).
+\item \emph{(uniqueness of limiting distribution)} The limiting distribution
+\(F\) is indeed unique. To see this, consider the following.
+
+Suppose \(\lim_{n\to\infty}F_n(\vect{x})=F(\vect{x})~\forall \vect{x}\in C(F)\) and
+\(\lim_{n\to\infty}F_n(\vect{x})=\widetilde{F}(\vect{x})~\forall \vect{x}\in
+C(\widetilde{F})\). Then, we have
+\(F(\vect{x})=\lim_{n\to\infty}F_n(\vect{x})j
+=\lim_{n\to\infty}\widetilde{F}_n(\vect{x})=\widetilde{F}(\vect{x})
+~\forall
+\vect{x}\in C(F)\cap C(\widetilde{F})=(C(F)^{c}\cup
+C(\widetilde{F}^{c})^{c}=:N^c\), with \(N\) being a Lebesgue null set. Hence,
+we have \(F=\widetilde{F}\) on \(N^c\).
+
+It then remains to establish that \(F=\widetilde{F}\) on \(N\) also. For all
+\(\vect{x}\in \N\), by the right-continuity of \(F\) and \(\widetilde{F}\) we
+have \(F(\vect{x})
+=\lim_{\substack{\vect{z}\to\vect{x}^{+},\\ \vect{z}\in N^c}}F(\vect{z})
+=\lim_{\substack{\vect{z}\to\vect{x}^{+},\\ \vect{z}\in N^c}}\widetilde{F}(\vect{z})
+=\widetilde{F}(\vect{x})
+\) where we can avoid choosing \(\vect{z}\)'s from \(N\) since \(N\) is countable.
+This establishes the uniqueness.
+\end{remark}
+\item \textbf{Portmanteau theorem.} To work with convergence in distribution,
+we often rely on the \emph{Portmanteau theorem}, which provides us a
+characterization of convergence in distribution.
+
+\begin{theorem}[Portmanteau]
+\label{thm:portmanteau}
+We have \(\vect{X}_n\tod \vect{X}\) iff
+\(\lim_{n\to\infty}\expv{h(\vect{X}_n)}=\expv{h(\vect{X}})\) for every bounded
+and continuous function \(h:\R^d\to\R\).
+\end{theorem}
+\begin{pf}
+Let \(F_n\) denote the distribution function of \(\vect{X}_n\) for every
+\(n\in\N\), and \(F\) denote the distribution function of \(\vect{X}\).
+
+``\(\Rightarrow\)'': We are going to utilize the definition of limit.
+
+Fix any \(\varepsilon>0\) and any continuous and bounded function \(h\). Then,
+by the boundedness we have \(|h(\vect{x})|\le M\) for all \(\vect{x}\in\R^d\).
+
+\textbf{Showing that \(\prob{\vect{X}\in I^c}\) is sufficiently small with
+\(I:=[\vect{a},\vect{b}]\).}
+By the contrapositive of \Cref{prp:marg-cts-df-cts}, we know that at each
+discontinuity point (jump) of \(F\), it corresponds to a discontinuity point
+(jump) of some margin of \(F\) (and also vice versa). Together with the fact
+that every margin can have at most countably many discontinuity points (jumps),
+we know that the set of discontinuity points of \(F\) can be expressed as
+\(D=\prod_{j=1}^{d}D_j\) where \(D_j\) is the countable set of discontinuities
+of of the margin \(F_j\) of \(F\), which is a Lebesgue null set.
+
+Since \(\lim_{\vect{a}\to\vect{-\infty},\vect{b}\to\vect{\infty}}
+\Delta_{(\vect{a},\vect{b}]}F=1\), for every \(\varepsilon>0\), there exist
+\(\vect{a},\vect{b}\in D^c\) such that \(\Delta_{[\vect{a},\vect{b}]}F
+\overset{\text{(\(F\) is continuous at
+\(\vect{a}\))}}{=}\Delta_{(\vect{a},\vect{b}]}F\ge 1-\varepsilon/6M\); here
+again we can choose \(\vect{a},\vect{b}\) from \(D^c\) since \(D\) is countable.
+Therefore, \(\prob{\vect{X}\in I^c}=1-\Delta_{[\vect{a},\vect{b}]}F\le\varepsilon/6M\).
+
+\textbf{Constructing an approximation \(h_{\varepsilon}\) that is sufficiently
+close to \(h\) uniformly.}
+Since \(h\) is continuous on the compact \(I\), it is uniformly continuous on
+\(I\). Hence, there exists a partition \(I=\biguplus_{k=1}^{m}I_k\) with \(m\in\N\),
+where each \(I_k\) is a rectangle with endpoints in \(D^c\) (possible since
+\(D\) is countable), such that \(\sup_{\vect{x},\vect{y}\in
+I_k}|h(\vect{x})-h(\vect{y})|\le\varepsilon/6\) (from the uniform continuity).
+
+Using this partition, we can construct \(h_{\varepsilon}\) by choosing
+\(\vect{x}_k\in I_k\) for each \(k=1,\dotsc,m\), and then defining
+\(h_{\varepsilon}(\vect{x}):=\sum_{k=1}^{m}h(\vect{x}_k)\indic_{I_k}(\vect{x})\).
+Hence, by construction we have
+\(|h(\vect{x})-h_{\varepsilon}(\vect{x})|\le\varepsilon/6\) for all
+\(\vect{x}\in I\).
+
+\textbf{Showing that \(\expv{h(\vect{X})}\) and
+\(\expv{h_{\varepsilon}(\vect{X})}\) are sufficiently close.}
+By the sufficiently tight upper bounds on \(\prob{\vect{X}\in I^c}\) and
+\(|h(\vect{x})-h_{\varepsilon}(\vect{x})|\) established above, we have
+\begin{align*}
+\bigl|\expv{h(\vect{X})}-\expv{h_{\varepsilon}(\vect{X})}\bigr|
+&=\bigl|\expv{h(\vect{X})-h_{\varepsilon}(\vect{X})}\bigr|
+\overset{\text{(triangle inequality)}}{\le}
+\expv{|h(\vect{X})-h_{\varepsilon}(\vect{X})|} \\
+&=\expv{\vc{|h(\vect{X})-h_{\varepsilon}(\vect{X})|}\indic_{I}(\vect{X})}
++\expv{|h(\vect{X})-\orc{h_{\varepsilon}(\vect{X})}|\indic_{I^c}(\vect{X})} \\
+\overset{\text{(\vc{bound}, \orc{\(h_{\varepsilon}=0\) on \(I^c\)})}}&{\le}
+\expv{(\vc{\varepsilon/6})\indic_{I}(\vect{X})}
++\expv{|h(\vect{X})-\orc{0}|\indic_{I^c}(\vect{X})}
+\overset{(|h(\vect{x})|\le M)}{\le}(\varepsilon/6)\prob{\vect{X}\in I}
++\expv{M\indic_{I^c}(\vect{X})} \\
+&=(\varepsilon/6)\prob{\vect{X}\in I}+M\prob{\vect{X}\in I^c}
+\overset{\text{(bound)}}{\le}
+(\varepsilon/6)\prob{\vect{X}\in I}+M(\varepsilon/6M)
+=\varepsilon/3.
+\end{align*}
+\textbf{Showing that \(\expv{h(\vect{X}_n)}\) and
+\(\expv{h_{\varepsilon}(\vect{X}_n)}\) are sufficiently close with sufficiently
+large \(n\).}
+
+Note that we have \(\lim_{n\to\infty}\prob{\vect{X}_n\in
+I^c}=1-\lim_{n\to\infty}\Delta_{I}F_n \underset{(\vect{X}_n\tod
+\vect{X})}{\overset{\text{(endpoints of \(I\) are continuity points)}}{=}}
+1-\lim_{n\to\infty}\Delta_{I}F=\lim_{n\to\infty}\prob{\vect{X}\in I^c}\le
+\varepsilon/6M\). Therefore, for all \(n\) that are sufficiently large, we have
+\(\prob{\vect{X}_n\in I^c}\le\varepsilon/3M\), and thus as in above we get
+\(|\expv{h(\vect{X}_n)}-\expv{h_{\varepsilon}(\vect{X}_n)}|
+\le \varepsilon/6+M\prob{\vect{X}_n\in I^c}
+\le \varepsilon/6+\varepsilon/3=\varepsilon/2\).
+
+
+\textbf{Showing that \(\expv{h_{\varepsilon}(\vect{X}_n)}\) and
+\(\expv{h_{\varepsilon}(\vect{X})}\) are sufficiently close with sufficiently
+large \(n\).}
+With sufficiently large \(n\), we have
+\begin{align*}
+\bigl|\expv{h_{\varepsilon}(\vect{X}_n)}-\expv{h_{\varepsilon}(\vect{X})}\bigr|
+&=\bigl|\expv{h_{\varepsilon}(\vect{X}_n)-h_{\varepsilon}(\vect{X})}\bigr|
+=\left|\sum_{k=1}^{m}h(\vect{x}_k)
+(\prob{\vect{X}_n\in I_k}-\prob{\vect{X}\in I_k})\right| \\
+\overset{\text{(triangle inequality)}}&{\le}
+\sum_{k=1}^{m}|h(\vect{x}_k)|\cdot \underbrace{|\prob{\vect{X}_n\in I_k}-\prob{\vect{X}\in I_k}|}_{
+\substack{\text{\(\to 0\) by assumption as}\\
+\text{endpoints of \(I_k\) are continuity points}
+}} \\
+\overset{\text{(\(n\) sufficiently large)}}&{<}\varepsilon/6.
+\end{align*}
+
+\textbf{Showing that \(\expv{h(\vect{X}_n)}\) and
+\(\expv{h(\vect{X})}\) are sufficiently close through
+\(\expv{h_{\varepsilon}(\vect{X}_n)}\) and \(\expv{h_{\varepsilon}(\vect{X})}\).}
+Combining all the sufficiently tight bounds obtained above, we get
+\begin{align*}
+|\expv{h(\vect{X}_n)}-\expv{h(\vect{X})}|
+&=|\expv{h(\vect{X}_n)}-\expv{h_{\varepsilon}(\vect{X}_n)}
++\expv{h_{\varepsilon}(\vect{X}_n)}-\expv{h_{\varepsilon}(\vect{X})}
++\expv{h_{\varepsilon}(\vect{X})}-\expv{h(\vect{X})}| \\
+\overset{\text{(triangle inequality)}}&{\le}
+|\expv{h(\vect{X}_n)}-\expv{h_{\varepsilon}(\vect{X}_n)}|
++|\expv{h_{\varepsilon}(\vect{X}_n)}-\expv{h_{\varepsilon}(\vect{X})}|
++|\expv{h_{\varepsilon}(\vect{X})}-\expv{h(\vect{X})}| \\
+&<\varepsilon/2+\varepsilon/6+\varepsilon/3=\varepsilon.
+\end{align*}
+``\(\Leftarrow\)'': We will establish that
+\(\lim_{n\to\infty}F_n(\vect{x})=F(\vect{x})~\forall\vect{x}\in C(F)\) by
+considering \(\liminf_{n\to\infty}F_n(\vect{x})\) and \(\limsup_{n\to\infty}F_n(\vect{x})\).
+
+\textbf{Showing that \(F(\vect{x})\le\liminf_{n\to\infty}F_n(\vect{x})~\forall
+\vect{x}\in C(F)\) by constructing a multilinear
+\(h_{\vect{\varepsilon}}\).}
+Fix any \(\vect{x}\in C(F)\) and any \(\vect{\varepsilon}>\vect{0}\). Construct
+the multilinear function
+\(h_{\vect{\varepsilon}}(\vect{z})=\prod_{j=1}^{d}\max\{\min\{(x_j-z_j)/\varepsilon_j,1\},0\}
+~\forall \vect{z}\in\R^d\), which satisfies
+\(\indic_{(\vect{-\infty},\vect{x}-\vect{\varepsilon}]}(\vect{z})\le
+h_{\vect{\varepsilon}}(\vect{z})\le
+\indic_{(\vect{-\infty},\vect{x}]}(\vect{z})~\forall \vect{z}\in\R^d\).
+\begin{intuition}
+The function \(h_{\vect{\varepsilon}}\) is obtained by linear
+interpolating of the indicator functions
+\(\indic_{(\vect{-\infty},\vect{x}-\vect{\varepsilon}]}\)
+and \(\indic_{(\vect{-\infty},\vect{x}]}\).
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=0:5]
+\addplot[blue, domain=0:3]{0};
+\addplot[magenta, opacity=0.5, domain=0:3.2, thick]{0};
+\draw[blue] (3,0) circle [radius=0.7mm];
+\draw[magenta] (3.2,0) circle [radius=0.7mm];
+\draw[blue, fill] (3,1) circle [radius=0.7mm];
+\draw[magenta, fill] (3.2,1) circle [radius=0.7mm];
+\addplot[blue, domain=3:5]{1};
+\addplot[magenta, opacity=0.5, domain=3.2:5, thick]{1};
+\addplot[orange, domain=3:3.2]{(x-3)/0.2};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{intuition}
+
+Then, we have
+\(F(\vect{x}-\vect{\varepsilon})
+=\expv{\indic_{(\vect{-\infty},\vect{x}-\vect{\varepsilon}]}(\vect{X})}
+\vc{\le}\expv{h_{\varepsilon}(\vect{X})}\) and
+\(\expv{h_{\varepsilon}(\vect{X}_n)}
+\orc{\le}\expv{\indic_{(\vect{-\infty},\vect{x}]}(\vect{X}_n)}
+=F_n(\vect{x})\). Since \(h_{\vect{\varepsilon}}\) is continuous and bounded,
+we have 
+\[
+\liminf_{n\to \infty}F_n(\vect{x})\orc{\ge}
+\liminf_{n\to \infty}\expv{h_{\varepsilon}(\vect{X}_n))}
+\overset{\text{(assumption)}}{=}\lim_{n\to\infty}\expv{h_{\vect{\varepsilon}}(\vect{X}_n)}
+\overset{\text{(assumption)}}{=}
+\expv{h_{\vect{\varepsilon}}(\vect{X}))}
+\vc{\ge}
+F(\vect{x}-\vect{\varepsilon}).
+\]
+As this holds for all \(\vect{\varepsilon}>\vect{0}\), we have
+\(F(\vect{x})\overset{(\vect{x}\in
+C(F))}{=}\lim_{\vect{\varepsilon}\to\vect{0}^{+}}F(\vect{x}-\vect{\varepsilon})\le
+\liminf_{n\to \infty}F_n(\vect{x})\).
+
+\textbf{Showing that \(\limsup_{n\to\infty}F_n(\vect{x})\le F(\vect{x})~\forall
+\vect{x}\in C(F)\) by constructing a multilinear \(h_{\vect{\varepsilon}}\).}
+Using a similar idea, we construct a multilinear function
+\(h_{\vect{\varepsilon}}\), given by
+\(h_{\vect{\varepsilon}}(\vect{z}):=\prod_{j=1}^{d}\max\{\min\{(x_j+\varepsilon_j-z_j)/\varepsilon_j,1\},0\}~\forall
+\vect{z}\in\R^d\), which satisfies
+\(\indic_{(\vect{-\infty},\vect{x}]}(\vect{z})\le
+h_{\vect{\varepsilon}}(\vect{z})\le
+\indic_{(\vect{-\infty},\vect{x}+\vect{\varepsilon}]}(\vect{z})~\forall
+\vect{z}\in\R^d\). 
+
+Similarly, we have \(F_n(\vect{x})
+=\expv{\indic_{(\vect{-\infty},\vect{x}]}(\vect{X}_n)}
+\vc{\le}\expv{h_{\vect{\varepsilon}}(\vect{X}_n)}\) and
+\(\expv{h_{\vect{\varepsilon}}(\vect{X}))}
+\orc{\le}\expv{\indic_{(\vect{-\infty},\vect{x}+\vect{\varepsilon}]}(\vect{X})}
+=F(\vect{x}+\vect{\varepsilon})\). Likewise, \(h_{\vect{\varepsilon}}\) is
+continuous and bounded, so
+\[
+\limsup_{n\to \infty}F_n(\vect{x})\vc{\le}
+\limsup_{n\to \infty}\expv{h_{\vect{\varepsilon}}(\vect{X}_n)}
+=\lim_{n\to\infty}\expv{h_{\vect{\varepsilon}}(\vect{X}_n)}
+=\expv{h_{\vect{\varepsilon}}(\vect{X})}\orc{\le}F(\vect{x}+\vect{\varepsilon}),
+\]
+meaning that \(\limsup_{n\to \infty}F_n(\vect{x})
+\le\lim_{\vect{\varepsilon}\to\vect{0}^{+}}F(\vect{x}+\vect{\varepsilon})
+=F(\vect{x})\).
+
+\textbf{Completing the proof.} Combining the two inequalities obtained gives
+\(F(\vect{x})\le\liminf_{n\to \infty}F_n(\vect{x})\le\limsup_{n\to
+\infty}F_n(\vect{x}) \le F(\vect{x})~\forall \vect{x}\in C(F)\), which implies
+that \(\liminf_{n\to \infty}F_n(\vect{x})=\limsup_{n\to
+\infty}F_n(\vect{x})=F(\vect{x})~\forall \vect{x}\in C(F)\), and thus
+\(\lim_{n\to\infty}F_n(\vect{x})=F(\vect{x})~\forall \vect{x}\in C(F)\).
+\end{pf}
+\item\label{it:conv-d-prop} \textbf{Properties of convergence in distribution.}
+While it takes quite some work to prove the Portmanteau theorem, it can be
+utilized for establishing many properties about convergence in distribution
+conveniently, such as the following:
+\begin{enumerate}
+\item \(\vect{X}_n\topr \vect{X}\implies \vect{X}_n\tod\vect{X}\).
+\item \(\vect{X}_n\tod \vect{c}\implies \vect{X}_n\topr\vect{c}\), where
+\(\vect{c}\in\R^d\) is a constant.
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item We will apply the Portmanteau theorem and the dominated convergence
+theorem for convergence in probability (\Cref{cor:dct-ip-version}). Now, fix
+any bounded and continuous function \(h:\R^d\to\R\), and we check the
+conditions for \Cref{cor:dct-ip-version}:
+\begin{itemize}
+\item Since \(h\) is continuous, it is measurable by
+\labelcref{it:cts-fn-meas}. Hence, by \labelcref{it:meas-compo-meas},
+\(h(\vect{X}_n)\) is measurable for all \(n\in\N\). Also, \(h(\vect{X}_n)\) is
+bounded as \(h\) is bounded. Therefore, \(h(\vect{X}_n)\) is integrable, i.e.,
+in \(L^1\), for each \(n\in\N\).
+\item We have \(\vect{X}_n\topr\vect{X}\overset{\text{(CMT)}}{\implies
+}h(\vect{X}_n)\topr h(\vect{X})\).
+\item By the boundedness, we have \(|h|\le M<\infty\) for some \(M>0\). Hence,
+we know \(|h(\vect{X}_n)|\le M\) for all \(n\in\N\), satisfying the dominating
+condition as the constant function (degenerate random variable) \(M\) is in
+\(L^1\) (we have \(\expv{|M|}=|M|\prob{\Omega}=|M|<\infty\)).
+\end{itemize}
+Hence, by \Cref{cor:dct-ip-version}, we have
+\(\lim_{n\to\infty}\expv{h(\vect{X}_n)}=\expv{h(\vect{X})}\), and the result
+follows by the Portmanteau theorem.
+\item Here we will use the fact that the \emph{Euclidean norm} (2-norm) of
+\(\vect{x}\) is less than or equal to the \emph{taxicab norm} (1-norm) of
+\(\vect{x}\):
+\((\sum_{j=1}^{d}x_j^{2})^{1/2}=:\|\vect{x}\|\le\|\vect{x}\|_{1}:=\sum_{j=1}^{d}|x_j|\).
+
+Note that the distribution function of the degenerate random vector
+\(\vect{c}\) is \(F(\vect{x})=\indic_{[\vect{c},\vect{\infty})}(\vect{x})\)
+with \(C(F)=\R^d\setminus \{\vect{x}:x_j=c_j\text{ and }x_k\ge c_k~\forall k\ge
+j\}\).
+
+Fix any \(n\in\N\) and \(\varepsilon>0\).  Since
+\(\{\omega\in\Omega:\max_{j=1,\dotsc,d}|X_{nj}(\omega)-c_j|\le\varepsilon/d\}
+\subseteq \{\omega\in\Omega:\|\vect{X}_n-\vect{c}\|_{1}\le\varepsilon\}
+\overset{(\|\cdot\|\le\|\cdot\|_{1})}{\subseteq}
+\{\omega\in\Omega:\|\vect{X}_n-\vect{c}\|\le\varepsilon\}\),
+we have
+\begin{align*}
+\prob{\|\vect{X}_n-\vect{c}\|>\varepsilon}&=1-\prob{\|\vect{X}_n-\vect{c}\|<\varepsilon}
+\le 1-\prob{\max_{j=1,\dotsc,d}|X_{nj}-c_j|\le\frac{\varepsilon}{d}} \\
+&=1-\prob{|X_{nj}-c_j|\le\frac{\varepsilon}{d}~\forall j=1,\dotsc,d}
+=1-\Delta_{\left[\vect{c}-\frac{\vect{\varepsilon}}{d}
+,\vect{c}+\frac{\vect{\varepsilon}}{d}\right]}F_n,
+\end{align*}
+where \(F_n\) is the distribution function of
+\(\vect{X}_n=(X_{n1},\dotsc,X_{nd})\) and
+\(\vect{\varepsilon}=(\varepsilon,\dotsc,\varepsilon)\).
+
+Since all endpoints of \(\left[\vect{c}-\frac{\vect{\varepsilon}}{d}
+,\vect{c}+\frac{\vect{\varepsilon}}{d}\right]\) are in \(C(F)\) (as the \(j\)th
+component cannot be \(c_j\)), we have
+\begin{align*}
+\lim_{n\to\infty}\prob{\|\vect{X}_n-\vect{c}\|>\varepsilon}
+&=1-\lim_{n\to\infty}\Delta_{\left[\vect{c}-\frac{\vect{\varepsilon}}{d}
+,\vect{c}+\frac{\vect{\varepsilon}}{d}\right]}F_n \\
+\overset{\left(\vect{X}_n\tod \vect{c}\right)}&{=}
+1-\Delta_{\left[\vect{c}-\frac{\vect{\varepsilon}}{d}
+,\vect{c}+\frac{\vect{\varepsilon}}{d}\right]}F
+\underset{\text{(other terms are zero)}}{\overset{\text{(expand by definition)}}{=}}
+1-F(c_1+\varepsilon/d,\dotsc,c_d+\varepsilon/d) \\
+\overset{(c_j\le c_1+\varepsilon/d~\forall j)}&{=}1-1=0,
+\end{align*}
+so the result follows.
+\end{enumerate}
+\end{pf}
+\item \textbf{Continuous mapping theorem for convergence in distribution.}
+As mentioned in \labelcref{it:cmt-ip-as}, there is also a continuous mapping
+theorem for convergence in distribution, and here we are ready to prove it
+using the Portmanteau theorem (elegantly!).
+
+\begin{theorem}[Continuous mapping theorem for convergence in distribution]
+\label{thm:cmt-id}
+Let \(\vect{h}:\R^d\to\R^k\) be continuous. Then,
+\(\vect{X}_n\tod\vect{X}\implies
+\vect{h}(\vect{X}_n)\tod\vect{h}(\vect{X})\).
+\end{theorem}
+\begin{pf}
+Fix any bounded and continuous function \(g:\R^k\to\R\). Then the composition
+\(g\circ\vect{h}:\R^d\to\R\) is also bounded and continuous. Hence, by
+``\(\Rightarrow\)'' direction of Portmanteau theorem on
+\(\vc{g\circ\vect{h}}(\orc{\vect{X}_n})\), we have
+\(\lim_{n\to\infty}\expv{\mgc{g}(\blc{\vect{h}(\vect{X}_n)})}
+=\expv{\mgc{g}(\blc{\vect{h}(\vect{X})})}\).
+
+As this holds for every bounded and continuous function \(g:\R^k\to\R\),
+applying the ``\(\Leftarrow\)'' direction of Portmanteau theorem on
+\(\mgc{g}(\blc{\vect{h}(\vect{X}_n)})\) gives
+\(\blc{\vect{h}(\vect{X}_n)}\tod\blc{\vect{h}(\vect{X})}\).
+\end{pf}
+\end{enumerate}
+\subsection{Uniform Integrability}
+\label{subsect:uniform-int}
+\begin{enumerate}
+\item In \Cref{subsect:conv-lp}, we do not find a mode of convergence that
+implies the convergence in \(L^p\). As it turns out, neither almost sure
+convergence nor convergence in probability would imply convergence in \(L^p\);
+see \Cref{subsect:counterexamples}. However, if the \emph{uniform
+integrability} is further assumed, then such implication can be obtained; see
+\Cref{thm:conv-ip-ui-imply-lp}. Let us start by defining what uniform
+integrability is and looking at some examples.
+\item \textbf{Definition.} A collection \(\{X_i\}_{i\in
+I}\subseteq L^1\) is said to be \defn{uniformly integrable} if \(
+\lim_{a\to\infty}\sup_{i\in I}\expv{|X_i|\indicset{|X_i|>a}}=0\).
+
+Intuitively, uniform integrability suggests that the ``tail'' part of \(|X_i|\)
+(indicated by \(\indicset{|X_i|>a}\)) would not ``explode'' and hence we have
+the \underline{integrability}. The word ``\underline{uniform}'' refers to the
+fact that we are considering the supremum over all \(i\in I\) in the definition.
+To better understand uniform integrability, consider the properties in
+\labelcref{it:ui-prop}.
+
+\item\label{it:ui-prop} \textbf{Properties of uniform integrability.}
+\begin{enumerate}
+\item The singleton \(\{X\}\) with \(X\in L^1\) is uniformly integrable.
+\item If \(|X_i|\le Y\) for all \(i\in I\) with \(Y\in L^1\), then \(\{X_i\}_{i\in
+I}\) is uniformly integrable.
+\item A finite collection \(\{X_i\}_{i=1}^{n}\subseteq L^1\) is
+uniformly integrable.
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item Since \(X\in L^1\), we know \(X\) is finite a.e.\ by
+\labelcref{it:leb-int-ae-fin}, and thus
+\(\lim_{a\to\infty}|X|\indicset{|X|>a}=0\) a.e. Also, we have
+\(|X|\indicset{|X|>a}\le|X|~\forall a\ge 0\) with \(|X|\in L^{1}\). Hence, by
+DCT we have \(\lim_{a\to\infty}\expv{|X|\indicset{|X|>a}}=0\), and so \(\{X\}\)
+is uniformly integrable.
+\item Since \(|X_i|\le Y\) for all \(i\in I\), we have \(0\le\sup_{i\in
+I}\expv{|X_i|\indicset{|X_i|>a}}\le\sup_{i\in
+I}\expv{Y\indicset{Y>a}}\tox{a}{\text{(a)}}0\). Therefore,
+we have \(\lim_{a\to\infty}\sup_{i\in I}\expv{|X_i|\indicset{|X_i|>a}}=0\).
+\item Note that we have \(|X_j|\le\sum_{i=1}^{n}|X_i|\) with
+\(\sum_{i=1}^{n}|X_i|\in L^1\) for every \(j=1,\dotsc,n\),
+and hence \(\{X_i\}_{i=1}^{n}\) is uniformly integrable by (b).
+\end{enumerate}
+\end{pf}
+\item \label{it:ui-char} \textbf{Characterization of uniform integrability.}
+The following characterization of uniform integrability is helpful for
+establishing results about uniform integrability.
+\begin{theorem}
+\label{thm:ui-char}
+A collection \(\{X_i\}_{i\in I}\subseteq L^1\) is uniformly integrable iff
+\begin{enumerate}
+\item \emph{(uniform bounded first absolute moments)} \(\sup_{i\in
+I}\expv{|X_i|}<\infty\)
+\item \emph{(uniform absolute continuity)} For all \(\varepsilon>0\), there
+exists \(\delta>0\) such that \(\sup_{i\in I}\expv{|X_i|\indic_{A}}<\varepsilon\) for every \(A\in\mathcal{F}\) with \(\prob{A}<\delta\).
+\end{enumerate}
+\end{theorem}
+\begin{pf}
+\begin{itemize}
+\item ``\(\Rightarrow\)'': For all \(i\in I\) and \(a\in (0,\infty)\), we have
+\(\expv{|X_i|\indic_{A}}=\expv{|X_i|\indic_{A\cap \{|X_i|\le a\}}}
++\expv{|X_i|\indic_{A\cap\{|X_i|>a\}}}\le
+a\prob{A}+\expv{|X_i|\indicset{|X_i|>a}}\). Thus, we have \(\sup_{i\in
+I}\expv{|X_i|\indic_{A}}\le a\prob{A}+\sup_{i\in
+I}\expv{|X_i|\indicset{|X_i|>a}}~\forall a\in (0,\infty)\).
+
+Taking \(A=\Omega\) gives (a). Next, fix any \(\varepsilon>0\).
+By the uniform integrability we have
+\(\lim_{a\to\infty}\sup_{i\in I}\expv{|X_i|\indicset{|X_i|>a}}=0\), so there
+exists sufficiently large \(a\) such that \(\sup_{i\in
+I}\expv{|X_i|\indicset{|X_i|>a}}<\varepsilon/2\). We then choose
+\(\delta=\varepsilon/2a\). With this \(\delta\), for every \(A\)
+with \vc{\(\prob{A}<\delta\)}, we have \(\sup_{i\in I}\expv{|X_i|\indic_{A}}
+\le a\vc{\prob{A}}+\expv{|X_i|\indicset{|X_i|>a}}
+<a\cdot\vc{\varepsilon/2a}+\varepsilon/2=\varepsilon\).
+\item ``\(\Leftarrow\)'': Fix any \(\varepsilon>0\).  Applying (b) with
+\(A=\{|X_i|>a\}\), we know there exists \(\delta>0\) such that \(\sup_{i\in
+I}\expv{|X_i|\indicset{|X_i|>a}}<\varepsilon/2\) for all \(i\) with
+\(\prob{|X_i|>a}<\delta\). Since \(\sup_{i\in
+I}\prob{|X_i|>a}\overset{\text{(Markov)}}{\le}\sup_{i\in
+I}\expv{|X_i|}/a=:c/a\overset{\text{(a)}}{<}\infty\), there exists sufficiently
+large \(a\) such that \(\prob{|X_i|>a}<\delta\) for all \(i\in I\).
+
+With such choice of \(a\), we then have
+\(\expv{|X_i|\indicset{|X_i|>a}}<\varepsilon/2\) for all \(i\in I\), and hence
+\(0\le\sup_{i\in I}\expv{|X_i|\indicset{|X_i|>a}}\le\varepsilon/2<\varepsilon\).
+By the definition of limit, we have \(\lim_{a\to\infty}\sup_{i\in
+I}\expv{|X_i|\indicset{|X_i|>a}}=0\).
+\end{itemize}
+\end{pf}
+\item \textbf{Convergence in probability implies convergence in \(L^p\) under
+uniform integrability.} To prove the implication we have suggested at the
+beginning of \Cref{subsect:uniform-int}, the following lemma is needed.
+\begin{lemma}
+\label{lma:int-over-set-go-to-zero-prob}
+Let \(X\in L^1\) and \(A_n\in\mathcal{F}\) for each \(n\in\N\). If
+\(\lim_{n\to\infty}\prob{A_n}=0\), then
+\(\lim_{n\to\infty}\expv{X\indic_{A_n}}=0\).
+\end{lemma}
+\begin{pf}
+Fix any \(\varepsilon>0\). Since \(\{X\}\) is uniformly integrable by
+\labelcref{it:ui-prop}, there exists \(a>0\) such that
+\(\expv{|X|\indicset{|X|>a}}<\varepsilon/2\). Also, by assumption there exists \(n_{\varepsilon}\in\N\) such that \(\prob{A_n}<\varepsilon/2a\) for all \(n\ge n_{\varepsilon}\).
+Hence,
+\begin{align*}
+|\expv{X\indic_{A_n}}|\overset{\text{(Jensen)}}&{\le}
+\expv{|X|\indic_{A_n}}=\expv{|X|\indic_{\mgc{A_n\cap\{\vc{|X|\le a}\}}}}
++\expv{|X|\indic_{\orc{A_n\cap\{|X|>a\}}}} \\
+&\le\expv{\vc{a}\indic_{\mgc{A_n}}}
++\expv{|X|\indic_{\orc{\{|X|>a\}}}}
+=a\prob{A_n}+\expv{|X|\indicset{|X|>a}} \\
+&<a\cdot \varepsilon/2a+\varepsilon/2=\varepsilon.
+\end{align*}
+\end{pf}
+
+\begin{theorem}
+\label{thm:conv-ip-ui-imply-lp}
+Let \(X\) be a random variable and \(\{X_n\}\) be a sequence of random
+variables. If \(X_n\topr X\) and \(\{|X_n|^{p}\}\) is uniformly integrable for
+some \(p\in [1,\infty)\), then \(X_n\tolp X\).
+\end{theorem}
+\begin{pf}
+\textbf{Showing that \(X\in L^p\).}
+Since \(X_n\topr X\), by subsequence principle we know for every subsequence
+\(\{X_{n_{k}}\}_{k\in\N}\subseteq \{X_n\}_{n\in\N}\), there
+exists a further subsequence \(\{X_{n_{k_{\ell}}}\}_{\ell\in\N}\subseteq
+\{X_{n_{k}}\}_{k\in\N}\) such that
+\(X_{n_{k_{\ell}}}\tox{\ell}{\text{a.s.}}X\).
+Hence, we have \(\expv{|X|^{p}}
+\overset{\left(\vc{\bigl|}X_{n_{k_{\ell}}}\vc{\bigr|^{p}}\tox{\ell}{\text{a.s.}}
+\vc{|}X\vc{|^{p}}\right)}{=}
+\expv{\liminf_{\ell\to \infty}\bigl|X_{n_{k_{\ell}}}\bigr|^{p}}
+\overset{\text{(Fatou)}}{\le}\liminf_{\ell\to \infty}
+\expv{\bigl|X_{n_{k_{\ell}}}\bigr|^{p}}
+\le\sup_{n\in\N}\expv{|X_n|^{p}}\overset{\text{(\Cref{thm:ui-char})}}{<}\infty\).
+Thus, \(X\in L^p\).
+
+\textbf{Getting an upper bound for \(\expv{|X_n-X|^{p}}\).}
+Note that \(|X_n-X|^{p}\le (|X_n|+|X|)^{p}
+\le (2\max\{|X_n|,|X|\})^{p}=2^{p}\max\{|X_n|^{p},|X|^{p}\}\le
+2^p(|X_n|^{p}+|X|^{p})\). Fix any \(\varepsilon>0\). Then we have
+\begin{align*}
+\expv{|X_n-X|^{p}}
+&=\expv{|X_n-X|^{p}\indicset{|X_n-X|\le\varepsilon^{1/p}}}
++\expv{|X_n-X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}} \\
+&\le \expv{(\varepsilon^{1/p})^{p}\indicset{|X_n-X|\le\varepsilon^{1/p}}}
++\expv{2^p(|X_n|^{p}+|X|^{p})\indicset{|X_n-X|>\varepsilon^{1/p}}} \\
+&\le \varepsilon\cdot 1
++2^{p}\vc{\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}
++2^{p}\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}.
+\end{align*}
+
+\textbf{Completing the proof by getting bounds in terms of \(\varepsilon\).}
+Since \(X\in L^p\), we have \(|X|^{p}\in L^1\) and hence by
+\Cref{lma:int-over-set-go-to-zero-prob} we have
+\(\lim_{n\to\infty}\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}=0\),
+because \(\lim_{n\to\infty}\prob{|X_n-X|>\varepsilon^{1/p}}=0\) by the
+assumption that \(X_n\topr X\). Thus, there exists \(n_{\varepsilon}\in\N\)
+such that \(\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}<\varepsilon/2^p\)
+for all \(n\ge n_{\varepsilon}\).
+
+Also, since \(\{|X_n|^{p}\}\) is uniformly integrable, by \Cref{thm:ui-char}
+there exists \(\delta>0\) such that
+\(\sup_{n\in\N}\vc{\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon}}}<\varepsilon\)
+whenever \(\prob{|X_n-X|>\varepsilon}<\delta\). TODO: why the ``\(A\)'' here
+can depend on \(n\)?
+
+Now, by the assumption
+that \(X_n\topr X\), we know there exists \(\widetilde{n}_{\varepsilon}\in\N\)
+such that \(\prob{|X_n-X|>\varepsilon}<\delta\), which implies
+\(\sup_{n\in\N}\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon}}<\varepsilon/2^p\),
+for all \(n\ge\widetilde{n}_{\varepsilon}\). TODO: that supremum does not
+depend on \(n\)...
+
+Therefore, for all \(n\ge\max\{n_{\varepsilon},\widetilde{n}_{\varepsilon}\}\),
+we have \(\expv{|X_n-X|^{p}}<\varepsilon+2^p\cdot \varepsilon/2^p+2^p\cdot
+\varepsilon/2^p=3\varepsilon\), which then implies that
+\(\lim_{n\to\infty}\|X_n-X\|_{p}=0\) (after changing
+\(\varepsilon\to\varepsilon/3\) above).
+\end{pf}
+\end{enumerate}
+\subsection{Slutsky's Theorem}
+\begin{enumerate}
+\item Apart from the \emph{continuous mapping theorem}, another critical result
+for working with modes of convergence is the \emph{Slutsky's theorem}, which
+suggests conditions under which we can ``add'' individual convergence together.
+
+Based on the CMT, we have \((\vect{X}_n,\vect{Y}_n)\tod (\vect{X},\vect{Y})\implies 
+\vect{h}(\vect{X}_n,\vect{Y}_n)\tod \vect{h}(\vect{X},\vect{Y})\) for every
+continuous function \(h\). Particularly, assuming the \(\vect{X}\)'s and
+\(\vect{Y}\)'s both take values in \(\R^d\), then we would have
+\(\vect{X}_n+\vect{Y}_n\tod \vect{X}+\vect{Y}\).
+
+However, if we only have the individual convergences \(\vect{X}_n\tod
+\vect{X}\) and \(\vect{Y}_n\tod \vect{Y}\), then we do not have
+\(\vect{X}_n+\vect{Y}_n\tod \vect{X}+\vect{Y}\) in general. To see this,
+take \(X\sim\ndist{0,1}\) and \(Y=-X\eqd X\). Now, take a sequence \(\{X_n\}\)
+such that \(X_n\tod X\). Since \(Y\eqd X\), by taking \(\{Y_n\}=\{X_n\}\),
+we have \(Y_n\tod Y\) also. So, in such case, we have \(X_n\tod X\) and \(Y_n\tod Y\),
+but \(X_n+Y_n=2X_n\tod 2X\). Of course, \(2X\) and \(X+Y=0\) do not have the
+same distribution.
+\begin{note}
+A special case where such result holds is when \(\vect{X}_n,\vect{Y}_n\) are
+independent for each \(n\in\N\) and \(\vect{X},\vect{Y}\) are independent.  It
+can be proved by using \emph{characteristic function}; see
+\Cref{sect:char-fun}. However, such condition is often quite restrictive,
+limiting its applicability. TODO: add that proof there.
+\end{note}
+\item \textbf{Condition for joint convergence in distribution.}
+Other than imposing the independence condition, there is a relatively less
+restrictive condition that can ensure joint convergence in distribution from
+individual convergence, which requires one of the sequences to converge in
+distribution to a \emph{constant}. Intuitively, this works because converging
+to a constant can avoid influencing the tail behaviour of another sequence.
+
+\begin{theorem}
+\label{thm:cond-joint-conv-d}
+If \(\vect{X}_n\tod\vect{X}\) and \(\vect{Y}_n\tod\vect{c}\) where
+\(\vect{c}\in\R^d\) is a constant, then \((\vect{X}_n,\vect{Y}_n)\tod
+(\vect{X},\vect{c})\).
+\begin{note}
+Here, it is not necessary for the \(\vect{X}\)'s to take values from the same space
+as the \(\vect{Y}\)'s.
+\end{note}
+\end{theorem}
+\begin{pf}
+Let \(F_n\) and \(F\) denote the distribution functions of
+\((\vect{X}_n,\vect{Y}_n)\) and \((\vect{X},\vect{c})\) respectively.
+Then, we have
+\(F(\vect{x},\vect{y})=\prob{\vect{X}\le\vect{x},\vect{c}\le\vect{y}}
+=F_{\vect{X}}(\vect{x})\indic_{[\vect{c},\vect{\infty})}(\vect{y})\). Now fix
+any \((\vect{x},\vect{y})\in C(F)\) and \(\varepsilon>0\) (which implies that
+\(\vect{x}\in C(F_{\vect{X}})\)).
+
+\textbf{Upper bounding \(\limsup_{n\to \infty}F_n(\vect{x},\vect{y})\).}
+Consider
+\begin{align*}
+F_n(\vect{x},\vect{y})&=
+\prob{\vect{X}_n\le\vect{x},\vc{\vect{Y}_n\le\vect{y},
+\|\vect{Y}_n-\vect{c}\|\le\varepsilon}}+
+\prob{\vect{X}_n\le\vect{x},\vect{Y}_n\le\vect{y},
+\vc{\|\vect{Y}_n-\vect{c}\|>\varepsilon}} \\
+&\vc{\le}\prob{\vect{X}_n\le\vect{x}, \vc{\vect{c}\le\vect{y}+{}_d\varepsilon}}
++\prob{\vc{\|\vect{Y}_n-\vect{c}\|>\varepsilon}} \\
+&=F_{\vect{X}_n}(\vect{x})\indic_{[\vect{c},\vect{\infty})}(\vect{y}+{}_{d}\varepsilon)
++\prob{\|\vect{Y}_n-\vect{c}\|>\varepsilon}.
+\end{align*}
+By \labelcref{it:conv-d-prop}, we have \(\vect{Y}_n\tod\vect{c}\implies
+\vect{Y}_n\topr\vect{c}\), which gives
+\begin{align*}
+\limsup_{n\to \infty}F_n(\vect{x},\vect{y})&\le 
+\limsup_{n\to \infty}F_{\vect{X}_n}(\vect{x})\indic_{[\vect{c},\vect{\infty})}
+(\vect{y}+{}_{d}\varepsilon)
++\underbrace{\limsup_{n\to \infty}\prob{\|\vect{Y}_n-\vect{c}\|>\varepsilon}}_{0} \\
+\overset{(\vect{x}\in C(F_{\vect{X}}))}&{=}F_{\vect{X}}(\vect{x})
+\indic_{[\vect{c},\vect{\infty})}(\vect{y}+{}_{d}\varepsilon)
+=F(\vect{x},\vect{y}+{}_{d}\varepsilon).
+\end{align*}
+
+\textbf{Lower bounding \(\liminf_{n\to \infty}F_n(\vect{x},\vect{y})\).} Since
+\(\vect{x}\in C(F_{\vect{X}})\), by definition of continuity, for all
+\(\delta>0\) there exists \(n_0\in\N\) such that
+\vc{\(F_{\vect{X}_n}(\vect{x})\ge F_{\vect{X}}(\vect{x})-\delta\)} for all
+\(n\ge n_{0}\). Hence, for all \(n\ge n_{0}\),
+\begin{align*}
+F(\vect{x},\vect{y}-{}_{d}\varepsilon)
+&=F_{\vect{X}}(\vect{x})\indic_{[\vect{c},\vect{\infty})}(\vect{y}-{}_{d}\varepsilon) \\
+&\vc{\le}\vc{(F_{\vect{X}_n}(\vect{x})+\delta)}
+\indic_{[\vect{c},\vect{\infty})}(\vect{y}-{}_{d}\varepsilon)
+\le F_{\vect{X}_n}(\vect{x})
+\indic_{[\vect{c},\vect{\infty})}(\vect{y}-{}_{d}\varepsilon)
++\delta \\
+&=\prob{\vect{X}_n\le\vect{x}, \vect{c}\le\vect{y}-{}_{d}\varepsilon}+\delta \\
+&=\prob{\vect{X}_n\le\vect{x}, \vect{c}\le\vect{y}-{}_{d}\varepsilon,
+\|\vect{Y}_n-\vect{c}\|\le\varepsilon}+
+\prob{\vect{X}_n\le\vect{x}, \vect{c}\le\vect{y}-{}_{d}\varepsilon,
+\|\vect{Y}_n-\vect{c}\|>\varepsilon}+\delta \\
+&\le\prob{\vect{X}_n\le\vect{x},
+\vect{Y}_n\le\vect{y}}+\prob{\|\vect{Y}_n-\vect{c}\|>\varepsilon}+\delta \\
+&=F_n(\vect{x},\vect{y})+\prob{\|\vect{Y}_n-\vect{c}\|>\varepsilon}+\delta.
+\end{align*}
+Therefore, like before we get \(
+F(\vect{x},\vect{y}-{}_{d}\varepsilon)
+\le\liminf_{n\to \infty}F_n(\vect{x},\vect{y})+0+\delta\).
+
+\textbf{Completing the proof by letting \(\delta\to 0^{+}\) and
+\(\varepsilon\to 0^{+}\).} Combining the bounds obtained previously, we get \[
+F(\vect{x},\vect{y}-{}_{d}\varepsilon)-\delta
+\le\liminf_{n\to \infty}F_n(\vect{x},\vect{y})
+\le\limsup_{n\to \infty}F_n(\vect{x},\vect{y})
+\le F(\vect{x},\vect{y}+{}_{d}\varepsilon).
+\]
+Letting \(\delta\to 0^{+}\) yields 
+\[F(\vect{x},\vect{y}-{}_{d}\varepsilon)
+\le\liminf_{n\to \infty}F_n(\vect{x},\vect{y})
+\le\limsup_{n\to \infty}F_n(\vect{x},\vect{y})
+\le F(\vect{x},\vect{y}+{}_{d}\varepsilon).\]
+Since \((\vect{x},\vect{y})\in C(F)\), we have 
+\(\lim_{\varepsilon\to 0^{+}}F(\vect{x},\vect{y}-{}_{d}\varepsilon)
+=F(\vect{x},\vect{y})\) and
+\(\lim_{\varepsilon\to 0^{+}}F(\vect{x},\vect{y}+{}_{d}\varepsilon)
+=F(\vect{x},\vect{y})\).
+Letting \(\varepsilon\to 0^{+}\) thus yields
+\[F(\vect{x},\vect{y})
+\le\liminf_{n\to \infty}F_n(\vect{x},\vect{y})
+\le\limsup_{n\to \infty}F_n(\vect{x},\vect{y})
+\le F(\vect{x},\vect{y})
+,\]
+which means \(\lim_{n\to\infty}F_n(\vect{x},\vect{y})=F(\vect{x},\vect{y})\).
+\end{pf}
+\item \textbf{Slutsky's theorem.} Slutsky's theorem is indeed an immediate
+corollary of \Cref{thm:cond-joint-conv-d} (but is a more well-known result).
+
+\begin{theorem}[Slutsky's theorem]
+\label{thm:slutsky}
+If \(\vect{X}_n\tod\vect{X}\) and \(\vect{Y}_n\tod\vect{c}\) where
+\(\vect{c}\in\R^d\) is a constant, then \(\vect{X}_n+\vect{Y}_n\tod
+\vect{X}+\vect{c}\) and \(\vect{X}_n\vect{Y}_n\tod \vect{c}\vect{X}\); here,
+the \(\vect{X}\)'s and \(\vect{Y}\)'s both take values from \(\R^d\), and the
+``multiplications'' of vectors are interpreted as componentwise ones.
+\end{theorem}
+\begin{pf}
+The result follows by applying \Cref{thm:cond-joint-conv-d} and the continuous
+mapping theorem with the continuous functions
+\(\vect{h}(\vect{x},\vect{y})=\vect{x}+\vect{y}\) and
+\(\vect{h}(\vect{x},\vect{y})=\vect{x}\vect{y}=(x_1y_1,\dotsc,x_dy_d)\)
+respectively.
+\end{pf}
+\end{enumerate}
+\subsection{Counterexamples About Implications Between Modes of Convergence}
+\label{subsect:counterexamples}
+\begin{enumerate}
+\item \textbf{A summary of implications between modes of convergence.}
+The implications between the major modes of convergence can be
+summarized in the picture below. Naturally, we would also like to investigate
+whether the converse of each implication holds. In
+\Cref{subsect:counterexamples}, we will provide counterexamples to illustrate
+that the converse indeed does not hold.
+\begin{center}
+\begin{tikzpicture}
+\node[] (cas) at (-2,1.5) {\(\vect{X}_n\toas \vect{X}\)};
+\node[] (cms) at (-2,-1.5) {\(X_n\tolp X\)};
+\node[] (cp) at (0,0) {\(\vect{X}_n\topr \vect{X}\)};
+\node[] (cd) at (3,0) {\(\vect{X}_n\tod \vect{X}\)};
+\node[] () at (1.5,-0.1) {\(\implies\)};
+\node[rotate=-45] () at (-1,0.7) {\(\implies\)};
+\node[rotate=45] () at (-1,-0.7) {\(\implies\)};
+\end{tikzpicture}
+\end{center}
+\item \textbf{An useful lemma for generating counterexamples.} The following
+lemma provides us a systematic way to generate counterexamples about the
+implications between modes of convergence.
+
+\begin{lemma}
+\label{lma:indp-two-pt-dist}
+Let \(\{X_n\}_{n\in\N}\) be independent with \(\prob{X_n=0}=1-1/n^{\alpha}\)
+and \(\prob{X_n=n}=1/n^{\alpha}\) for each \(n\in\N\), where \(\alpha>0\). Then:
+\begin{enumerate}
+\item \(X_n\toas 0\) iff \(\alpha>1\).
+\item \(X_n\topr 0\) for every \(\alpha>0\).
+\item \(X_n\tolp 0\) iff \(\alpha>p\).
+\end{enumerate}
+\end{lemma}
+\begin{pf}
+\begin{enumerate}
+\item Fix any \(\varepsilon>0\). Note that
+\(\prob{|X_n-0|>\varepsilon}=\prob{X_n>\varepsilon}=\prob{X_n=n}=1/n^{\alpha}\).
+Hence,
+\(\sum_{n=1}^{\infty}\prob{|X_n-0|>\varepsilon}=\sum_{n=1}^{\infty}1/n^{\alpha}<\infty\)
+iff \(\alpha>1\) by the convergence criterion for \(p\)-series.
+Now, by the first and second Borel-Cantelli lemmas, we have \(\prob{X_n=n\text{ io}}
+=\indic_{(0,1]}(\alpha)\), and thus \(\prob{\lim_{n\to\infty}X_n=0}
+=\prob{X_n=0\text{ abfm}}=1-\prob{X_n=n\text{ io}}=\indicset{\alpha>1}=1\) iff
+\(\alpha>1\), as desired.
+\item Fix any \(\varepsilon>0\) and any \(\alpha>0\). Since we have
+\(\prob{|X_n-0|>\varepsilon}\overset{\text{(same as (a))}}{=}1/n^{\alpha}\) for
+each \(n\in\N\), it follows that
+\(\lim_{n\to\infty}\prob{|X_n-0|>\varepsilon}=\lim_{n\to\infty}1/n^{\alpha}=0\).
+\item Fix any \(\alpha>0\) and \(p>0\). The result follows by noting that
+\(\lim_{n\to\infty}\expv{|X_n-0|^{p}}=\lim_{n\to\infty}\expv{X_n^{p}}=\lim_{n\to\infty}n^p\cdot
+(1/n^{\alpha})=\lim_{n\to\infty}n^{p-\alpha}=0\) iff \(\alpha>p\).
+\end{enumerate}
+\end{pf}
+\item \textbf{List of counterexamples.} With the help of
+\Cref{lma:indp-two-pt-dist}, we can obtain many counterexamples fairly easily:
+\begin{enumerate}[label={(\arabic*)}]
+\item \(\vect{X}_n\toas \vect{X}\centernot\Longleftarrow \vect{X}_n\topr\vect{X}\):
+The sequence in \Cref{lma:indp-two-pt-dist} with \(\alpha\in (0,1]\).
+
+\begin{pf}
+By \Cref{lma:indp-two-pt-dist}, we know \(X_n\topr 0\) while
+\(X_n\cancel{\toas}0\).
+\end{pf}
+\item \(\vect{X}_n\tolp \vect{X}\centernot\Longleftarrow \vect{X}_n\topr\vect{X}\):
+The sequence in \Cref{lma:indp-two-pt-dist} with \(\alpha\in (0,p)\).
+
+
+\begin{pf}
+By \Cref{lma:indp-two-pt-dist}, we know \(X_n\topr 0\) while
+\(X_n\cancel{\tolp}0\).
+\end{pf}
+\item \(\vect{X}_n\toas \vect{X}\centernot\Longrightarrow \vect{X}_n\tolp\vect{X}\):
+The sequence in \Cref{lma:indp-two-pt-dist} with \(\alpha\in (1,p]\).
+
+\begin{pf}
+By \Cref{lma:indp-two-pt-dist}, we know \(X_n\toas 0\) while
+\(X_n\cancel{\tolp}0\).
+\end{pf}
+\item \(\vect{X}_n\toas \vect{X}\centernot\Longleftarrow
+\vect{X}_n\tolp\vect{X}\): The \emph{typewriter sequence} defined by
+\(X_1=\indic_{[0,1]}, X_2=\indic_{[0,1/2]}, X_3=\indic_{[1/2,1]},
+X_4=\indic_{[0,1/3]}, X_5=\indic_{[1/3,2/3]}, X_6=\indic_{[2/3,1]}, \dotsc\),
+where each \(X_n\) is on
+\((\Omega,\mathcal{F},\pr)=([0,1],\bar{\mathcal{B}}([0,1]),\lambda)\).
+The sequence can be more compactly expressed by
+\(X_{\frac{n(n-1)}{2}+k}=\indic_{[\frac{k-1}{n},\frac{k}{n}]}\) for all
+\(k=1,\dotsc,n\) and \(n\in\N\).
+\begin{intuition}
+The intervals in the indicator functions ``move'' like a typewriter.
+\end{intuition}
+
+\begin{pf}
+For all \(k=1,\dotsc,n\), we have \(\expv{\left|X_{\frac{n(n-1)}{2}+k}-0\right|^{p}}
+=\expv{\indic_{[\frac{k-1}{n},\frac{k}{n}]}}=\lambda([\frac{k-1}{n},\frac{k}{n}])
+=\frac{1}{n}\to 0\) as \(n\to\infty\), for every \(p\in[1,\infty)\).
+Consequently, we have \(X_m\tox{m}{L^p} 0\).
+
+However, for all \(\omega\in[0,1]\) and all \(n\in\N\), there exists a unique
+\(k=1,\dotsc,n\) such that \(X_{\frac{n(n-1)}{2}+k}(\omega)=1\) (the \(\omega\)
+falls into exactly one of those intervals), and \(X_{\frac{n(n-1)}{2}+k}(\omega)=0\)
+for other \(k\)'s. Therefore, we have \(\limsup_{m\to \infty}X_m(\omega)=1\)
+and \(\liminf_{m\to \infty}X_m(\omega)=0\), which means that \(\{X_m\}\) does
+not converge at every \(\omega\in \Omega\), and thus definitely not converging
+almost surely.
+\end{pf}
+\item \(\vect{X}_n\topr \vect{X}\centernot\Longleftarrow
+\vect{X}_n\tod\vect{X}\): Let \(X\) follow the \emph{Rademacher distribution},
+which is given by \(\prob{X=-1}=\prob{X=1}=1/2\), and \(X_n:=(-1)^{n}X\) for
+every \(n\in\N\).
+
+\begin{pf}
+Since \(X,X_1,X_2,\dotsc\) all have the same distribution, we have \(X_n\tod
+X\). However, for every \(\varepsilon\in (0,2)\), we have
+\[
+\prob{|X_n-X|>\varepsilon}=\prob{\left|\bigl((-1)^{n}-1\bigr)X\right|>\varepsilon}
+=\begin{cases}
+\prob{0>\varepsilon}=0&\text{if \(n\) is even,} \\
+\prob{2>\varepsilon}=1&\text{if \(n\) is odd,}
+\end{cases}
+\]
+implying that \(\lim_{n\to\infty}\prob{|X_n-X|>\varepsilon}\) does not even exist,
+and so \(\{X_n\}\) does not converge in probability.
+\end{pf}
+\end{enumerate}
+With these counterexamples, we can enrich our picture above as follows:
+\begin{center}
+\begin{tikzpicture}
+\node[] (cas) at (-2,1.5) {\(\vect{X}_n\toas \vect{X}\)};
+\node[] (cms) at (-2,-1.5) {\(X_n\tolp X\)};
+\node[] (cp) at (0,0) {\(\vect{X}_n\topr \vect{X}\)};
+\node[] (cd) at (3,0) {\(\vect{X}_n\tod \vect{X}\)};
+\node[] () at (1.5,-0.2) {\(\Longrightarrow\)};
+\node[] () at (1.5,0.2) {\(\centernot{\Longleftarrow}\)};
+\node[rotate=-45] () at (-0.8,0.7) {\(\Longrightarrow\)};
+\node[rotate=-45] () at (-1.2,0.7) {\(\centernot{\Longleftarrow}\)};
+\node[rotate=45] () at (-0.8,-0.7) {\(\Longrightarrow\)};
+\node[rotate=45] () at (-1.2,-0.7) {\(\centernot{\Longleftarrow}\)};
+\node[rotate=90] () at (-2.8,0) {\(\centernot{\Longleftarrow}\)};
+\node[rotate=90] () at (-2.5,0) {\(\centernot{\Longrightarrow}\)};
+\end{tikzpicture}
+\end{center}
+\end{enumerate}
+\subsection{Applications of Modes of Convergence}
+\begin{enumerate}
+\item After studying different modes of convergence and their relationships, we
+will now discuss some of their applications, including (i) convergence of
+quantile functions, (ii) \emph{laws of large numbers}, and (iii)
+\emph{Glivenko-Cantelli theorem}, which is an important theorem for statistics.
+For the famous \emph{central limit theorem}, we will discuss it in
+\Cref{sect:char-fun}.
+\item \textbf{Convergence of quantile functions.}
+\begin{proposition}
+\label{prp:conv-quant-fun}
+If \(\lim_{n\to\infty}F_n(x)=F(x)~\forall x\in C(F)\) \emph{(corresponding to
+convergence in distribution)}, then
+\(\lim_{n\to\infty}F_n^{-1}(u)=F^{-1}(u)~\forall u\in (0,1)\cap C(F^{-1})\).
+\end{proposition}
+\begin{pf}
+Fix any \(u\in (0,1)\cap C(F^{-1})\).
+
+\textbf{Showing that \(\liminf_{n\to \infty}F_n^{-1}(u)\ge F^{-1}(u)\).} Since
+\(F\) has at most countably many discontinuities (jumps), we know \(C(F)^{c}\)
+is countable. Hence, for all \(\varepsilon>0\), we can choose \(x\in C(F)\)
+such that \(\vc{F^{-1}(u)-\varepsilon<x}<F^{-1}(u)\). Now, as \(x\in C(F)\), we have
+\(\lim_{n\to\infty}F_n(x)=F(x)<u\), where \(F(x)<u\) holds because \(x<F^{-1}(u)=
+\inf\{x\in\R:F(x)\ge u\}\), which means that \(\inf\{x\in\R:F(x)\ge u\}\) is
+not a lower bound for \(x\), implying that \(F(x)<u\).
+
+By the definition of limit, we know that there exists \(n_0\in\N\) such that
+\(F_n(x)<u\) for all \(n\ge n_0\). This implies by \labelcref{it:gen-inv-prop}
+that \(F_{n}^{-1}(u)\ge \vc{x>F^{-1}(u)-\varepsilon}\) for all \(n\ge n_0\), and
+hence \(\liminf_{n\to \infty}F_n^{-1}(u)\ge x>F^{-1}(u)-\varepsilon\). Letting
+\(\varepsilon\to 0^{+}\) then yields \(\liminf_{n\to \infty}F_{n}^{-1}(u)\ge
+F^{-1}(u)\).
+
+\textbf{Showing that \(\limsup_{n\to \infty}F_n^{-1}(u)\le F^{-1}(u)\).}
+Again, since \(C(F)^{c}\) is countable, for all \(\varepsilon>0\) and all
+\(u'>u\), there exists \(x'\in C(F)\) such that \(F^{-1}(u')<\vc{x'<F^{-1}(u')+\varepsilon}\).
+Then, we have \(\lim_{n\to\infty}F_n(x')\overset{(x'\in C(F))}{=}F(x')
+\overset{(F^{-1}(u')<x')}{\ge}u'>u\), and hence there exists \(n_0'\in\N\) such
+that \(F_n(x')>u\) for all \(n\ge n_0\). 
+
+Likewise, by \labelcref{it:gen-inv-prop} we have \(F_n^{-1}(u)\le
+x'<F^{-1}(u')+\varepsilon\) for all \(n\ge n_0\), and so \(\limsup_{n\to
+\infty}F_n^{-1}(u)\le \vc{x'<F^{-1}(u')+\varepsilon}\). Letting
+\(\varepsilon\to 0^{+}\) then yields \(\limsup_{n\to \infty}F_n^{-1}(u)\le
+F^{-1}(u')\). Further letting \(u'\to u^{+}\) yields \(\limsup_{n\to
+\infty}F_n^{-1}(u)\le F^{-1}(u)\), as \(u\in C(F^{-1})\).
+
+\textbf{Completing the proof.} Collecting the two inequalities above gives
+\(F^{-1}(u)\le \liminf_{n\to \infty}F_n^{-1}(u)\le \limsup_{n\to \infty}F_n^{-1}(u)
+\le F^{-1}(u)\), which implies that \(\lim_{n\to\infty}F_n^{-1}(u)=F^{-1}(u)\),
+as desired.
+\end{pf}
+\item \textbf{Laws of large numbers.}
+\begin{theorem}[Laws of large numbers]
+\label{thm:lln}\hfill
+\begin{enumerate}
+\item \emph{(weak law of large numbers (WLLN))} Let \(\{X_n\}\subseteq L^2\) be iid
+with mean \(\mu=\expv{X_1}\) and variance \(\sigma^2=\vari{X_1}\) (\(<\infty\)
+as the random variables are in \(L^2\)). Then,
+\(\bar{X}_n:=\frac{1}{n}\sum_{i=1}^{n}X_i\topr \mu\).
+\item \emph{(strong law of large numbers (SLLN))}
+Let \(\{X_n\}\subseteq L^1\) be iid with mean \(\mu=\expv{X_1}\). Then,
+\(\bar{X}_n:=\frac{1}{n}\sum_{i=1}^{n}X_i\toas \mu\).
+\end{enumerate}
+\end{theorem}
+\begin{note}
+As their names suggest, the SLLN indeed implies the weak law of large numbers.
+While it may seem to be unnecessary to cover the WLLN then, the proof of the
+WLLN (without using the SLLN) turns out to be much easier than the one for the
+SLLN. Also, in many statistical applications, the WLLN is already enough.
+\end{note}
+
+\begin{pf}
+We will only cover the proof of the weak law of large number here. For all
+\(\varepsilon>0\), we have
+\[
+0\le \prob{|\bar{X}_n-\mu|>\varepsilon}\overset{\text{(monotonicity)}}{\le}
+\prob{|\bar{X}_n-\mu|\ge\varepsilon}
+\overset{\text{(Chebyshev)}}{\le}\frac{\expv{(\bar{X}_n-\mu)^{2}}}{\varepsilon^{2}}
+=\frac{\vari{\bar{X}_n}}{\varepsilon^{2}}=\frac{\sigma^{2}}{n\varepsilon^{2}}.
+\]
+Letting \(n\to\infty\) then gives \(\lim_{n\to\infty}
+\prob{|\bar{X}_n-\mu|>\varepsilon}=0\), as desired.
+\end{pf}
+\item \textbf{Glivenko-Cantelli theorem.} The Glivenko-Cantelli theorem is
+about convergence of \emph{empirical distribution functions}.  Let
+\(\{\vect{X}_n\}_{n\in\N}\) be iid. With any fixed \(\vect{x}\in\R^d\), the
+collection \(\{\indicset{\vect{X}_n\le\vect{x}}\}_{n\in\N}\) would contain iid
+random variables in \(L^1\). So, by the SLLN, for the
+empirical distribution functions
+\(F_n(\vect{x})=\frac{1}{n}\sum_{i=1}^{n}\indicset{\vect{X}_i\le\vect{x}}\), we
+have the \emph{pointwise} almost sure convergence:
+\[F_n(\vect{x})\toas
+\expv{\indicset{\vect{X}_1\le\vect{x}}}=\prob{\vect{X}_1\le\vect{x}}=F(\vect{x})\]
+for all \(\vect{x}\in\R^d\).
+
+The Glivenko-Cantelli theorem asserts an even stronger result, namely that such
+almost sure convergence is indeed also \emph{uniform}.
+
+\begin{theorem}[Glivenko-Cantelli]
+\label{thm:glivenko-cantelli}
+If \(\vect{X}_1,\dotsc,\vect{X}_n\iid F\), then
+\(\sup_{\vect{x}\in\R^d}|F_n(\vect{x})-F(\vect{x})|\toas 0\).
+\end{theorem}
+
+
+\begin{pf}
+We only prove the case with \(d=1\) here.
+
+\textbf{Upper bounding \(|F_n(x)-F(x)|\).} Fix any \(x\in [a,b)\). Since each
+\(F_n\) and \(F\) are increasing, we have
+\[
+\begin{cases}
+F_n(x)-F(x)\ge F_n(a)-F(b-)=\vc{\bigl(F_n(a)-F(a)\bigr)}-\bigl(F(b-)-F(a)\bigr), \\
+F_n(x)-F(x)\le F_n(b-)-F(a)=\orc{\bigl(F_n(b-)-F(b-)\bigr)}+\bigl(F(b-)-F(a)\bigr),
+\end{cases}
+\]
+where \(F(b-):=\lim_{x\to b^{-}}F(x)\). This implies that
+\begin{align*}
+|F_n(x)-F(x)|&\le\max\{|\vc{\bigl(F_n(a)-F(a)\bigr)}-\bigl(F(b-)-F(a)\bigr)|,
+|\orc{\bigl(F_n(b-)-F(b-)\bigr)}+\bigl(F(b-)-F(a)\bigr)|\} \\
+\overset{\text{(triangle)}}&{\le}
+\max\{\vc{|F_n(a)-F(a)|},\orc{|F_n(b-)-F(b-)|}\}+\bigl(F(b-)-F(a)\bigr).
+\end{align*}
+
+\textbf{Partitioning the \(y\)-axis for \(F\) with sufficiently close end-points.}
+
+\textbf{Claim:} For every \(\varepsilon\in (0,3]\), there exists
+\(n_{\varepsilon}\in\N\) and a partition
+\(-\infty=:z_0<z_1\dotsb<z_{n_{\varepsilon}}:=\infty\) such that
+\(F(z_k-)-F(z_{k-1})\le\varepsilon/3\) for all \(k=1,\dotsc,n_{\varepsilon}\).
+
+\begin{pf}
+In case \(F\) is continuous, taking \(z_k=F^{-1}(\varepsilon k/3)\) for all
+\(k=0,1,,\dotsc,\lfloor 3/\varepsilon\rfloor\), with \(n_{\varepsilon}=\lfloor
+3/\varepsilon\rfloor +1\), would work. For the case where \(F\) has some
+discontinuities (jumps), note that there are only finitely many \(x\) for which
+\(F(x)-F(x-)>\varepsilon/3\); otherwise, \(F\) could take value larger than
+\(1\). By including those \(x\)'s as the end-points in the partition (raising
+\(n_{\varepsilon}\) by a finite number), we can then ensure that
+\(F(z_k-)-F(z_{k-1})\le \varepsilon/3\) for all \(k\) still.
+\end{pf}
+
+\textbf{Upper bounding the supremum by maximal distances from
+the partition and applying the SLLN.}
+Since every \(x\in\R\) lies in exactly one of the partition intervals
+\([z_{k-1},z_k)\), applying the upper bound on \(|F_n(x)-F(x)|\) with
+\(a=z_{k-1}\) and \(b=z_k\) for all \(k=1,\dotsc,n_{\varepsilon}\) gives
+\begin{align*}
+\sup_{x\in\R}|F_n(x)-F(x)|&\le \max_{k=1,\dotsc,n_{\varepsilon}}
+\bigl\{\max\{\vc{|F_n(z_{k-1})-F(z_{k-1})|},
+\orc{|F_n(z_{k}-)-F(z_{k}-)|}\}
++\underbrace{\bigl(F(z_{k}-)-F(z_{k-1})\bigr)}_{\le\varepsilon/3}\bigr\} \\
+&\le \max_{k=1,\dotsc,n_{\varepsilon}}\{\underbrace{\vc{|F_n(z_{k-1})-F(z_{k-1})|}}
+_{\toas 0\text{ by SLLN}}\}+
+\max_{k=1,\dotsc,n_{\varepsilon}}\{\underbrace{\orc{|F_n(z_{k}-)-F(z_{k}-)|}}
+_{\toas 0\text{ by SLLN}}\}
++\varepsilon/3 \\
+\overset{\text{(\(n\) sufficiently large)}}&{<}\varepsilon/3+\varepsilon/3+\varepsilon/3=\varepsilon,
+\end{align*}
+implying that \(\sup_{\vect{x}\in\R^d}|F_n(\vect{x})-F(\vect{x})|\toas 0\).
+\end{pf}
+
+\begin{remark}
+\item For a fixed \(\vect{x}\in\R^d\), \(F_n(\vect{x})\toas F(\vect{x})\)
+is equivalent to \(|F_n(\vect{x})-F(\vect{x})|\toas 0\). So the statement is
+suggesting \(F_n(\vect{x})\) is converging almost surely to \(F(\vect{x})\) at
+an ``uniform rate'' for all \(\vect{x}\in\R^d\).
+\item \emph{(rate of convergence)} The rate of convergence for
+\(\sup_{\vect{x}\in\R^d}|F_n(\vect{x})-F(\vect{x})|\) is quantified by the
+\emph{Dvoretzky-Kiefer-Wolfowitz (DKW) inequality}: For all \(\varepsilon>0\),
+we have
+\[
+\begin{cases}
+\prob{\sup_{x\in\R}|F_n(x)-F(x)|>\varepsilon}
+\le 2e^{-2n\varepsilon^{2}}&\text{if \(d=1\),} \\
+\prob{\sup_{\vect{x}\in\R^d}|F_n(\vect{x})-F(\vect{x})|>\varepsilon}
+\le (n+1)de^{-2n\varepsilon^{2}}&\text{if \(d\ge 2\).}
+\end{cases}
+\]
+\end{remark}
+\end{enumerate}

@@ -7,6 +7,7 @@
 \usepackage{aligned-overset}
 \usepackage{derivative}
 \usepackage{mleftright}
+\usepackage{centernot}
 \usepackage{cancel}
 \usepackage{fontawesome5}
 \usepackage[svgnames]{xcolor}
@@ -71,6 +72,14 @@
 \newcommand*{\ndist}[1]{\operatorname{N}\left(#1\right)}
 \newcommand*{\unif}[2]{\operatorname{U}\left(#1,#2\right)}
 \newcommand*{\supp}[1]{\operatorname{supp}\left(#1\right)}
+\newcommand*{\tocc}{\underset{n\to\infty}{\overset{\text{c.c.}}{\longrightarrow}}}
+\newcommand*{\toas}{\underset{n\to\infty}{\overset{\text{a.s.}}{\longrightarrow}}}
+\newcommand*{\topr}{\underset{n\to\infty}{\overset{\text{p}}{\longrightarrow}}}
+\newcommand*{\netopr}{\underset{n\to\infty}{\overset{\text{p}}{\nearrow}}}
+\newcommand*{\setopr}{\underset{n\to\infty}{\overset{\text{p}}{\searrow}}}
+\newcommand*{\tod}{\underset{n\to\infty}{\overset{\text{d}}{\longrightarrow}}}
+\newcommand*{\tolp}{\underset{n\to\infty}{\overset{L^p}{\longrightarrow}}}
+\newcommand*{\tox}[2]{\underset{#1\to\infty}{\overset{#2}{\longrightarrow}}}
 
 \newcommand*{\N}{\mathbb{N}}
 \newcommand*{\R}{\mathbb{R}}
@@ -85,6 +94,8 @@
 \newcommand*{\im}[1]{\operatorname{Im}\left(#1\right)}
 
 \newcommand*{\inner}[2]{\left\langle #1,#2\right\rangle}
+\newcommand*{\rk}[1]{\operatorname{rank}\left(#1\right)}
+\newcommand*{\nul}[1]{\operatorname{null}\left(#1\right)}
 
 \newcommand*{\defn}[1]{\index[def]{#1}\textcolor{ForestGreen}{\textbf{#1}}}
 \newcommand*{\bu}[1]{\textbf{\underline{#1}}}

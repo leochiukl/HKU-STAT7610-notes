@@ -24,7 +24,7 @@ abstract) definition of expectation, which is closely related to the notion of
 integrals in \Cref{subsect:construct-lebesgue-int}, to better understand this
 concept.
 \end{enumerate}
-\subsection{Construction of Lebesgue integrals}
+\subsection{Construction of Lebesgue Integrals}
 \label{subsect:construct-lebesgue-int}
 \begin{enumerate}
 \item \textbf{Motivation.} The formulas of expectations mentioned above are
@@ -596,6 +596,10 @@ Since \(|X|\overset{\text{(triangle inequality)}}{\le}|\re{X}|+|\im{X}|
 and \(\int_{\Omega}^{}|\im{X}|\odif{\mu}<\infty\)), we again have \(X\) is
 integrable iff \(\int_{\Omega}^{}|X|\odif{\mu}<\infty\) here (where \(|X|\)
 denotes the modulus of \(X\)).
+\item \emph{(special notation for Lebesgue measure)} In the case where \(\Omega=\R^d\)
+and \(\mu=\lambda\) is the Lebesgue measure, we often just write
+\(\int_{\Omega}^{}f(\vect{x})\odif{\vect{x}}\) instead of
+\(\int_{\Omega}^{}f(\vect{x})\odif{\lambda(\vect{x})}\).
 \end{remark}
 \item \label{it:quasi-int-prop}\textbf{Properties of quasi-integrable functions.} Let
 \(X,Y:\Omega\to\bar{\R}\) be quasi-integrable (and measurable) functions. Then:
@@ -1208,6 +1212,9 @@ would become
 which takes a form that is more familiar to us. The integral
 \(\int_{\R^d}^{}h(\vect{x})\odif{F(\vect{x})}\) is known as the
 \defn{Lebesgue-Stieltjes integral} of \(h\) with respect to \(F\).
+In the special case with \(F(\vect{x})=\prod_{j=1}^{d}x_j\) for all
+\(\vect{x}\in[\vect{a},\vect{b}]\), it becomes the Lebesgue integral of \(h\)
+with respect to the Lebesgue measure \(\lambda\).
 
 From this expression, it is also clear that if we have \(\vect{X}_1\eqd
 \vect{X}_2\) (so both share the same distribution function \(F\)), then
@@ -1243,11 +1250,65 @@ The \defn{Riemann-Stieltjes integral}
 \(\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{F(\vect{x})}\) is defined as
 the limit of the \emph{Riemann-Stieltjes sums}:
 \[
-\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{F(\vect{x})}:=\lim_{\vect{n}\to\vect{\infty}}
-\sum_{\vect{i}={}_{d}1}^{\vect{n}}h(\vect{\xi}_{\vect{i}})
+\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{F(\vect{x})}
+:=\lim_{n_1,,\dotsc,n_d\to\infty}\sum_{i_d=1}^{n_d}\dotsb\sum_{i_1=1}^{n_1}h(\xi_{1i_1},\dotsc,\xi_{di_{d}})
 \Delta_{(\vect{x}_{\vect{i}-{}_{d}1},\vect{x}_{\vect{i}}]}F
 \]
-TODO
+where \((\vect{x}_{\vect{i}-{}_{d}1},\vect{x}_{\vect{i}}]\) denotes \(\left(
+\begin{bmatrix}x_{1,i_1-1}\\\vdots\\ x_{d,i_d-1}\end{bmatrix},
+\begin{bmatrix}x_{1i_1}\\\vdots\\ x_{di_d}\end{bmatrix}
+\right]\), with \(a_j=x_{j0}<x_{j1}<\dotsb<x_{jn}=b_j\) and
+\(\xi_{ji_j}\in[x_{j,i_j-1},x_{j,i_j}]\) for all \(j=1,\dotsc,d\).
+Here, the measure associated to the \(F\)-volume is the Lebesgue-Stieltjes
+measure \(\lambda_{F}\).
+
+\begin{note}
+In the special case with \(F(\vect{x})=\prod_{j=1}^{d}x_j\) for all
+\(\vect{x}\in[\vect{a},\vect{b}]\), it reduces to the \defn{Riemann integral}
+\(\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{\vect{x}}\). Here, the measure
+associated to the \(F\)-volume is the Lebesgue measure \(\lambda\).
+\end{note}
+
+The following relates the Riemann-Stieltjes and Lebesgue-Stieltjes integrals:
+\begin{proposition}
+\label{prp:rs-ls-int-relate}
+Let \(h:[\vect{a},\vect{b}]\to\R\) be a function.
+\begin{enumerate}
+\item If \(h\) is bounded, then \(h\) is Riemann-Stieltjes integrable with
+respect to \(F\) on \([\vect{a},\vect{b}]\) iff \(h\) is continuous
+\(\lambda_{F}\)-a.e.\ on \([\vect{a},\vect{b}]\).
+\item If \(h\) is Riemann-Stieltjes integrable with respect to \(F\) on
+\([\vect{a},\vect{b}]\), then \(h\) is also Lebesgue-Stieltjes integrable with
+respect to \(\lambda_{F}\), with the Lebesgue-Stieltjes integral
+\(\int_{[\vect{a},\vect{b}]}^{}h\odif{\lambda_{F}}\) being equal to the
+Riemann-Stieltjes integral \(\int_{[\vect{a},\vect{b}]}^{}h\odif{F}\).
+\end{enumerate}
+\begin{pf}
+See \textcite{terhorst1984riemann}.
+\end{pf}
+
+\begin{note}
+In the context of computing expectation of \(h(\vect{X})\) where \(\vect{X}\)
+is a random vector under a probability measure \(\pr\), since we have
+\(\lambda_{F}=\pr_{\vect{X}}\) by \Cref{thm:dist-fn-char-prob-meas-rd}, the
+Lebesgue-Stieltjes integral \(\int_{[\vect{a},\vect{b}]}^{}h\odif{\lambda_{F}}\)
+can indeed be expressed as \(
+\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{\pr_{\vect{X}}(\vect{x})}
+\overset{\text{(notation)}}{=}\int_{[\vect{a},\vect{b}]}^{}h(\vect{x})\odif{F(\vect{x})}\).
+It shares the same notation as the one for Riemann integral, and indeed can be
+computed as a Riemann-Stieltjes integral (if exists) by
+\Cref{prp:rs-ls-int-relate}. This serves as the main tool for computing such
+Lebesgue-Stieltjes integral.
+\end{note}
+
+A famous example concerning the difference between Riemann and Lebesgue
+integral is the \emph{Dirichlet function} \(h(x)=\indic_{\Q}(x)\) for all
+\(x\in[0,1]\). Since it is bounded and discontinuous on \([0,1]\) (with
+\(\lambda([0,1])=1\)), it follows by \Cref{prp:rs-ls-int-relate} that \(h\) is
+not Riemann integrable. However, it is a simple function and is Lebesgue
+integrable: We have \(\int_{[0,1]}^{}h\odif{\lambda}=1\cdot \lambda(\Q)+0\cdot
+\lambda([0,1]\setminus \Q)=0\).
+\end{proposition}
 \item \textbf{Fubini-Tonelli theorem.} The main tool for computing multivariate
 integrals is the \emph{Fubini-Tonelli theorem}; perhaps you have seen some
 special cases of this result in your previous multivariable calculus course.
@@ -1261,10 +1322,13 @@ consider the product space \((\Omega,\mathcal{F},\mu)=(\Omega_1\times
 \(h:\Omega\to\eR\) be a
 \((\mathcal{F}_1\otimes\mathcal{F}_2,\mathcal{B}(\eR))\)-measurable function.
 
-If \(h\in L_{+}\) \emph{(Tonelli)} or \(h\in L^{1}\) \emph{(Fubini)}, then
+If \(h\in L_{+}(\Omega,\mathcal{F},\mu)\) \emph{(Tonelli)} or \(h\in
+L^{1}(\Omega,\mathcal{F},\mu)\) \emph{(Fubini)}, then
 \(\omega_1\mapsto\vc{\int_{\Omega_2}^{}h(\omega_1,\omega_2)\odif{\mu_2(\omega_2)}}\)
-and \(\omega_2\mapsto\orc{\int_{\Omega_1}^{}h(\omega_1,\omega_2)\odif{\mu_1(\omega_1)}}\)
-are \(\mathcal{F}_1\)-measurable and \(\mathcal{F}_2\)-measurable respectively, and
+and
+\(\omega_2\mapsto\orc{\int_{\Omega_1}^{}h(\omega_1,\omega_2)\odif{\mu_1(\omega_1)}}\)
+are \(\mathcal{F}_1\)-measurable and \(\mathcal{F}_2\)-measurable respectively,
+and
 \[
 \int_{\Omega}^{}h\odif{\mu}
 =\int_{\Omega_1}^{}
@@ -1279,7 +1343,7 @@ Omitted.
 
 \begin{remark}
 \item \emph{Tonelli's theorem} refers to the result with condition \(h\in
-L_{+}\), and \emph{Fubini's theorem} refers to the result with \(h\in L_1\).
+L_{+}\), and \emph{Fubini's theorem} refers to the result with \(h\in L^1\).
 The result above is a combination of these two theorems.
 \item The Fubini-Tonelli theorem gives us conditions under which changing the
 order of integration is allowed. The result can be extended to the case where
@@ -1304,7 +1368,14 @@ Let \(X_1,\dotsc,X_d\in L^{1}\) be independent. Then, we have \(\expv{X_1\dotsb
 X_d}=\expv{X_1}\dotsb\expv{X_d}\).
 \end{proposition}
 \begin{pf}
-We follow the typical procedure in applying the Fubini-Tonelli theorem
+First note that under the independence of \(X_1,\dotsc,X_d\), by
+\Cref{thm:char-rv-ind} the joint distribution function \(F\) of
+\(X_1,\dotsc,X_d\) is given by \(F(\vect{x})=\prod_{j=1}^{d}F_j(x_j)\), where
+\(F_j\) is the distribution function of \(X_j\) for each \(j=1,\dotsc,d\).
+Interpreting \(F\) and each \(F_j\) as distributions (push-forward measures), we
+can then see that \(F\) can be seen as the product measure \(\prod_{j=1}^{d}F_j\).
+
+Then, we follow the typical procedure in applying the Fubini-Tonelli theorem
 suggested above.
 \begin{enumerate}[label={(\arabic*)}]
 \item By \emph{Tonelli's theorem}, we have
@@ -1317,7 +1388,7 @@ suggested above.
 \expv{|X_1|}\dotsb\expv{|X_d|}\overset{(X_1,\dotsc,X_d\in L^1)}{<}\infty.
 \end{align*}
 Hence, \(X_1\dotsb X_d\in L^{1}\).
-\item Applying Fubini's theorem gives
+\item Applying \emph{Fubini's theorem} gives
 \begin{align*}
 \expv{X_1\cdots X_d}&=\int_{\R^d}^{}x_1\dotsb x_d\odif{F(\vect{x})}
 \overset{\text{(Fubini)}}{=}
@@ -1429,7 +1500,7 @@ space and \(X,Y\in L^2\). Then the \defn{variance} and \defn{standard
 deviation} of \(X\) are \(\vari{X}:=\expv{(X-\expv{X})^{2}}\) and
 \(\sd{X}:=\sqrt{\vari{X}}\) respectively. The \defn{covariance} and \defn{correlation}
 of \(X\) and \(Y\) are \(\cov{X,Y}:=\expv{(X-\expv{X})(Y-\expv{Y})}\) and
-\(\corr{X,Y}:=\frac{\cov{X,Y}}{\sqrt{\vari{X}}\vari{Y}}\) respectively.
+\(\corr{X,Y}:=\frac{\cov{X,Y}}{\sqrt{\vari{X}\vari{Y}}}\) respectively.
 
 \begin{note}
 The correlation \(\corr{X,Y}\) serves as a measure of \emph{linear} dependence
@@ -1620,7 +1691,7 @@ M(F_1(x_1),F_2(x_2))-F_1(x_1)F_2(x_2)\odif{x_1}\odif{x_2}.
 \end{align*}
 \end{note}
 \end{enumerate}
-\subsection{Multivariate versions of probabilistic quantities}
+\subsection{Multivariate Versions of Probabilistic Quantities}
 \label{subsect:multivar-prob-quant}
 \begin{enumerate}
 \item After studying some probabilistic quantities, here we are going to study
@@ -1736,7 +1807,7 @@ it reduces to \(\vari{(\sum_{i=1}^{d}X_i)/d}=(\vari{X_1})/d\).
 \end{enumerate}
 \end{enumerate}
 \item \textbf{Characterization of covariance matrix.} To close
-\Cref{subsect:multivar-prob-quant}, we introduce a characterization of
+\Cref{subsect:multivar-prob-quant}, we will introduce a characterization of
 covariance matrix. To prove such characterization, the following result from
 linear algebra is helpful.
 \begin{lemma}[Cholesky decomposition]
@@ -1775,16 +1846,21 @@ its covariance matrix is \(\cov{\vect{X}}=I_d\), and thus
 \(\Sigma\) is the covariance matrix of \(A\vect{X}\).
 \end{pf}
 
-\begin{note}
-This result also implies a characterization of \emph{correlation matrix},
-namely that a real symmetric matrix \(P\) is a correlation matrix iff it is
-positive semi-definite \vc{with every diagonal entry being \(1\)}. This is
-because the correlation matrix of \((X_1,\dotsc,X_d)\) is the same as the
-covariance matrix of \((X_1/\sd{X_1},\dotsc,X_d/\sd{X_d})\), whose diagonal
-entries are always \(1\).
-\end{note}
+\begin{remark}
+\item \emph{(characterization of correlation matrix)} This result also implies
+a characterization of \emph{correlation matrix}, namely that a real symmetric
+matrix \(P\) is a correlation matrix iff it is positive semi-definite \vc{with
+every diagonal entry being \(1\)}. This is because the correlation matrix of
+\((X_1,\dotsc,X_d)\) is the same as the covariance matrix of
+\((X_1/\sd{X_1},\dotsc,X_d/\sd{X_d})\), whose diagonal entries are always
+\(1\).
+\item \emph{(invertibility of covariance matrix)} From linear algebra,
+\(\Sigma\in\R^{d\times d}\) is invertible iff it is positive definite (not semi-definite).
+Hence, some covariance matrices can be non-invertible and we need positive
+definiteness to ensure the invertibility.
+\end{remark}
 \end{enumerate}
-\subsection{The Lebesgue-Radon-Nikodym theorem}
+\subsection{The Lebesgue-Radon-Nikodym Theorem}
 \label{subsect:leb-rn}
 \begin{enumerate}
 \item In \Cref{subsect:leb-rn}, we will explore results about \emph{changes of
@@ -1871,14 +1947,18 @@ continuous with respect to \(\mu\))} and \(\nu_s\perp\mu\) \emph{(\underline{s}i
 integrable (wrt \(\mu\)) \(f:\Omega\to[0,\infty)\) such that
 \(\nu_a(A)=\int_{A}^{}f\odif{\mu}\) for all \(A\in\mathcal{F}\).
 
-\begin{note}
-In such case, we say that \(\nu_a\) has \defn{density} \(f\) with respect to
-\(\mu\), denoted by \(\odif{\nu_a}=f\odif{\mu}\), or \(f=\odv{\nu_a}{\mu}\)
-(inspired by the formula
+\begin{remark}
+\item \emph{(meaning of a.e.\ unique)} Here ``\(\mu\)-a.e.\ unique'' suggests
+that if there is another function \(g\) satisfying such conditions, then
+we have \(f=g\) \(\mu\)-a.e.
+\item \emph{(terminologies)} In such case, we say that \(\nu_a\) has
+\defn{density} \(f\) with respect to \(\mu\), denoted by
+\(\odif{\nu_a}=f\odif{\mu}\) or \(f=\odv{\nu_a}{\mu}\) (the notations are
+inspired by the formula
 \(\nu_a(A)=\vc{\int_{A}^{}\odif{\nu_a}=\int_{A}^{}f\odif{\mu}}\)).  Such
 density \(f\) is also known as the \defn{Radon-Nikodym derivative} of \(\nu_a\)
-with respect to \(\mu\).
-\end{note}
+with respect to \(\mu\) (unique a.e.).
+\end{remark}
 \end{enumerate}
 \end{theorem}
 \begin{pf}
@@ -1890,10 +1970,10 @@ first step is to consider the collection
 \(\mathcal{A}:=\{\vc{g:\Omega\to[0,\infty]}: \text{\(g\) is integrable wrt
 \(\mu\), \(\int_{A}^{}g\odif{\mu}\le\nu(A)\) for all \(A\in\mathcal{F}\)}\}\).
 
-\textbf{Showing that \(\mathcal{A}\) is nonempty and closed under finite maxima.}
+\textbf{Showing that \(\mathcal{A}\) is nonempty and closed under maxima (of finitely many elements).}
 \begin{itemize}
 \item \emph{Nonempty:} Since \(\mathcal{A}\) contains the zero function, it is nonempty.
-\item \emph{Closed under finite maxima:} Fix any \(g_1,g_2\in\mathcal{A}\). We
+\item \emph{Closed under maxima:} Fix any \(g_1,g_2\in\mathcal{A}\). We
 want to show that \(\max\{g_1,g_2\}\in\mathcal{A}\) (which would then imply by
 induction that \(g_1,\dotsc,g_n\in\mathcal{A}\implies \max\{g_1,\dotsc,g_n\}\in\mathcal{A}\)).
 
@@ -2057,8 +2137,9 @@ construction of \(\mu_n\) and \(\nu_n\), we have
 \(\mu_n(A_n^c)=\nu_n(A_n^c)=0\). So, we have
 \(\int_{A_n^c}^{}f_n\odif{\mu_n}=0\) by \labelcref{it:quasi-int-prop}, and hence
 \(\nu_{n,s}(A_n^c)=\nu_n(A_n^c)-\int_{A_n^c}^{}f_n\odif{\mu_n}=0-0=0\).
-Furthermore, we may, without affecting the \(\mu_n\)-a.e.\ uniqueness, assume
-that \(f_n|_{A_n^c}=0\) since \(\mu_n(A_n^c)=0\).
+Furthermore, we may assume that \(f_n|_{A_n^c}=0\) (after redefinition if
+needed) without affecting the \(\mu_n\)-a.e.\ uniqueness, since
+\(\mu_n(A_n^c)=0\).
 
 Now, let \(\nu_a(B):=\int_{B}^{}f\odif{\mu}~\forall B\in\mathcal{F}\) with
 \(f:=\sum_{n=1}^{\infty}f_n\), after redefining on a null set where it is
@@ -2085,7 +2166,7 @@ have \(\nu_s\perp\mu\). Also, we know by \labelcref{it:quasi-int-prop} that
 &=\sum_{n=1}^{\infty}\left(\int_{B}^{}f_n\odif{\mu_n}+\nu_{n,s}(B)\right)
 \underset{(f_{n}|_{A_n^c}=0)}{\overset{(\mu_n|_{A_n}=\mu|_{A_{n}})}{=}}
 \sum_{n=1}^{\infty}\int_{B}^{}f_n\odif{\mu}+\nu_{s}(B) \\
-\overset{\text{(Tonelli, counting measure)}}&{=}
+\overset{\text{(\Cref{cor:leb-int-sum-commu})}}&{=}
 \int_{B}^{}\sum_{n=1}^{\infty}f_n\odif{\mu}+\nu_{s}(B)
 =\int_{B}^{}f\odif{\mu}+\nu_{s}(B)
 =\nu_a(B)+\nu_s(B).
@@ -2137,24 +2218,27 @@ then have
 =\int_{A}^{}\odv{\nu}{\mu}\odif{\mu} =\int_{\Omega}^{}g\odv{\nu}{\mu}\odif{\mu}
 \]
 By the linearity of integral, the equation also holds for all simple functions.
-\item Fix any \(g\in L_{+}\). By \Cref{lma:apx-seq}, there exists a sequence
+\item Fix any \(g\in L_{+}(\Omega,\mathcal{F},\nu)\). By \Cref{lma:apx-seq}, there exists a sequence
 \(\{g_n\}\) of nonnegative simple functions on \(\Omega'\) such that
-\(g_n\nearrow g\), so
+\(g_n\nearrow g\), which implies that \(g_n\odv{\nu}{\mu}\nearrow g\odv{\nu}{\mu}\)
+with \(g_n\odv{\nu}{\mu}\in L_{+}\) for each \(n\in\N\). Hence,
 \[
-\int_{\Omega}^{}g\odif{\mu}\overset{\text{(MCT)}}{=}
-\lim_{n\to\infty}\int_{\Omega}^{}g_n\odif{\mu}
+\int_{\Omega}^{}g\odif{\nu}\overset{\text{(MCT)}}{=}
+\lim_{n\to\infty}\int_{\Omega}^{}g_n\odif{\nu}
 \overset{(1)}{=}\lim_{n\to\infty}\int_{\Omega}^{}g_n\odv{\nu}{\mu}\odif{\mu}
 \overset{\text{(MCT)}}{=}\int_{\Omega}^{}g\odv{\nu}{\mu}\odif{\mu}.
 \]
-\item Fix any \(g\in L^{1}\). Then we have
+\item Fix any \(g\in L^{1}(\Omega,\mathcal{F},\nu)\). Then we have
 \[
-\int_{\Omega}^{}g\odif{\mu}=\int_{\Omega}^{}g^{+}\odif{\mu}-\int_{\Omega}^{}g^{-}\odif{\mu}
+\int_{\Omega}^{}g\odif{\nu}=\int_{\Omega}^{}g^{+}\odif{\nu}-\int_{\Omega}^{}g^{-}\odif{\nu}
 \overset{(2)}{=}\int_{\Omega}^{}g^{+}\odv{\nu}{\mu}\odif{\mu}
 -\int_{\Omega}^{}g^{-}\odv{\nu}{\mu}\odif{\mu}
 =\int_{\Omega}^{}g\odv{\nu}{\mu}\odif{\mu}.
 \]
+This also implies that \(g\odv{\nu}{\mu}\in L^{1}(\Omega,\mathcal{F},\mu)\) as
+\(\int_{\Omega}^{}g^{+}\odv{\nu}{\mu}\odif{\mu}=\int_{\Omega}^{}g^{+}\odif{\nu}<\infty\)
+and \(\int_{\Omega}^{}g^{-}\odv{\nu}{\mu}\odif{\mu}=\int_{\Omega}^{}g^{-}\odif{\nu}<\infty\).
 \end{enumerate}
-TODO: show that \(g\odv{\nu}{\mu}\in L^{1}(\Omega,\mathcal{F},\mu)\).
 \item For all \(A\in\mathcal{F}\), we have
 \(\lambda(A)=0\overset{(\mu\ll\lambda)}{\implies }\mu(A)=0
 \overset{(\nu\ll\lambda)}{\implies }\nu(A)=0\), and hence \(\nu\ll\lambda\).
@@ -2182,7 +2266,9 @@ respect to the Lebesgue measure \(\lambda\), then by Radon-Nikodym theorem we ha
 where \(f=\odv{F}{\lambda}\) is the Radon-Nikodym derivative.
 
 Particularly, setting \(B=(\vect{-\infty},\vect{x}]\) gives
-\(F(\vect{x})=F((\vect{-\infty},\vect{x}]=\int_{(\vect{-\infty},\vect{x}]}^{}f\odif{\lambda}
+\(F(\vect{x})=F((\vect{-\infty},\vect{x}]
+=\int_{(\vect{-\infty},\vect{x}]}^{}f\odif{\lambda}
+=\int_{(\vect{-\infty},\vect{x}]}^{}f(\widetilde{\vect{x}})\odif{\lambda(\widetilde{\vect{x}})}
 \overset{\text{(notation)}}{=}\int_{(\vect{-\infty},\vect{x}]}^{}f(\widetilde{\vect{x}})\odif{\widetilde{\vect{x}}}\),
 which suggests that the Radon-Nikodym derivative is indeed the density function
 of \(F\). In such case, recall that \(F\) is said to be \emph{absolutely

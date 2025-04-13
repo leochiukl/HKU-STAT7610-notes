@@ -332,7 +332,7 @@ through some popular zero-one laws, namely \emph{Borel-Cantelli lemmas} and
 \label{thm:bc-lma}
 Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
 \(\{A_i\}_{i\in\N}\subseteq \mathcal{F}\) be a collection of events.
-\begin{enumerate}[label={(\arabic*)}]
+\begin{enumerate}
 \item \emph{(first Borel-Cantelli lemma)} If \(\sum_{i=1}^{\infty}\prob{A_i}<\infty\), then
 \(\prob{\{\omega\in A_n\text{ io}\}}=0\).
 \item \emph{(second Borel-Cantelli lemma)} If \(\{A_i\}_{i\in\N}\) is
@@ -786,11 +786,11 @@ the sampling (details omitted here).
 \end{note}
 \item \textbf{Empirical distribution functions.} Given a random sample
 \(\vect{X}_1,\dotsc,\vect{X}_n\), the \defn{empirical distribution
-function} \(\widehat{F}_n\) is defined by
-\(\widehat{F}_n(\vect{x})=\sum_{i=1}^{n}\frac{1}{n}\indic_{[\vect{X}_i,\vect{\infty})}(\vect{x})\),
+function} \(F_n\) is defined by
+\(F_n(\vect{x})=\sum_{i=1}^{n}\frac{1}{n}\indic_{[\vect{X}_i,\vect{\infty})}(\vect{x})\),
 which jumps by \(1/n\) at each \(\vect{X}_i\). Here
 \(\vect{X}_1,\dotsc,\vect{X}_n\) are considered to be \underline{empirical} data,
-and the empirical distribution function \(\widehat{F}_n\) can be viewed as an
+and the empirical distribution function \(F_n\) can be viewed as an
 estimation of the true underlying distribution function that generate such
 \(\vect{X}_1,\dotsc,\vect{X}_n\). We also note that the empirical distribution
 function indeed corresponds to a mixture distribution function, with
@@ -801,8 +801,8 @@ Sampling can also be done on an empirical distribution function.
 Let \(U\sim\unif{0}{1}\) and we write \(I=\lceil nU\rceil\), which follows the
 discrete uniform distribution with support \(\{1,\dotsc,n\}\). Then, based on
 the mixture distribution we have \(\vect{X}_{\lceil nU\rceil}\sim
-\widehat{F}_n\). This hints a method for sampling from the empirical
-distribution function \(\widehat{F}_n\) as follows. Given
+F_n\). This hints a method for sampling from the empirical
+distribution function \(F_n\) as follows. Given
 \(\vect{X}_1,\dotsc,\vect{X}_n\):
 \begin{enumerate}[label={(\arabic*)}]
 \item Obtain realizations of \(U\).
