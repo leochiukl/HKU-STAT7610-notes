@@ -529,8 +529,9 @@ contradiction.
 \end{enumerate}
 \end{pf}
 \subsubsection*{Lebesgue integrals of measurable functions}
-\item \textbf{Definition.} The last step in the construction of Lebesgue
-integral is to extend the notion of \(\int_{\Omega}^{}X\odif{\mu}\) to every
+\item\label{it:leb-int-gen-def} \textbf{Definition.} The last step in the
+construction of Lebesgue integral is to extend the notion of
+\(\int_{\Omega}^{}X\odif{\mu}\) to every
 \((\mathcal{F},\mathcal{B}(\bar{\R}))\)-measurable function
 \(X:\Omega\to\bar{\R}\). The key idea is to write such function \(X\) as the
 difference \(X=X^{+}-X^{-}\) where \(X^{+}:=\max\{X,0\}\ge 0\) and
@@ -579,12 +580,12 @@ If \(\int_{\Omega}^{}X^{+}\odif{\mu}<\infty\) and \(\int_{\Omega}^{}X^{+}\odif{\
 \(\int_{\Omega}^{}|X|\odif{\mu}<\infty\), which gives us a helpful criterion
 for determining integrability.
 
-\item \emph{(Lebesgue integral of complex-valued function)} Lebesgue integral
-of a \emph{complex-valued} function can be constructed by handling its real and
-imaginary parts separately. For a complex-valued
-function \(X:\Omega\to\C\) that is \((\mathcal{F},\mathcal{B}(\C))\)-measurable
-(note that we have \(\mathcal{B}(\C)=\mathcal{B}(\R^2)\)), it is
-\defn{integrable} if \(\int_{\Omega}^{}|\re{X}|\odif{\mu}<\infty\) and
+\item \emph{(Lebesgue integral of complex-valued function)}
+Lebesgue integral of a \emph{complex-valued} function can be constructed by
+handling its real and imaginary parts separately. For a complex-valued function
+\(X:\Omega\to\C\) that is \((\mathcal{F},\mathcal{B}(\C))\)-measurable (note
+that we have \(\mathcal{B}(\C)=\mathcal{B}(\R^2)\)), it is \defn{integrable} if
+\(\int_{\Omega}^{}|\re{X}|\odif{\mu}<\infty\) and
 \(\int_{\Omega}^{}|\im{X}|\odif{\mu}<\infty\) where \(\re{X}\) and \(\im{X}\)
 denote the real and imaginary parts of \(X\) respectively. If it is integrable,
 then we define

@@ -1,3 +1,559 @@
 \section{Characteristic Functions}
 \label{sect:char-fun}
+\begin{enumerate}
+\item From \Cref{thm:dist-fn-char-dist}, we know that distribution can be
+characterized via the \emph{distribution function}. Here, we will study another
+kind of function that can also characterize distributions, known as the
+\emph{characteristic function} (cf). It serves as an alternative to the
+\emph{moment generating function} you have learnt before, with the critical
+advantage that it always exists, unlike the moment generating function. As we
+shall see in \Cref{subsect:clt}, the characteristic function is the basis for
+proving the famous \emph{central limit theorem}.  Before going through the
+proof, we need to lay some groundwork in \Cref{subsect:cf-def-prop} first.
+\end{enumerate}
+\subsection{Definition and Properties of Characteristic Function}
+\label{subsect:cf-def-prop}
+\begin{enumerate}
+\item \textbf{Definition.} The \defn{characteristic function} of \(\vect{X}\)
+is a complex-valued function \(\phi_{\vect{X}}:\R^{d}\to\C\) given by
+\(\phi_{\vect{X}}(\vect{t})=\expv{e^{i\vect{t}^{T}\vect{X}}}\) for all
+\(\vect{t}\in\R^{d}\).
 
+Comparing with the moment generating function \(M_{\vect{X}}(\vect{t})
+=\expv{e^{\vect{t}^{T}\vect{X}}}\), the cf has an additional ``\(i\)'' in the
+power. So, the cdf takes a similar ``form'' as the moment generating function,
+and as one may expect, also carries similar properties as the moment generating
+function.
+\item\label{it:cf-prop} \textbf{Properties of characteristic functions.}
+\begin{enumerate}
+\item \emph{(Explicit form of cfs)}
+\(\phi_{\vect{X}}(\vect{t})=\expv{\cos(\vect{t}^{T}\vect{X})}
++i\expv{\sin(\vect{t}^{T}\vect{X})}\) for all \(\vect{t}\in\R^{d}\).
+\item 
+\(\expv{\left|e^{i\vect{t}^{T}\vect{X}}\right|}=1\) for all
+\(\vect{t}\in\R^{d}\).
+\item \emph{(Existence)} The characteristic function
+\(\phi_{\vect{X}}(\vect{t})\) exists for all \(\vect{t}\in\R^{d}\).
+\item \emph{(Bounded)} \(|\phi_{\vect{X}}(\vect{t})|\le 1\) for all
+\(\vect{t}\in\R^{d}\).
+\item \(\phi_{\vect{X}}(\vect{0})=1\).
+\item\label{it:cf-unif-cts} \emph{(Uniform continuity)} The characteristic function
+\(\phi_{\vect{X}}\) is uniformly continuous.
+\item \emph{(Effect after linear operations)}
+We have \(\phi_{A\vect{x}+\vect{b}}(\vect{t})=e^{i\vect{t}^{T}\vect{b}}
+\phi_{\vect{X}}(A^{T}\vect{t})\) for all \(\vect{t}\in\R^{d}\).
+\item \emph{(Factorization under independence)} If \(X_1,\dotsc,X_d\) are
+independent, then \(\phi_{\vect{X}}(\vect{t})=\prod_{j=1}^{d}\phi_{X_j}(t_j)\)
+for all \(\vect{t}\in\R^{d}\), and particularly,
+\(\phi_{\sum_{j=1}^{d}X_j}(t)=\prod_{j=1}^{d}\phi_{X_j}(t)\) for all \(t\in\R\).
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item By the Euler's formula \(e^{ix}=\cos(x)+i\sin(x)~\forall x\in\R\) and
+the definition of expectation of complex-valued function (see
+\labelcref{it:leb-int-gen-def}), we have
+\(\phi_{\vect{X}}(\vect{t})=\expv{\cos(\vect{t}^{T}\vect{X})}
++i\expv{\sin(\vect{t}^{T}\vect{X})}\).
+
+\item By the definition of modulus, we have \(|a+ib|=\sqrt{a^{2}+b^{2}}\)
+for all \(a,b\in\R\). Hence, for all \(\vect{t}\in\R^{d}\),
+\begin{equation}
+\label{eq:abs-eitx-one}
+\left|e^{i\vect{t}^{T}\vect{X}}\right|=
+\cos(\vect{t}^{T}\vect{X})+i\sin(\vect{t}^{T}\vect{X})|
+=\sqrt{\cos^{2}(\vect{t}^{T}\vect{X})+\sin^{2}(\vect{t}^{T}\vect{X})}
+=1,
+\end{equation}
+and so the result follows.
+\item By (b) we have \(\expv{\left|e^{i\vect{t}^{T}\vect{X}}\right|}=1<\infty\)
+for all \(\vect{t}\in\R^{d}\).  Thus, \(e^{i\vect{t}^{T}\vect{X}}\) is
+integrable and hence \(\phi_{\vect{X}}(\vect{t})\) exists for all
+\(\vect{t}\in\R^{d}\).
+\item By triangle inequality, we have \(|\phi_{\vect{X}}(\vect{t})|
+=\left|\expv{e^{i\vect{t}^{T}\vect{X}}}\right|\overset{\text{(triangle)}}{\le}
+\expv{|e^{i\vect{t}^{T}\vect{X}}|}\overset{\text{(b)}}{=}1\) for all
+\(\vect{t}\in\R^{d}\).
+\item Note that \(\phi_{\vect{X}}(\vect{0})=\expv{e^{0}}=1\).
+\item Note first that
+\begin{align*}
+|\phi_{\vect{X}}(\vect{t}+\vect{h})-\phi_{\vect{X}}(\vect{t})|
+&=\left|\expv{e^{i(\vect{t}+\vect{h})^{T}\vect{X}}}-
+\expv{e^{i\vect{t}^{T}\vect{X}}}\right|
+=\left|\expv{e^{i\vect{t}^{T}\vect{X}}(e^{i\vect{h}^{T}\vect{X}}-1)}\right| \\
+\overset{\text{(triangle)}}&{\le}
+\expv{\left|e^{i\vect{t}^{T}\vect{X}}(e^{i\vect{h}^{T}\vect{X}}-1)\right|}
+\overset{\text{(\Cref{eq:abs-eitx-one})}}{=}
+\expv{\left|e^{i\vect{h}^{T}\vect{X}}-1\right|}.
+\end{align*}
+Now fix any sequence \(\{\vect{h}_n\}\tox{n}{} \vect{0}\). Since we have
+\(\{|e^{i\vect{h}_n^{T}\vect{x}}-1|\}\tox{n}{}0\) and
+\(|e^{i\vect{h}_n^{T}\vect{x}}-1|\overset{\text{(triangle)}}{\le}
+|e^{i\vect{h}_{n}^{T}\vect{x}}|+1\le 2\) for all \(n\in\N\), by DCT we conclude
+that \(\lim_{\vect{h}_n\to\vect{0}}\expv{|e^{i\vect{h}_n^{T}\vect{X}}-1|}=0\).
+As this holds for every sequence \(\{\vect{h}_n\}\tox{n}{} \vect{0}\),
+the characteristic function \(\phi_{\vect{X}}\) is uniformly continuous.
+\item For all \(\vect{t}\in\R^{d}\), we have
+\[\phi_{A\vect{X}+\vect{b}}(\vect{t})
+=\expv{e^{i\vect{t}^{T}(A\vect{X}+\vect{b})}}
+=e^{i\vect{t}^{T}\vect{b}}\expv{e^{i\vect{t}^{T}(A\vect{X})}}
+=e^{i\vect{t}^{T}\vect{b}}\expv{e^{i(\vc{A^{T}\vect{t}})^{T}\vect{X}}}
+=e^{i\vect{t}^{T}\vect{b}}\phi_{\vect{X}}(\vc{A^{T}\vect{t}}).\]
+\item Under the independence, we have
+\[
+\phi_{\vect{X}}(\vect{t})=\expv{e^{i\vect{t}^{T}\vect{X}}}
+=\expv{e^{i\sum_{j=1}^{d}t_jX_j}}
+=\expv{\prod_{j=1}^{d}e^{it_jX_j}}
+\overset{(\text{\Cref{prp:expv-prod-indp}})}{=}
+=\prod_{j=1}^{d}\expv{e^{it_jX_j}}
+=\prod_{j=1}^{d}\phi_{X_j}(t_{j})
+\]
+for all \(\vect{t}\in\R^{d}\). Particularly, for all \(t\in\R\) we have
+\(\phi_{\sum_{j=1}^{d}X_j}(t)=\expv{it\sum_{j=1}^{d}X_j}
+\overset{(\vect{t}=(t,\dotsc,t))}{=}
+\phi_{\vect{X}}(\vect{t})
+=\prod_{j=1}^{d}\phi_{X_j}(t)
+\).
+\end{enumerate}
+\end{pf}
+\item \textbf{L\'evy's continuity theorem.} An important result that relates
+the \emph{convergence in distribution} and the limit of characteristic functions
+is the \emph{L\'evy's continuity theorem}. It is a very powerful tool in many
+proofs involving characteristic functions, notably the \emph{central limit
+theorem}.
+
+\begin{theorem}[L\'evy's continuity theorem]
+\label{thm:levy-cont}
+\hfill
+\begin{enumerate}
+\item If \(\vect{X}_n\tod \vect{X}\), then 
+\(\lim_{n\to\infty}\phi_{\vect{X}_n}(\vect{t})
+=\phi_{\vect{X}}(\vect{t})\) for all \(\vect{t}\in\R^{d}\).
+\item If \(\lim_{n\to\infty}\phi_{\vect{X}_n}(\vect{t})\) exists for all
+\(\vect{t}\in\R^{d}\) and is continuous at \(\vect{0}\) (as a function of
+\(\vect{t}\)), then \(\vect{X}_n\tod\vect{X}\) where \(\vect{X}\) is a
+random vector having characteristic function \(\phi(\vect{t}):=
+\lim_{n\to\infty}\phi_{\vect{X}_n}(\vect{t})\).
+\end{enumerate}
+\end{theorem}
+\begin{pf}
+\begin{enumerate}
+\item Fix any \(\vect{t}\in\R^{d}\). Consider the function
+\(\vect{h}(\vect{x})=e^{i\vect{t}^{T}\vect{x}}\). By \Cref{eq:abs-eitx-one}, we
+know that \(\vect{h}\) is bounded. Also, note that \(\vect{h}\) is
+continuous, as a composition of continuous functions. Hence, by the Portmanteau
+theorem, we have \(\lim_{n\to\infty}\phi_{\vect{X}_n}(\vect{t})
+=\lim_{n\to\infty}\expv{h(\vect{X}_n)}
+=\expv{h(\vect{X})}=\phi_{\vect{X}}(\vect{t})\).
+\item Omitted.
+\end{enumerate}
+\end{pf}
+\item \textbf{Cram\'er-Wold device.} Based on the characteristic function, we
+can establish the following result about the convergence in
+distribution of linear combinations.
+
+\begin{theorem}[Cram\'er-Wold device]
+\label{thm:cramer-wold}
+Let \(\vect{X},\vect{X}_1,\vect{X}_2,\dotsc\) be random vectors. We have
+\(\vect{X}_n\tod\vect{X}\) iff
+\(\vect{a}^{T}\vect{X}_n\tod\vect{a}^{T}\vect{X}\) for all
+\(\vect{a}\in\R^{d}\).
+\end{theorem}
+\begin{pf}
+``\(\Rightarrow\)'': It follows by applying the CMT with \(\vect{h}(\vect{x})=\vect{a}^{T}\vect{x}\).
+
+``\(\Leftarrow\)'': For all \(\vect{t}\in\R^{d}\), we have
+\[
+\phi_{\vect{X}_n}(\vect{t})=\expv{e^{i(1)\vc{\vect{t}^{T}\vect{X}_n}}}
+=\phi_{\vc{\vect{t}^{T}\vect{X}_n}}(1)
+\tox{n}{\text{(\Cref{thm:levy-cont}, assumption)}}
+\phi_{\vect{t}^{T}\vect{X}}(1)=\phi_{\vect{X}}(\vect{t}).
+\]
+Since \(\phi_{\vect{X}}\) is continuous at \(\vect{0}\) by
+\labelcref{it:cf-unif-cts}, applying \Cref{thm:levy-cont} again gives
+\(\vect{X}_n\tod \vect{X}\).
+\end{pf}
+
+In particular, \Cref{thm:cramer-wold} establishes the following helper result
+for dealing with equality in distribution.
+\begin{corollary}
+\label{cor:equal-in-dist-lin-comb}
+Let \(\vect{X}\) and \(\vect{Y}\) be random vectors. Then, \(\vect{X}\eqd
+\vect{Y}\) iff \(\vect{a}^{T}\vect{X}\eqd \vect{a}^{T}\vect{Y}\).
+\end{corollary}
+\begin{pf}
+``\(\Rightarrow\)'': Assume \(\vect{X}\eqd\vect{Y}\). Taking
+\(\vect{X}_n=\vect{X}\eqd \vect{Y}\) for every \(n\in\N\), we have
+\(\vect{X}_n\tod\vect{X}\) and \(\vect{X}_n\tod\vect{Y}\). Hence,
+applying \Cref{thm:cramer-wold} twice yields \(\vect{a}^{T}\vect{X}_n\tod
+\vect{a}^{T}\vect{X}\) and \(\vect{a}^{T}\vect{X}_n\tod\vect{a}^{T}\vect{Y}\)
+for all \(\vect{a}\in\R^{d}\). Due to the uniqueness of limiting
+distribution (\labelcref{it:conv-dist-lim-dist-unique}), we must then have
+\(\vect{a}^{T}\vect{X}\eqd \vect{a}^{T}\vect{Y}\) for all \(\vect{a}\in\R^{d}\).
+
+``\(\Leftarrow\)'': The idea is similar. Fix any \(\vect{a}\in\R^{d}\) and assume
+\(\vect{a}^{T}\vect{X}\eqd\vect{a}^{T}\vect{Y}\). Taking
+\(\vect{X}_n=\vect{X}\)
+for every \(n\in\N\), we have
+\(\vect{a}^{T}\vect{X}_n\tod \vect{a}^{T}\vect{X}\)
+and \(\vect{a}^{T}\vect{X}_n\tod \vect{a}^{T}\vect{Y}\). Hence,
+applying \Cref{thm:cramer-wold} twice yields \(\vect{X}_n\tod
+\vect{X}\) and \(\vect{X}_n\tod\vect{Y}\)
+for all \(\vect{a}\in\R^{d}\). Due to the uniqueness of limiting distribution
+(\labelcref{it:conv-dist-lim-dist-unique}), we must then have
+\(\vect{X}\eqd \vect{Y}\) for all
+\(\vect{a}\in\R^{d}\).
+\end{pf}
+\item \textbf{Characterizing distribution by characteristic function.}
+As mentioned at the beginning of \Cref{sect:char-fun}, distribution can be
+characterized by the characteristic function. This is justified by the
+following result.
+\begin{theorem}
+\label{thm:cf-char-dist}
+We have \(\phi_{\vect{X}}(\vect{t})=\phi_{\vect{Y}}(\vect{t})\) for all
+\(\vect{t}\in\R^{d}\) iff \(\vect{X}\eqd \vect{Y}\).
+\end{theorem}
+\begin{pf} (Idea only)
+Quite a lot of analytical arguments (mostly dealing with integrals) are needed
+in the proof, so we shall only give a rough proof idea here, without covering
+the technical analytic details.
+
+For ``\(\Leftarrow\)'', it just follows by definition. So the only hard part is
+to prove ``\(\Rightarrow\)''. The key idea is to derive an \emph{inversion
+formula} for \(d=1\), i.e., a formula that expresses the \emph{distribution
+function} in terms of the \emph{characteristic function}, which is the other
+way round as the usual expression of characteristic function as an expectation,
+which can in turn be expressed in terms of distribution function.
+Here, we skip all the technical details in the derivation, and it turns
+out that the inversion formula is given by
+\begin{equation}
+\label{eq:char-fn-invers-fmla}
+F(b)-F(a)+\frac{\prob{X=a}}{2}-\frac{\prob{X=b}}{2}
+=\lim_{T\to\infty}\frac{1}{2\pi}\int_{-T}^{T}
+\frac{e^{-ita}-e^{-itb}}{it}\phi_{X}(t)\odif{t}.
+\end{equation}
+This establishes the ``\(\Rightarrow\)'' direction for \(d=1\). For the case
+with \(d>1\), the ``\(\Rightarrow\)'' direction follows by noting that
+\[
+\phi_{\vect{a}^{T}\vect{X}}(t)=\expv{e^{it\vect{a}^{T}\vect{X}}}
+=\expv{e^{i(\vc{t\vect{a}})^{T}\vect{X}}}
+=\phi_{\vect{X}}(\vc{t\vect{a}})\overset{(\vect{X}\eqd \vect{Y})}{=}
+\phi_{\vect{Y}}(t\vect{a})=\phi_{\vect{a}^{T}\vect{Y}}(t)
+\]
+for all \(t\in\R\) and \(\vect{a}\in\R^{d}\), which implies by the established
+\(d=1\) case that \(\vect{a}^{T}\vect{X}\eqd \vect{a}^{T}\vect{Y}\). Therefore,
+by \Cref{cor:equal-in-dist-lin-comb} we have \(\vect{X}\eqd \vect{Y}\).
+\end{pf}
+
+Using \Cref{thm:cf-char-dist}, we can derive the following criteria about the
+realness of characteristic function.
+
+\begin{corollary}
+\label{cor:char-fn-real-crit}
+Let \(\phi_{\vect{X}}\) be a characteristic function. The following are
+equivalent.
+\begin{enumerate}
+\item \(\phi_{\vect{X}}\) is real (i.e., \(\phi_{\vect{X}}(\vect{t})\in\R\) for
+all \(\vect{t}\in\R^{d}\)).
+\item \(\phi_{\vect{X}}(\vect{t})=\phi_{-\vect{X}}(\vect{t})\) for all
+\(\vect{t}\in\R^{d}\).
+\item \(\vect{X}\eqd -\vect{X}\).
+\end{enumerate}
+\end{corollary}
+\begin{pf}
+\begin{itemize}
+\item \(\text{(a) \(\iff\) (b)}\): Note that \(\phi_{\vect{X}}\) is real iff
+for all \(\vect{t}\in\R^{d}\),
+\begin{align*}
+\phi_{\vect{X}}(\vect{t})&=
+\underbrace{\overline{\phi_{\vect{X}}(\vect{t})}}
+_{\mathclap{\text{complex conjugate}}}
+=\expv{\cos(\vect{t}^{T}\vect{X})}-i\expv{\sin(\vect{t}^{T}\vect{X})}
+\underset{(\sin(-x)=-\sin(x))}{\overset{(\cos(-x)=x)}{=}}
+\expv{\cos((-\vect{t})^{T}\vect{X})}+i\expv{\sin((-\vect{t})^{T}\vect{X})} \\
+&=\phi_{\vect{X}}(-\vect{t})=\expv{e^{i(-\vect{t})^{T}\vect{X}}}
+=\expv{e^{i\vect{t}^{T}(\vc{-\vect{X}})}}=\phi_{-\vect{X}}(\vect{t}).
+\end{align*}
+\item \(\text{(b) \(\iff\) (c)}\): It follows from \Cref{thm:cf-char-dist}.
+\end{itemize}
+\end{pf}
+\item \textbf{Properties of multivariate normal
+distribution.} \Cref{thm:cf-char-dist} is also helpful for establishing
+numerous properties of multivariate normal distribution. We start with the
+following result that provides a characterization of multivariate normal
+distribution.
+
+\begin{proposition}
+\label{prp:mult-norm-char}
+We have \(\vect{X}\sim\ndistd{\vect{\mu},\Sigma}\) iff
+\(\vect{a}^{T}\vect{X}\sim
+\ndist{\vect{a}^{T}\vect{\mu},\vect{a}^{T}\Sigma\vect{a}}\) for all
+\(\vect{a}\in\R^{d}\).
+\end{proposition}
+\begin{pf}
+``\(\Rightarrow\)'': Here we will use the fact that the characteristic function
+of \(\vect{X}\sim\ndistd{\vect{\mu},\Sigma}\) is given by
+\(\phi_{\vect{X}}(\vect{t})
+=e^{i\vect{t}^{T}\vect{\mu}-\frac{1}{2}\vect{t}^{T}\Sigma \vect{t}}\) for all
+\(\vect{t}\in\R^{d}\).
+
+Assume that \(\vect{X}\sim\ndistd{\vect{\mu},\Sigma}\), and fix any
+\(\vect{a}\in\R^{d}\). Then, we have
+\[
+\phi_{\vect{a}^{T}\vect{X}}(t)=\expv{e^{i(t\vect{a})^{T}\vect{X}}}
+=\phi_{\vect{X}}(\vc{t\vect{a}})
+=
+e^{i(\vc{t\vect{a}})^{T}\vect{\mu}
+-\frac{1}{2}(\vc{t\vect{a}})^{T}\Sigma(\vc{t\vect{a}})}
+=e^{it(\orc{\vect{a}^{T}\vect{\mu}})
+-\frac{1}{2}t^{2}(\mgc{\vect{a}^{T}\Sigma\vect{a}})}
+\]
+for all \(t\in\R\). Therefore, by \Cref{thm:cf-char-dist}, we have
+\(\vect{a}^{T}\vect{X}\sim\ndist{\vect{a}^{T}\vect{\mu}
+,\vect{a}^{T}\Sigma\vect{a}}\).
+
+``\(\Leftarrow\)'': Assume \(\vect{a}^{T}\vect{X}
+\sim\ndist{\vect{a}^{T}\vect{\mu},\vect{a}^{T}\Sigma\vect{a}}\) for all
+\(\vect{a}\in\R^{d}\). Let \(\vect{Y}\sim\ndistd{\vect{\mu},\Sigma}\), and fix
+any \(\vect{a}\in\R^{d}\). By the ``\(\Rightarrow\)'' direction, we have
+\(\vect{a}^{T}\vect{Y}\sim\ndist{\vect{a}^{T}\vect{\mu}
+,\vect{a}^{T}\Sigma\vect{a}}\), which means that
+\(\vect{a}^{T}\vect{Y}\eqd\vect{a}^{T}\vect{X}\). Hence, by
+\Cref{cor:equal-in-dist-lin-comb}, we have \(\vect{X}\eqd\vect{Y}\), implying
+that \(\vect{X}\sim\ndistd{\vect{\mu},\Sigma}\).
+\end{pf}
+
+\Cref{prp:mult-norm-char} leads to many properties of normal distribution,
+suggested by the following result.
+\begin{corollary}
+\label{cor:norm-prop}
+Let \(\vect{X}\sim\ndistd{\vect{\mu},\Sigma}\).
+\begin{enumerate}
+\item \emph{(Marginal normality of multivariate normal distribution)} We have
+\(X_j\sim\ndist{\mu_j, \Sigma_{jj}}\) for all \(j=1,\dotsc,d\).
+\item \emph{(Distribution of sum of normal random variables)} We have
+\(X_1+\dotsb+X_d\sim\ndist{\sum_{j=1}^{d}\mu_{j},
+\sum_{i=1}^{d}\sum_{j=1}^{d}\Sigma_{ij}}\). Particularly, if \(X_1,\dotsc,X_d\)
+are pairwise uncorrelated, then
+\(X_1+\dotsb+X_d\sim\ndist{\sum_{j=1}^{d}\mu_{j},
+\sum_{j=1}^{d}\Sigma_{jj}}
+\).
+\item \emph{(Distribution of mean of normal random variables)} We have
+\[
+\frac{X_1+\dotsb+X_d}{d}\sim\ndist{
+\frac{1}{d}\sum_{j=1}^{d}\mu_{j},
+\frac{1}{d^{2}}\sum_{i=1}^{d}\sum_{j=1}^{d}\Sigma_{ij}}.
+\]
+Particularly, if \(X_1,\dotsc,X_d\) are pairwise uncorrelated, then
+\[
+\frac{X_1+\dotsb+X_d}{d}\sim
+\ndist{\frac{1}{d}\sum_{j=1}^{d}\mu_{j}, 
+\frac{1}{d^{2}}\sum_{j=1}^{d}\Sigma_{jj}}.
+\]
+\end{enumerate}
+\end{corollary}
+\begin{pf}
+\begin{enumerate}
+\item Use the ``\(\Rightarrow\)'' direction of \Cref{prp:mult-norm-char} with
+\(\vect{a}=\vect{e}_j\) for every \(j=1,\dotsc,d\).
+\item Use the ``\(\Rightarrow\)'' direction of \Cref{prp:mult-norm-char} with
+\(\vect{a}=(1,\dotsc,1)\).
+\item Use the ``\(\Rightarrow\)'' direction of \Cref{prp:mult-norm-char} with
+\(\vect{a}=(1/d,\dotsc,1/d)\).
+\end{enumerate}
+\end{pf}
+\end{enumerate}
+\subsection{Central Limit Theorem}
+\label{subsect:clt}
+\begin{enumerate}
+\item \textbf{Preliminary analytical results.} To prove the central limit
+theorem, two more preliminary analytical results are needed, as follows.
+\begin{lemma}
+\label{lma:conv-expo}
+If \(\lim_{n\to\infty}a_n=a\), then \(\lim_{n\to\infty}(1+a_n/n)^{n}=e^{a}\).
+\end{lemma}
+\begin{warning}
+In general, \(\{f_n\}\tox{n}{}f\) and \(\{a_n\}\tox{n}{}a\) do \emph{not} imply
+that \(\{f_n(a_n)\}\tox{n}{}f(a)\). For example, take \(f_n(x)=x^{n}\) and
+\(a_n=1-1/n\) for each \(n\in\N\). Then, we have \(\{f_n\}\tox{n}{}f\) with
+\(f(x)=\indicset{x=1}\) and \(\{a_n\}\tox{n}{}a=1\), while \(\{f_n(a_n)\}
+=\{(1-1/n)^{n}\}\tox{n}{}e^{-1}\ne 1=f(a)\).
+\end{warning}
+
+\begin{pf}
+By Taylor series expansion, we have \(\ln(1+x)=-\sum_{k=1}^{\infty}(-x)^{k}/k\)
+for all \(-1<x<1\). Hence, for all \(-1/2<x<1/2\) we have
+\begin{align*}
+|\ln (1+x)-x|&=\left|\sum_{k=2}^{\infty}\frac{(-x)^{k}}{k}\right|
+\overset{\text{(triangle)}}{\le}
+x^{2}\sum_{k=2}^{\infty}\frac{|x|^{k-2}}{k}
+\overset{(j=k-2)}{=}x^{2}\sum_{j=0}^{\infty}\frac{|x|^{j}}{j+2} \\
+&\le \frac{x^{2}}{2}\sum_{j=0}^{\infty}|x|^{j}
+\overset{(|x|\le 1/2)}{\le}
+\frac{x^{2}}{2}\sum_{k=0}^{\infty}(1/2)^{k}=x^{2}.
+\end{align*}
+Next, since \(\lim_{n\to\infty}a_n=a\), we have \(\lim_{n\to\infty}a_n/n
+=(\lim_{n\to\infty}a_n)(\lim_{n\to\infty}1/n)=a\cdot 0=0\), by setting
+\(\varepsilon=1/2\), we know there exists \(n_0\in\N\) such that
+\(|a_n/n|<1/2\) for all \(n\ge n_{0}\). Also, since \(\{a_n\}\) is convergent,
+it is bounded and we can write \(|a_n|\le M\) for all \(n\in\N\), for some
+\(M>0\).
+
+Therefore, for all \(n\ge n_{0}\), we have
+\[
+\left|n\ln\left(1+\frac{a_n}{n}\right)-a_n\right|
+=n\left|\ln\left(1+\vc{\frac{a_n}{n}}\right)-\vc{\frac{a_n}{n}}\right|
+\overset{(|a_n/n|<1/2)}{=}
+n\left(\frac{a_n}{n}\right)^{2}
+\le \frac{M^{2}}{n}.
+\]
+This implies that
+\[
+0\le
+\lim_{n\to\infty}\left|n\ln\left(1+\frac{a_n}{n}\right)-a\right|
+\overset{\text{(triangle)}}{\le}
+\lim_{n\to\infty}\left|n\ln\left(1+\frac{a_n}{n}\right)-a_n\right|
++\lim_{n\to\infty}|a_n-a|
+\le\lim_{n\to\infty}\frac{M^{2}}{n}+0
+=0,
+\]
+and so \(\lim_{n\to\infty}\ln(1+a_n/n)^{n}=
+\lim_{n\to\infty}n\ln(1+a_n/n)=a\). Since the exponential
+function is continuous, we get \(\lim_{n\to\infty}(1+a_n/n)^{n}=e^{a}\).
+\end{pf}
+
+\begin{lemma}
+\label{lma:expansion-cf-zero}
+If \(\expv{|X|^{m}}<\infty\) for some \(m\in\N\), then \(\phi_{X}(t)
+=\sum_{k=0}^{m}\expv{X^{k}}(it)^{k}/k!+o(|t|^{m})\),
+where we have \defn{\(h=o(g)\)} if \(\lim_{t\to 0}|h(t)|/g(t)=0\).
+\end{lemma}
+\begin{pf}
+Omitted.
+\end{pf}
+\item \textbf{Central limit theorem.} We can now prove the central limit
+theorem (CLT) as follows.
+\begin{theorem}[Central limit theorem]
+\label{thm:clt}
+If \(\{X_n\}\) is a sequence of iid random variables with \(\mu=\expv{X_1}\in\R\)
+and \(0<\sigma^{2}=\vari{X_1}<\infty\), then
+\[\sqrt{n}\frac{\bar{X}_n-\mu}{\sigma}\tod\ndist{0,1},\]
+where \(\bar{X}_n=(\sum_{i=1}^{n}X_i)/n\).
+\end{theorem}
+\begin{pf}
+Let \(Z_k=(X_k-\mu)/\sigma\) for every \(k\in\N\). Then, it suffices to show that
+\(\sqrt{n}\bar{Z}_n\tod\ndist{0,1}\), where \(\bar{Z}_n=(Z_1+\dotsb+Z_n)/n\).
+Fix any \(t\in\R\), and consider
+\begin{align*}
+\phi_{\sqrt{n}\bar{Z}_n}(t)&=\expv{e^{i(t/\sqrt{n})\sum_{k=1}^{n}Z_k}}
+\overset{(\text{\Cref{prp:expv-prod-indp}})}{=}
+\prod_{k=1}^{n}\expv{e^{i(\vc{t/\sqrt{n}})Z_k}}
+\overset{\text{(identically distributed)}}{=}
+\phi_{Z_1}(\vc{t/\sqrt{n}})^{n} \\
+\overset{\text{(\Cref{lma:expansion-cf-zero}, \(m=2\))}}&{=}
+\left(1+i\vc{\frac{t}{\sqrt{n}}}\expv{Z_1}
+-\frac{t^{2}/n}{2}\expv{Z_1}^{2}+o(t^{2}/n)\right)^{n}
+\underset{(\expv{Z_1^{2}}=1)}{\overset{(\expv{Z_1}=0)}{=}}
+\left(1-\frac{t^{2}/2-o(t^{2}/n)/(1/n)}{n}\right)^{n} \\
+&=\left(1-\frac{\orc{t^{2}/2-t^{2}o(1/n)/(1/n)}}{n}\right)^{n}.
+\end{align*}
+Since \(\lim_{n\to\infty}\orc{t^{2}/2-t^{2}o(1/n)/(1/n)}
+=t^{2}/2-t^{2}(0)=t^{2}/2\), by \Cref{lma:conv-expo} we have
+\(\lim_{n\to\infty}\phi_{\sqrt{n}\bar{Z}_n}(t)=e^{-t^{2}/2}\). Therefore,
+\Cref{thm:levy-cont} gives \(\sqrt{n}\bar{Z}_n\tod Z\) where the characteristic
+function of \(Z\) is \(\phi_{Z}(t)=e^{-t^{2}/2}\), which is the one for
+\(\ndist{0,1}\). Hence, by \Cref{thm:cf-char-dist} we know
+\(Z\sim\ndist{0,1}\).
+\end{pf}
+
+\begin{remark}
+\item \emph{(Sample sum form)} The form of CLT is expressed in terms of
+\emph{sample mean}. By multiplying both the numerator and denominator by \(n\),
+we can get the \emph{sample sum} form:
+t\((\sum_{i=1}^{n}X_i-n\mu)/(\sqrt{n}\sigma)\tod \ndist{0,1}\).
+\item \emph{(Role of the factor \(\sqrt{n}\))} Intuitively, the factor
+\(\sqrt{n}\) multiplied to the expression serves for ``amplifying'' the
+difference between sample mean and the true mean, adjusted by \(\sigma\):
+\((\bar{X}_n-\mu)/\sigma\), so that its limiting distribution does not just
+``vanish''; note that we have \((\bar{X}_n-\mu)/\sigma\toas 0\) by the SLLN.
+\item \emph{(Practical usage of CLT)} In practice, with a large \(n\), we know
+that \(\bar{X}_n\apxsim\ndist{\mu,\sigma^{2}/n}\) and
+\(\sum_{i=1}^{n}X_i\apxsim\ndist{n\mu,n\sigma^{2}}\), as long as
+\(X_1,\dotsc,X_n\) are iid with finite mean and variance (not necessarily
+normally distributed themselves). However, there is not a clear mathematical
+meaning of ``\(\apxsim\)'' and formally we still need to interpret these based
+on the convergence in distribution.
+
+Here, we also note that ``\(\apxsim\)'' would become ``\(\sim\)'' (exactly)
+if \(X_1,\dotsc,X_n\) are also normally distributed, by \Cref{cor:norm-prop}.
+\end{remark}
+\item \textbf{Extensions to CLT.} The result in \Cref{thm:clt} is sometimes
+known as the \emph{classical} CLT since there are indeed numerous extensions to
+the result, including the following:
+\begin{enumerate}
+\item\label{it:mult-clt} \emph{(Multivariate CLT)}
+If \(\{\vect{X}_n\}\) is a sequence of iid random vectors with mean vector
+\(\vect{\mu}=(\expv{X_{11}},\dotsc,\expv{X_{1d})}\in\R^{d}\)
+and covariance matrix \(\Sigma\in\R^{d\times d}\), whose \((i,j)\)th entry
+is \(\Sigma_{ij}=\cov{X_{1i},X_{1j}}\), then
+\[
+\sqrt{n}(\bar{\vect{X}}_n-\vect{\mu})\tod \ndistd{\vect{0},\Sigma}.
+\]
+\item\label{it:lindeberg-feller-clt} \emph{(Lindeberg-Feller CLT)} Let \(\{X_n\}\)
+be a sequence of independent random variables, where the mean of variance of
+\(X_n\) are \(\mu_n=\expv{X_n}\in\R\) and \(\sigma_n^{2}=\vari{X_n}<\infty\)
+respectively for each \(n\in\N\). Let
+\(s_n^{2}=\vari{\sum_{k=1}^{n}X_k}=\sum_{k=1}^{n}\sigma_{k}^{2}\). If the
+\defn{Lindeberg condition}
+\[
+\lim_{n\to\infty}\frac{1}{s_{n}^{2}}\sum_{k=1}^{n}\expv{(X_{k}-\mu_{k})^{2}
+\indicset{\frac{|X_k-\mu_{k}|}{s_n}>\varepsilon}}
+=0\quad\text{for all \(\varepsilon>0\)}
+\]
+holds, then
+\[
+\frac{\sum_{k=1}^{n}(X_{k}-\mu_{k})}{s_n}\tod \ndist{0,1}.
+\]
+Furthermore, the Lindeberg condition holds if the \defn{Lyapunov condition}
+\[
+\lim_{n\to\infty}\frac{1}{s_n^{2+\delta}}
+\sum_{k=1}^{n}\expv{|X_k-\mu_{k}|^{2+\delta}}=0
+\quad\text{for some \(\delta>0\)}
+\]
+holds.
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item Fix any \(\vect{a}\in\R^{d}\). Consider first the case where
+\(\vect{a}^{T}\Sigma\vect{a}=0\), which means that
+\(\vari{\vect{a}^{T}\vect{X}_n}=\vect{a}^{T}\Sigma\vect{a}=0\) for each
+\(n\in\N\). Then, we know that \(\vect{a}^{T}\vect{X}_n\eqas
+\vect{a}^{T}\vect{\mu}~\forall n\in\N\) by \labelcref{it:var-cov-corr-prop}.
+Therefore, we have \(\vect{a}^{T}(\sqrt{n}(\bar{\vect{X}}_n-\vect{\mu})) \tod
+\ndist{0,\vect{a}^{T}\Sigma\vect{a}}\), where \(\ndist{0,0}\) refers to the
+distribution of a random variable taking the value \(0\) always.
+
+Next, consider the case where \(\vect{a}^{T}\SIgma\vect{a}>0\).
+By \Cref{prp:mult-norm-char} we have
+\(\vect{a}^{T}\vect{X}_n\sim
+\ndist{\vect{a}^{T}\vect{\mu},\vect{a}^{T}\Sigma\vect{a}}\)
+for all \(n\in\N\). Since \(\{\vect{a}^{T}\vect{X}_n\}\) forms
+a sequence of iid random variables with finite mean \(\vect{a}^{T}\vect{\mu}\)
+and variance \(\vect{a}^{T}\Sigma\vect{a}\), by the classical CLT
+(\Cref{thm:clt}) we have
+\[
+\sqrt{n}\frac{(\sum_{k=1}^{n}\vect{a}^{T}\vect{X}_k)/n
+-\vect{a}^{T}\vect{\mu}}{\sqrt{\vect{a}^{T}\Sigma\vect{a}}}
+=\sqrt{n}\frac{\vect{a}^{T}(\bar{\vect{X}}_n-\vect{\mu})}
+{\sqrt{\vect{a}^{T}\Sigma\vect{a}}}
+\tod\ndist{0,1}.
+\]
+This implies that \(\vect{a}^{T}(\sqrt{n}(\bar{\vect{X}}_n-\vect{\mu}))
+\tod \vc{\ndist{0,\vect{a}^{T}\Sigma\vect{a}}}\), by the CMT. Now, let
+\(\vect{X}\sim\ndistd{\vect{0},\Sigma}\). Noting that \(\vect{a}^{T}\vect{X}
+\sim\vc{\ndist{0,\vect{a}^{T}\Sigma\vect{a}}}\), by \Cref{thm:cramer-wold} we
+conclude that
+\(\sqrt{n}(\bar{\vect{X}}_n-\vect{\mu})\tod\ndistd{\vect{0},\Sigma}\).
+\item Omitted.
+\end{enumerate}
+\end{pf}
+\end{enumerate}

@@ -173,7 +173,8 @@ n}\|\vect{X}_k-\vect{X}\| >\varepsilon}~\forall \varepsilon>0\), forcing that
 \varepsilon>0\). Therefore, \(\vect{X}_n\topr\vect{X}\).
 \item Note that \(\vect{X}_n\topr\vect{X}\implies \|\vect{X}_n-\vect{X}\|\topr
 0\).  Also, by the monotonicity of \(\{\vect{X}_n\}\) we have \(\sup_{k\ge
-n}\|\vect{X}_k-\vect{X}\| =\|\vect{X}_n-\vect{X}\|\topr 0\). TODO: why? Hence,
+n}\|\vect{X}_k-\vect{X}\|\eqas\|\vect{X}_n-\vect{X}\|\topr 0\). This implies
+that \(\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|\topr 0\), and hence
 by \Cref{thm:as-conv-char-ip} we have \(\vect{X}_n\toas\vect{X}\).
 \end{enumerate}
 \end{pf}
@@ -406,9 +407,9 @@ well-defined.
 
 \begin{note}
 By taking \(h(x)=x\), the inequality reduces to \(\prob{|X|\ge
-x}\le\expv{|X|}/x\), which is known as the \emph{Markov's inequality}. Also,
-taking \(h(x)=x^2\) gives \(\prob{|X|\ge x}\le\expv{X^2}/x^2\), which is known
-as the \emph{Chebyshev's inequality}.
+x}\le\expv{|X|}/x~\forall x>0\), which is known as the \defn{Markov's inequality}. Also,
+taking \(h(x)=x^2\) gives \(\prob{|X|\ge x}\le\expv{X^2}/x^2~\forall x>0\), which is known
+as the \defn{Chebyshev's inequality}.
 \end{note}
 \begin{proposition}
 \label{prp:conv-lp-prop}
@@ -482,15 +483,18 @@ distribution (or weakly)}, denoted by \(\vect{X}_n\tod\vect{X}\), if
 C(F):=\{\vect{x}\in\R^d:F\text{ is continuous at \(\vect{x}\)}\}\), which is
 the set of all continuity points of \(F\).
 
-\begin{remark}
-\item Since \(F\) is increasing, there are at most countably many
-discontinuities (jumps), so \(C(F)^{c}\) is countable, and hence a Lebesgue
-null set. Therefore, with \(\vect{X}_n\tod\vect{X}\), we have
+\begin{note}
+Since \(F\) is increasing, there are at most countably many discontinuities
+(jumps), so \(C(F)^{c}\) is countable, and hence a Lebesgue null set.
+Therefore, with \(\vect{X}_n\tod\vect{X}\), we have
 \(\lim_{n\to\infty}F_n(\vect{x})=F(\vect{x)}\) a.e. (wrt Lebesgue measure
 \(\lambda\)).
-\item \emph{(uniqueness of limiting distribution)} The limiting distribution
-\(F\) is indeed unique. To see this, consider the following.
+\end{note}
+\item\label{it:conv-dist-lim-dist-unique} \textbf{Uniqueness of limiting
+distribution.} The limiting distribution function \(F\) appearing in the
+definition of convergence in distribution is indeed unique.
 
+\begin{pf}
 Suppose \(\lim_{n\to\infty}F_n(\vect{x})=F(\vect{x})~\forall \vect{x}\in C(F)\) and
 \(\lim_{n\to\infty}F_n(\vect{x})=\widetilde{F}(\vect{x})~\forall \vect{x}\in
 C(\widetilde{F})\). Then, we have
@@ -509,7 +513,7 @@ have \(F(\vect{x})
 =\widetilde{F}(\vect{x})
 \) where we can avoid choosing \(\vect{z}\)'s from \(N\) since \(N\) is countable.
 This establishes the uniqueness.
-\end{remark}
+\end{pf}
 \item \textbf{Portmanteau theorem.} To work with convergence in distribution,
 we often rely on the \emph{Portmanteau theorem}, which provides us a
 characterization of convergence in distribution.
@@ -892,7 +896,7 @@ I}\expv{|X_i|\indic_{A}}\le a\prob{A}+\sup_{i\in
 I}\expv{|X_i|\indicset{|X_i|>a}}~\forall a\in (0,\infty)\).
 
 Taking \(A=\Omega\) gives (a). Next, fix any \(\varepsilon>0\).
-By the uniform integrability we have
+By the uniform integrability we have \\
 \(\lim_{a\to\infty}\sup_{i\in I}\expv{|X_i|\indicset{|X_i|>a}}=0\), so there
 exists sufficiently large \(a\) such that \(\sup_{i\in
 I}\expv{|X_i|\indicset{|X_i|>a}}<\varepsilon/2\). We then choose
@@ -968,54 +972,52 @@ Note that \(|X_n-X|^{p}\le (|X_n|+|X|)^{p}
 2^p(|X_n|^{p}+|X|^{p})\). Fix any \(\varepsilon>0\). Then we have
 \begin{align*}
 \expv{|X_n-X|^{p}}
-&=\expv{|X_n-X|^{p}\indicset{|X_n-X|\le\varepsilon^{1/p}}}
-+\expv{|X_n-X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}} \\
-&\le \expv{(\varepsilon^{1/p})^{p}\indicset{|X_n-X|\le\varepsilon^{1/p}}}
-+\expv{2^p(|X_n|^{p}+|X|^{p})\indicset{|X_n-X|>\varepsilon^{1/p}}} \\
+&=\expv{|X_n-X|^{p}\indicset{|X_n-X|\le\varepsilon}}
++\expv{|X_n-X|^{p}\indicset{|X_n-X|>\varepsilon}} \\
+&\le \expv{(\varepsilon)^{p}\indicset{|X_n-X|\le\varepsilon}}
++\expv{2^p(|X_n|^{p}+|X|^{p})\indicset{|X_n-X|>\varepsilon}} \\
 &\le \varepsilon\cdot 1
-+2^{p}\vc{\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}
-+2^{p}\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}.
++2^{p}\vc{\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon}}}
++2^{p}\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon}}}.
 \end{align*}
 
 \textbf{Completing the proof by getting bounds in terms of \(\varepsilon\).}
 Since \(X\in L^p\), we have \(|X|^{p}\in L^1\) and hence by
 \Cref{lma:int-over-set-go-to-zero-prob} we have
-\(\lim_{n\to\infty}\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}=0\),
-because \(\lim_{n\to\infty}\prob{|X_n-X|>\varepsilon^{1/p}}=0\) by the
+\(\lim_{n\to\infty}\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon}}}=0\),
+because \(\lim_{n\to\infty}\prob{|X_n-X|>\varepsilon}=0\) by the
 assumption that \(X_n\topr X\). Thus, there exists \(n_{\varepsilon}\in\N\)
-such that \(\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon^{1/p}}}}<\varepsilon/2^p\)
-for all \(n\ge n_{\varepsilon}\).
+such that
+\(\orc{\expv{|X|^{p}\indicset{|X_n-X|>\varepsilon}}}<\varepsilon\) for all
+\(n\ge n_{\varepsilon}\).
 
 Also, since \(\{|X_n|^{p}\}\) is uniformly integrable, by \Cref{thm:ui-char}
-there exists \(\delta>0\) such that
-\(\sup_{n\in\N}\vc{\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon}}}<\varepsilon\)
-whenever \(\prob{|X_n-X|>\varepsilon}<\delta\). TODO: why the ``\(A\)'' here
-can depend on \(n\)?
-
-Now, by the assumption
-that \(X_n\topr X\), we know there exists \(\widetilde{n}_{\varepsilon}\in\N\)
-such that \(\prob{|X_n-X|>\varepsilon}<\delta\), which implies
-\(\sup_{n\in\N}\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon}}<\varepsilon/2^p\),
-for all \(n\ge\widetilde{n}_{\varepsilon}\). TODO: that supremum does not
-depend on \(n\)...
+there exists \(\delta>0\) such that \\
+\(\sup_{i\in\N}\vc{\expv{|X_i|^{p}\indicset{|X_n-X|>\varepsilon}}}<\varepsilon\)
+whenever \(\prob{|X_n-X|>\varepsilon}<\delta\). Now, by the assumption that
+\(X_n\topr X\), we know there exists \(\widetilde{n}_{\varepsilon}\in\N\) such
+that \(\prob{|X_n-X|>\varepsilon}<\delta\), which implies that
+\[\vc{\expv{|X_n|^{p}\indicset{|X_n-X|>\varepsilon}}}\le
+\sup_{i\in\N}\expv{|X_i|^{p}\indicset{|X_n-X|>\varepsilon}}<\varepsilon,\]
+for all \(n\ge\widetilde{n}_{\varepsilon}\).
 
 Therefore, for all \(n\ge\max\{n_{\varepsilon},\widetilde{n}_{\varepsilon}\}\),
-we have \(\expv{|X_n-X|^{p}}<\varepsilon+2^p\cdot \varepsilon/2^p+2^p\cdot
-\varepsilon/2^p=3\varepsilon\), which then implies that
+we have \(\expv{|X_n-X|^{p}}<\varepsilon+2^p\varepsilon+2^p
+\varepsilon=(1+2^{p+1})\varepsilon\), which then implies that
 \(\lim_{n\to\infty}\|X_n-X\|_{p}=0\) (after changing
-\(\varepsilon\to\varepsilon/3\) above).
+\(\varepsilon\to\varepsilon/(1+2^{p+1})\) above).
 \end{pf}
 \end{enumerate}
 \subsection{Slutsky's Theorem}
 \begin{enumerate}
-\item Apart from the \emph{continuous mapping theorem}, another critical result
+\item Apart from the \emph{continuous mapping theorem}, another crucial result
 for working with modes of convergence is the \emph{Slutsky's theorem}, which
 suggests conditions under which we can ``add'' individual convergence together.
 
 Based on the CMT, we have \((\vect{X}_n,\vect{Y}_n)\tod (\vect{X},\vect{Y})\implies 
 \vect{h}(\vect{X}_n,\vect{Y}_n)\tod \vect{h}(\vect{X},\vect{Y})\) for every
 continuous function \(h\). Particularly, assuming the \(\vect{X}\)'s and
-\(\vect{Y}\)'s both take values in \(\R^d\), then we would have
+\(\vect{Y}\)'s both take values in \(\R^d\), we would have
 \(\vect{X}_n+\vect{Y}_n\tod \vect{X}+\vect{Y}\).
 
 However, if we only have the individual convergences \(\vect{X}_n\tod
