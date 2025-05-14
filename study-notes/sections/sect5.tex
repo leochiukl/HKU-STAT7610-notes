@@ -1031,9 +1031,10 @@ It can be shown that \(X\in L^{\infty}\) iff \(X\) is bounded a.e.
 \end{remark}
 \item \textbf{Properties for \(L^{p}\) spaces.}
 \begin{enumerate}
-\item\label{it:holder-cs-ineq} \emph{(H\"older inequality)} Let \(p,q\in [1,\infty]\) with \(1/p+1/q=1\)
-(with the convention that \(1/\infty:=0\)) be \emph{conjugate indices}. Then,
-\(\|XY\|_{1}\le \|X\|_{p}\|Y\|_{q}\) for all measurable functions \(X,Y:\Omega\to\R\).
+\item\label{it:holder-cs-ineq} \emph{(H\"older inequality)} Let \(p,q\in
+[1,\infty]\) with \(1/p+1/q=1\) (with the convention that \(1/\infty:=0\)) be
+\emph{conjugate indices}. Then, \(\|XY\|_{1}\le \|X\|_{p}\|Y\|_{q}\) for all
+measurable functions \(X,Y:\Omega\to\R\).
 
 Furthermore, if we have \(p,q\in (1,\infty)\), \(X\in L^{p}\), and \(Y\in
 L^{q}\), then the equality holds iff \(\alpha|X|^{p}\eqae \beta|Y|^{q}\) for
@@ -1073,7 +1074,10 @@ gets simplified to \(\|X\|_{p}\le\|X\|_{q}\).
 \begin{enumerate}
 \item Omitted.
 \item Omitted.
-\item By the convexity of \(\varphi\), for all \(x_0\in\R\), there
+\item First, it can be shown that \(\int_{\Omega}^{}\varphi(X)\odif{\mu}\in
+(-\infty,\infty]\) (see, e.g., \textcite[Theorem~7.9]{klenke2020probability}). In case it is \(\infty\), there is nothing to prove. So, we can assume henceforth that it is in \((-\infty,\infty)\), i.e., \(\varphi(X)\in L^{1}\).
+
+By the convexity of \(\varphi\), for all \(x_0\in\R\), there
 exists a \emph{supporting line} \(x\mapsto \varphi(x_0)+m(x-x_0)\) of the graph
 of \(\varphi\), satisfying that \(\varphi(x)\ge\varphi(x_0)+m(x-x_0)\) for all
 \(x\in\R\).

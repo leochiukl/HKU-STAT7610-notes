@@ -1,0 +1,1567 @@
+\section{Conditional Expectation}
+\label{sect:cond-exp}
+\begin{enumerate}
+\item We have finally reached the last section of this notes, which is about
+the concept of \emph{conditional expectation}. This notion plays a fundamental
+role in the study of probability theory, which formalizes the idea of computing
+probabilistic quantities with some \emph{additional information} given
+\emph{(conditioning)}. While you should have already learnt basic ideas about
+conditional expectation before, here we will analyze it in full mathematical
+details and introduce a \emph{measure-theoretic} way to define conditional
+expectation. Such definition is quite general and frees us from many
+restrictions, but is also rather abstract unfortunately \faIcon[regular]{dizzy}.
+\end{enumerate}
+\subsection{Ordinary Conditioning}
+\begin{enumerate}
+\item Before providing the measure-theoretic definition of conditional
+expectation, we first have a glance on how ``ordinary'' conditioning (i.e., the
+one you have seen before) works, and its potential restrictions, as a
+motivation of the measure-theoretic study of conditional expectation.
+\item \textbf{Ordinary conditional probability and implied conditional
+expectation.} Recall from \Cref{subsect:ordinary-cond-prob} that, on a
+probability space \((\Omega,\mathcal{F},\pr)\), for an event
+\(B\in\mathcal{F}\) with \(\prob{B}>0\), the \emph{(ordinary) conditional
+probability} of \(A\) given \(B\) is defined by \(\prob{A|B}=\prob{A\cap
+B}/\prob{B}\) for every \(A\in\mathcal{F}\). Based on this idea, we can then
+define \emph{conditional distribution function} (with some restrictions) as
+follows. Consider a random vector \(\vect{X}_2:\Omega\to\R^{d_{2}}\). For every
+event \(B\in\mathcal{F}\) with \(\prob{B}>0\), we define the \defn{(ordinary)
+conditional distribution function of \(\vect{X}_2\) given \(B\)} by
+\[
+F_{\vect{X}_2|B}(\vect{x}_2):=\prob{\vect{X}_2\le\vect{x}_2|B}
+=\frac{\prob{\{\vect{X}_2\le\vect{x}_2\}\cap B}}{\prob{B}}
+\]
+for all \(\vect{x}_2\in\R^{d_2}\). If exists, then the mean of
+\(F_{\vect{X}_2|B}\) (i.e., mean of a random variable with distribution
+function being \(F_{\vect{X}_2|B}\)) is called the \defn{(ordinary) conditional
+expectation of \(\vect{X}_2\) given \(B\)}.
+
+Often, we are handling the case with \(B=\{\vect{X}_1=\vect{x}_1\}\) for some
+random variable \(\vect{X}_1\). However, the definition above only works
+if \(\prob{B}=\prob{\vect{X}_1=\vect{x}_1}>0\) (e.g., discrete case), and
+breaks down if \(\prob{\vect{X}_1=\vect{x}_1}=0\) (e.g., continuous case).
+\item \textbf{How to deal with conditioning on zero-probability
+event?}
+If \(F_{\vect{X}_1}\) is discrete, we know that
+\(B=\{\vect{X}_1=\vect{x}_1\}\) has positive probability for every
+\(\vect{x}_1\in\supp{F_{\vect{X}_1}}\), and zero probability for every
+\(\vect{x}_1\) outside the support. In this case, we may handle the potential
+conditioning on zero probability through, e.g., setting the conditional
+distribution function as zero for every \(\vect{x}_1\) outside the support:
+\[
+F_{\vect{X}_2|\vect{X}_1}(\vect{x}_1)=
+\begin{cases}
+\prob{\vect{X}_2\le\vect{x}_2|\vect{X}_1=\vect{x}_1}&\text{if \(\vect{x}_1\in\supp{F_{\vect{X}_1}}\),} \\
+0&\text{otherwise.}
+\end{cases}
+\]
+This is still meaningful as we have plenty of
+\(\vect{x}_1\in\supp{F_{\vect{X}_1}}\) to work with, and we can just
+``neglect'' the behaviour of \(F_{\vect{X}_2|\vect{X}_1}\) at \(\vect{x}_1\)
+outside the support.
+
+However, in case \(F_{\vect{X}_1}\) is \emph{continuous}, the event
+\(B=\{\vect{X}_1=\vect{x}_1\}\) would have zero probability for \emph{every}
+\(\vect{x}_1\), making the method suggested above obsolete, as we would need to
+artificially define the value taken by \(F_{\vect{X}_2|\vect{X}_1}\) at
+\emph{every} point, making this concept not meaningful anymore.
+
+This leads us to the idea of considering the following limiting argument.
+Suppose we have \((\vect{X}_1,\vect{X}_2)\sim F\) with a joint density \(f\).
+Recall from your first probability course that the \emph{conditional density}
+is defined by
+\[
+f_{\vect{X}_2|\vect{X}_1}(\vect{x}_2|\vect{x}_1)
+=\frac{f(\vect{x}_1,\vect{x}_2)}{f_{\vect{X}_1}(\vect{x}_1)}
+\]
+if \(f_{\vect{X}_1}(\vect{x}_1)>0\). It is then natural to define
+\[
+F_{\vect{X}_2|\vect{X}_1}(\vect{x}_2|\vect{x}_1)
+:=\prob{\vect{X}_2\le\vect{x}_2|\vect{X}_1=\vect{x}_1}
+=\int_{\vect{-\infty}}^{\vect{x}_2}
+f_{\vect{X}_2|\vect{X}_1}(\widetilde{\vect{x}}_2|\vect{x}_1)
+\odif{\widetilde{\vect{x}}_2}
+\]
+provided that \(f_{\vect{X}_1}(\vect{x}_1)>0\). Nevertheless, such
+``definition'' may actually lead to potential ill-definedness, as the
+\emph{Borel-Kolmogorov paradox} illustrates.
+\item \textbf{Borel-Kolmogorov paradox.} Let
+\((X_1,X_2)\sim\operatorname{U}(D)\) with \(D=\{(x_1,x_2):-1\le x_1\le 1, 0\le
+x_2\le \sqrt{1-x_{1}^{2}}\}\) being the upper half of unit disk centered at
+\((0,0)\). Here, \(\operatorname{U}(D)\) refers to the uniform distribution
+on \(D\). We then consider the conditional distribution using two coordinates.
+
+\begin{enumerate}
+\item \emph{(Cartesian coordinates)} Using the Cartesian coordinates, the joint
+density is \[f(x_1,x_2)=\frac{1}{\pi/2}\indicset{(x_1,x_2)\in D}
+=\frac{2}{\pi}\indicset{(x_1,x_2)\in D},\] and we have
+\[f_{X_1}(x_1)
+=\int_{0}^{\sqrt{1-x_{1}^{2}}}f(x_1,x_2)\odif{x_2}
+=\frac{2}{\pi}\indicset{-1\le x_1\le 1}\int_{0}^{\sqrt{1-x_{1}^{2}}}\odif{x_2}
+=\frac{2\sqrt{1-x_{1}^{2}}}{\pi}\indicset{-1\le x_1\le 1}.
+\]
+Hence, for every \(x_1\in (-1,1)\), we get
+\[
+f_{X_2|X_1}(x_2|x_1)=\frac{f(x_1,x_2)}{f_{X_1}(x_1)}
+=\frac{1}{\sqrt{1-x_{1}^{2}}}\indicset{(x_1,x_2)\in D},
+\]
+Particularly, we have
+\[\prob{X_2\in [0,1/2]|X_1=0}=\int_{0}^{1/2}1\odif{x_2}=\frac{1}{2}.\]
+
+\item \emph{(Polar coordinates)} We introduce the polar coordinates with
+\(X_1=R\cos(\Theta)\) and \(X_2=R\sin(\Theta)\). In polar coordinates, \(D\)
+can be expressed as \(\{(r,\theta):0\le r\le 1, 0\le \theta\le \pi\}
+=[0,1]\times[0,\pi]\). Applying the change-of-variables formula for density,
+we get
+\begin{align*}
+f_{R,\Theta}(r,\theta)&=f(x_{1},x_{2})
+\begin{vmatrix}
+\pdv{r\cos\theta}/{r}&\pdv{r\cos\theta}/{\theta} \\
+\pdv{r\sin\theta}/{r}&\pdv{r\sin\theta}/{\theta}
+\end{vmatrix}
+=f(x_1,x_2)\begin{vmatrix}
+\cos\theta&-r\sin\theta \\
+\sin\theta&r\cos\theta
+\end{vmatrix} \\
+&=\frac{2r}{\pi}\indicset{(x_1,x_2)\in D}
+=\frac{2r}{\pi}\indicset{(r,\theta)\in [0,1]\times [0,\pi]}.
+\end{align*}
+Therefore, we have \[f_{\Theta}(\theta)
+=\indicset{\theta\in[0,\pi]}\int_{0}^{1}\frac{2r}{\pi}\odif{r}
+=\frac{1}{\pi}\indicset{\theta\in[0,\pi]}.\]
+Thus, for every \(\theta\in [0,\pi]\) we get
+\[
+f_{R|\Theta}(r|\theta)=\frac{2r/\pi}{1/\pi}\indicset{0\le r\le 1}
+=2r\indicset{0\le r\le 1}.
+\]
+Particularly, we have
+\[
+\prob{R\in[0,1/2]|\Theta=\pi/2}=\int_{0}^{1/2}2r\odif{r}=\frac{1}{4}.
+\]
+\end{enumerate}
+In this case, while both \(\prob{X_2\in [0,1/2]|X_1=0}\) and
+\(\prob{R\in[0,1/2]|\Theta=\pi/2}\) should just be describing the same
+probability expressed in different coordinates system, their values turn out to
+differ.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=-1:1, axis lines=middle, ymax=1.1, ymin=-0.1, xmax=1.1,
+xmin=-1.1, axis equal image]
+\addplot[blue, name path=A]{sqrt{1-x^2}};
+\addplot[draw=none, name path=B]{0};
+\tikzfillbetween[of=A and B]{blue, opacity=0.1};
+\draw[yellow, opacity=0.5, line width=0.5mm] (0,0) -- (0,0.5);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Intuitively, this phenomenon appears since the two coordinates system lead to
+different ways to ``approach'' this probability as a limit. This is best
+understood through the following pictures:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=-1:1, axis lines=middle, ymax=1.1, ymin=-0.1, xmax=1.1,
+xmin=-1.1, title={Cartesian}, axis equal image]
+\addplot[blue, name path=A]{sqrt{1-x^2}};
+\addplot[draw=none, name path=B]{0};
+\tikzfillbetween[of=A and B]{blue, opacity=0.1};
+\draw[green, opacity=0.3, line width=2mm] (0,0) -- (0,1);
+\draw[yellow, opacity=0.5, line width=0.5mm] (0,0) -- (0,0.5);
+\draw[->, violet] (-0.2,0.3) -- (-0.05,0.3);
+\draw[->, violet] (0.2,0.3) -- (0.05,0.3);
+\draw[densely dotted, magenta] (-0.03,0.5) -- (0.03,0.5);
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[domain=-1:1, axis lines=middle, ymax=1.1, ymin=-0.1, xmax=1.1,
+xmin=-1.1, title={Polar}, axis equal image]
+\addplot[blue, name path=A]{sqrt{1-x^2}};
+\addplot[draw=none, name path=B]{0};
+\tikzfillbetween[of=A and B]{blue, opacity=0.1};
+\draw[yellow, opacity=0.5, line width=0.5mm] (0,0) -- (0,0.5);
+\addplot[draw=none, name path=C, domain=-0.05:0]{sqrt{1-x^2}};
+\addplot[draw=none, name path=D, domain=-0.05:0]{-19.975*x};
+\addplot[draw=none, name path=E, domain=0:0.05]{sqrt{1-x^2}};
+\addplot[draw=none, name path=F, domain=0:0.05]{19.975*x};
+\tikzfillbetween[of=C and D]{green, opacity=0.3};
+\tikzfillbetween[of=E and F]{green, opacity=0.3};
+\draw[->, violet] (-0.2,0.35) -- (-0.05,0.4);
+\draw[->, violet] (0.2,0.35) -- (0.05,0.4);
+\draw[dashed, magenta] (-0.025,0.49875) -- (0,1);
+\draw[dashed, magenta] (0.025,0.49875) -- (0,1);
+\draw[dashed, magenta] (-0.025,0.49875) -- (0.025,0.49875);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+These pictures also intuitively illustrate why the probability is \(1/2\) for
+Cartesian coordinates and is \(1/4\) for polar coordinates. For Cartesian
+coordinates, the ``region of interest'' occupies a half of the ``limiting''
+region (approached with ``rectangles'' with shrinking widths). On the other
+hand, for polar coordinates, it only occupies a quarter of the ``limiting
+region'' (approached with ``circular sectors'' with shrinking central angles).
+The dependency of the probability calculation on the way of how the limit is
+approached is an undesirable trait, and can lead to ambiguities. This issue
+can be avoided by following the \emph{measure-theoretic} approach instead.
+\end{enumerate}
+\subsection{Conditioning in a Measure-Theoretic Framework}
+\label{subsect:meas-theoretic-cond}
+\begin{enumerate}
+\item In view of the potential issues from the ``ordinary'' way of conditioning
+suggested above, we are then motivated to study the conditioning in a
+\emph{measure-theoretic} framework. Let us start with the measure-theoretic
+definition of conditional expectation.
+
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(\mathcal{G}\subseteq
+\mathcal{F}\) be a \(\sigma\)-algebra on \(\Omega\), and \(X\in
+L^{1}(\Omega,\mathcal{F},\pr)\). The \defn{conditional expectation of \(X\)
+given \(\mathcal{G}\)}, denoted by \(\expv{X|\mathcal{G}}\), is any function
+\(Y:\Omega\to\R\) satisfying:
+\begin{enumerate}[label={(\arabic*)}]
+\item \emph{(Measurability)} \(Y\) is \(\mathcal{G}\)-measurable.
+\item \emph{(Partial averaging)} \(\expv{Y\indic_{A}}=\expv{X\indic_{A}}\) for
+every \(A\in\mathcal{G}\).
+
+\begin{note}
+Due to the presence of the indicator function \(\indic_{A}\), the ``averaging''
+(mean) is only taken over ``part'' of \(\Omega\), hence the name ``partial
+averaging''.
+\end{note}
+\end{enumerate}
+Any such \(Y\) is said to be a \defn{version} of \(\expv{X|\mathcal{G}}\). We
+also have the following shorthand notations about conditional expectation:
+\begin{itemize}
+\item \(\expv{X|\mathcal{A}}:=\expv{X|\sigma(\mathcal{A})}\) with
+\(\mathcal{A}\subseteq \mathcal{F}\) being a collection of events.
+\item \(\expv{X|Z}:=\expv{X|\sigma(Z)}\) with \(Z:\Omega\to\Omega'\) being a
+function (e.g., random variable, random vector, etc.).
+\item \(\vari{X|\mathcal{G}}=\expv{(X-\expv{X|\mathcal{G}})^{2}|\mathcal{G}}\)
+is the \defn{conditional variance of \(X\) given \(\mathcal{G}\)}.
+\end{itemize}
+With the measurability and partial averaging properties satisfied, the function
+\(Y\) carries the characteristics of a random variable and an expectation
+``with respect to \(\mathcal{G}\)'' (i.e., we only require
+\(\mathcal{G}\)-measurability for random variable, and consider only set in
+\(\mathcal{G}\) for the partial averaging).
+
+\item \textbf{Integrability, existence, and uniqueness.} With this
+nonconstructive definition of conditional expectation, the first thing we
+should do is to examine whether the object defined ``makes sense'', by
+investigating some core properties about it, namely \emph{integrability},
+\emph{existence}, and \emph{uniqueness}.
+
+\begin{proposition}[Integrability]
+\label{prp:cond-exp-int}
+Every version \(Y\) of \(\expv{X|\mathcal{G}}\) is integrable, i.e., in
+\(L^{1}(\Omega,\vc{\mathcal{G}},\pr)\).
+\end{proposition}
+\begin{pf}
+Let \(A=\{Y\ge 0\}=Y^{-1}([0,\infty))\in\mathcal{G}\). Then, we have
+\(A^{c}\in\mathcal{G}\), and hence
+\begin{align*}
+\expv{|Y|}&=\expv{|Y|\indic_{A}}+\expv{|Y|\indic_{A^{c}}}
+=\expv{Y\indic_{A}}+\expv{(-Y)\indic_{A^{c}}}
+=\int_{A}^{}Y\odif{\pr}+\int_{A^{c}}^{}(-Y)\odif{\pr} \\
+\overset{\text{(partial averaging)}}&{=}
+\int_{A}^{}X\odif{\pr}+\int_{A^{c}}^{}(-X)\odif{\pr}
+\overset{\text{(monotonicity)}}{\le}
+\int_{A}^{}|X|\odif{\pr}+\int_{A^{c}}^{}|X|\odif{\pr}
+=\int_{\Omega}^{}|X|\odif{\pr}=\expv{|X|}\overset{(X\in L^{1})}{<}\infty.
+\end{align*}
+\end{pf}
+
+\begin{theorem}[Existence and a.s.\ uniqueness]
+\label{thm:cond-exp-exist-unique}
+The conditional expectation \(\expv{X|\mathcal{G}}\) exists and is unique a.s.
+\end{theorem}
+\begin{pf}
+We first prove the existence. Consider first the case where \(X\ge 0\). By
+\labelcref{it:nonneg-leb-int-prop}, the function \(\nu\) given by
+\(\nu(A)=\expv{X\indic_{A}}=\int_{A}^{}X\odif{\pr}\) for all
+\(A\in\mathcal{G}\) is a measure on \((\Omega,\mathcal{G})\). Also, by
+\labelcref{it:quasi-int-prop} we have \(\nu(A)=0\) for every \(A\in\mathcal{G}\)
+with \(\prob{A}=0\), i.e., \(\nu\ll\pr\), with \(\pr\) being the original
+probability measure restricted on \(\mathcal{G}\) (we keep this notation for
+convenience). Applying \Cref{thm:leb-rn} then gives, for all
+\(A\in\mathcal{G}\),
+\[
+\int_{A}^{}X\odif{\pr}=\nu(A)=\int_{A}^{}\odv{\nu}{\pr}\odif{\pr}
+\]
+where \(\odv{\nu}/{\pr}\) is the \(\pr\)-a.s.\ unique integrable (and hence
+\(\mathcal{G}\)-measurable) Radon-Nikodym derivative. By definition of
+conditional expectation, \(\odv{\nu}/{\pr}\) is a version of \(\expv{X|\mathcal{G}}\),
+establishing the existence in this case.
+
+Next, consider the general case where \(X\) may not be nonnegative. We write
+\(X=X^{+}-X^{-}\), and let \(Y^{+}=\expv{X^{+}|\mathcal{G}}\) and
+\(Y^{-}=\expv{X^{-}|\mathcal{G}}\) (which exist by the case above). By
+\Cref{prp:cond-exp-int}, both \(Y^{+}\) and \(Y^{-}\) are integrable, which
+implies that \(Y:=Y^{+}-Y^{-}\) is also integrable (and hence
+\(\mathcal{G}\)-measurable). Furthermore, we have
+\[
+\int_{A}^{}X\odif{\pr}=
+\int_{A}^{}X^{+}\odif{\pr}
+-\int_{A}^{}X^{-}\odif{\pr}
+\overset{\text{(partial averaging)}}{=}
+\int_{A}^{}Y^{+}\odif{\pr}
+-\int_{A}^{}Y^{-}\odif{\pr}
+=\int_{A}^{}Y\odif{\pr}
+\]
+for all \(A\in\mathcal{G}\). Therefore, \(Y\) is a version of
+\(\expv{X|\mathcal{G}}\). This establishes the existence.
+
+Now, we prove the a.s.\ uniqueness. Suppose both \(Y\) and \(\widetilde{Y}\)
+are versions of \(\expv{X|\mathcal{G}}\). Then, by the partial averaging
+property we have
+\(\expv{Y\indic_{A}}=\expv{X\indic_{A}}=\expv{\widetilde{Y}\indic_{A}}\) for
+every \(A\in\mathcal{G}\). Furthermore, by \Cref{prp:cond-exp-int}, \(Y\) and
+\(\widetilde{Y}\) are integrable. Hence, by
+\labelcref{it:equiv-ae-equal-int-fn} we have \(Y\eqas\widetilde{Y}\),
+establishing the a.s.\ uniqueness.
+\end{pf}
+
+As \Cref{thm:cond-exp-exist-unique} suggests, the conditional expectation is
+only unique \emph{almost surely}.  Consequently, equalities/inequalities
+involving conditional expectation like \(Y=\expv{X|\mathcal{G}}\) should all be
+understood to hold \emph{almost surely} only. Nonetheless, to avoid making the
+notations cumbersome, we often just write ``\(=\)'' to mean ``\(\eqas\)''; this
+should be clear from context.  When considering conditional expectation in the
+measure-theoretic framework here, we are actually working with a specific
+version of \(\expv{X|\mathcal{G}}\) implicitly. But since it equals every other
+version a.s., we usually do not care much about the choice of version.
+\item \textbf{Regular conditional probability measures.} Having the conditional
+expectation \(\expv{X|\mathcal{G}}\) defined, it is then tempting to define the
+\emph{conditional probability measure} \(\prob{\cdot|\mathcal{G}}\) by
+\(\prob{A|\mathcal{G}}=\expv{\indic_{A}|\mathcal{G}}\) for every
+\(A\in\mathcal{F}\). However, since \(\expv{\indic_{A}|\mathcal{G}}\) is only
+unique a.s.\ in general, such function may not be well-defined.
+
+In view of this, the first thing to be done is to specify a certain version of
+\(\expv{\indic_{A}|\mathcal{G}}\) for each \(A\in\mathcal{F}\) in the
+definition, so that the function is well-defined. Afterwards, we need to
+ensure that \(\prob{\cdot|\mathcal{G}}\) is a valid probability measure, by
+requiring the conditions there to be satisfied. This discussion leads to
+the definition of \emph{regular conditional probability measure}.
+
+Let \((\Omega,\mathcal{F})\) and \((\Omega',\mathcal{F}')\) be measurable
+spaces, and \(\mathcal{G}\subseteq \mathcal{F}\) be a \(\sigma\)-algebra.  The
+function \(\spr:\mathcal{F}\times \Omega\to [0,\infty]\) is called a \defn{regular
+conditional probability measure given \(\mathcal{G}\)} if
+\begin{enumerate}[label={(\arabic*)}]
+\item \emph{(Specifying versions)} For every fixed \(A\in\mathcal{F}\), the
+function \(\vc{\omega}\mapsto\sprob{A,\vc{\omega}}\) is a specific version of
+\(\prob{A|\mathcal{G}}:=\expv{\indic_{A}|\mathcal{G}}\).
+\item \emph{(Qualifying as probability measure)} For every
+fixed \(\omega\in\Omega\), the function \(\vc{A}\mapsto\sprob{\vc{A},\omega}\)
+is a probability measure on \((\Omega,\mathcal{F})\).
+\end{enumerate}
+In a similar way, we call the function
+\(F_{\vect{X}|\mathcal{G}}^{*}:\R^{d}\times \Omega \to [0,1]\) a \defn{regular
+conditional distribution function of \(\vect{X}\) given \(\mathcal{G}\)} if
+\begin{enumerate}[label={(\arabic*)}]
+\item \emph{(Specifying versions)} For every fixed \(\vect{x}\in\R^{d}\),
+the function \(\vc{\omega}\mapsto F_{\vect{X}|\mathcal{G}}^{*}(\vect{x},\vc{\omega})\)
+is a specific version of \(\prob{\vect{X}\le\vect{x}|\mathcal{G}}\).
+\item \emph{(Qualifying as distribution function)} For every fixed
+\(\omega\in\Omega\), the function \(\vc{\vect{x}}\mapsto
+F_{\vect{X}|\mathcal{G}}(\vc{\vect{x}},\omega)\) is a distribution function.
+\end{enumerate}
+
+The definitions of regular conditional probability measure and distribution
+function here are again \emph{nonconstructive}, so it is not immediately clear
+whether they actually exist (just like the case for conditional expectation).
+It turns out that as long as there is a bijective function
+\(\varphi:\Omega'\to\R^{d}\) such that both \(\varphi\) and \(\varphi^{-1}\)
+are measurable \emph{(\((\Omega',\mathcal{F}')\) is nice)}, then both of them
+exist. In many cases of practical interest, such ``niceness'' is satisfied,
+e.g., \((\Omega',\mathcal{F}')=(\R^{d},\mathcal{B}(\R^{d}))\) is nice
+(by taking \(\varphi\) to be the identity function). So, henceforth we will
+assume the niceness and always work with the regular ones (implicitly) when
+considering the notations like \(\prob{A|\mathcal{G}}\) and
+\(\prob{\vect{X}\le\vect{x}|\mathcal{G}}\).
+\item \textbf{Formula of conditional expectation
+for \(\mathcal{G}\) generated by a countable partition.} Generally, we do not
+have an explicit formula for finding out the conditional expectation.  However,
+in the special case where \(\mathcal{G}\) is generated by a countable
+partition, we do have an explicit formula for conditional expectation (up to
+a.s.\ equality), which involves expressions that should have appeared in your
+first probability course.
+
+\begin{proposition}
+\label{prp:count-part-cond-exp}
+Let \(X\in L^{1}(\Omega,\mathcal{F},\pr)\),
+\(\mathcal{A}=\{A_n:n\in\N\}\subseteq \mathcal{F}\) be a partition of
+\(\Omega\), and \(\mathcal{G}=\sigma(\mathcal{A})
+\overset{\text{(\Cref{lma:sig-alg-gen-part})}}{=}
+\{\biguplus_{i\in
+I}^{}A_i:A_i\in\mathcal{A}~\forall i\in I \text{ and } I\subseteq \N\}\subseteq
+\mathcal{F}\). Then, we have
+\[
+\expv{X|\mathcal{G}}=\sum_{n=1}^{\infty}\expvmu{A_n}{X}\indic_{A_n},\quad
+\text{where }\expvmu{A_n}{X}:=\begin{cases}
+\expv{X\indic_{A_n}}/\prob{A_n}&\text{if \(\prob{A_n}>0\),} \\
+0&\text{if \(\prob{A_n}=0\).}
+\end{cases}
+\]
+\end{proposition}
+
+\begin{note}
+The value assigned for \(\expvmu{A_n}{X}\) in the case \(\prob{A_n}=0\) can
+indeed be replaced by other real numbers (not necessarily \(0\)); this also
+explains why the equality only holds a.s.\
+\end{note}
+
+\begin{pf}
+Let \(Y:=\sum_{n=1}^{\infty}\expvmu{A_n}{X}\indic_{A_n}:\Omega\to\R\). We now
+verify that \(Y\) satisfies both the measurability and partial averaging
+properties.
+
+\begin{enumerate}[label={(\arabic*)}]
+\item Let \(Y_m:=\sum_{n=1}^{m}\expvmu{A_n}{X}\indic_{A_n}
+=\sum_{n=1}^{m}\expvmu{A_n}{X}\indic_{A_n} +0\cdot
+\indic_{\biguplus_{k=m+1}^{\infty}A_k}\) for every \(m\in\N\).  Since each
+\(Y_m\) is simple with all the indicator sets being in \(\mathcal{G}\), we know
+\(Y_m\in\mathcal{G}\) for all \(m\in\N\). Hence, by \labelcref{it:seq-rvs-meas}
+we have \(Y=\lim_{m\to\infty}Y_m\in\mathcal{G}\).
+\item \textbf{Showing that \(Y\indic_{A}\in L^{1}(\Omega,\mathcal{F},\pr)\) for
+all \(A\in\mathcal{G}\).}
+Note that \(|Y|\overset{\text{(triangle)}}{\le}
+\sum_{n=1}^{\infty}|\expvmu{A_n}{X}|\indic_{A_n}
+\overset{\text{(triangle)}}{\le}
+\sum_{n=1}^{\infty}\expvmu{A_n}{|X|}\indic_{A_n}\). Hence,
+\begin{align*}
+\expv{|Y|}\overset{\text{(monotonicity)}}&{\le}
+\expv{\sum_{n=1}^{\infty}\expvmu{A_n}{|X|}\indic_{A_n}}
+\overset{\text{(MCT)}}{=}
+\lim_{N\to\infty}\expv{\sum_{n=1}^{N}\expvmu{A_n}{|X|}\indic_{A_n}} \\
+\overset{\text{(linearity)}}&{=}
+\lim_{N\to\infty}\sum_{n=1}^{N}\expvmu{A_n}{|X|}\prob{A_n}
+=\lim_{N\to\infty}\sum_{n=1}^{N}\expv{|X|\indic_{A_n}} \\
+\overset{\text{(linearity)}}&{=}
+\lim_{N\to\infty}\expv{\vc{\sum_{n=1}^{N}}|X|\indic_{\vc{A_n}}}
+=\lim_{N\to\infty}\expv{|X|\indic_{\vc{\bigcup_{n=1}^{N}A_n}}}
+\overset{\text{(MCT)}}{=}\expv{|X|}<\infty.
+\end{align*}
+Therefore, for every \(A\in\mathcal{G}\), we have
+\(\expv{|Y\indic_{A}|}\overset{\text{(monotonicity)}}{\le} \expv{|Y|}<\infty\),
+and hence \(Y\indic_{A}\in L^{1}(\Omega,\mathcal{F},\pr)\).
+
+\textbf{Showing the partial averaging property.}
+Fix any \(A\in\mathcal{G}\). We can then write \(A=\biguplus_{i\in I}^{}A_i\)
+for some countable \(I\subseteq \N\). Therefore,
+\begin{align*}
+\expv{Y\indic_{A}}\overset{\text{(\(Y\indic_{A}\in L^{1}\), 
+\labelcref{it:leb-int-sig-add})}}&{=}
+\sum_{i\in I}^{}\expv{\vc{Y}\indic_{A_i}}
+=\sum_{i\in I}^{}\expv{\vc{\expvmu{A_i}{X}}\indic_{A_i}} \\
+\overset{\text{(\(\vc{\expvmu{A_i}{X}}\) deterministic)}}&{=}
+\sum_{i\in I}^{}\vc{\expvmu{A_i}{X}}\expv{\indic_{A_i}}
+=\sum_{i\in I}^{}\expvmu{A_i}{X}\prob{A_i}.
+\end{align*}
+Noting that for each \(i\in I\),
+\begin{align*}
+\expvmu{A_i}{X}\prob{A_i}
+&=\begin{cases}
+\frac{\expv{X\indic_{A_i}}}{\prob{A_i}}\prob{A_i}=\expv{X\indic_{A_i}}
+&\text{if \(\prob{A_i}>0\),} \\
+0\cdot 0&\text{if \(\prob{A_i}=0\),}
+\end{cases} \\
+\overset{\text{\labelcref{it:quasi-int-prop}}}&{=}
+\expv{X\indic_{A_i}},
+\end{align*}
+we have
+\[
+\expv{Y\indic_{A}}=\sum_{i\in I}^{}\expv{X\indic_{A_i}}
+\overset{\text{\labelcref{it:leb-int-sig-add}}}{=}\expv{X\indic_{A}}.
+\]
+\end{enumerate}
+\end{pf}
+
+\begin{remark}
+\item \emph{(Interpretation of formula)} The formula of conditional expectation
+in \Cref{prp:count-part-cond-exp} can be more intuitively understood as
+follows. From an ``information'' perspective, we can interpret ``given
+\(\mathcal{G}\)'' as suggesting that, for the unknown outcome
+\(\omega\in\Omega\), the given information is enough for us to determine
+whether each set in \(\mathcal{G}\) contains \(\omega\). In the case here, we
+have \(\mathcal{G}=\{\biguplus_{i\in I}^{}A_i:A_i\in\mathcal{A}~\forall i\in I
+\text{ and } I\subseteq \N\}\), so based on the information we have
+\(\omega\in A_n\) for some known \(n\in\N\) (but we still do not know what
+\(\omega\) is exactly). With this piece of information, the ``expectation'' or
+``best prediction'' for \(X=X(\omega)\) should naturally be the mean of \(X\)
+over \(A_n\) (containing all the possible candidates of \(\omega\)), scaled by
+for the probability of \(A_n\), i.e., \(\expv{X|\mathcal{G}}(\omega)
+\overset{(\omega\in A_n)}{=}\expv{X\indic_{A_n}}/\prob{A_n}=\expvmu{A_n}{X}\).
+\item \emph{(Conditional probability)} \Cref{prp:count-part-cond-exp} also
+gives rise to formulas of conditional probability. By taking \(X=\indic_{A}\)
+with \(A\in\mathcal{F}\), we have
+\[
+\prob{A|\mathcal{G}}=\expv{\indic_{A}|\mathcal{G}}
+=\sum_{n=1}^{\infty}\frac{\expv{\indic_{A}\indic_{A_n}}}{\prob{A_n}}\indic_{A_n}
+=\sum_{n=1}^{\infty}\frac{\expv{\indic_{A\cap A_n}}}{\prob{A_n}}\indic_{A_n}
+=\sum_{n=1}^{\infty}\frac{\prob{A\cap A_n}}{\prob{A_n}}\indic_{A_n}
+=\sum_{n=1}^{\infty}\prob{A|A_n}\indic_{A_n}
+\]
+with \(\prob{A|A_n}:=0\) if \(\prob{A_n}=0\). This formula suggests that
+\(\prob{A|\mathcal{G}}(\omega)=\prob{A|A_n}\) whenever \(\omega\in A_n\), which
+is quite intuitive.
+
+\item \emph{(Conditional probability given discrete \(\vect{X}\))}
+The formula above can be reduced to a more familiar one by taking \(\mathcal{G}=
+\sigma(\vect{X})\) where \(\vect{X}\) has support \(\supp{\vect{X}}=\{\vect{x}_n:n\in\N\}\).
+In such case, we can write \(\mathcal{G}=\{\vect{X}^{-1}(B):B\in\mathcal{B}(\R^{d})\}
+=\sigma(\mathcal{A})\) where \(\mathcal{A}\) is a partition of \(\Omega\),
+including every set
+\(\{\vect{X}=\vect{x}_n\}\) (and also the set
+\(\{\vect{X}\notin\supp{\vect{X}}\}\), if nonempty, which always has
+probability zero and thus can be omitted in the sum below). Hence, by the
+formula above we have
+\[
+\prob{A|\vect{X}}:=\prob{A|\sigma(\vect{X})}
+=\sum_{n=1}^{\infty}\prob{A|\vect{X}=\vect{x}_n}\indicset{\vect{X}=\vect{x}_n},
+\]
+meaning that if we know that \(\vect{X}=\vect{x}_n\) (i.e.,
+\(\omega\in\{\vect{X}=\vect{x}_n\}\)), the conditional probability
+\(\prob{A|\vect{X}}\) is given by \(\prob{A|\vect{X}=\vect{x}_n}\) (very
+natural).
+\end{remark}
+\item \textbf{Properties of conditional expectation.} Based on the definition
+of conditional expectation here, we can indeed deduce many properties that are
+perhaps somewhat familiar to you, and also allow us to work with conditional
+expectations more efficiently.
+
+\begin{proposition}
+\label{prp:cond-exp-prop}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(\mathcal{H},\mathcal{G}\)
+be \(\sigma\)-algebras such that \(\mathcal{H}\subseteq \mathcal{G}\subseteq
+\mathcal{F}\), and \(X,Y\in L^{1}(\Omega,\mathcal{F},\pr)\).
+
+\begin{enumerate}
+\item \emph{(No information)} \(\expv{X|\{\varnothing,\Omega\}}=\expv{X}\).
+\item \emph{(No relevant information)} If \(X\) is independent of
+\(\mathcal{G}\) (i.e., \(\sigma(X)\) and \(\mathcal{G}\) are independent), then
+\(\expv{X|\mathcal{G}}=\expv{X}\).
+\item \emph{(Full information)} If \(X\in\mathcal{G}\), then \(\expv{X|\mathcal{G}}=X\).
+Particularly, \(\expv{c|\mathcal{G}}=c\) for every \(c\in\R\).
+\item \emph{(Linearity)}
+\(\expv{aX+bY|\mathcal{G}}=a\expv{X|\mathcal{G}}+b\expv{Y|\mathcal{G}}\) for
+all \(a,b\in\R\).
+\item \emph{(Monotonicity)} If \(X\le Y\), then
+\(\expv{X|\mathcal{G}}\le\expv{Y|\mathcal{G}}\).
+\item \emph{(Triangle inequality)} \(|\expv{X|\mathcal{G}}|\le\expv{|X||\mathcal{G}}\).
+\item \emph{(Tower property)} \(\expv{\expv{X|\mathcal{H}}|\mathcal{G}}
+=\expv{X|\mathcal{H}}=\expv{\expv{X|\mathcal{G}}|\mathcal{H}}\).
+Particularly, \(\expv{X}=\expv{\expv{X|\mathcal{G}}}\) \emph{(law of total
+expectation)}.
+\end{enumerate}
+\end{proposition}
+\begin{pf}
+\begin{enumerate}
+\item \begin{enumerate}[label={(\arabic*)}]
+\item Since \(\expv{X}\) is constant, it is
+\(\{\varnothing,\Omega\}\)-measurable.
+\item We have
+\(
+\expv{\expv{X}\indic_{\varnothing}}
+\overset{\text{\labelcref{it:quasi-int-prop}}}{=}
+0\overset{\text{\labelcref{it:quasi-int-prop}}}{=}
+\expv{X\indic_{\varnothing}}
+\)
+and
+\(
+\expv{\expv{X}\indic_{\Omega}}
+=\expv{\expv{X}}
+=\expv{X}
+=\expv{X\indic_{\Omega}}
+\).
+\end{enumerate}
+\item \begin{enumerate}[label={(\arabic*)}]
+\item Since \(\expv{X}\) is constant, it is \(\mathcal{G}\)-measurable.
+\item For all \(A\in\mathcal{G}\), we have
+\(
+\expv{\vc{\expv{X}}\indic_{A}}
+\overset{\text{(linearity)}}{=}\vc{\expv{X}}\expv{\indic_{A}}
+\overset{\text{(independence)}}{=}\expv{X\indic_{A}}
+\).
+\end{enumerate}
+\item Let \(Y=X\). We have:
+\begin{enumerate}[label={(\arabic*)}]
+\item \(Y\) is \(\mathcal{G}\)-measurable by definition.
+\item For all \(A\in\mathcal{G}\), we have
+\(\expv{Y\indic_{A}}=\expv{X\indic_{A}}\).
+\end{enumerate}
+Hence, \(\expv{X|\mathcal{G}}=Y=X\). In particular, the random variable
+(constant function) \(c\) is always \(\mathcal{G}\)-measurable, and so
+\(\expv{c|\mathcal{G}}=c\).
+\item \begin{enumerate}[label={(\arabic*)}]
+\item Since \(\expv{X|\mathcal{G}}\) and \(\expv{Y|\mathcal{G}}\) are
+\(\mathcal{G}\)-measurable, \(a\expv{X|\mathcal{G}}+b\expv{Y|\mathcal{G}}\)
+is also \(\mathcal{G}\)-measurable.
+\item For all \(A\in\mathcal{G}\), we have
+\begin{align*}
+\expv{(a\expv{X|\mathcal{G}}+b\expv{Y|\mathcal{G}})\indic_{A}}
+\overset{\text{(linearity)}}&{=}
+a\expv{\expv{X|\mathcal{G}}\indic_{A}}+b\expv{\expv{Y|\mathcal{G}}\indic_{A}} \\
+\overset{\text{(partial averaging)}}&{=}
+a\expv{X\indic_{A}}+b\expv{Y\indic_{A}}
+\overset{\text{(linearity)}}{=}
+\expv{(aX+bY)\indic_{A}}.
+\end{align*}
+\end{enumerate}
+\item
+For all \(A\in\mathcal{G}\), we have \[\expv{\expv{X|\mathcal{G}}\indic_{A}}
+\overset{\text{(partial averaging)}}{=}\expv{X\indic_{A}}
+\overset{(X\indic_{A}\le Y\indic_{A})}{\le}\expv{Y\indic_{A}}
+\overset{\text{(partial averaging)}}{=}\expv{\expv{Y|\mathcal{G}}\indic_{A}}.\]
+Hence, we have
+\[\expv{(\expv{X|\mathcal{G}}-\expv{Y|\mathcal{G}})\indic_{A}}\le
+0.\]
+
+Now fix any \(\varepsilon>0\) and let \(A_{\varepsilon}:=\{
+\expv{X|\mathcal{G}}-\expv{Y|\mathcal{G}}\ge\varepsilon
+\}\in\mathcal{G}\) (as \(\expv{X|\mathcal{G}}-\expv{Y|\mathcal{G}}\) is
+\(\mathcal{G}\)-measurable). Applying the inequality above on
+\(A_{\varepsilon}\) gives
+\[
+0\ge\expv{(\expv{X|\mathcal{G}}-\expv{Y|\mathcal{G}})\indic_{A_{\varepsilon}}}
+\overset{\text{(monotonicity)}}{\ge}\expv{\varepsilon\indic_{A_{\varepsilon}}}
+=\varepsilon\prob{A_{\varepsilon}}\ge 0.
+\]
+This implies that \(\prob{A_{\varepsilon}}=0\) for all \(\varepsilon>0\),
+and hence
+\[
+0\le 
+\prob{\expv{X|\mathcal{G}}>\expv{Y|\mathcal{G}}}
+=\prob{\bigcup_{n=1}^{\infty}A_{1/n}}
+\overset{\text{(subadditivity)}}{\le}
+\sum_{n=1}^{\infty}\prob{A_{1/n}}
+=0,
+\]
+meaning that \(\prob{\expv{X|\mathcal{G}}>\expv{Y|\mathcal{G}}}=0\). Therefore,
+we have \(\expv{X|\mathcal{G}}\le\expv{Y|\mathcal{G}}\) (a.s.).
+\item Consider
+\begin{align*}
+|\expv{X|\mathcal{G}}|&=\left|\expv{X^{+}-X^{-}|\mathcal{G}}\right|
+\overset{\text{(linearity)}}{=}
+\left|\expv{X^{+}|\mathcal{G}}-\expv{X^{-}|\mathcal{G}}\right| \\
+\overset{\text{(triangle)}}&{\le}
+\big|\underbrace{\expv{X^{+}|\mathcal{G}}}
+_{\mathclap{\underset{\text{(monotonicity)}}{\ge}0}}\big|
++\big|\underbrace{\expv{X^{-}|\mathcal{G}}}
+_{\mathclap{\underset{\text{(monotonicity)}}{\ge}0}}\big|
+=\expv{X^{+}|\mathcal{G}}+\expv{X^{-}|\mathcal{G}}
+=\expv{|X||\mathcal{G}}.
+\end{align*}
+\item Since \(\expv{X|\mathcal{H}}\in\mathcal{H}\) and \(\mathcal{H}\subseteq
+\mathcal{G}\), we have \(\expv{X|\mathcal{H}}\in\mathcal{G}\). Hence, by (c)
+we have \(\expv{\expv{X|\mathcal{H}}|\mathcal{G}}=\expv{X|\mathcal{H}}\).
+This proves the first equality. Now, consider the second equality:
+\begin{enumerate}[label={(\arabic*)}]
+\item By definition, \(\expv{\expv{X|\mathcal{G}}|\mathcal{H}}\) is
+\(\mathcal{H}\)-measurable.
+\item For all \(A\in\mathcal{H}\subseteq \mathcal{G}\), we have
+\[
+\expv{\expv{\expv{X|\mathcal{G}}|\mathcal{H}}\indic_{A}}
+\underset{(A\in\mathcal{H})}{\overset{\text{(partial averaging)}}{=}}
+\expv{\expv{X|\mathcal{G}}\indic_{A}}
+\underset{(A\in\mathcal{G})}{\overset{\text{(partial averaging)}}{=}}
+\expv{X\indic_{A}}
+\underset{(A\in\mathcal{H})}{\overset{\text{(partial averaging)}}{=}}
+\expv{\expv{X|\mathcal{H}}\indic_{A}}.
+\]
+\end{enumerate}
+To get the law of total expectation, take
+\(\mathcal{H}=\{\varnothing,\Omega\}\subseteq \mathcal{G}\). Then, we have
+\[
+\expv{X}\overset{\text{(a)}}{=}\expv{X|\{\varnothing,\Omega\}}
+\overset{\text{(tower)}}{=}
+\expv{\expv{X|\mathcal{G}}|\{\varnothing,\Omega\}}
+\overset{\text{(a)}}{=}\expv{\expv{X|\mathcal{G}}}.
+\]
+\end{enumerate}
+\end{pf}
+
+\begin{remark}
+\item \emph{(``Tower'' in tower property)} In the tower property, we have
+\(\expv{\expv{X|\mathcal{H}}|\mathcal{G}}
+=\expv{X|\mathcal{H}}=\expv{\expv{X|\mathcal{G}}|\mathcal{H}}\). There
+are several ``layers'' of conditioning involved, which looks like a ``tower'',
+hence the name ``tower property''.
+\item \emph{(Interpretation of tower property)} To interpret the tower property
+more intuitively, we can consider the impact of the
+coarseness/fineness\footnote{\(\mathcal{G}\) is coarser (finer) if it contains
+smaller (larger) number of sets.} of \(\mathcal{G}\) on the conditional
+expectation (averaging): For a coarser (finer) \(\mathcal{G}\), ``larger''
+(``smaller'') pieces are contained. Hence, ``stronger'' (``weaker'') averaging
+takes place over each ``piece'', making \(\expv{X|\mathcal{G}}\) retain less
+(more) information about \(X\). Parts (a) and (c) provide two extreme examples:
+(i) For \(\mathcal{G}=\{\varnothing,\Omega\}\), it is so coarse that no
+information is retained except just the mean of \(X\):
+\(\expv{X|\mathcal{G}}=\expv{X}\), and (ii) For \(\mathcal{G}\) with
+\(X\in\mathcal{G}\), it is so fine that full information about \(X\) is
+retained: \(\expv{X|\mathcal{G}}=X\) (there is no ``averaging'' taking place).
+
+Armed with this idea, the tower property can then be interpreted as saying that
+\emph{the coarser \(\sigma\)-algebra remains} (\(\mathcal{H}\) in the case with
+\(\mathcal{G}\subseteq \mathcal{H}\)), which can be intuitively understood as
+follows:
+\begin{itemize}
+\item \(\expv{\expv{X|\mathcal{H}}|\mathcal{G}}=\expv{X|\mathcal{H}}\):
+Conditioning on the coarser \(\mathcal{H}\) already retains only a little
+information about \(X\), and conditioning on the finer \(\mathcal{G}\)
+afterwards cannot ``bring back'' the information lost.
+\item \(\expv{\expv{X|\mathcal{G}}|\mathcal{H}}=\expv{X|\mathcal{H}}\)
+Conditioning on the finer \(\mathcal{G}\) first allows us to retain more
+information about \(X\), but conditioning on the coarser \(\mathcal{H}\)
+afterwards just leads to more loss in information, and so at the end, still a
+little information about \(X\) is retained.
+\end{itemize}
+\end{remark}
+\item \textbf{Inequalities about conditional expectation.}
+In \labelcref{it:holder-cs-ineq,it:minkowski-ineq,it:jensen-ineq}, we have
+studied various inequalities about expectation. It turns out that there is an
+analogous versions of them for \emph{conditional} expectation. But before
+stating them, we first need to define a ``conditional version'' of \(L^{p}\)
+norm. We define \(\|X|\mathcal{G}\|_{p}:=\expv{|X|^{p}|\mathcal{G}}^{1/p}\)
+for every \(p\in (0,\infty]\) (though we typically only consider \(p\in[1,\infty]\)).
+The inequalities are as follows. Let \((\Omega,\mathcal{F},\pr)\) be a
+probability space.
+\begin{enumerate}
+\item \label{it:cond-holder-cs-ineq} \emph{(Conditional H\"older's inequality)}
+Let \(p,q\in [1,\infty]\) with \(1/p+1/q=1\) (with the convention that
+\(1/\infty:=0\)) be conjugate indices. Then, \(\|XY\vc{|\mathcal{G}}\|_{1}\le
+\|X\vc{|\mathcal{G}}\|_{p}\|Y\vc{|\mathcal{G}}\|_{q}\) for all \(X\in
+L^{p}(\Omega,\mathcal{F},\pr)\) and \(Y\in L^{q}(\Omega,\mathcal{F},\pr)\)
+(which can then be shown to imply \(XY\in L^{1}(\Omega,\mathcal{F},\pr)\)).
+
+\begin{note}
+The special case with \(p=q=2\) is known as the \emph{conditional
+Cauchy-Schwarz inequality}.
+\end{note}
+\item \label{it:cond-minkowski-ineq} \emph{(Conditional Minkowski's inequality)}
+Let \(p\in [1,\infty]\). Then \(\|X+Y\vc{|\mathcal{G}}\|_{p}\le \|X\vc{|\mathcal{G}}\|_{p}+\|Y\vc{|\mathcal{G}}\|_{p}\) for all
+\(X,Y\in L^{p}(\Omega,\mathcal{F},\pr)\).
+\item \label{it:cond-jensen-ineq} \emph{(Conditional Jensen's inequality)}
+Let \(X:\Omega\to\R\) be a function in \(L^{1}(\Omega,\mathcal{F},\pr)\), and
+\(\varphi\) be a convex function on \(\R\), such that \(\varphi(X)\in
+L^{1}(\Omega,\mathcal{F},\pr)\). Then,
+\(\varphi(\expv{X\vc{|\mathcal{G}}})\le\expv{\varphi(X)\vc{|\mathcal{G}}}\).
+
+\begin{note}
+Like \labelcref{it:jensen-ineq}, if \(\varphi\) is concave (with
+\(\varphi(X)\in L^{1}(\Omega,\mathcal{F},\pr)\) still), then we have
+\(\varphi(\expv{X|\mathcal{G}})\ge\expv{\varphi(X)|\mathcal{G}}\).
+\end{note}
+\end{enumerate}
+\begin{pf}
+Omitted.
+\end{pf}
+\item \textbf{Contraction and convergence in \(L^{p}\) for conditional expectation.}
+\begin{enumerate}
+\item\label{it:cond-lp-contract} \emph{(Contraction in \(L^{p}\))}
+If \(X\in L^{p}(\Omega,\mathcal{F},\pr)\) and \(p\in [1,\infty)\), then
+\(\|\expv{X|\mathcal{G}}\|_{p}\le\|X\|_{p}\).
+
+\item \label{it:cond-lp-conv} \emph{(Convergence in \(L^{p}\))}
+Let \(X,X_1,X_2,\dotsc\) be in \(L^{p}(\Omega,\mathcal{F},\pr)\), with
+\(p\in[1,\infty)\).  If \(X_n\tolp X\), then
+\(\expv{X_n|\mathcal{G}}\tolp\expv{X|\mathcal{G}}\).
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item Note that
+\[
+\|\orc{\expv{X|\mathcal{G}}}\|_{p}=\expv{|\orc{\expv{X|\mathcal{G}}}|^{p}}^{1/p}
+\overset{\text{(conditional Jensen)}}{\le}
+\expv{\expv{|X|^{p}|\mathcal{G}}}^{1/p}
+\overset{\text{(total expectation)}}{=}
+\expv{|X|^{p}}^{1/p}=\|X\|_{p}.
+\]
+\item Note that
+\[
+\|\expv{X_n|\mathcal{G}}-\expv{X|\mathcal{G}}\|_{p}
+\overset{\text{(linearity)}}{=}
+\|\expv{X_n-X|\mathcal{G}}\|_{p}
+\overset{\text{(a)}}{\le}\|X_n-X\|_{p}\tox{n}{\text{(assumption)}}0.
+\]
+Hence, by definition we have \(\expv{X_n|\mathcal{G}}\tolp\expv{X|\mathcal{G}}\).
+\end{enumerate}
+\end{pf}
+\item \textbf{Conditional versions of convergence results.}
+In \Cref{thm:mct,lma:fatou,thm:dct}, we have studied three notable convergence
+results for expectation, namely MCT, Fatou's lemma, and DCT. Like the
+inequalities, there are also conditional versions for them, as follows.
+
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space.
+\begin{enumerate}
+\item \emph{(Conditional monotone convergence theorem)}
+Let \(X_n\) be an \vc{integrable} function in \(L_{+}\) for every \(n\in\N\).
+If we have \(X_n\nearrow X\) pointwisely, then \(X\) is in \(L_{+}\) and
+is \vc{integrable}, and \(\expv{X_n|\mathcal{G}}\nearrow\expv{X|\mathcal{G}}\) \vc{a.s.}
+\item \emph{(Conditional Fatou's lemma)} Let \(X_n\) be an \vc{integrable}
+function in \(L_{+}\) for every \(n\in\N\). Then, \(\expv{\liminf_{n\to
+\infty}X_n|\mathcal{G}}\le\liminf_{n\to \infty}\expv{X_n|\mathcal{G}}\)
+\vc{a.s.}
+\item \emph{(Conditional dominated convergence theorem)}
+Let \(X_n\in L^{1}\) for every \(n\in\N\), and \(X:\Omega\to\R\) be measurable.
+If \(X_n\toas X\) and \(|X_n|\le Y\) a.s.\ for all \(n\in\N\), for some
+\(Y\in L^{1}\) \emph{(domination)}, then \(X\in L^{1}\) and
+\(\lim_{n\to\infty}\expv{X_n|\mathcal{G}}=\expv{X|\mathcal{G}}\) \vc{a.s.}
+\end{enumerate}
+\begin{pf}
+\begin{enumerate}
+\item By monotonicity, \(X_n\nearrow X\) pointwisely implies
+\(\expv{X_n|\mathcal{G}}\nearrow\) pointwisely (a.s.), and so we can let
+\(Y:=\lim_{n\to\infty}\expv{X_n|\mathcal{G}}\) (a.s.). By
+\labelcref{it:seq-rvs-meas}, \(Y\) is \(\mathcal{G}\)-measurable. Also, for all
+\(A\in\mathcal{G}\) we have
+\[
+\expv{Y\indic_{A}}=\expv{\lim_{n\to\infty}(\expv{X_n|\mathcal{G}}\indic_{A})}
+\overset{\text{(MCT)}}{=}\lim_{n\to\infty}\expv{\expv{X_n|\mathcal{G}}\indic_{A}}
+\overset{\text{(partial averaging)}}{=}\lim_{n\to\infty}\expv{X_n\indic_{A}}
+\overset{\text{(MCT)}}{=}\expv{X\indic_{A}}.
+\]
+By \Cref{prp:cond-exp-int}, we know that \(Y\in L^{1}\). Hence, by taking
+\(A=\Omega\in\mathcal{G}\) we know \(X\in L_{+}\) is integrable (MCT implies
+that \(X\in L_{+}\)).  Furthermore, we have
+\(\expv{X|\mathcal{G}}=Y=\lim_{n\to\infty}\expv{X_n|\mathcal{G}}\).
+\item Like the proof of Fatou's lemma, let \(Y_n:=\inf_{k\ge n}X_k\) for every
+\(n\in\N\). Since \(0\le Y_n\le X_n\) for each \(n\in\N\), each \(Y_n\) is in
+\(L_{+}\) and is integrable. Also, \(Y_n\nearrow\) pointwisely by construction,
+thus we can let \(Y:=\lim_{n\to\infty}Y_n=\liminf_{n\to \infty}X_n\).
+Hence,
+\begin{align*}
+\expv{\liminf_{n\to \infty}X_n|\mathcal{G}}
+&=\expv{Y|\mathcal{G}}\overset{\text{(conditional MCT)}}{=}
+\lim_{n\to\infty}\expv{Y_n|\mathcal{G}}
+=\liminf_{n\to \infty}\expv{\vc{Y_n}|\mathcal{G}} \\
+&=\liminf_{n\to \infty}\expv{\left.\vc{\inf_{k\ge n}X_k}\right|\mathcal{G}}
+\overset{(\vc{\inf_{k\ge n}X_k}\le X_n)}{=}
+\liminf_{n\to \infty}\expv{X_n|\mathcal{G}}.
+\end{align*}
+\item By DCT, we immediately have \(X\in L^{1}\). So it remains to show that
+\(\lim_{n\to\infty}\expv{X_n|\mathcal{G}}=\expv{X|\mathcal{G}}\) a.s. Noting
+that
+\[
+0\le|\expv{X_n|\mathcal{G}}-\expv{X|\mathcal{G}}|
+\overset{\text{(linearity)}}{=}|\expv{X_n-X|\mathcal{G}}|
+\overset{\text{(triangle)}}{\le}\expv{|X_n-X||\mathcal{G}}
+\overset{\text{(monotonicity)}}{\le}
+\expv{\left.\sup_{k\ge n}|X_k-X|\right|\mathcal{G}},
+\]
+it suffices to show that \(\lim_{n\to\infty}\expv{Z_n}=0\) a.s., with
+\(Z_{\vc{n}}:= \sup_{k\ge \vc{n}}|X_k-X|\) for every \(n\in\N\).
+By \Cref{thm:as-conv-char-ip}, we have \(Z_n\topr 0\). Also, for each
+\(n\in\N\), we have
+\[
+0\le Z_n
+\overset{\text{(triangle)}}{\le}
+\sup_{k\ge n}(\underbrace{|X_n|}_{\underset{\text{a.s.}}{\le} Y}+
+\underbrace{|X|}_{\underset{\text{a.s.}}{\le} Y})
+\overset{\text{a.s.}}{\le}2Y \in L^{1}.
+\]
+It then follows by \Cref{cor:dct-ip-version} that
+\(\lim_{n\to\infty}\expv{Z_n}=\expv{0}=0\).
+
+Since \(Z_n\ge 0\) and \(Z_n\searrow\), by monotonicity we know
+\(\expv{Z_n|\mathcal{G}}\ge 0\) and \(\expv{Z_n|\mathcal{G}}\searrow\).
+Therefore, we can let \(Z:=\lim_{n\to\infty}\expv{Z_n|\mathcal{G}}\), which is
+\(\mathcal{G}\)-measurable by \labelcref{it:seq-rvs-meas}. Also, since
+\(0\le Z\le
+\expv{Z_n|\mathcal{G}}\overset{\text{(\Cref{prp:cond-exp-int})}}{\in} L^{1}\)
+for each \(n\in\N\), we know \(Z\) is in \(L_{+}\) and is integrable, and also
+\[
+0\overset{\text{(monotonicity)}}{\le}
+\expv{Z}\overset{\text{(monotonicity)}}{\le}
+\expv{\expv{Z_n|\mathcal{G}}}\overset{\text{(total expectation)}}{=}
+\expv{Z_n}\tox{n}{\text{(above)}}0,
+\]
+which implies that \(\expv{Z}=0\). Hence,
+\(\lim_{n\to\infty}\expv{Z_n|\mathcal{G}}\overset{\text{(definition)}}{=}Z
+\underset{\labelcref{it:nonneg-leb-int-prop}}{\eqas} 0\).
+\end{enumerate}
+\end{pf}
+\item \textbf{``Removing'' \(\sigma\)-algebra in conditional expectation based
+on independence.} By the \emph{no relevant information} property in
+\Cref{prp:cond-exp-prop}, we know that \(\expv{X|\mathcal{G}}=\expv{X}\) if
+\(\mathcal{G}\) is independent of \vc{\(\sigma(X)\)}. Here, the \(\sigma\)-algebra
+\(\mathcal{G}\) can be ``removed'' from the conditional expectation due to the
+independence. This property is generalized by the following result, which
+suggests when such ``removal'' can take place with two \(\sigma\)-algebras
+involved.
+
+\begin{proposition}
+\label{prp:cond-exp-ind-remove-sig-alg}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space,
+\(\mathcal{G},\mathcal{H}\subseteq \mathcal{F}\) be \(\sigma\)-algebras, and
+\(X\in L^{1}(\Omega,\mathcal{F},\pr)\). If \(\mathcal{H}\) is independent of
+\vc{\(\sigma(\sigma(X),\mathcal{G})\)}, then
+\(\expv{X|\sigma(\mathcal{G},\mathcal{H})} =\expv{X|\mathcal{G}}\).
+\end{proposition}
+\begin{pf}
+Consider first the case with \(X\ge 0\). Let \(Y\) be a version of
+\(\expv{X|\mathcal{G}}\). Then \(Y\) is \(\mathcal{G}\)-measurable by definition,
+and \(Y\ge 0\) a.s.\ by monotonicity. By \labelcref{it:nonneg-leb-int-prop},
+the functions \(\mu\) and \(\nu\) defined by \(\mu(A)=\expv{Y\indic_{A}}\)
+and \(\nu(A)=\expv{X\indic_{A}}\) for all \(A\in\mathcal{F}\) are measures on
+\((\Omega,\mathcal{F})\). Note that \(\mu(\Omega)=\expv{Y}=\expv{\expv{X|\mathcal{G}}}
+\overset{\text{(total expectation)}}{=}\expv{X}<\infty\)
+and \(\nu(\Omega)=\expv{X}<\infty\) also. Hence both measures are finite, thus
+also \(\sigma\)-finite.
+
+For all \(G\in\mathcal{G}\) and \(H\in\mathcal{H}\), we have
+\begin{align*}
+\mu(G\cap H)&=\expv{Y\indic_{G\cap H}}=\expv{Y\indic_{G}\indic_{H}}
+\overset{\text{(\(Y\in\mathcal{G}\), \(\mathcal{H}\) independent of
+\(\mathcal{G}\))}}{=}\expv{Y\indic_{G}}\expv{\indic_{H}} \\
+\overset{\text{(partial averaging)}}&{=}
+\expv{X\indic_{G}}\expv{\indic_{H}}
+\overset{\text{(\(\mathcal{H}\) independent of
+\(\sigma(\sigma(X),\mathcal{G})\))}}{=}
+\expv{X\indic_{G}\indic_{H}}
+=\expv{X\indic_{G\cap H}}=\nu(G\cap H).
+\end{align*}
+This means that \(\mu\) and \(\nu\) are \(\sigma\)-finite measures that
+coincide on the \(\pi\)-system \(\{G\cap H:G\in\mathcal{G},
+H\in\mathcal{H}\}\). Thus, by \Cref{prp:meas-unique}, \(\mu\) and \(\nu\)
+coincide on \(\sigma(\{G\cap H:G\in\mathcal{G},H\in\mathcal{H}\}
+\overset{\text{\labelcref{it:sig-alg-union-two-expr}}}{=}
+\sigma(\mathcal{G},\mathcal{H})\). In other words, for every
+\(A\in\sigma(\mathcal{G},\mathcal{H})\), we have
+\(\mu(A)=\expv{Y\indic_{A}}=\expv{X\indic_{A}}=\nu(A)\). This shows the partial
+averaging property.
+
+Therefore, \(Y=\expv{X|\mathcal{G}}\) is also a version of
+\(\expv{X|\sigma(\mathcal{G},\mathcal{H})}\). It then follows by the a.s.\
+uniqueness of conditional expectation (\Cref{thm:cond-exp-exist-unique})
+that \(\expv{X|\mathcal{G}}\eqas\expv{X|\sigma(\mathcal{G},\mathcal{H})}\).
+
+Now, consider the general case where \(X\) may not be nonnegative. We write
+\(X=X^{+}-X^{-}\). Then, by the proven case and linearity, we get
+\[
+\expv{X|\mathcal{G}}\eqas \expv{X^{+}|\mathcal{G}}-\expv{X^{-}|\mathcal{G}}
+\eqas\expv{X^{+}|\sigma(\mathcal{G},\mathcal{H})}
+-\expv{X^{-}|\sigma(\mathcal{G},\mathcal{H})}
+\eqas\expv{X|\sigma(\mathcal{G},\mathcal{H})}.
+\]
+\end{pf}
+
+To see how \Cref{prp:cond-exp-ind-remove-sig-alg} generalizes the \emph{no
+relevant information} property (i.e., includes it as a special case), take
+\(\mathcal{G}=\{\varnothing,\Omega\}\). Then, we have
+\[\sigma(\sigma(X),\mathcal{G})\overset{\text{(consider
+definition)}}{=}\sigma(\sigma(X))\overset{\text{(\(\sigma(X)\) is the smallest
+\(\sigma\)-algebra containing itself)}}{=}\sigma(X)\]
+and 
+\[\sigma(\mathcal{G},\mathcal{H})\overset{\text{(consider
+definition)}}{=}\sigma(\mathcal{H})\overset{\text{(\(\mathcal{H}\) is the smallest
+\(\sigma\)-algebra containing itself)}}{=}\mathcal{H}.\]
+Therefore, in this case \Cref{prp:cond-exp-ind-remove-sig-alg} is just
+asserting that
+\(\expv{X|\mathcal{H}}=\expv{X|\{\varnothing,\Omega\}}\overset{\text{(no
+information)}}{=}\expv{X}\), which is the same as the \emph{no relevant
+information} property.
+\item \textbf{Taking out what is known.} The next property of conditional
+expectation to be discussed is \emph{taking out what is known (TOWIK)}, which
+is frequently used. In its proof, we will utilize the following lemma, which
+can simplify the verification of the \emph{partial averaging} property for
+conditional expectation.
+\begin{lemma}
+\label{lma:part-avg-on-pi-sys}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(\mathcal{G}\subseteq
+\mathcal{F}\) be a \(\sigma\)-algebra on \(\Omega\), and \(X\in
+L^{1}(\Omega,\mathcal{F},\pr)\). If \(\mathcal{A}\subseteq \mathcal{F}\) is a
+\(\pi\)-system such that (i) \(\sigma(\mathcal{A})=\mathcal{G}\) and (ii) there
+exists \(\{A_i\}_{i\in\N}\subseteq \mathcal{A}\) such that
+\(\bigcup_{i=1}^{\infty}A_i=\Omega\), then a function \(Y:\Omega\to\R\) is a
+version of \(\expv{X|\mathcal{G}}\) if it satisfies:
+\begin{enumerate}[label={(\arabic*)}]
+\item \emph{(Measurability)} \(Y\in\mathcal{G}\).
+\item \emph{(Partial averaging on \(\mathcal{A}\))}
+\(\expv{Y\indic_{A}}=\expv{X\indic_{A}}\) for all \(A\in\mathcal{A}\).
+\end{enumerate}
+\end{lemma}
+\begin{pf}
+First, for all \(A\in\mathcal{A}\), we have
+\(\expv{|X\indic_{A}|}\overset{\text{(monotonicity)}}{\le} \expv{|X|}<\infty\),
+and so \(X\indic_{A}\) is integrable. Now, by the partial averaging on
+\(\mathcal{A}\), we have \(\expv{Y\indic_{A}}=\expv{X\indic_{A}}\),
+which means that \(Y\indic_{A}\) is integrable also. Therefore, by the
+integrability of \(X\indic_{A}\) and \(Y\indic_{A}\) for all \(A\in\mathcal{A}\),
+we get the following chain of equivalences:
+\begin{align*}
+\quad\expv{Y\indic_{A}}&=\expv{X\indic_{A}}\quad\forall A\in\mathcal{A} \\
+\iff \expv{Y^{+}\indic_{A}}-\expv{Y^{-}\indic_{A}}
+&=\expv{X^{+}\indic_{A}}-\expv{X^{-}\indic_{A}}\quad \forall A\in\mathcal{A} \\
+\iff \mu(A):=\expv{(Y^{+}+X^{-})\indic_{A}}
+&=\expv{(X^{+}+Y^{-})\indic_{A}}=:\nu(A)\quad \forall A\in\mathcal{A}.
+\end{align*}
+Since \(X\in\mathcal{F}\) and \(Y\in\mathcal{G}\) (hence also
+\(Y\in\mathcal{F}\)), we know \(Y^{+}+X^{-}\in\mathcal{F}\) and
+\(X^{+}+Y^{-}\in\mathcal{F}\). Therefore, by \labelcref{it:nonneg-leb-int-prop}
+we know \(\mu\) and \(\nu\) are measures on \(\mathcal{F}\) (hence also on
+\(\mathcal{G}\)).
+
+With \(\mu|_{\mathcal{A}}=\nu|_{\mathcal{A}}\) and the integrability of \(X,Y\)
+(thus also \(X^{+},X^{-},Y^{+},Y^{-}\)) on \(\mathcal{A}\subseteq
+\sigma(\mathcal{A})=\mathcal{G}\), we get for each \(i\in\N\),
+\(\mu(A_i)\overset{(A_i\in\mathcal{A})}{=}\nu(A_i)
+\overset{\text{(integrability)}}{<}\infty\). Since
+\(\bigcup_{i=1}^{\infty}A_i=\Omega\) by assumption, we have
+\[
+\mu|_{\mathcal{G}}=\mu|_{\sigma(\mathcal{A})}
+\overset{\text{(\Cref{prp:meas-unique})}}{=}
+\nu|_{\sigma(\mathcal{A})}=\nu|_{\mathcal{G}}.
+\]
+This means that
+\[
+\mu(A)=\expv{(Y^{+}+X^{-})\indic_{A}}
+=\expv{(X^{+}+Y^{-})\indic_{A}}=\nu(A)\quad \forall A\in\mathcal{G},
+\]
+which is equivalent to
+\[
+\expv{Y\indic_{A}}=\expv{X\indic_{A}}\quad\forall A\in\mathcal{G},
+\]
+i.e., the partial averaging property for conditional expectation. Hence, by
+definition, \(Y\) is a version of \(\expv{X|\mathcal{G}}\).
+\end{pf}
+
+Now we are ready to prove the \emph{taking out what is known} property.
+
+\begin{proposition}[Taking out what is known (TOWIK)]
+\label{prp:towik}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
+\(\mathcal{G}\subseteq \mathcal{F}\) be a \(\sigma\)-algebra on \(\Omega\). If
+\(XY\) and \(X\) are integrable and \(Y\in\mathcal{G}\), then \(\expv{XY|\mathcal{G}}
+=Y\expv{X|\mathcal{G}}\) \emph{(taking out the ``known'' \(Y\))}.
+\end{proposition}
+\begin{pf}
+\begin{enumerate}[label={(\arabic*)}]
+\item Since \(Y\in\mathcal{G}\) and \(\expv{X|\mathcal{G}}\in\mathcal{G}\),
+we have \(Y\expv{X|\mathcal{G}}\in\mathcal{G}\).
+\item We apply the standard argument on \(Y\).
+\begin{enumerate}
+\item Fix any indicator function \(Y=\indic_{B}\) with \(B\in\mathcal{G}\).
+For all \(A\in\mathcal{G}\),
+\[
+\expv{\vc{Y\expv{X|\mathcal{G}}}\indic_{A}}
+=\expv{\indic_{B}\expv{X|\mathcal{G}}\indic_{A}}
+=\expv{\expv{X|\mathcal{G}}\indic_{A\cap B}}
+\overset{(A\cap B\in\mathcal{G})}{=}
+\expv{X\indic_{A\cap B}}
+=\expv{\indic_{B}X\indic_{A}}
+=\expv{\vc{XY}\indic_{A}}.
+\]
+By linearity, the equality also holds for every simple \(Y\in\orc{\mathcal{G}}\)
+(i.e., those with the form \(Y=\sum_{i=1}^{n}y_i\indic_{A_i}\) where
+\(y_1,\dotsc,y_n\in\R\) and \(A_1,\dotsc,A_n\in\orc{\mathcal{G}}\) are pairwise
+disjoint).
+\item Fix any nonnegative \(Y\in\mathcal{G}\). Consider first the case
+where \(X\ge 0\).
+
+By \Cref{lma:apx-seq}, we know there exists a sequence \(\{Y_n\}\) of
+nonnegative simple functions such that \(Y_n\nearrow Y\). Hence, for all
+\(A\in\mathcal{G}\), we have \(Y_n\expv{X|\mathcal{G}}\indic_{A}\nearrow
+Y\expv{X|\mathcal{G}}\indic_{A}\) and \(XY_n\indic_{A}\nearrow XY\indic_{A}\),
+both pointwisely, which imply that
+\[
+\expv{\vc{Y\expv{X|\mathcal{G}}}\indic_{A}}
+\overset{\text{(MCT)}}{=}\lim_{n\to\infty}\expv{Y_n\expv{X|\mathcal{G}}\indic_{A}}
+\underset{\text{(partial averaging)}}{\overset{\text{(simple case)}}{=}}
+\lim_{n\to\infty}\expv{XY_n\indic_{A}}
+\overset{\text{(MCT)}}{=}
+\expv{\vc{XY}\indic_{A}}.
+\]
+Next, consider the general case where \(X\) may not be nonnegative. Write
+\(X=X^{+}-X^{-}\), and then we get
+\begin{align*}
+\expv{\vc{Y\expv{X|\mathcal{G}}}\indic_{A}}
+&=\expv{Y\expv{X^{+}|\mathcal{G}}\indic_{A}}-\expv{Y\expv{X^{-}|\mathcal{G}}\indic_{A}}
+\underset{\text{(partial averaging)}}{\overset{\text{(above case)}}{=}}
+\expv{X^{+}Y\indic_{A}}-\expv{X^{-}Y\indic_{A}} \\
+&=\expv{\vc{XY}\indic_{A}}
+\end{align*}
+for all \(A\in\mathcal{G}\).
+\item Fix any \(Y\in\mathcal{G}\). Write \(Y=Y^{+}-Y^{-}\).
+Then, for all \(A\in\mathcal{G}\) we have
+\begin{align*}
+\expv{\vc{Y\expv{X|\mathcal{G}}}\indic_{A}}
+&=\expv{Y^{+}\expv{X|\mathcal{G}}\indic_{A}}
+-\expv{Y^{-}\expv{X|\mathcal{G}}\indic_{A}}
+\underset{\text{(partial averaging)}}{\overset{\text{(nonnegative case)}}{=}}
+\expv{XY^{+}\indic_{A}}
+-\expv{XY^{-}\indic_{A}} \\
+&=\expv{\vc{XY}\indic_{A}}.
+\end{align*}
+\end{enumerate}
+\end{enumerate}
+\end{pf}
+
+A corollary of the TOWIK property is a ``conditional version'' of
+\Cref{prp:expv-prod-indp} (expectation of product is product of expectations).
+\begin{corollary}
+\label{cor:cond-expv-prod-indp}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
+\(\mathcal{G}\subseteq \mathcal{F}\) be a \(\sigma\)-algebra on \(\Omega\).  If
+\(X\), \(Y\), and \(XY\) are integrable, and \(Y\) is independent of
+\(\sigma(\sigma(X),\mathcal{G})\), then
+\(\expv{XY|\mathcal{G}}=\expv{Y}\expv{X|\mathcal{G}}\).
+\end{corollary}
+\begin{pf}
+Note that
+\begin{align*}
+\expv{XY|\mathcal{G}}\overset{\text{(tower, \(\mathcal{G}\subseteq
+\sigma(\sigma(X),\mathcal{G}))\))}}&{=}
+\expv{\expv{\vc{X}Y|\sigma(\vc{\sigma(X)},\mathcal{G})}|\mathcal{G}}
+\overset{\text{(TOWIK)}}{=}
+\expv{\vc{X}\expv{Y|\sigma(\sigma(X),\mathcal{G})}|\mathcal{G}} \\
+\overset{\text{(\Cref{prp:cond-exp-prop})}}&{=}
+\expv{X\expv{Y}|\mathcal{G}}=\expv{Y}\expv{X|\mathcal{G}}.
+\end{align*}
+\end{pf}
+\item \textbf{Factorization/Doob-Dynkin lemma.} Here, we are going to study an
+important result, known as \emph{factorization} or \emph{Doob-Dynkin lemma},
+that justifies the method of finding conditional expectation learnt in your
+first probability course. It turns out that, while the definition of
+conditional expectation given here is rather abstract, it is possible to be
+reduced to some more ``comprehensible'' forms that you have previously seen.
+
+\begin{theorem}[Factorization/Doob-Dynkin lemma]
+\label{thm:factorization}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space,
+\((\Omega',\mathcal{F}')\) be a measurable space, and \(Z:\Omega\to\Omega'\).
+The function \(Y:\Omega\to\R\) is \((\sigma(Z),\mathcal{B}(\R))\)-measurable
+iff there exists a \((\mathcal{F}',\mathcal{B}(\R))\)-measurable function
+\vc{\(h:\Omega'\to\R\)} such that \(Y=h(Z)\).
+\end{theorem}
+\begin{center}
+\begin{tikzpicture}
+\node[scale=2] (om) at (0,0) {\(\Omega\)};
+\node[scale=2] (omp) at (5,0) {\(\Omega'\)};
+\node[scale=2] (er) at (10,0) {\(\R\)};
+\node[] () at (11,0) {};
+\draw[-Latex] (om) to[bend left] node[auto, scale=1.5]{\(Z\)} (omp);
+\draw[-Latex, violet] (omp) to[bend left] node[auto, scale=1.5]{\(h\)} (er);
+\draw[-Latex] (om) to[bend right] node[auto, swap, scale=1.5]{\(Y\)} (er);
+\node[draw, dashed, scale=1.5] () at (0,-1) {\(\sigma(Z)\)};
+\node[draw, dashed, scale=1.5] () at (5,-1) {\(\mathcal{F}'\)};
+\node[draw, dashed, scale=1.5] () at (10,-1) {\(\mathcal{B}(\R)\)};
+\draw[->, dashed, brown, thick] (5,-1.7) -- (2.5,1);
+\draw[->, dashed, brown, thick] (5,-1.7) -- (7.5,1);
+\node[brown] () at (5,-2.5) {``factorize''};
+\end{tikzpicture}
+\end{center}
+\begin{pf}
+``\(\Leftarrow\)'': Since \(Z\) is \((\sigma(Z),\mathcal{F}')\)-measurable
+and \(h\) is \((\mathcal{F}',\mathcal{B}(\R))\)-measurable, by
+\labelcref{it:meas-compo-meas} we know that \(Y=h(Z)\) is
+\((\sigma(Z),\mathcal{B}(\R))\)-measurable.
+
+``\(\Rightarrow\)'': Let \(Y\) be \((\sigma(Z),\mathcal{B}(\R))\)-measurable.
+We then apply the standard argument on \(Y\).
+\begin{enumerate}[label={(\arabic*)}]
+\item Fix any simple \(Y=\sum_{i=1}^{n}y_i\indic_{A_i}\) with \(n\in\N\) and
+\(A_i\in\sigma(Z)\) for every \(i=1,\dotsc,n\). Noting that \(A_i=Z^{-1}(A_i')\)
+with \(A_i'\in\mathcal{F}'\) for each \(i=1,\dotsc,n\), we have
+\[
+Y(\omega)=\sum_{i=1}^{n}y_i\indic_{A_i}(\omega)
+=\sum_{i=1}^{n}y_i\indic_{Z^{-1}(A_i')}(\omega)
+\overset{(\omega\in Z^{-1}(A_i')\iff Z(\omega)\in A_i')}
+{=}\sum_{i=1}^{n}y_i\indic_{A_i'}(Z(\omega))
+=h(Z(\omega))
+\]
+where \(h(z):=\sum_{i=1}^{n}y_i\indic_{A_i'}(z)\) is
+\((\mathcal{F}',\mathcal{B}(\R))\)-measurable.
+\item Fix any \(Y\ge 0\) that is \((\sigma(Z),\mathcal{B}(\R))\)-measurable.
+By \Cref{lma:apx-seq}, there exists a sequence \(\{Y_n\}\) of simple functions
+such that \(Y_n\nearrow Y\). Now, for each \(n\in\N\), we know by (1) that
+there exists a \((\mathcal{F}',\mathcal{B}(\R))\)-measurable function \(h_n\)
+such that \(Y_n=h_n(Z)\). Since \(Y_n\nearrow\), we have \(h_n\nearrow\) also.
+Thus, we have
+\[
+Y=\lim_{n\to\infty}Y_n=\lim_{n\to\infty}h_n(Z)=\sup_{n\in\N}h_n(Z)=:h(Z),
+\]
+where \(h(z)=\sup_{n\in\N}h_n(z)\) is
+\((\mathcal{F}',\mathcal{B}(\R))\)-measurable by \labelcref{it:seq-rvs-meas}.
+\item Fix any \((\sigma(Z),\mathcal{B}(\R))\)-measurable \(Y\). Write
+\(Y=Y^{+}-Y^{-}\). By (2), there exist
+\((\mathcal{F}',\mathcal{B}(\R))\)-measurable functions \(h^{+}\) and \(h^{-}\)
+such that \(Y^{+}=h^{+}(Z)\) and \(Y^{-}=h^{-}(Z)\). Then, we have \(Y=h(Z)\)
+with \(h:=h^{+}-h^{-}\) being \((\mathcal{F}',\mathcal{B}(\R))\)-measurable.
+\end{enumerate}
+\end{pf}
+
+Using \Cref{thm:factorization}, we can derive the following corollary which
+justifies the ``elementary'' way of computing conditional expectation.
+\begin{corollary}[Factorization for conditional expectation]
+\label{cor:fact-cond-exp}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space. If \(X\in L^{1}\) and
+\(\vect{Z}:\Omega\to\R^{d}\) is a random vector, then there
+exists a measurable \(h:\R^{d}\to\R\) such that
+\(\expv{X|\vect{Z}}=h(\vect{Z})\).
+\end{corollary}
+\begin{note}
+For every \(\vect{z}\in\R^{d}\), the value \(\expv{X|\vect{Z}=\vect{z}}:=h(\vect{z})\)
+is said to be the \defn{conditional expectation of \(X\) given \(\vect{Z}=\vect{z}\)}.
+\end{note}
+
+\begin{pf}
+Note that \(X\) is \((\mathcal{F},\mathcal{B}(\R))\)-measurable, \(\vect{Z}\)
+is \((\mathcal{F},\mathcal{B}(\R^{d}))\)-measurable, and \(\expv{X|\vect{Z}}\)
+is \((\sigma(Z),\mathcal{B}(\R))\)-measurable. Therefore, the result follows by
+taking \(\Omega'=\R^{d}\), \(\mathcal{F}'=\mathcal{B}(\R^{d})\), and
+\(Y=\expv{X|\vect{Z}}\) in \Cref{thm:factorization}.
+\end{pf}
+\item \textbf{Factorization of conditional expectation under independence.}
+Both \Cref{thm:factorization} and \Cref{cor:fact-cond-exp} suggest the
+\emph{existence} of factorization, but do not give us an explicit ``formula''
+for finding out what \(h\) is.\footnote{While the proof of
+\Cref{thm:factorization} does suggest that how such \(h\) can be constructed,
+it is not in a very explicit form and is generally hard to obtain.} In the
+following, we will consider a special case where we do have an explicit formula
+for such \(h\).
+
+\begin{proposition}
+\label{prp:fact-indp}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space.  If
+\(\vect{X}:\Omega\to\R^{d_{\vect{x}}}\) and
+\(\vect{Z}:\Omega\to\R^{d_{\vect{z}}}\) are independent random vectors, and
+\(g:\R^{d_{\vect{x}}+d_{\vect{z}}}\to\R\) is a measurable function such that
+\(g(\vect{X},\vect{Z})\in L^{1}\), then
+\(\expv{g(\vect{X},\vect{Z})|\vect{Z}}=h(\vect{Z})\) (a.s.), where
+\(h(\vect{z}):=\expv{g(\vect{X},\vect{z})}\).
+\end{proposition}
+%\begin{note}
+%Here, the conditional expectation \(\expv{g(\vect{X},\vect{Z})|\vect{Z}}\)
+%may involve a random variable \(g(\vect{X},\vect{Z})\) that is only in \(L_{+}\)
+%but not in \(L_{1}\). This case is technically excluded in our definition of
+%conditional expectation. For the purpose here, we may treat such conditional
+%expectation to be defined in the same way as usual (a function from \(\Omega\)
+%to \(\R\) that satisfies the measurability and partial averaging properties),
+%but it should be warned that such ``conditional expectation'' may not satisfy
+%the previously proven properties anymore \warn{}; only the result here is
+%guaranteed to hold for such case.
+%\end{note}
+
+\begin{pf}
+\begin{enumerate}[label={(\arabic*)}]
+\item Since \(h\) is
+\((\mathcal{B}(\R^{d_{\vect{z}}}),\mathcal{B}(\R))\)-measurable
+and \(\vect{Z}\) is \((\sigma(\vect{Z}),\mathcal{B}(\R^{d}))\)-measurable,
+by \labelcref{it:meas-compo-meas} we know \(h(\vect{Z})\) is
+\(\sigma(Z)\)-measurable.
+\item Fix any \(A\in\sigma(\vect{Z})\). Then, we can write \(A=\vect{Z}^{-1}(B)\)
+for some \(B\in\mathcal{B}(\R^{d_{\vect{z}}})\). With this expression,
+we note that \(\indic_{A}(\omega)=\indic_{\vect{Z}^{-1}(B)}(\omega)
+=\indic_{B}(\vect{Z}(\omega))\) for all \(\omega\in\Omega\). Now, since
+\(g(\vect{X},\vect{Z})\in L^{1}\), applying the Fubini's theorem yields
+\begin{align*}
+\int_{A}^{}g(\vect{X},\vect{Z})\odif{\pr}
+&=\int_{\Omega}^{}g(\vect{X},\vect{Z})\indic_{A}\odif{\pr}
+=\int_{\Omega}^{}g(\vect{X},\vect{Z})\indic_{B}(\vect{Z})\odif{\pr} \\
+\overset{\text{(\Cref{thm:change-of-var})}}&{=}
+\int_{\R^{d_{\vect{x}}+d_{\vect{z}}}}^{}g(\vect{x},\vect{z})\indic_{B}(\vect{z})\odif{
+{F_{\vect{X},\vect{Z}}(\vect{x},\vect{z})}} \\
+\overset{\text{(Fubini, independence)}}&{=}
+\int_{\R^{d_{\vect{z}}}}^{}
+\int_{\R^{d_{\vect{x}}}}^{}
+g(\vect{x},\vect{z})\indic_{B}(\vect{z})
+\odif{F_{\vect{X}}(\vect{x})}\odif{F_{\vect{Z}}(\vect{z})} \\
+&=\int_{\R^{d_{\vect{z}}}}^{}
+\indic_{B}(\vect{z})
+\underbrace{\int_{\R^{d_{\vect{x}}}}^{}
+g(\vect{x},\vect{z})\odif{F_{\vect{X}}(\vect{x})}}
+_{\expv{g(\vect{X},\vect{z})}=h(\vect{z})}
+\odif{F_{\vect{Z}}(\vect{z})} \\
+&=\int_{\R^{d_{\vect{z}}}}^{}\indic_{B}(\vect{z})h(\vect{z})\odif{F_{\vect{Z}}(\vect{z})}
+\overset{\text{(\Cref{thm:change-of-var})}}{=}
+\int_{\Omega}^{}\indic_{B}(\vect{Z})h(\vect{Z})\odif{\pr} \\
+&=\int_{\Omega}^{}\indic_{A}h(\vect{Z})\odif{\pr}
+=\int_{A}^{}h(\vect{Z})\odif{\pr}.
+\end{align*}
+\end{enumerate}
+\end{pf}
+
+\begin{remark}
+\item \emph{(Practical usage)} Based on \Cref{prp:fact-indp}, we can compute
+conditional expectation of the form \(\expv{g(\vect{X},\vect{Z})|\vect{Z}}\),
+where \(\vect{X}\) and \(\vect{Z}\) are independent, by first computing
+\(h(\vect{z})=\expv{g(\vect{X},\vect{z})}\) \emph{(replacing \(\vect{Z}\) by
+\(\vect{z}\) in the expression and removing the condition)}, and then
+conclude that the conditional expectation is \(h(\vect{Z})\) \emph{(replacing
+every \(\vect{z}\) by \(\vect{Z}\) in the final expression)}.
+\end{remark}
+\end{enumerate}
+\subsection{Applications of Conditional Expectation}
+\begin{enumerate}
+\item After having a solid foundation on the measure-theoretic backbone of
+conditional expectation in \Cref{subsect:meas-theoretic-cond}, we now study
+some applications of conditional expectation, including deviations of formulas
+about \emph{conditional distribution functions}, \emph{variances}, and
+\emph{random sums}, and also about the usage of conditional expectation in
+\emph{regression analysis}.
+\item \textbf{Conditional distribution formula.}
+Conditional expectation can be used for deriving the following versatile
+formula for computing distribution functions via conditioning.
+
+\begin{proposition}
+\label{prp:cond-dist-fmla}
+Let \(\vect{X}\) and \(\vect{Z}\) be random vectors. If
+\((\vect{X},\vect{Z})\sim F\) for a \((d_{\vect{x}}+d_{\vect{z}})\)-dimensional
+distribution function \(F\), then
+\[
+F(\vect{x},\vect{z})=\int_{(\vect{-\infty},\vect{z}]}^{}
+F_{\vect{X}|\vect{Z}}(\vect{x}|\widetilde{\vect{z}})
+\odif{F_{\vect{Z}}(\widetilde{\vect{z}})}
+\quad\text{for all \((\vect{x},\vect{z})\in\R^{d_{\vect{x}}+d_{\vect{z}}}\).}
+\]
+\end{proposition}
+\begin{pf}
+Let \(h(\widetilde{\vect{z}})=\expv{\indicset{\vect{X}\le\vect{x}}
+|\vect{Z}=\widetilde{\vect{z}}}=\prob{\vect{X}\le\vect{x}|\vect{Z}=\widetilde{\vect{z}}}
+=F_{\vect{X}|\vect{Z}}(\vect{x}|\widetilde{\vect{z}})\). Consider
+\begin{align*}
+F(\vect{x},\vect{z})
+&=\expv{\indicset{\vect{X}\le\vect{x},\vect{Z}\le\vect{z}}}
+=\expv{\indicset{\vect{X}\le\vect{x}}\indicset{\vect{Z}\le\vect{z}}}
+\overset{\text{(total expectation)}}{=}
+\expv{\expv{\indicset{\vect{X}\le\vect{x}}
+\vc{\indicset{\vect{Z}\le\vect{z}}}|\vect{Z}}} \\
+\overset{\text{(TOWIK)}}&{=}
+\expv{\vc{\indicset{\vect{Z}\le\vect{z}}}
+\expv{\indicset{\vect{X}\le\vect{x}}|\vect{Z}}}
+=\expv{\indicset{\vect{Z}\le\vect{z}}h(\vect{Z})}
+\overset{\text{(\Cref{thm:change-of-var})}}{=}
+\int_{\R^{d_{\vect{z}}}}^{}
+\indicset{\widetilde{\vect{z}}\le\vect{z}}h(\widetilde{\vect{z}})
+\odif{F_{\vect{Z}}(\widetilde{\vect{z}})} \\
+&=\int_{(\vect{-\infty},\vect{z}]}^{}
+h(\widetilde{\vect{z}})\odif{F_{\vect{Z}}(\widetilde{\vect{z}})}
+=\int_{(\vect{-\infty},\vect{z}]}^{}
+F_{\vect{X}|\vect{Z}}(\vect{x}|\widetilde{\vect{z}})
+\odif{F_{\vect{Z}}(\widetilde{\vect{z}})}.
+\end{align*}
+\end{pf}
+\item \textbf{Law of total variance.} Apart from the \emph{law of total
+expectation} (\Cref{prp:cond-exp-prop}), there is also the \emph{law of total
+variance}, but the formula is slightly more complex. The following lemma,
+which gives a conditional version of the ``2nd moment minus 1st moment
+squared'' formula for the variance, is helpful for establishing the law of
+total variance.
+
+\begin{lemma}
+\label{lma:cond-var-mom-diff}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(\mathcal{G}\subseteq
+\mathcal{F}\) be a \(\sigma\)-algebra, and \(X\in
+L^{\vc{2}}(\Omega,\mathcal{F},\pr)\). Then, \(\vari{X|\mathcal{G}}
+=\expv{X^{2}|\mathcal{G}}-\expv{X|\mathcal{G}}^{2}\).
+\end{lemma}
+\begin{pf}
+Note that
+\begin{align*}
+\vari{X|\mathcal{G}}&=\expv{(X-\expv{X|\mathcal{G}})^{2}|\mathcal{G}}
+\overset{\text{(linearity)}}{=}
+\expv{X^{2}|\mathcal{G}}-2\expv{X\vc{\expv{X|\mathcal{G}}}|\mathcal{G}}
++\expv{\vc{(\expv{X|\mathcal{G}})^{2}}|\mathcal{G}} \\
+\overset{\text{(TOWIK twice)}}&{=}
+\expv{X^{2}|\mathcal{G}}-2\vc{\expv{X|\mathcal{G}}}\expv{X|\mathcal{G}}
++\vc{(\expv{X|\mathcal{G}})^{2}}
+=\expv{X^{2}|\mathcal{G}}-(\expv{X|\mathcal{G}})^{2}.
+\end{align*}
+\end{pf}
+\begin{proposition}[Law of total variance]
+\label{prp:law-of-total-var}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(\mathcal{G}\subseteq
+\mathcal{F}\) be a \(\sigma\)-algebra, and \(X\in
+L^{\vc{2}}(\Omega,\mathcal{F},\pr)\). Then, \(\vari{X}=\expv{\vari{X|\mathcal{G}}}
++\vari{\expv{X|\mathcal{G}}}\).
+\end{proposition}
+\begin{pf}
+We have
+\begin{align*}
+\vari{X}&=\expv{X^{2}}-\expv{X}^{2}
+\overset{\text{(total expectation twice)}}{=}
+\expv{\vc{\expv{X^{2}|\mathcal{G}}}}-\expv{\expv{X|\mathcal{G}}}^{2} \\
+\overset{\text{(\Cref{lma:cond-var-mom-diff})}}&{=}
+\expv{\vc{\vari{X|\mathcal{G}}+\expv{X|\mathcal{G}}^{2}}}
+-\expv{\expv{X|\mathcal{G}}}^{2}
+\overset{\text{(linearity)}}{=}
+\expv{\vari{X|\mathcal{G}}}+\expv{\orc{\expv{X|\mathcal{G}}}^{2}}
+-\expv{\orc{\expv{X|\mathcal{G}}}}^{2} \\
+&=\expv{\vari{X|\mathcal{G}}}+\vari{\orc{\expv{X|\mathcal{G}}}}.
+\end{align*}
+\end{pf}
+\item \textbf{Formulas of expectation and variance of random sum.} In
+\labelcref{it:mixture-dist}, we have seen the appearance of random variable
+like \(S=\sum_{i=1}^{N}X_i\), which is a \emph{random sum} with both the number
+of summands and the summands themselves being random variables. To compute the
+expectation and variance of such random sum, the following formulas are often
+used.
+
+\begin{proposition}
+\label{prp:random-sum-fmla}
+Let \(N,X_1,X_2,\dotsc\) be independent, \(N\in\N_0\), \(X_1,X_2,\dotsc\) be
+identically distributed, and \(S=\sum_{i=1}^{N}X_i\).
+\begin{enumerate}
+\item \emph{(Wald's equation)} If \(N,X_1\in L^{1}\), then \(S\in L^{1}\) and
+\(\expv{S}=\expv{N}\expv{X_1}\).
+\item \emph{(Blackwell-Girshick equation)} If \(N,X_1\in L^{2}\), then \(S\in
+L^{2}\) and \(\vari{S}=\expv{N}\vari{X_1}+\vari{N}\expv{X_1}^{2}\).
+\end{enumerate}
+\end{proposition}
+\begin{pf}
+\begin{enumerate}
+\item We first show \(S\in L^{1}\). Let \(S_n=\sum_{i=1}^{n}X_i\) for each
+\(n\in\N_0\). Then, we have \(S=\sum_{n=1}^{\infty}S_n\indicset{N=n}\),
+and thus
+\begin{align*}
+\expv{|S|}\overset{\text{(triangle)}}&{\le}\sum_{n=1}^{\infty}\expv{|S_n|\indicset{N=n}}
+\overset{\text{(independence)}}{=}
+\sum_{n=1}^{\infty}\vc{\expv{|S_n|}}\expv{\indicset{N=n}} \\
+\overset{\text{(triangle)}}&{\le}
+\sum_{n=1}^{\infty}\vc{n\expv{|X_1|}}\prob{N=n}
+=\expv{|X_1|}\sum_{n=1}^{\infty}n\prob{N=n}
+=\expv{|X_1|}\expv{N}<\infty.
+\end{align*}
+Repeating the same argument without the absolute value \(|\cdot|\)
+(inequalities becomes equalities as there is no absolute value) yields
+\(\expv{S}=\expv{N}\expv{X_1}\). Alternatively, we can apply
+\Cref{prp:fact-indp} as follows. Noting that
+\(S=\sum_{i=1}^{N}X_i=g(\vect{X},N)\in L^{1}\), we have
+\[
+\expv{S|N}=\expv{g(\vect{X},N)|N}\overset{\text{(\Cref{prp:fact-indp})}}{=}
+h(N),
+\]
+where
+\(h(n)=\expv{g(\vect{X},n)}=\expv{\sum_{i=1}^{n}X_i}=\sum_{i=1}^{n}\expv{X_i}
+=n\expv{X_1}\).
+Hence, we get
+\[
+\expv{S}\overset{\text{(total expectation)}}{=}
+\expv{\expv{S|N}}=\expv{h(N)}=\expv{N\expv{X_1}}=\expv{N}\expv{X_1}.
+\]
+\item Again, we first show \(S\in L^{2}\). Let \(S_n=\sum_{i=1}^{n}X_i\) for
+each \(n\in\N_0\). Then, we have
+\(S^{2}=\sum_{n=1}^{\infty}S_n^{2}\indicset{N=n}\), and thus
+\begin{align*}
+\expv{S^{2}}&=\sum_{n=1}^{\infty}\expv{S_n^{2}\indicset{N=n}}
+\overset{\text{(independence)}}{=}\sum_{n=1}^{\infty}\expv{S_n^{2}}\prob{N=n} \\
+&=\sum_{n=1}^{\infty}(\vari{S_n}+\expv{S_n}^{2})\prob{N=n}
+\underset{\text{\orc{(linearity)}}}{\overset{\text{\vc{(independence)}}}{=}}
+\sum_{n=1}^{\infty}(\vc{n\vari{X_1}}+\orc{n^{2}\expv{X_1}^{2}})\prob{N=n} \\
+&=\expv{N}\vari{X_1}+\expv{N^{2}}\expv{X_1}^{2}<\infty,
+\end{align*}
+which implies that \(S\in L^{2}\).
+
+Next, to show the equation, there are again two approaches:
+\begin{itemize}
+\item \emph{Method 1: Using the relationship \(\vari{S}=\expv{S^{2}}-\expv{S}^{2}\).}
+Note that
+\[
+\vari{S}=\expv{N}\vari{X_1}+\expv{N^{2}}\expv{X_1}^{2}-(\expv{N}\expv{X_1})^{2}
+=\expv{N}\vari{X_1}+\expv{N^{2}}\vari{X_1}.
+\]
+\item \emph{Method 2: Using \Cref{prp:fact-indp}.}
+First, we have
+\begin{align*}
+\vari{S|N}&=\expv{(S-\expv{S|N})^{2}|N}
+\overset{\text{(see (a))}}{=}\expv{(S-N\expv{X_1})^{2}|N} \\
+\overset{(g(\vect{X},N)=(S-N\expv{X_1})^{2})}&{=}\expv{g(\vect{X},N)|N}
+\overset{\text{(\Cref{prp:fact-indp})}}{=}h(N)
+\end{align*}
+where
+\(h(n)=\expv{g(\vect{X},\mgc{n})}=\expv{(\sum_{i=1}^{\mgc{n}}X_i-\mgc{n}\expv{X_1})^{2}}=
+\vari{\sum_{i=1}^{n}X_i}\overset{\text{(independence)}}{=}n\vari{X_1}\). Hence,
+\(\vari{S|N}=N\vari{X_1}\). Therefore, by the law of total variance,
+\begin{align*}
+\vari{S}&=\expv{\vari{S|N}}+\vari{\expv{S|N}}
+\overset{\text{(see (a))}}{=}\expv{N\vari{X_1}}+\vari{N\expv{X_1}} \\
+&=\expv{N}\vari{X_1}+\vari{N}\expv{X_1}^{2}.
+\end{align*}
+\end{itemize}
+\end{enumerate}
+\end{pf}
+\item \textbf{Role of conditional expectation in regression.} In statistics
+(regression analysis), the function
+\(\vect{z}\mapsto\expv{g(\vect{X},\vect{Z})|\vect{Z}=\vect{z}}:=h(\vect{z})\)
+is called the \defn{regression function} of \(g(\vect{X},\vect{Z})\) on
+\(\vect{Z}\) at \(\vect{z}\). If \(g(\vect{X},\vect{Z})\in L^{2}\), then
+\(h(\vect{z})\) is the best \(L^{2}\)-approximation of \(g(\vect{X},\vect{Z})\)
+with \(\vect{Z}=\vect{z}\) observed, in terms of mean squared error, as the
+following result illustrates.
+
+\begin{proposition}
+\label{prp:cond-exp-best-l2}
+Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(\mathcal{G}\subseteq
+\mathcal{F}\) be a \(\sigma\)-algebra, and \(X\in
+L^{2}(\Omega,\mathcal{F},\pr)\). Then, \(\expv{X|\mathcal{G}}\) is the
+\(Y\in L^{2}(\Omega,\vc{\mathcal{G}},\pr)\) which minimizes
+\(\expv{(X-Y)^{2}}\), i.e.,
+\[
+\expv{(X-Y)^{2}}=\min_{Z\in L^{2}(\Omega,\vc{\mathcal{G}},\pr)}\expv{(X-Z)^{2}}
+\quad\text{iff}\quad
+Y\eqas \expv{X|\mathcal{G}}.
+\]
+\end{proposition}
+\begin{pf}
+Note first that
+\begin{align*}
+\expv{(X-Y)^{2}}&=\expv{(X-\expv{X|\mathcal{G}}+\expv{X|\mathcal{G}}-Y)^{2}} \\
+&=\underbrace{\expv{(X-\expv{X|\mathcal{G}})^{2}}}_{\text{does not depend on \(Y\)}}
++2\expv{(X-\expv{X|\mathcal{G}})(\expv{X|\mathcal{G}}-Y)}
++\underbrace{\expv{(\expv{X|\mathcal{G}}-Y)^{2}}}
+_{\mathclap{\text{smallest \((=0)\) iff \(Y\eqas \expv{X|\mathcal{G}}\)}}}.
+\end{align*}
+Therefore, it suffices to show that
+\(\expv{(X-\expv{X|\mathcal{G}})(\expv{X|\mathcal{G}}-Y)}=0\) for every \(Y\in
+L^{2}(\Omega,\vc{\mathcal{G}},\pr)\):
+\begin{align*}
+&\quad\expv{(X-\expv{X|\mathcal{G}})(\expv{X|\mathcal{G}}-Y)}
+\overset{\text{(total expectation)}}{=}
+\expv{\expv{(X-\expv{X|\mathcal{G}})\vc{(\expv{X|\mathcal{G}}-Y)}|\mathcal{G}}} \\
+\overset{\text{(TOWIK)}}&{=}
+\expv{\vc{(\expv{X|\mathcal{G}}-Y)}
+\expv{(X-\expv{X|\mathcal{G}})|\mathcal{G}}}
+\overset{\text{(linearity)}}{=}
+\expv{(\expv{X|\mathcal{G}}-Y)
+(\expv{X|\mathcal{G}}-\expv{\orc{\expv{X|\mathcal{G}}}|\mathcal{G}})} \\
+\overset{\text{(TOWIK)}}&{=}
+\expv{(\expv{X|\mathcal{G}}-Y)
+(\expv{X|\mathcal{G}}-\orc{\expv{X|\mathcal{G}}})}
+=\expv{0}=0.
+\end{align*}
+\end{pf}
+
+More geometrically, the conditional expectation \(\expv{X|\mathcal{G}}\) can
+actually be interpreted as the \emph{orthogonal projection} of \(X\) onto the
+closed subspace \(L^{2}(\Omega,\mathcal{G},\pr)\) of the Hilbert space
+\(L^{2}(\Omega,\mathcal{F},\pr)\) equipped with inner product \(\inner{X}{Y}:=
+\expv{XY}\). Here, such orthogonal projection is given by
+\[
+\argmin_{Y\in L^{2}(\Omega,\mathcal{G},\pr)}\expv{(X-Y)^{2}}
+\overset{\text{(\Cref{prp:cond-exp-best-l2})}}{=}
+\expv{X|\mathcal{G}}.
+\]
+\begin{center}
+\begin{tikzpicture}
+\draw[-Latex, blue] (0,0) -- (3,2) node[pos=1.1]{\(X\)};
+\draw[green, opacity=0.2, fill] (-5,-3) rectangle (5,3);
+\node[] () at (-3,1.5) {\(L^{2}(\Omega,\mathcal{F},\pr)\)};
+\draw[violet, thick] (-5,0) -- (5,0);
+\node[] () at (-3,-0.5) {\(L^{2}(\Omega,\vc{\mathcal{G}},\pr)\)};
+\draw[-Latex, magenta] (0,0) --node[auto, swap]{\(Y=\expv{X|\mathcal{G}}\)} (3,0);
+\draw[-Latex, dashed] (3,2) --node[auto]{\(Y-X\)} (3,0);
+\end{tikzpicture}
+\end{center}
+We can verify the orthogonality as follows:
+\begin{align*}
+\inner{Y}{Y-X}&=\expv{Y(Y-X)}
+=\expv{\expv{X|\mathcal{G}}(\expv{X|\mathcal{G}}-X)}
+=\expv{\expv{X|\mathcal{G}}^{2}-X\expv{X|\mathcal{G}}}
+=\expv{\expv{X|\mathcal{G}}^{2}}-\expv{X\expv{X|\mathcal{G}}} \\
+\overset{\text{(total expectation)}}&{=}
+\expv{\expv{X|\mathcal{G}}^{2}}-\expv{\expv{X\vc{\expv{X|\mathcal{G}}}|\mathcal{G}}}
+\overset{\text{(TOWIK)}}{=}
+\expv{\expv{X|\mathcal{G}}^{2}}-\expv{\vc{\expv{X|\mathcal{G}}}\expv{X|\mathcal{G}}} \\
+&=\expv{\expv{X|\mathcal{G}}^{2}}-\expv{\expv{X|\mathcal{G}}^{2}}
+=0.
+\end{align*}
+\end{enumerate}

@@ -2,18 +2,19 @@
 \label{sect:cond-prob-indep-dep}
 \begin{enumerate}
 \item In \Cref{sect:cond-prob-indep-dep}, we will delve into notions that are
-\emph{exclusive} to probability theory, namely ordinary conditional probability,
-independence, and dependence. The availability of these concepts is a main
-difference that separates the closely related \emph{measure theory} and \emph{probability
-theory}.
+\emph{exclusive} to probability theory, namely ordinary conditional
+probability, independence, and dependence. The availability of these concepts
+is a main difference that separates the closely related \emph{measure theory}
+and \emph{probability theory}.
 \end{enumerate}
 \subsection{Ordinary Conditional Probability}
+\label{subsect:ordinary-cond-prob}
 \begin{enumerate}
 \item The \emph{ordinary conditional probability} is indeed just the
 conditional probability you have seen in your first probability course. We add
 the term ``ordinary'' here since we are going to introduce a much more general
 and abstract \faIcon[regular]{dizzy} concept of conditioning (see
-\Cref{sect:conditional-expectation}).
+\Cref{sect:cond-exp}).
 
 Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(B\in\mathcal{F}\) be
 an event with \rc{\(\prob{B}>0\)}. Then, the \defn{(ordinary) conditional
@@ -710,16 +711,17 @@ This is denoted by \(X_1,\dotsc,X_d\iid F\).
 \emph{Kolmogorov's extension theorem}, we can also construct infinite sequences
 of independent random variables.
 \end{remark}
-\item \textbf{Mixture distributions.} In actuarial science, apart from working
-with independent random variables, often we deal with \emph{mixture
-distributions}, e.g., aggregate loss \(S:=\sum_{i=1}^{N}X_i\), where each
-\(X_i\) represents a loss amount, and \(N\) is the (random) number of losses, taking
-values in \(\N\). Here \(S\) possesses a mixture distribution: a distribution
-that is created by ``mixing'' two sources of randomness, one from \(X_i\)'s and
-another from \(N\).  To be more precise, \(S\) should be interpreted as the sum
-of random variables \(\sum_{i=1}^{n}X_i\) \emph{given} \(N=n\), for every \(n\in\N\);
-from here the relationship between mixture distribution and \emph{conditioning}
-becomes more transparent.
+\item\label{it:mixture-dist} \textbf{Mixture distributions.} In actuarial
+science, apart from working with independent random variables, often we deal
+with \emph{mixture distributions}, e.g., aggregate loss
+\(S:=\sum_{i=1}^{N}X_i\), where each \(X_i\) represents a loss amount, and
+\(N\) is the (random) number of losses, taking values in \(\N\). Here \(S\)
+possesses a mixture distribution: a distribution that is created by ``mixing''
+two sources of randomness, one from \(X_i\)'s and another from \(N\).  To be
+more precise, \(S\) should be interpreted as the sum of random variables
+\(\sum_{i=1}^{n}X_i\) \emph{given} \(N=n\), for every \(n\in\N\); from here the
+relationship between mixture distribution and \emph{conditioning} becomes more
+transparent.
 
 In general, let \(I\sim F_I\) be a random variable with \(\supp{F_I}=\N\), and
 \(\vect{X}_i\sim F_i\) for every \(i\in\N\). Suppose that
