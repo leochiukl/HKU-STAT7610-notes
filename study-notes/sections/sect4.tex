@@ -40,11 +40,11 @@ indeed).
 \item Fix any pairwise disjoint \(A_1,A_2,\dotsc\in\mathcal{F}\). Then,
 \begin{align*}
 \prob{\left.\biguplus_{i=1}^{\infty}A_i\right|B}
-&=\frac{\prob{\left(\biguplus_{i=1}^{\infty}A_i\right)\cap B}}{\prob{B}} \\
-&=\frac{\prob{\biguplus_{i=1}^{\infty}(A_i\cap B)}}{\prob{B}} \\
-&=\frac{\sum_{i=1}^{\infty}\prob{A_i\cap B}}{\prob{B}} \\
-&=\sum_{i=1}^{\infty}\frac{\prob{A_i\cap B}}{\prob{B}} \\
-&=\sum_{i=1}^{\infty}\prob{A_i|B}.
+&=\frac{\prob{\left(\biguplus_{i=1}^{\infty}A_i\right)\cap B}}{\prob{B}}
+=\frac{\prob{\biguplus_{i=1}^{\infty}(A_i\cap B)}}{\prob{B}}
+=\frac{\sum_{i=1}^{\infty}\prob{A_i\cap B}}{\prob{B}} \\
+&=\sum_{i=1}^{\infty}\frac{\prob{A_i\cap B}}{\prob{B}}
+=\sum_{i=1}^{\infty}\prob{A_i|B}.
 \end{align*}
 \end{enumerate}
 \end{pf}
@@ -68,7 +68,7 @@ Of course, merely having the equality \(\prob{A|B}\prob{B}=\prob{A\cap B}\)
 still leaves a lot of room for discussions on what conditioning on such
 zero-probability event \(B\) means.  To deal with this somewhat complicated
 issue of ``conditioning on zero-probability events'', it is standard to utilize
-the machinery from \Cref{sect:conditional-expectation}.
+the machinery from \Cref{sect:cond-exp}.
 
 \item \textbf{Two main results about ordinary conditional probability.} You
 should have already learnt the following two properties about conditional
@@ -137,7 +137,7 @@ independence in the following.
 Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and \(I\subseteq \R\)
 be an arbitrary index set. Then:
 \begin{enumerate}
-\item \emph{(independence of events)} The events \(A_1,\dotsc,A_n\in\mathcal{F}\) are \defn{independent} if
+\item \emph{(Independence of events)} The events \(A_1,\dotsc,A_n\in\mathcal{F}\) are \defn{independent} if
 \(\prob{\bigcap_{i\in I}^{}A_i}=\prod_{i\in I}^{}\prob{A_i}\) for
 \underline{every} subset \(I\subseteq \{1,\dotsc,n\}\). \begin{warning} Not
 just \(I=\{1,\dotsc,n\}\)!  \end{warning}
@@ -146,25 +146,25 @@ just \(I=\{1,\dotsc,n\}\)!  \end{warning}
 Here we have \(\bigcap_{i\in \varnothing}^{}A_i:=\Omega\) and
 \(\prod_{i\in\varnothing}^{}\prob{A_i}:=1\).
 \end{note}
-\item \emph{(independence of a collection of events)} A collection
+\item \emph{(Independence of a collection of events)} A collection
 \(\{A_i\}_{i\in I}\subseteq \mathcal{F}\) of events is \defn{independent} if
 \(A_{i_1},\dotsc,A_{i_n}\) are independent for all
 \(\{i_1,\dotsc,i_n\}\subseteq I\) with \(n\in\N\) being arbitrary.
-\item \emph{(independence of families)} The families
+\item \emph{(Independence of families)} The families
 \(\mathcal{A}_1,\dotsc,\mathcal{A}_n\subseteq \mathcal{F}\) of events are
 \defn{independent} if \(A_1,\dotsc,A_n\) are independent for all
 \(A_1\in\mathcal{A}_1,\dotsc,A_n\in\mathcal{A}_n\).
-\item \emph{(independence of a collection of families)} A collection
+\item \emph{(Independence of a collection of families)} A collection
 \(\{\mathcal{A}_i\}_{i\in I}\) of families of events, with
 \(\mathcal{A}_i\subseteq \mathcal{F}\) for all \(i\in I\), is
 \defn{independent} if \(\mathcal{A}_{i_1},\dotsc,\mathcal{A}_{i_n}\) are
 independent for all \(\{i_1,\dotsc,i_n\}\subseteq I\) with \(n\in\N\) being
 arbitrary.
-\item \emph{(independence of measurable functions)} Measurable functions
+\item \emph{(Independence of measurable functions)} Measurable functions
 \(X_1,\dotsc,X_d\), all defined on the probability space
 \((\Omega,\mathcal{F},\pr)\), are \defn{independent}, if the families
 \(\sigma(X_{i_1}),\dotsc,\sigma(X_{i_d})\) are independent.
-\item \emph{(independence of a collection of measurable functions)} A
+\item \emph{(Independence of a collection of measurable functions)} A
 collection \(\{X_i\}_{i\in I}\) of measurable functions, all defined on the
 probability space \((\Omega,\mathcal{F},\pr)\), is \defn{independent} if the
 collection \(\{\sigma(X_i)\}_{i\in I}\) is independent.
@@ -189,13 +189,13 @@ following) for every \(i\in I\), then the collection is independent if
 the process of verifying independence. Throughout, let
 \((\Omega,\mathcal{F},\pr)\) be a probability space.
 \begin{enumerate}
-\item \label{it:ind-via-gen} \emph{(independence via generators)} If
+\item \label{it:ind-via-gen} \emph{(Independence via generators)} If
 \(\{\mathcal{A}_{i}\}_{i\in I}\) is a collection of independent \(\pi\)-systems
 on \(\Omega\), then the collection \(\{\sigma(\mathcal{A}_i)\}_{i\in I}\) is
 independent.
-\item \label{it:ind-comp} \emph{(independence of complements)} If \(\{A_{i}\}_{i\in I}\subseteq \mathcal{F}\)
+\item \label{it:ind-comp} \emph{(Independence of complements)} If \(\{A_{i}\}_{i\in I}\subseteq \mathcal{F}\)
 is independent, then so is \(\{A_{i}^c\}_{i\in I}\).
-\item \label{it:grouping-lma} \emph{(grouping lemma)} If \(\{\mathcal{A}_{i}\}_{i\in
+\item \label{it:grouping-lma} \emph{(Grouping lemma)} If \(\{\mathcal{A}_{i}\}_{i\in
 I}\subseteq \mathcal{F}\) is a collection of independent \(\pi\)-systems, and
 \(I=\biguplus_{j\in J}^{}I_j\), then the collection \(\{\sigma(\bigcup_{i\in
 I_j}^{}\mathcal{A}_i)\}_{j\in J}\) is independent.
@@ -284,7 +284,7 @@ are independent.
 \item Assume \(\{A_i\}_{i\in I}\subseteq \mathcal{F}\) is independent. Then,
 consider the family \(\{\mathcal{A}_i\}_{i\in I}\) with \(\mathcal{A}_i\) being
 the singleton \(\{A_i\}\) for all \(i\in I\). Note that
-\(\{\mathcal{A}_i\}_{i\in I}\) are independent \(\pi\)-systems, so
+\(\{\mathcal{A}_i\}_{i\in I}\) contains independent \(\pi\)-systems, so
 \(\{\sigma(\mathcal{A}_i)\}_{i\in I}\) is independent by
 \labelcref{it:ind-via-gen}. Since
 \(A_i^c\in\sigma(\mathcal{A}_i)=\{\varnothing,A_i,A_i^c,\Omega\}\) for all
@@ -326,17 +326,17 @@ I_j}^{}\mathcal{A}_i)\) by the minimality.
 \item \textbf{Zero-one laws.} Generally, a \defn{zero-one law} refers to any
 result which asserts that the probability of an event has to be
 \underline{zero} or \underline{one}, under certain conditions. Here we will go
-through some popular zero-one laws, namely \emph{Borel-Cantelli lemmas} and
-\emph{Kolmogorov's zero-one law}.
+through some popular zero-one laws, namely the \emph{Borel-Cantelli lemmas} and
+the \emph{Kolmogorov's zero-one law}.
 
 \begin{theorem}[Borel-Cantelli lemmas]
 \label{thm:bc-lma}
 Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
 \(\{A_i\}_{i\in\N}\subseteq \mathcal{F}\) be a collection of events.
 \begin{enumerate}
-\item \emph{(first Borel-Cantelli lemma)} If \(\sum_{i=1}^{\infty}\prob{A_i}<\infty\), then
+\item \emph{(First Borel-Cantelli lemma)} If \(\sum_{i=1}^{\infty}\prob{A_i}<\infty\), then
 \(\prob{\{\omega\in A_n\text{ io}\}}=0\).
-\item \emph{(second Borel-Cantelli lemma)} If \(\{A_i\}_{i\in\N}\) is
+\item \emph{(Second Borel-Cantelli lemma)} If \(\{A_i\}_{i\in\N}\) is
 independent and \(\sum_{i=1}^{\infty}\prob{A_i}=\infty\), then
 \(\prob{\{\omega\in A_n\text{ io}\}}=1\).
 \end{enumerate}
@@ -381,12 +381,13 @@ io}\}}=0\).
 \end{enumerate}
 \end{pf}
 
-The next result will be Kolmogorov's zero-one law. But before stating that, we
-first introduce a preliminary concept: \emph{tail \(\sigma\)-algebra}. Let
-\((\Omega,\mathcal{F})\) be a measurable space and
+The next result will be the \emph{Kolmogorov's zero-one law}. But before
+stating that, we first introduce a preliminary concept: \emph{tail
+\(\sigma\)-algebra}. Let \((\Omega,\mathcal{F})\) be a measurable space and
 \(\{\mathcal{A}_n\}_{n\in\N}\subseteq \mathcal{P}(\mathcal{F})\) be a
 collection of \(\pi\)-systems. Then, the \defn{tail \(\sigma\)-algebra (of
-\(\{\mathcal{A}_n\}_{n\in\N}\))} , denoted by \(\mathcal{T}\) or \(\mathcal{T}(\{\mathcal{A}_n\}_{n\in\N})\), is given by
+\(\{\mathcal{A}_n\}_{n\in\N}\))} , denoted by \(\mathcal{T}\) or
+\(\mathcal{T}(\{\mathcal{A}_n\}_{n\in\N})\), is given by
 \(\mathcal{T}=\bigcap_{n=1}^{\infty}\sigma(\bigcup_{k=n}^{\infty}\mathcal{A}_k)
 =\bigcap_{n=1}^{\infty}\sigma(\mathcal{A}_n,\mathcal{A}_{n+1},\dotsc)\) (check
 that it is a \(\sigma\)-algebra on \(\Omega\)!). Every event in \(\mathcal{T}\)
@@ -464,11 +465,11 @@ which means that \(\prob{A}=\prob{A\cap A}=\prob{A}\prob{A}=\prob{A}^{2}\), or
 \(\prob{A}=0\text{ or }1\), for every \(A\in\mathcal{T}\).
 \end{pf}
 \begin{remark}
-\item \emph{(application of Kolmogorov's zero-one law to independent events)}
+\item \emph{(Application of Kolmogorov's zero-one law to independent events)}
 By taking \(\mathcal{A}_n=\{A_n\}\) for every \(n\in\N\), we know that given a
 collection \(\{A_n\}_{n\in\N}\subseteq \mathcal{F}\) of independent events, we have
 \(\prob{A}=0\text{ or }1\) for every \(A\in\mathcal{T}=\bigcap_{n=1}^{\infty}\sigma(\{A_n,A_{n+1},\dotsc\})\).
-\item \emph{(application of Kolmogorov's zero-one law to independent random
+\item \emph{(Application of Kolmogorov's zero-one law to independent random
 variables)} Suppose we are given a collection \(\{X_n\}_{n\in\N}\) of
 independent random variables, all defined on \((\Omega,\mathcal{F},\pr)\).
 Then, by taking \(\mathcal{A}_n=\sigma(X_n)\) for every \(n\in\N\), we have
@@ -531,7 +532,7 @@ Hence, by definition, \(\{X_i\}_{i\in I}\) is independent.
 \end{pf}
 
 \begin{remark}
-\item \emph{(special case for finitely many random variables --- factorization
+\item \emph{(Special case for finitely many random variables --- factorization
 of distribution function)} With \(I=\{1,\dotsc,d\}\), random variables
 \(X_1,\dotsc,X_d\) with \(\vect{X}=(X_1,\dotsc,X_d)\sim F\) and margins
 \(F_1,\dotsc,F_d\) are independent iff \[
@@ -542,7 +543,7 @@ of distribution function)} With \(I=\{1,\dotsc,d\}\), random variables
 x_{i_1},\dotsc,X_{i_n}\le x_{i_n}}=\prod_{k=1}^{n}\prob{X_{i_k}\le x_{i_k}}\)
 for every \(\{i_1,\dotsc,i_n\}\subseteq I\), by letting some components of
 \(\vect{x}\) to \(\infty\).)
-\item \emph{(special case for finitely many random variables --- factorization
+\item \emph{(Special case for finitely many random variables --- factorization
 of density function)} Assuming further that \(F\) has continuous partial
 derivatives with respect to each component in \(\supp{F}\), we know that \(F\) is
 absolutely continuous with density given by
@@ -558,7 +559,7 @@ f(\vect{x})=\frac{\partial^{d}}{\partial x_d\cdots\partial x_1}F(\vect{x})
 \(f(\vect{x})=\prod_{j=1}^{d}f_j(x_j)\) for all
 \(\vect{x}\in\prod_{j=1}^{d}\supp{F_j}\).)
 
-\item \emph{(survival function version of the result)} We indeed also have a
+\item \emph{(Survival function version of the result)} We indeed also have a
 ``survival function version'' of the result: \(\{X_i:i\in I\}\) is independent
 iff for all \(n\in\N\) and \(\{i_1,\dotsc,i_n\}\subseteq I\),
 \(\prob{X_{i_1}>x_{i_1},\dotsc,X_{i_n}>x_{i_n}}=\prod_{k=1}^{n}\prob{X_{i_k}>x_{i_k}}\).
@@ -703,11 +704,11 @@ above gives \(\prob{X_j\le x_j}=F_j(x_j)\). Thus, \(X_j\sim F_j\) for every
 \end{pf}
 
 \begin{remark}
-\item \emph{(independent and identically distributed random variables)} If
+\item \emph{(Independent and identically distributed random variables)} If
 \(F_1=\dotsb=F_d=F\), then \(X_1,\dotsc,X_d\) are said to be \defn{independent
 and identically distributed (iid)} from \(F\), or \defn{independent copies of \(X\sim F\)}.
 This is denoted by \(X_1,\dotsc,X_d\iid F\).
-\item \emph{(infinite sequence of independent random variables)} Using
+\item \emph{(Infinite sequence of independent random variables)} Using
 \emph{Kolmogorov's extension theorem}, we can also construct infinite sequences
 of independent random variables.
 \end{remark}
@@ -772,9 +773,9 @@ method}, which utilizes the quantile transform in \Cref{prp:quantile-trans}.
 The \defn{inversion method} for sampling from a random variable \(X\sim F\) is
 to first obtain (independent) realizations from \(U\sim \unif{0}{1}\) (many
 algorithms are available for this), and then evaluate the quantile function
-\(F^{-1}\) on each of them. This is theoretically justified because \(F^{-1}(U)\sim F\), 
-so the resulting values \(F^{-1}(u)\)'s can be seen as realizations from the
-distribution specified by \(F\).
+\(F^{-1}\) on each of them. This is theoretically justified because \(F^{-1}(U)\sim F\),
+so the resulting values \(F^{-1}(u)\)'s can be seen as realizations of a
+random vector with the distribution function \(F\).
 
 To sample from the iid random variables \(X_1,\dotsc,X_n\), we can use the
 inversion method and consider \(F^{-1}(U_1),\dotsc,F^{-1}(U_n)\iid F\) with
@@ -782,7 +783,7 @@ inversion method and consider \(F^{-1}(U_1),\dotsc,F^{-1}(U_n)\iid F\) with
 obtained, and then transformed by the quantile function \(F^{-1}\).
 
 \begin{note}
-There are also some other (more efficient) methods for sampling, often equipped
+There are also some other more efficient methods for sampling, often equipped
 with a \emph{variance reduction} component, which can increase the ``precision'' in
 the sampling (details omitted here).
 \end{note}
@@ -810,7 +811,7 @@ distribution function \(F_n\) as follows. Given
 \item Obtain realizations of \(U\).
 \item Based on them, obtain realizations of \(I=\lceil nU\rceil\).
 \item For each realization of \(I\), return \(\vect{X}_i\) if the realization
-is \(i\) (\(\vect{X}_i\) is known after being observed \faIcon{eye}).
+is \(i\).
 \end{enumerate}
 \end{enumerate}
 \subsection{Dependence}
@@ -833,7 +834,7 @@ meaningfully talk about ``dependence''). This can be viewed as a
 \label{prp:copula-char}
 A function \(C:[0,1]^{d}\to [0,1]\) is a \(d\)-dimensional copula iff
 \begin{enumerate}[label={(\arabic*)}]
-\item \emph{(groundedness)} \(C(\vect{u})=0\) if \(u_j=0\) for some \(j=1,\dotsc,d\).
+\item \emph{(Groundedness)} \(C(\vect{u})=0\) if \(u_j=0\) for some \(j=1,\dotsc,d\).
 \item \emph{(\(\unif{0}{1}\) margins)} \(C(1,\dotsc,1,u_j,1,\dotsc,1)=u_j\) for
 all \(u_j\in [0,1]\), for all \(j=1,\dotsc,d\).
 \item \emph{(\(d\)-increasingness)} \(\Delta_{(\vect{a},\vect{b}]}C\ge 0\) for
@@ -848,9 +849,9 @@ being a distribution function are immediate; we only need to establish the
 normalization and right-continuous properties for \(C\) to be a distribution
 function (after being extended in the way mentioned in \labelcref{it:dist-fn}):
 \begin{itemize}
-\item \emph{normalization:} We have \(\lim_{\vect{x}\to\vect{\infty}}C(\vect{x})
+\item \emph{Normalization:} We have \(\lim_{\vect{x}\to\vect{\infty}}C(\vect{x})
 =C(1,\dotsc,1)\overset{\text{(\(\unif{0}{1}\) margins)}}{=}1\).
-\item \emph{right-continuity:} Applying \Cref{lma:lipschitz-ineq} to the
+\item \emph{Right-continuity:} Applying \Cref{lma:lipschitz-ineq} to the
 function \(C\) with \(\unif{0}{1}\) margins here, we have
 \(|C(\vect{b})-C(\vect{a})| \le\sum_{j=1}^{d}|b_j-a_j|\), which implies the
 uniform continuity of \(C\), and hence its right-continuity.
@@ -866,7 +867,7 @@ considered to be the foundational result that drives the study of copula:
 \label{thm:sklar}
 \hfill
 \begin{enumerate}
-\item \emph{(decomposition)} Given any distribution function \(F\) with margins \(F_1,\dotsc,F_d\),
+\item \emph{(Decomposition)} Given any distribution function \(F\) with margins \(F_1,\dotsc,F_d\),
 there exists a copula \(C\) such that
 \begin{equation}
 \label{eq:copula-link}
@@ -876,7 +877,7 @@ Furthermore, \(C\) is uniquely defined on \(\prod_{j=1}^{d}\ran{F_j}\), and is
 given by \(C(\vect{u})=F\left(F_1^{-1}(u_1),\dotsc,F_d^{-1}(u_d)\right)\) for all
 \(\vect{u}\in\prod_{j=1}^{d}\ran{F_j}\), where \(\ran{F_j}\) denotes the
 \emph{range} of \(F_j\), namely \(\{F_j(x):x\in\R\}\) for all \(j=1,\dotsc,d\).
-\item \emph{(combination)} Given any copula \(C\) and univariate distribution
+\item \emph{(Combination)} Given any copula \(C\) and univariate distribution
 functions \(F_1,\dotsc,F_d\), the function \(F\) as defined in
 \Cref{eq:copula-link} is a distribution function with margins
 \(F_1,\dotsc,F_d\).
@@ -925,12 +926,12 @@ for all \(\vect{x}\in\R^d\), so the function \(F\) as defined in
 \end{pf}
 
 \begin{remark}
-\item \emph{(role of copula)} The decomposition property suggests that a
+\item \emph{(Role of copula)} The decomposition property suggests that a
 joint distribution function can always be decomposed into two parts: (i) its
 margins \(F_1,\dotsc,F_d\) and (ii) a copula. From this, we can see that a
 copula indeed reflects the dependence inherit in the joint distribution
 function \(F\).
-\item \emph{(construction of distribution functions via copula)} The
+\item \emph{(Construction of distribution functions via copula)} The
 combination property provides a method to construct joint distribution
 functions flexibly, according to dependence structures we want.
 \item We say that \(\vect{X}\sim F\) \defn{has copula \(C\)} if
@@ -1087,16 +1088,23 @@ of independence, comonotone, and countermonotone copulas.} For
 \((X_1,\dotsc,X_d)\sim F\) with continuous margins \(F_1,\dotsc,F_d\) and
 copula \(C\), we can interpret the previously introduced independence,
 comonotone, and countermonotone copulas as follows:
-\begin{itemize}
-\item \emph{(independence copula)} \(C=\Pi\) iff \(X_1,\dotsc,X_d\) are
-\underline{independent}, by \Cref{thm:char-rv-ind}.
-\item \emph{(comonotone copula)} \(C=M\) iff \(X_j\eqas T_j(X_1)\), where
+\begin{enumerate}
+\item \emph{(Independence copula)} \(C=\Pi\) iff \(X_1,\dotsc,X_d\) are
+\underline{independent}.
+\item \emph{(Comonotone copula)} \(C=M\) iff \(X_j\eqas T_j(X_1)\), where
 \(T_j=F_j^{-1}\circ F_1\) is strictly increasing on \(\supp{F_1}\), for all
-\(j=2,\dotsc,d\), by the invariance principle.
-\item \emph{(countermonotone copula)} \(C=W\) iff \(X_2\eqas T(X_1)\), where
-\(T=F_2^{-1}\circ (1-F_1)\) is strictly decreasing on \(\supp{F_1}\), by the
-invariance principle.
-\end{itemize}
+\(j=2,\dotsc,d\).
+\item \emph{(Countermonotone copula)} \(C=W\) iff \(X_2\eqas T(X_1)\), where
+\(T=F_2^{-1}\circ (1-F_1)\) is strictly decreasing on \(\supp{F_1}\).
+\end{enumerate}
+\begin{pf}
+(Sketch)
+\begin{enumerate}
+\item Apply \Cref{thm:char-rv-ind}.
+\item Apply the invariance principle for ``\(\Leftarrow\)''.
+\item Apply the invariance principle for ``\(\Leftarrow\)'' also.
+\end{enumerate}
+\end{pf}
 \item \textbf{Fr\'echet-Hoeffding bounds.} For the comonotone copula \(M\) and
 countermonotone copula \(W\), apart from describing the extremely positive
 dependence and extremely negative dependence, they also serve for bounds on

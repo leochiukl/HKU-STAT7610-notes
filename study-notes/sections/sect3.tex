@@ -57,7 +57,7 @@ also said to be \defn{\(\mathcal{F}\)-measurable}, denoted by
 \item \((\mathcal{B}(\Omega),\mathcal{B}(\R^d))\)-measurable and
 \((\bar{\mathcal{B}}(\Omega),\mathcal{B}(\R^d))\)-measurable functions are said to be
 \defn{Borel measurable} and \defn{Lebesgue measurable} respectively.
-\item \emph{(completeness of \(\mathcal{F}\))} To enrich the collection of
+\item \emph{(Completeness of \(\mathcal{F}\))} To enrich the collection of
 measurable functions, the \(\mathcal{F}\) chosen is usually the completion of a
 \(\sigma\)-algebra (i.e., \(\mathcal{F}=\bar{\mathcal{F}}\); see
 \Cref{thm:complete-meas}), which comprises of more sets after the completion,
@@ -139,7 +139,7 @@ A^c&\text{if \(B\) contains \(0\) but not \(1\),} \\
 Hence, \(X^{-1}(\mathcal{B}(\R))=\{\varnothing,A,A^c,\Omega\}\subseteq \mathcal{F}\),
 since \(A\in\mathcal{F}\).
 \end{pf}
-\item \emph{(simple random variables)} Let \((\Omega,\mathcal{F})\) be a
+\item \emph{(Simple random variables)} Let \((\Omega,\mathcal{F})\) be a
 measurable space, and \(A_1,\dotsc,A_n\in\mathcal{F}\) be pairwise disjoint
 sets.  Then, \(X:\Omega\to\R\) with \(X=\sum_{i=1}^{n}x_i\indic_{A_i}\) for
 some \(x_1,\dotsc,x_n\in\R\) is \(\mathcal{F}\)-measurable. \begin{note}
@@ -216,7 +216,7 @@ Note that \(X^{-1}(A')\in\sigma(X^{-1}(\mathcal{A}'))\) for all
 With the help of \Cref{lma:sig-alg-gen-preimg-comm}, we are now ready to prove
 the following properties of measurable functions.
 \begin{enumerate}
-\item\label{it:check-meas-via-preimg-gen} \emph{(checking measurability by
+\item\label{it:check-meas-via-preimg-gen} \emph{(Checking measurability by
 considering preimages of generator)} Let \((\Omega,\mathcal{F})\) and
 \((\Omega',\mathcal{F}')\) be measurable spaces, and \(\mathcal{A}'\subseteq
 \mathcal{P}(\Omega')\) be a \emph{generator} of \(\mathcal{F}'\), i.e.,
@@ -239,7 +239,7 @@ X^{-1}(\mathcal{F}')=X^{-1}(\sigma(\mathcal{A'}))
 \subseteq \mathcal{F}
 \).
 \end{pf}
-\item \label{it:meas-compo-meas} \emph{(composition of measurable functions is
+\item \label{it:meas-compo-meas} \emph{(Composition of measurable functions is
 measurable)} Let \((\Omega,\mathcal{F})\), \((\Omega',\mathcal{F}')\), and
 \((\Omega'',\mathcal{F}'')\) be measurable spaces. If \(X:\Omega\to\Omega'\) and
 \(Y:\Omega'\to\Omega''\) are \((\mathcal{F},\mathcal{F}')\)-measurable and
@@ -259,7 +259,7 @@ For all \(A''\in\mathcal{F}''\), we have
 \overset{\text{(\(X\) measurable)}}{\in}\mathcal{F}.
 \end{align*}
 \end{pf}
-\item \label{it:cts-fn-meas} \emph{(continuous functions are measurable)} Let
+\item \label{it:cts-fn-meas} \emph{(Continuous functions are measurable)} Let
 \((\Omega,\mathcal{T})\) and \((\Omega',\mathcal{T}')\) be topological spaces.
 If \(X:\Omega\to\Omega'\) is continuous, then \(X\) is
 \((\mathcal{B}(\Omega),\mathcal{B}(\Omega'))\)-measurable.
@@ -275,7 +275,7 @@ By the continuity of \(X\), we have \(X^{-1}(\mathcal{T}')\subseteq
 \(X^{-1}(\mathcal{B}(\Omega'))=X^{-1}(\sigma(\mathcal{T}'))=\sigma(X^{-1}(\mathcal{T}'))\subseteq
 \mathcal{B}(\Omega)\), as desired.
 \end{pf}
-\item\label{it:mono-fn-meas} \emph{(monotone functions are measurable)}
+\item\label{it:mono-fn-meas} \emph{(Monotone functions are measurable)}
 If \(h:\R\to\R\) is a monotone (increasing or decreasing) function, then \(h\) is
 \((\mathcal{B}(\R),\mathcal{B}(\R))\)-measurable.
 
@@ -342,7 +342,7 @@ contradiction.
 properties of general measurable functions, we now investigate the properties
 of more specific measurable functions, namely random variables/vectors.
 \begin{enumerate}
-\item \label{it:ran-vec-vec-rvs} \emph{(random vectors are vectors of random
+\item \label{it:ran-vec-vec-rvs} \emph{(Random vectors are vectors of random
 variables)} Let \((\Omega,\mathcal{F})\) be a measurable space and let
 \(X:\Omega\to\R^d\) be a function. Then \(X\) is a random vector iff \(X=(X_1,\dotsc,X_d)\)
 for some random variables \(X_1,\dotsc,X_d\).
@@ -378,7 +378,7 @@ X^{-1}((\vect{a},\vect{b}])
 \in\mathcal{F}.
 \]
 \end{pf}
-\item \label{it:meas-fn-ran-vec} \emph{(measurable functions of random vectors
+\item \label{it:meas-fn-ran-vec} \emph{(Measurable functions of random vectors
 are random vectors)} Let \(\vect{h}:\R^d\to\R^k\) be a measurable function. If
 \(\vect{X}:\Omega\to\R^d\) is a random vector, then
 \(\vect{h}(\vect{X}):\Omega\to\R^k\) is a random vector.
@@ -392,7 +392,7 @@ random variables.
 \begin{pf}
 It follows from \labelcref{it:meas-compo-meas}.
 \end{pf}
-\item \label{it:seq-rvs-meas} \emph{(measurability about sequences of random variables)}
+\item \label{it:seq-rvs-meas} \emph{(Measurability about sequences of random variables)}
 Let \(\{X_{i}\}_{i\in\N}\) be a sequence of random variables on a measurable
 space \((\Omega,\mathcal{F})\). \begin{note}
 It can be shown that \(X\) is a random sequence iff \(X=\{X_{i}\}_{i\in\N}\)
@@ -487,7 +487,7 @@ q<\limsup_{n\to\infty}X_n(\omega)\) for some \(q\in\Q\). Then it is immediate th
 \end{itemize}
 \end{enumerate}
 \end{pf}
-\item \label{it:complete-meas-relate} \emph{(relationship between completeness and
+\item \label{it:complete-meas-relate} \emph{(Relationship between completeness and
 measurability)} Let \((\Omega,\mathcal{F},\mu)\) be a measure space, and
 \(X,Y,Z,X_1,X_2,\dotsc\) be functions from \(\Omega\) to \(\R\). Then:
 \begin{enumerate}
@@ -765,11 +765,11 @@ respectively.  If \(\vect{X}_1\eqd \vect{X}_2\), then
 For every measurable function \(\vect{h}:\R^d\to\R^k\), we have
 \begin{align*}
 F_{\vect{h}(\vect{X}_1)}(\vect{x})
-&=\pr_{1}(\vect{h}(\vect{X}_1)\le\vect{x})
-=\pr_{1}(\vect{X}_1\in\vect{h}^{-1}((\vect{-\infty},\vect{x}]) \\
+&=\probs{1}{\vect{h}(\vect{X}_1)\le\vect{x}}
+=\probs{1}{\vect{X}_1\in\vect{h}^{-1}((\vect{-\infty},\vect{x}])} \\
 \overset{(\vect{X}_1\eqd \vect{X}_2)}&{=}
-\pr_{2}(\vect{X}_2\in\vect{h}^{-1}((\vect{-\infty},\vect{x}])
-=\pr_{2}(\vect{h}(\vect{X}_2)\le\vect{x})
+\probs{2}{\vect{X}_2\in\vect{h}^{-1}((\vect{-\infty},\vect{x}])}
+=\probs{2}{\vect{h}(\vect{X}_2)\le\vect{x}}
 =F_{\vect{h}(\vect{X}_2)}(\vect{x})
 \end{align*}
 for all \(\vect{x}\in\R^k\). Thus,
@@ -820,9 +820,9 @@ For the case where \(F\) is discrete, change \(\int\to\sum\),
 \(\text{``integrating''}\to\text{``summing''}\), and
 \(\text{``density''}\to\text{``mass''}\).
 
-However, having absolutely continuous margins do \emph{not} imply that \(F\) is
-absolutely continuous. To see this, consider an example where
-\(\vect{X}=(U,U)\) with \(U\sim \unif{0}{1}\). Here both \(X_1=U\) and
+However, having absolutely continuous margins does \emph{not} imply that \(F\) is
+absolutely continuous. To see this, consider the following example with
+\(\vect{X}=(U,U)\), where \(U\sim \unif{0}{1}\). Here both \(X_1=U\) and
 \(X_2=U\) are absolutely continuous, with the density function being
 \(f(x)=\indic_{(0,1)}(x)\). On the other hand, since the distribution function
 of \(\vect{X}\) is \(F_{\vect{X}}(\vect{x})=\prob{U\le x_1, U\le
@@ -926,10 +926,10 @@ For all \(k\in\N\) and all \(t_1,\dotsc,t_k\in I\) with \(t_1<\dotsb<t_k\),
 suppose that there is a probability measure \(\pr_{t_1,\dotsc,t_k}\) on
 \(\mathcal{B}(\R^d)^{k}\) satisfying:
 \begin{itemize}
-\item \emph{(permutation invariance)} \(\pr_{t_{\pi(1)},\dotsc,t_{\pi(k)}}(\prod_{i=1}^{k}B_{\pi(i)})
+\item \emph{(Permutation invariance)} \(\pr_{t_{\pi(1)},\dotsc,t_{\pi(k)}}(\prod_{i=1}^{k}B_{\pi(i)})
 =\pr_{t_1,\dotsc,t_k}(\prod_{i=1}^{k}B_i)\) for all
 \(B_1,\dotsc,B_k\in\mathcal{B}(\R^d)\) and all permutations \(\pi\) of \(\{1,\dotsc,k\}\).
-\item \emph{(compatibility)} \(\pr_{t_1,\dotsc,t_{k+1}}(\prod_{i=1}^{k}B_k\times\R^d)
+\item \emph{(Compatibility)} \(\pr_{t_1,\dotsc,t_{k+1}}(\prod_{i=1}^{k}B_k\times\R^d)
 =\pr_{t_1,\dotsc,t_{k+1}}(\prod_{i=1}^{k}B_i)\) for all
 \(B_1,\dotsc,B_k\in\mathcal{B}(\R^d)\).
 \end{itemize}
@@ -973,7 +973,7 @@ Let \(F\) be a distribution function and \(U\sim\unif{0}{1}\). Then
 \end{proposition}
 \begin{pf}
 Note that \(\prob{F^{-1}(U)\le x}
-\overset{\text{(\labelcref{it:gen-inv-prop}; \(F\) is right-continuous)}}{=}
+\overset{\text{(\labelcref{it:gen-inv-prop}, \(F\) is right-continuous)}}{=}
 \prob{U\le F(x)}=F(x)\) for all \(x\in\R\).
 \end{pf}
 \item \textbf{Probability transform.} Apart from the quantile transform, there
@@ -1005,7 +1005,9 @@ increasing on \([0,1]\) by \labelcref{it:gen-inv-prop}. Therefore, we have
 \begin{align*}
 \prob{F(X)\le u}&=\prob{F^{-1}(F(X))\le F^{-1}(u)} \\
 &=\underbrace{\prob{\{F^{-1}(F(X))\le F^{-1}(u)\}\cap \{X\in\supp{F}\}}}
-_{\overset{\text{\labelcref{it:gen-inv-prop}}}{=}\prob{\{X\le F^{-1}(u)\}
+_{\underset{\text{(\Cref{lma:strict-incr-support})}}
+{\overset{\text{\labelcref{it:gen-inv-prop}}}{=}}
+\prob{\{X\le F^{-1}(u)\}
 \cap \{X\in\supp{F}\}}
 }
 +\underbrace{\prob{\{F^{-1}(F(X))\le F^{-1}(u)\}\cap

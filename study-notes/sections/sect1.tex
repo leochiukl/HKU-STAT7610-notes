@@ -155,16 +155,16 @@ special case of ``\(\omega\in A_n\) for infinitely many \(n\)''.
 \[
 \left(\liminf_{n\to \infty}A_n\right)^{c}
 =\left(\bigcup_{n=1}^{\infty}\vc{\bigcap_{k\ge n}A_k}\right)^{c}
-\overset{\text{DM}}{=} \bigcap_{n=1}^{\infty}\vc{\left(\bigcap_{k\ge n}A_k\right)^{c}}
-\overset{\text{DM}}{=} \bigcap_{n=1}^{\infty}\left(\vc{\bigcup_{k\ge n}A_k^{c}}\right)
+\overset{\text{(DM)}}{=} \bigcap_{n=1}^{\infty}\vc{\left(\bigcap_{k\ge n}A_k\right)^{c}}
+\overset{\text{(DM)}}{=} \bigcap_{n=1}^{\infty}\left(\vc{\bigcup_{k\ge n}A_k^{c}}\right)
 =\limsup_{n\to \infty}A_n^c .
 \]
 \item Again apply De Morgan's laws twice:
 \[
 \left(\limsup_{n\to \infty}A_n\right)^{c}
 =\left(\bigcap_{n=1}^{\infty}\vc{\bigcup_{k\ge n}A_k}\right)^{c}
-\overset{\text{DM}}{=} \bigcup_{n=1}^{\infty}\vc{\left(\bigcup_{k\ge n}A_k\right)^{c}}
-\overset{\text{DM}}{=} \bigcup_{n=1}^{\infty}\left(\vc{\bigcap_{k\ge n}A_k^{c}}\right)
+\overset{\text{(DM)}}{=} \bigcup_{n=1}^{\infty}\vc{\left(\bigcup_{k\ge n}A_k\right)^{c}}
+\overset{\text{(DM)}}{=} \bigcup_{n=1}^{\infty}\left(\vc{\bigcap_{k\ge n}A_k^{c}}\right)
 =\liminf_{n\to \infty}A_n^c .
 \]
 \end{enumerate}
@@ -321,16 +321,15 @@ the set of all preimages of sets in \(\mathcal{A}\), i.e.,
 subset of \(\Omega'\), and \(\{A_i'\}_{i\in I}\) be any collection of subsets of
 \(\Omega'\).
 \begin{enumerate}
-\item \emph{(preservation of complementation)} \(\big(X^{-1}(A')\big)^{c}=X^{-1}(A'^{c})\).
-\item \emph{(preservation of union)} \(X^{-1}(\bigcup_{i\in I}A_i')=\bigcup_{i\in I}X^{-1}(A_i')\).
-\item \emph{(preservation of intersection)} \(X^{-1}(\bigcap_{i\in I}A_i')=\bigcap_{i\in I}X^{-1}(A_i')\).
-\item \emph{(monotonicity)} Let \(\mathcal{A}',\mathcal{B}'\subseteq
+\item \emph{(Preservation of complementation)} \(\big(X^{-1}(A')\big)^{c}=X^{-1}(A'^{c})\).
+\item \emph{(Preservation of union)} \(X^{-1}(\bigcup_{i\in I}A_i')=\bigcup_{i\in I}X^{-1}(A_i')\).
+\item \emph{(Preservation of intersection)} \(X^{-1}(\bigcap_{i\in I}A_i')=\bigcap_{i\in I}X^{-1}(A_i')\).
+\item \emph{(Monotonicity)} Let \(\mathcal{A}',\mathcal{B}'\subseteq
 \mathcal{P}(\Omega')\). Then, \(\mathcal{A}'\subseteq \mathcal{B}'\implies
 X^{-1}(\mathcal{A}')\subseteq X^{-1}(\mathcal{B}')\).
 \end{enumerate}
 \begin{pf}
 We demonstrate the proof for (b) and (d) here and leave the rest as exercises.
-
 \begin{enumerate}
 \item[(b)]
 ``\(\subseteq\)'': Fix any \(\omega\in X^{-1}(\bigcup_{i\in I}A_i')\). By
@@ -370,10 +369,10 @@ codomain as \([0,\infty]\) since it makes sense for a ``volume'' to be always
 nonnegative, and we sometimes want to assign ``infinite volume''.} should
 satisfy the following:
 \begin{enumerate}[label={(\arabic*)}]
-\item \emph{(assigning to an interval its length)} \(\lambda((a,b])=b-a\) for
+\item \emph{(Assigning to an interval its length)} \(\lambda((a,b])=b-a\) for
 any \(a,b\in\R\) with \(a\le b\).  Here, \((a,b]\) can be replaced by
 \((a,b)\), \([a,b)\), or \([a,b]\).
-\item \emph{(invariant under translation, rotations, and reflections)}
+\item \emph{(Invariant under translation, rotations, and reflections)}
 \(\lambda\) assigns the same value to \emph{congruent} sets (i.e., one can be
 obtained from another using just translations, rotations, and reflections).
 \item \emph{(\(\sigma\)-additivity)} Given any pairwise disjoint collection
@@ -389,7 +388,7 @@ On the other hand, requiring \emph{uncountable} additivity would be way too
 strong since in such case we would have, for all \(A\in\mathcal{F}\),
 \[
 \lambda(A)=\lambda\left(\bigcup_{x\in A}\{x\}\right)
-\overset{\text{uncountable add.}}{=}
+\overset{\text{(uncountable add.)}}{=}
 \sum_{x\in A}^{}\lambda(\{x\})
 :=\sup_{B\subseteq A,\; B\text{ finite}}\sum_{x\in B}^{}\underbrace{\lambda(\{x\})}_{\lambda([x,x])=x-x=0}
 =0,
@@ -400,16 +399,18 @@ which means that \emph{every} set has a ``zero volume''!
 Based on these requirements, we can deduce:
 \begin{enumerate}
 \item \(\lambda(\varnothing)=0\).
-\item \emph{(additivity)} For any \(\{A_i\}_{i=1}^{n}\subseteq\pow{\R}\), we have
+\item \emph{(Additivity)} For any \(\{A_i\}_{i=1}^{n}\subseteq\pow{\R}\), we have
 \(\lambda(\biguplus_{i=1}^{n}A_i)=\sum_{i=1}^{n}\lambda(A_i)\).
-\item \emph{(monotonicity)} For any \(A\subseteq B\), we have
+\item \emph{(Monotonicity)} For any \(A\subseteq B\), we have
 \(\lambda(A)\le\lambda(B)\) .
 \end{enumerate}
 \begin{pf}
 \begin{enumerate}
 \item \(\lambda(\varnothing)=\lambda((a,a])=a-a=0\).
-\item \(\lambda(\biguplus_{i=1}^{n}A_i)=\lambda(\biguplus_{i=1}^{n}A_i\uplus\varnothing\uplus\varnothing\uplus\dotsb)
-\overset{\text{\(\sigma\)-add.}}{=}\sum_{i=1}^{n}\lambda(A_i)+\sum_{i=n+1}^{\infty}0=\sum_{i=1}^{n}\lambda(A_i)\).
+\item
+\(\lambda(\biguplus_{i=1}^{n}A_i)=\lambda(\biguplus_{i=1}^{n}A_i\uplus\varnothing\uplus\varnothing\uplus\dotsb)
+\overset{\text{(\(\sigma\)-add.)}}{=}
+\sum_{i=1}^{n}\lambda(A_i)+\sum_{i=n+1}^{\infty}0=\sum_{i=1}^{n}\lambda(A_i)\).
 \item \(\lambda(B)=\lambda(B\uplus(B\setminus A))=\lambda(A)
 +\underbrace{\lambda(B\setminus A)}_{\ge 0}\ge \lambda(A)\).
 \end{enumerate}
@@ -545,7 +546,7 @@ The main issue is again related to non-measurable sets. We claim that at least
 one set in the collections \(\{A_i\}_{i=1}^{k}\) and \(\{B_i\}_{i=1}^{k}\) is
 non-measurable. Suppose not, then additivity would imply that
 \(\lambda(A)=\lambda(\biguplus_{i=1}^{k}A_i)=\sum_{i=1}^{k}\lambda(A_i)
-\overset{\text{invariance}}{=}\sum_{i=1}^{k}\lambda(B_i)=\lambda(\biguplus_{i=1}^{k}B_i)=\lambda(B)\).
+\overset{\text{(invariance)}}{=}\sum_{i=1}^{k}\lambda(B_i)=\lambda(\biguplus_{i=1}^{k}B_i)=\lambda(B)\).
 But we can select \(A\) and \(B\) that get different assigned values by
 \(\lambda\). Contradiction.
 \end{enumerate}
@@ -571,13 +572,13 @@ probability theory!).
 \item \textbf{Definitions.}
 \begin{itemize}
 \item A family \(\mathcal{A}\subseteq \pow{\Omega}\) is a \defn{semiring} on
-\(\Omega\) if
+\(\Omega\) if:
 \begin{enumerate}[label={(\arabic*)}]
 \item \(\varnothing\in\mathcal{A}\).
-\item \emph{(``stable'' under set differences)}
+\item \emph{(``Stable'' under set differences)}
 \(A,B\in\mathcal{A}\implies A\setminus B=\biguplus_{i=1}^{n}A_i\) for
 some pairwise disjoint \(A_1,\dotsc,A_n\in\mathcal{A}\), where \(n\in\N\).
-\item \emph{(closed under intersections)} \(A,B\in\mathcal{A}\implies A\cap B\in\mathcal{A}\).
+\item \emph{(Closed under intersections)} \(A,B\in\mathcal{A}\implies A\cap B\in\mathcal{A}\).
 \end{enumerate}
 \begin{note}
 The ``stability'' under set differences suggests that, while taking set
@@ -585,27 +586,28 @@ differences may yield something outside \(\mathcal{A}\), we can still express
 the result as a disjoint union of finitely many sets in \(\mathcal{A}\) (so
 still ``stable'' to a certain degree).
 \end{note}
-\item A family \(\mathcal{A}\subseteq \pow{\Omega}\) is a \defn{ring} on \(\Omega\) if
+\item A family \(\mathcal{A}\subseteq \pow{\Omega}\) is a \defn{ring} on
+\(\Omega\) if:
 \begin{enumerate}[label={(\arabic*)}]
 \item \(\varnothing\in\mathcal{A}\).
-\item \emph{(closed under set differences)}
+\item \emph{(Closed under set differences)}
 \(A,B\in\mathcal{A}\implies A\setminus B\in\mathcal{A}\).
-\item \emph{(closed under unions)} \(A,B\in\mathcal{A}\implies A\cup B\in\mathcal{A}\).
+\item \emph{(Closed under unions)} \(A,B\in\mathcal{A}\implies A\cup B\in\mathcal{A}\).
 \end{enumerate}
 \item A family \(\mathcal{A}\subseteq \pow{\Omega}\) is an \defn{algebra} (or
-\defn{field}) on \(\Omega\) if
+\defn{field}) on \(\Omega\) if:
 \begin{enumerate}[label={(\arabic*)}]
 \item \(\varnothing\in\mathcal{A}\).
-\item \emph{(closed under complementations)} \(A\in\mathcal{A}\implies A^c=\Omega\setminus A\in\mathcal{A}\).
-\item \emph{(closed under unions)}
+\item \emph{(Closed under complementations)} \(A\in\mathcal{A}\implies A^c=\Omega\setminus A\in\mathcal{A}\).
+\item \emph{(Closed under unions)}
 \(A,B\in\mathcal{A}\implies A\cup B\in\mathcal{A}\).
 \end{enumerate}
 \item \ystar{} A family \(\mathcal{A}\subseteq \pow{\Omega}\) is a
-\defn{\(\sigma\)-algebra} (or \defn{\(\sigma\)-field}) on \(\Omega\) if
+\defn{\(\sigma\)-algebra} (or \defn{\(\sigma\)-field}) on \(\Omega\) if:
 \begin{enumerate}[label={(\arabic*)}]
 \item \(\varnothing\in\mathcal{A}\).
-\item \emph{(closed under complementations)} \(A\in\mathcal{A}\implies A^c=\Omega\setminus A\in\mathcal{A}\).
-\item \emph{(closed under countable unions)}
+\item \emph{(Closed under complementations)} \(A\in\mathcal{A}\implies A^c=\Omega\setminus A\in\mathcal{A}\).
+\item \emph{(Closed under countable unions)}
 \(A_1,A_2,\dotsc\in\mathcal{A}\implies \bigcup_{i=1}^{\infty}A_i\in\mathcal{A}\).
 \end{enumerate}
 \begin{note}
@@ -614,7 +616,7 @@ A \(\sigma\)-algebra is actually also closed under countable
 closedness under countable unions and complementations:
 \[
 A_1,A_2,\dotsc\in\mathcal{A}
-\implies \bigcap_{i=1}^{\infty}A_i\overset{\text{DM}}{=}
+\implies \bigcap_{i=1}^{\infty}A_i\overset{\text{(DM)}}{=}
 \left(\bigcup_{i=1}^{\infty}A_i^{c}\right)^{c}
 \in\mathcal{A}.
 \]
@@ -649,10 +651,9 @@ and any \(A,B\in\mathcal{A}\). Let \(A_1=A\), \(A_2=B\), and
 is closed under unions, thus is an algebra.
 
 \textbf{Strictness:} Take \(\Omega=(0,1]\) and
-\(\mathcal{A}=\{\biguplus_{i=1}^{n}(a_i,b_i]: 0\le a_i\le b_i\le 1, n\in\N\}\)
-(or in words, the family of all possible finite disjoint unions of intervals of
-the form \((a,b]\) (i.e., left-open and right-closed intervals) lying in
-\(\Omega=(0,1]\)).
+\(\mathcal{A}=\{\biguplus_{i=1}^{n}(a_i,b_i]: 0\le a_i\le b_i\le 1, n\in\N\}\),
+i.e., the family of all possible finite disjoint unions of intervals of the
+form \((a,b]\) lying in \(\Omega=(0,1]\).
 
 It can be directly checked that \(\mathcal{A}\) is an algebra.
 \begin{center}
@@ -700,7 +701,7 @@ left-open and right-closed intervals must still be left-open and right-closed.
 \item \underline{\(\text{algebra}\subsetneq\text{ring}\)} \\
 \textbf{Inclusion:} Fix any algebra \(\mathcal{A}\) on \(\Omega\), and any
 \(A,B\in\mathcal{A}\).  Applying closedness under complementations and unions,
-we have \(A\setminus B=A\cap B^c\overset{\text{DM}}{=}(A^c\cup B)^c\in\mathcal{A}\).
+we have \(A\setminus B=A\cap B^c\overset{\text{(DM)}}{=}(A^c\cup B)^c\in\mathcal{A}\).
 This shows \(\mathcal{A}\) is closed under set differences, and hence is a
 ring.
 
@@ -711,7 +712,7 @@ not an algebra since \(\varnothing^c=\Omega=\{1\}\notin \mathcal{A}\).
 \item \underline{\(\text{ring}\subsetneq\text{semiring}\)} \\
 \textbf{Inclusion:} Fix any ring \(\mathcal{A}\) on \(\Omega\), and any \(A,B\in\mathcal{A}\).
 Applying closedness under set differences, we get
-\(A\cap \vc{B}\overset{\text{DM}}{=}A\cap\vc{(A\cap B^c)^c}
+\(A\cap \vc{B}\overset{\text{(DM)}}{=}A\cap\vc{(A\cap B^c)^c}
 =A\setminus (A\setminus B)\in \mathcal{A}\), and also
 \(A\setminus B=\underbrace{(A\setminus B)}_{\in\mathcal{A}}\uplus\underbrace{\varnothing}_{\in \mathcal{A}}\).
 
@@ -866,11 +867,13 @@ below.
 Firstly, we have
 \(\varnothing=\varnothing\cap\Omega'\in\mathcal{F}'\).
 
-Next, fix any \(A'\in\mathcal{F}'\). By definition, we can write \(A'=A\cap\Omega'\) for some \(A\in\mathcal{F}\). Then, emphasizing universal sets in the complement notations, we have
+Next, fix any \(A'\in\mathcal{F}'\). By definition, we can write
+\(A'=A\cap\Omega'\) for some \(A\in\mathcal{F}\). Then, emphasizing universal
+sets in the complement notations, we have
 \[
 (A')^{c_{\Omega'}}
 =(A\cap\Omega')^{c_{\Omega'}}
-\overset{\text{DM}}{=}
+\overset{\text{(DM)}}{=}
 A^{c_{\Omega'}}\cup \Omega'^{c_{\Omega'}}
 =A^{c_{\Omega'}}
 =\underbrace{A^{c_{\mgc{\Omega}}}}_{\in\mathcal{F}}\cap\Omega'
@@ -882,7 +885,7 @@ Hence,
 \[
 \bigcup_{i=1}^{\infty}A_i'
 =\bigcup_{i=1}^{\infty}(A_i\cap\Omega')
-\overset{\text{distributive}}{=}
+\overset{\text{(distributive)}}{=}
 \underbrace{\left(\bigcup_{i=1}^{\infty}A_i\right)}_{\in\mathcal{F}}\cap\Omega'
 \in\mathcal{F}'.
 \]
@@ -902,7 +905,7 @@ First, we have \(\varnothing=X^{-1}(\underbrace{\varnothing}_{\in\mathcal{F}'})\
 Now fix any \(A\in\mathcal{F}\). Then \(A=X^{-1}(A')\) for some
 \(A'\in\mathcal{F}'\). Hence,
 \[
-A^{c}=(X^{-1}(A'))^{c}\overset{\text{preserv.\ comp.}}{=}
+A^{c}=(X^{-1}(A'))^{c}\overset{\text{(preserv.\ comp.)}}{=}
 X^{-1}(\underbrace{(A')^{c}}_{\in\mathcal{F}'})
 \in\mathcal{F}.
 \]
@@ -911,7 +914,7 @@ Next, fix any \(A_1,A_2,\dotsc\in\mathcal{F}\). Then for all \(i\in\N\),
 \[
 \bigcup_{i=1}^{\infty}A_i
 =\bigcup_{i=1}^{\infty}X^{-1}(A_i')
-\overset{\text{preserv.\ union}}{=}
+\overset{\text{(preserv.\ union)}}{=}
 X^{-1}\bigg(\underbrace{\bigcup_{i=1}^{\infty}A_i'}_{\in\mathcal{F}'}\bigg)
 \in\mathcal{F}.
 \]
@@ -1050,7 +1053,7 @@ In general, let \(\mathcal{A}\) be a family of subsets of \(\Omega\), and let
 \(\mathcal{F}\supseteq \mathcal{A}\)}\}\). Then the \defn{\(\sigma\)-algebra
 generated by \(\mathcal{A}\)} is given by the intersection of all those
 \(\sigma\)-algebras, i.e.,
-\(\defn{\text{\(\sigma(\mathcal{A})\)}}:=\bigcap_{\mathcal{F}\in\mathcal{F}_{\mathcal{A}}}\mathcal{F}\).
+\(\text{\(\sigma(\mathcal{A})\)}:=\bigcap_{\mathcal{F}\in\mathcal{F}_{\mathcal{A}}}\mathcal{F}\).
 
 \item \label{it:sigma-alg-gen-interpret}
 \textbf{Interpretation of \(\sigma(\mathcal{A})\).} The family
@@ -1171,7 +1174,7 @@ is a \(\sigma\)-algebra, we have
 
 \item \textbf{\(\sigma\)-algebra generated by unions and collections of functions.}
 \begin{itemize}
-\item \emph{generated by unions:} Let \(\mathcal{F}_i\) be a \(\sigma\)-algebra
+\item \emph{Generated by unions:} Let \(\mathcal{F}_i\) be a \(\sigma\)-algebra
 on \(\Omega\) for all \(i\in I\). Then the \(\sigma\)-algebra generated by
 their union \(\bigcup_{i\in I}\mathcal{F}_i\) has a special notation:
 \(\defn{\text{\(\sigma(\mathcal{F}_i:i\in I)\)}}:=\sigma(\bigcup_{i\in I}\mathcal{F}_i)\).
@@ -1187,7 +1190,7 @@ The union \(\mathcal{F}_1\cup\mathcal{F}_2=\{\varnothing,\{0\},\{1\},\{0,2\},\{1
 is not a \(\sigma\)-algebra since \(\{0\},\{1\}\in\mathcal{F}_1\cup
 \mathcal{F}_2\) but \(\{0,1\}=\{0\}\cup\{1\}\notin \mathcal{F}_1\cup\mathcal{F}_2\).
 \end{note}
-\item \emph{generated by collections of functions:} For every \(i\in I\), let
+\item \emph{Generated by collections of functions:} For every \(i\in I\), let
 \(X_i:\Omega\to\Omega_i\) be a function with a \(\sigma\)-algebra
 \(\mathcal{F}_i\) on \(\Omega_i\). Then, the \defn{\(\sigma\)-algebra generated
 by \(\{X_i\}_{i\in I}\)} (the collection of all the functions \(X_i\)'s) is
@@ -1290,7 +1293,7 @@ the function interpretation above).
 
 Then, the \defn{product \(\sigma\)-algebra} on \(\Omega\) is
 \[
-\defn{\text{\(\bigotimes_{i\in I}\mathcal{F}_i\)}}:
+\bigotimes_{i\in I}\mathcal{F}_i:
 =\sigma(\pi_{i}:i\in I)
 =\sigma\left(\bigcup_{i\in I}^{}\sigma(\pi_i)\right)
 =\sigma\left(\bigcup_{i\in I}^{}\pi_{i}^{-1}(\mathcal{F}_i)\right).
@@ -1354,11 +1357,11 @@ unions}, it just requires closedness under \emph{countable \vc{disjoint}
 unions}, which is often easier to check.
 
 A family \(\mathcal{D}\subseteq \mathcal{P}(\Omega)\) is a \defn{Dynkin system}
-(or \defn{\(\lambda\)-system}) on \(\Omega\) if
+(or \defn{\(\lambda\)-system}) on \(\Omega\) if:
 \begin{enumerate}[label={(\arabic*)}]
 \item \(\varnothing\in\mathcal{D}\).
-\item \emph{(closed under complementations)} \(A\in\mathcal{D}\implies A^c=\Omega\setminus A\in\mathcal{D}\).
-\item \emph{(closed under countable disjoint unions)} \(
+\item \emph{(Closed under complementations)} \(A\in\mathcal{D}\implies A^c=\Omega\setminus A\in\mathcal{D}\).
+\item \emph{(Closed under countable disjoint unions)} \(
 A_1,A_2,\dotsc\in\mathcal{D} \text{ pairwise disjoint}
 \implies \biguplus_{i=1}^{\infty}A_i\in\mathcal{D}\).
 \end{enumerate}
@@ -1384,11 +1387,11 @@ with \(\sigma\)-algebra.
 \item (2') be ``\(A,B\in\mathcal{D}\text{ with }A\subseteq
 B\implies B\setminus A\in\mathcal{D}\)'',
 \item (3') be ``\(A_1,A_2,\dotsc\in\mathcal{D}\text{ with
-}A_i\nearrow \implies \bigcup_{i=1}^{\infty}A_i\in\mathcal{D}\)'' (closedness
-under countable unions of increasing sets).
+}A_i\nearrow \implies \bigcup_{i=1}^{\infty}A_i\in\mathcal{D}\)'' \emph{(closedness
+under countable unions of increasing sets)}.
 \end{itemize}
-  Then the conditions (1), (2), and (3) for Dynkin system
-are equivalent to the conditions (1'), (2'), and (3').
+Then the conditions (1), (2), and (3) for Dynkin system are equivalent to the
+conditions (1'), (2'), and (3').
 \item \(\text{\(\sigma\)-algebra}\subsetneq\text{Dynkin system}\).
 \item If \(\mathcal{D}\) is a Dynkin system and \emph{also a \(\pi\)-system},
 then \(\mathcal{D}\) is a \(\sigma\)-algebra.
@@ -1404,7 +1407,7 @@ Firstly, we have \(\Omega=\varnothing^c\in\mathcal{D}\) by (1) and (2). This
 shows (1').
 
 Fix any \(A,B\in\mathcal{D}\) with \(A\subseteq B\). Then, \(B\setminus A=B\cap
-A^c \overset{\text{DM}}{=}(B^c\uplus A)^c\). (Here \(A\) and \(B^c\) are
+A^c \overset{\text{(DM)}}{=}(B^c\uplus A)^c\). (Here \(A\) and \(B^c\) are
 disjoint since \(A\subseteq B\).) Now, using the conditions (2) and (3), we have
 \((B^c\uplus A)^c\in\mathcal{D}\). This shows (2').
 
@@ -1428,7 +1431,7 @@ This shows (3').
 \node[] () at (-6,0) {\(\cdots\)};
 \end{tikzpicture}
 \end{center}
-\item \underline{(1'), (2'), (3') \(\implies\) (1), (2), (3)}: 
+\item \underline{(1'), (2'), (3') \(\implies\) (1), (2), (3)}:
 
 Firstly, we have \(\varnothing=\Omega\setminus \Omega\in\mathcal{D}\) by (1')
 and (2'). This shows (1).
@@ -1468,8 +1471,8 @@ is not a \(\sigma\)-algebra since \(A\cup B=\{0,1,2\}\notin \mathcal{D}\).
 \item Fix any \(A_1,A_2,\dotsc\in\mathcal{D}\). Let \(B_1:=A_1\in\mathcal{D}\)
 and, for all \(n=2,3,\dotsc\), \(B_n:=A_n\setminus
 \bigcup_{i=1}^{n-1}A_i=A_n\cap(\bigcup_{i=1}^{n-1}A_i)^{c}
-\overset{\text{DM}}{=}A_n\cap\bigcap_{i=1}^{n-1}A_i^c \overset{\text{(2),
-\(\pi\)-system}}{\in}\mathcal{D}\). Note that \(B_n\)'s are pairwise disjoint
+\overset{\text{(DM)}}{=}A_n\cap\bigcap_{i=1}^{n-1}A_i^c \overset{\text{((2),
+\(\pi\)-system)}}{\in}\mathcal{D}\). Note that \(B_n\)'s are pairwise disjoint
 and \(\bigcup_{n=1}^{N}A_n=\biguplus_{n=1}^{N}B_n\) for all \(N\in\N\).  Hence,
 \[
 \bigcup_{n=1}^{\infty}A_i=\lim_{N\to\infty}\bigcup_{n=1}^{N}A_n
@@ -1633,8 +1636,8 @@ topology is. A \defn{topology} on a set \(\Omega\) is a family of subsets
 \(\mathcal{T}\subseteq \mathcal{P}(\Omega)\) such that:
 \begin{enumerate}[label={(\arabic*)}]
 \item \(\varnothing,\Omega\in\mathcal{T}\).
-\item \emph{(closed under arbitrary unions)} \(A_i\in\mathcal{T}\;\forall i\in I\implies \bigcup_{i\in I}^{}A_i\in\mathcal{T}\).
-\item \emph{(closed under finite intersections)} \(A_1,\dotsc,A_n\in\mathcal{T}\implies \bigcap_{i=1}^{n}A_i\in\mathcal{T}\).
+\item \emph{(Closed under arbitrary unions)} \(A_i\in\mathcal{T}\;\forall i\in I\implies \bigcup_{i\in I}^{}A_i\in\mathcal{T}\).
+\item \emph{(Closed under finite intersections)} \(A_1,\dotsc,A_n\in\mathcal{T}\implies \bigcap_{i=1}^{n}A_i\in\mathcal{T}\).
 \end{enumerate}
 \begin{intuition}
 The closedness under arbitrary unions and finite intersections originate from
@@ -1658,8 +1661,8 @@ topology'', i.e., the one that is induced by the Euclidean metric, under which
 our usual notion of ``open set'' and ``closed set'' (the concepts for
 \emph{metric space}; see e.g., MATH3401) agrees with the openness and closedness
 under the ``usual topology''. In general, a metric space can always induce a
-corresponding topological space. (But we will mostly focus on the case
-where \(\Omega=\R^d\) when discussing Borel \(\sigma\)-algebra.)
+corresponding topological space. But here we will mostly focus on the case
+where \(\Omega=\R^d\) when discussing Borel \(\sigma\)-algebra.
 
 Let \((\Omega,\mathcal{T})\) be a topological space. Then the \defn{Borel
 \(\sigma\)-algebra} on \(\Omega\) is given by
@@ -1764,6 +1767,7 @@ Here, the interval and inequality notations carry componentwise meaning:
 \((\vect{a},\vect{b})=(a_1,b_1)\times\dotsb\times (a_d,b_d)\), etc., where
 \(\vect{a}=(a_1,\dotsc,a_d)\) and \(\vect{b}=(b_1,\dotsc,b_d)\).
 \end{note}
+
 \begin{pf}
 Omitted.
 \end{pf}

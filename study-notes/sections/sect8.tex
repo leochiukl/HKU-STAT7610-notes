@@ -31,15 +31,14 @@ conditional distribution function of \(\vect{X}_2\) given \(B\)} by
 F_{\vect{X}_2|B}(\vect{x}_2):=\prob{\vect{X}_2\le\vect{x}_2|B}
 =\frac{\prob{\{\vect{X}_2\le\vect{x}_2\}\cap B}}{\prob{B}}
 \]
-for all \(\vect{x}_2\in\R^{d_2}\). If exists, then the mean of
-\(F_{\vect{X}_2|B}\) (i.e., mean of a random variable with distribution
-function being \(F_{\vect{X}_2|B}\)) is called the \defn{(ordinary) conditional
-expectation of \(\vect{X}_2\) given \(B\)}.
-
-Often, we are handling the case with \(B=\{\vect{X}_1=\vect{x}_1\}\) for some
-random variable \(\vect{X}_1\). However, the definition above only works
-if \(\prob{B}=\prob{\vect{X}_1=\vect{x}_1}>0\) (e.g., discrete case), and
-breaks down if \(\prob{\vect{X}_1=\vect{x}_1}=0\) (e.g., continuous case).
+for all \(\vect{x}_2\in\R^{d_2}\). The mean of \(F_{\vect{X}_2|B}\) (i.e., mean
+of a random variable with distribution function being \(F_{\vect{X}_2|B}\)), if
+exists, is called the \defn{(ordinary) conditional expectation of
+\(\vect{X}_2\) given \(B\)}.  Often, we are handling the case with
+\(B=\{\vect{X}_1=\vect{x}_1\}\) for some random variable \(\vect{X}_1\).
+However, the definition above only works if
+\(\prob{B}=\prob{\vect{X}_1=\vect{x}_1}>0\) (e.g., discrete case), and breaks
+down if \(\prob{\vect{X}_1=\vect{x}_1}=0\) (e.g., continuous case).
 \item \textbf{How to deal with conditioning on zero-probability
 event?}
 If \(F_{\vect{X}_1}\) is discrete, we know that
@@ -89,7 +88,8 @@ provided that \(f_{\vect{X}_1}(\vect{x}_1)>0\). Nevertheless, such
 \((X_1,X_2)\sim\operatorname{U}(D)\) with \(D=\{(x_1,x_2):-1\le x_1\le 1, 0\le
 x_2\le \sqrt{1-x_{1}^{2}}\}\) being the upper half of unit disk centered at
 \((0,0)\). Here, \(\operatorname{U}(D)\) refers to the uniform distribution
-on \(D\). We then consider the conditional distribution using two coordinates.
+on \(D\) (i.e., constant density over \(D\)). We then consider the conditional
+distribution using two coordinates.
 
 \begin{enumerate}
 \item \emph{(Cartesian coordinates)} Using the Cartesian coordinates, the joint
@@ -195,9 +195,9 @@ xmin=-1.1, title={Polar}, axis equal image]
 These pictures also intuitively illustrate why the probability is \(1/2\) for
 Cartesian coordinates and is \(1/4\) for polar coordinates. For Cartesian
 coordinates, the ``region of interest'' occupies a half of the ``limiting''
-region (approached with ``rectangles'' with shrinking widths). On the other
+region (approached with ``rectangles'' having shrinking widths). On the other
 hand, for polar coordinates, it only occupies a quarter of the ``limiting
-region'' (approached with ``circular sectors'' with shrinking central angles).
+region'' (approached with ``circular sectors'' having shrinking central angles).
 The dependency of the probability calculation on the way of how the limit is
 approached is an undesirable trait, and can lead to ambiguities. This issue
 can be avoided by following the \emph{measure-theoretic} approach instead.
@@ -285,10 +285,10 @@ convenience). Applying \Cref{thm:leb-rn} then gives, for all
 \[
 \int_{A}^{}X\odif{\pr}=\nu(A)=\int_{A}^{}\odv{\nu}{\pr}\odif{\pr}
 \]
-where \(\odv{\nu}/{\pr}\) is the \(\pr\)-a.s.\ unique integrable (and hence
-\(\mathcal{G}\)-measurable) Radon-Nikodym derivative. By definition of
-conditional expectation, \(\odv{\nu}/{\pr}\) is a version of \(\expv{X|\mathcal{G}}\),
-establishing the existence in this case.
+where \(\odv{\nu}/{\pr}\) is the \(\pr\)-a.s.\ unique and
+\(\mathcal{G}\)-measurable Radon-Nikodym derivative. By
+definition of conditional expectation, \(\odv{\nu}/{\pr}\) is a version of
+\(\expv{X|\mathcal{G}}\), establishing the existence in this case.
 
 Next, consider the general case where \(X\) may not be nonnegative. We write
 \(X=X^{+}-X^{-}\), and let \(Y^{+}=\expv{X^{+}|\mathcal{G}}\) and
@@ -403,11 +403,27 @@ I}^{}A_i:A_i\in\mathcal{A}~\forall i\in I \text{ and } I\subseteq \N\}\subseteq
 \]
 \end{proposition}
 
-\begin{note}
-The value assigned for \(\expvmu{A_n}{X}\) in the case \(\prob{A_n}=0\) can
+\begin{remark}
+\item The value assigned for \(\expvmu{A_n}{X}\) in the case \(\prob{A_n}=0\) can
 indeed be replaced by other real numbers (not necessarily \(0\)); this also
 explains why the equality only holds a.s.\
-\end{note}
+
+\item \emph{(More explicit form of the formula)} For convenience, suppose that
+there are only \(k\) nonempty sets \(A_1,\dotsc,A_k\) in the partition, each
+with positive probability. Then, we can write
+\[
+\expv{X|\mathcal{G}}(\omega)
+=\begin{cases}
+\expv{X\indic_{A_1}}/\prob{A_1}&\text{if \(\omega\in A_1\),} \\
+\expv{X\indic_{A_2}}/\prob{A_2}&\text{if \(\omega\in A_2\),} \\
+\vdots \\
+\expv{X\indic_{A_k}}/\prob{A_k}&\text{if \(\omega\in A_k\).}
+\end{cases}
+\]
+From this expression, it is transparent that the conditional expectation in
+this case is a ``piecewise constant'' function in \(\omega\) (the output stays
+the same within a certain \(A_j\)).
+\end{remark}
 
 \begin{pf}
 Let \(Y:=\sum_{n=1}^{\infty}\expvmu{A_n}{X}\indic_{A_n}:\Omega\to\R\). We now
@@ -687,17 +703,20 @@ are several ``layers'' of conditioning involved, which looks like a ``tower'',
 hence the name ``tower property''.
 \item \emph{(Interpretation of tower property)} To interpret the tower property
 more intuitively, we can consider the impact of the
-coarseness/fineness\footnote{\(\mathcal{G}\) is coarser (finer) if it contains
-smaller (larger) number of sets.} of \(\mathcal{G}\) on the conditional
-expectation (averaging): For a coarser (finer) \(\mathcal{G}\), ``larger''
-(``smaller'') pieces are contained. Hence, ``stronger'' (``weaker'') averaging
-takes place over each ``piece'', making \(\expv{X|\mathcal{G}}\) retain less
-(more) information about \(X\). Parts (a) and (c) provide two extreme examples:
-(i) For \(\mathcal{G}=\{\varnothing,\Omega\}\), it is so coarse that no
-information is retained except just the mean of \(X\):
-\(\expv{X|\mathcal{G}}=\expv{X}\), and (ii) For \(\mathcal{G}\) with
-\(X\in\mathcal{G}\), it is so fine that full information about \(X\) is
-retained: \(\expv{X|\mathcal{G}}=X\) (there is no ``averaging'' taking place).
+coarseness/fineness\footnote{We say that \(\mathcal{H}\) is coarser than
+\(\mathcal{G}\) (or \(\mathcal{G}\) is finer than \(\mathcal{H}\)) if
+\(\mathcal{H}\subseteq \mathcal{G}\), i.e., \(\mathcal{H}\) contains fewer
+``pieces'' and hence they are generally ``larger''/``rougher''.} of
+\(\mathcal{G}\) on the conditional expectation (averaging): For a coarser
+(finer) \(\mathcal{G}\), generally ``larger'' (``smaller'') pieces are
+contained. Hence, ``stronger'' (``weaker'') averaging takes place over the
+``pieces'', making \(\expv{X|\mathcal{G}}\) retain less (more) information
+about \(X\). Parts (a) and (c) provide two extreme examples: (i) For
+\(\mathcal{G}=\{\varnothing,\Omega\}\), it is so coarse that no information is
+retained except just the mean of \(X\): \(\expv{X|\mathcal{G}}=\expv{X}\), and
+(ii) For \(\mathcal{G}\) with \(X\in\mathcal{G}\), it is so fine that full
+information about \(X\) is retained: \(\expv{X|\mathcal{G}}=X\) (there is no
+``averaging'' taking place).
 
 Armed with this idea, the tower property can then be interpreted as saying that
 \emph{the coarser \(\sigma\)-algebra remains} (\(\mathcal{H}\) in the case with
@@ -741,7 +760,7 @@ Let \(p\in [1,\infty]\). Then \(\|X+Y\vc{|\mathcal{G}}\|_{p}\le \|X\vc{|\mathcal
 \(X,Y\in L^{p}(\Omega,\mathcal{F},\pr)\).
 \item \label{it:cond-jensen-ineq} \emph{(Conditional Jensen's inequality)}
 Let \(X:\Omega\to\R\) be a function in \(L^{1}(\Omega,\mathcal{F},\pr)\), and
-\(\varphi\) be a convex function on \(\R\), such that \(\varphi(X)\in
+\(\varphi\) be a convex function on \(\R\) such that \(\varphi(X)\in
 L^{1}(\Omega,\mathcal{F},\pr)\). Then,
 \(\varphi(\expv{X\vc{|\mathcal{G}}})\le\expv{\varphi(X)\vc{|\mathcal{G}}}\).
 
@@ -969,10 +988,12 @@ conditional expectation.
 Let \((\Omega,\mathcal{F},\pr)\) be a probability space, \(\mathcal{G}\subseteq
 \mathcal{F}\) be a \(\sigma\)-algebra on \(\Omega\), and \(X\in
 L^{1}(\Omega,\mathcal{F},\pr)\). If \(\mathcal{A}\subseteq \mathcal{F}\) is a
-\(\pi\)-system such that (i) \(\sigma(\mathcal{A})=\mathcal{G}\) and (ii) there
-exists \(\{A_i\}_{i\in\N}\subseteq \mathcal{A}\) such that
-\(\bigcup_{i=1}^{\infty}A_i=\Omega\), then a function \(Y:\Omega\to\R\) is a
-version of \(\expv{X|\mathcal{G}}\) if it satisfies:
+\(\pi\)-system such that (i) \(\sigma(\mathcal{A})=\mathcal{G}\)
+\emph{(generating \(\mathcal{G}\))} and (ii) there exists
+\(\{A_i\}_{i\in\N}\subseteq \mathcal{A}\) such that
+\(\bigcup_{i=1}^{\infty}A_i=\Omega\) \emph{(containing a cover of \(\Omega\))},
+then the function \(Y:\Omega\to\R\) is a version of \(\expv{X|\mathcal{G}}\) if
+it satisfies:
 \begin{enumerate}[label={(\arabic*)}]
 \item \emph{(Measurability)} \(Y\in\mathcal{G}\).
 \item \emph{(Partial averaging on \(\mathcal{A}\))}
@@ -1057,7 +1078,7 @@ disjoint).
 \item Fix any nonnegative \(Y\in\mathcal{G}\). Consider first the case
 where \(X\ge 0\).
 
-By \Cref{lma:apx-seq}, we know there exists a sequence \(\{Y_n\}\) of
+By \Cref{prp:apx-seq}, we know there exists a sequence \(\{Y_n\}\) of
 nonnegative simple functions such that \(Y_n\nearrow Y\). Hence, for all
 \(A\in\mathcal{G}\), we have \(Y_n\expv{X|\mathcal{G}}\indic_{A}\nearrow
 Y\expv{X|\mathcal{G}}\indic_{A}\) and \(XY_n\indic_{A}\nearrow XY\indic_{A}\),
@@ -1096,7 +1117,8 @@ Then, for all \(A\in\mathcal{G}\) we have
 \end{pf}
 
 A corollary of the TOWIK property is a ``conditional version'' of
-\Cref{prp:expv-prod-indp} (expectation of product is product of expectations).
+\Cref{prp:expv-prod-indp} (expectation of product is product of expectations),
+with two random variables.
 \begin{corollary}
 \label{cor:cond-expv-prod-indp}
 Let \((\Omega,\mathcal{F},\pr)\) be a probability space, and
@@ -1171,7 +1193,7 @@ Y(\omega)=\sum_{i=1}^{n}y_i\indic_{A_i}(\omega)
 where \(h(z):=\sum_{i=1}^{n}y_i\indic_{A_i'}(z)\) is
 \((\mathcal{F}',\mathcal{B}(\R))\)-measurable.
 \item Fix any \(Y\ge 0\) that is \((\sigma(Z),\mathcal{B}(\R))\)-measurable.
-By \Cref{lma:apx-seq}, there exists a sequence \(\{Y_n\}\) of simple functions
+By \Cref{prp:apx-seq}, there exists a sequence \(\{Y_n\}\) of simple functions
 such that \(Y_n\nearrow Y\). Now, for each \(n\in\N\), we know by (1) that
 there exists a \((\mathcal{F}',\mathcal{B}(\R))\)-measurable function \(h_n\)
 such that \(Y_n=h_n(Z)\). Since \(Y_n\nearrow\), we have \(h_n\nearrow\) also.
@@ -1214,7 +1236,7 @@ taking \(\Omega'=\R^{d}\), \(\mathcal{F}'=\mathcal{B}(\R^{d})\), and
 Both \Cref{thm:factorization} and \Cref{cor:fact-cond-exp} suggest the
 \emph{existence} of factorization, but do not give us an explicit ``formula''
 for finding out what \(h\) is.\footnote{While the proof of
-\Cref{thm:factorization} does suggest that how such \(h\) can be constructed,
+\Cref{thm:factorization} does suggest how such \(h\) can be constructed,
 it is not in a very explicit form and is generally hard to obtain.} In the
 following, we will consider a special case where we do have an explicit formula
 for such \(h\).
@@ -1229,25 +1251,17 @@ Let \((\Omega,\mathcal{F},\pr)\) be a probability space.  If
 \(\expv{g(\vect{X},\vect{Z})|\vect{Z}}=h(\vect{Z})\) (a.s.), where
 \(h(\vect{z}):=\expv{g(\vect{X},\vect{z})}\).
 \end{proposition}
-%\begin{note}
-%Here, the conditional expectation \(\expv{g(\vect{X},\vect{Z})|\vect{Z}}\)
-%may involve a random variable \(g(\vect{X},\vect{Z})\) that is only in \(L_{+}\)
-%but not in \(L_{1}\). This case is technically excluded in our definition of
-%conditional expectation. For the purpose here, we may treat such conditional
-%expectation to be defined in the same way as usual (a function from \(\Omega\)
-%to \(\R\) that satisfies the measurability and partial averaging properties),
-%but it should be warned that such ``conditional expectation'' may not satisfy
-%the previously proven properties anymore \warn{}; only the result here is
-%guaranteed to hold for such case.
-%\end{note}
 
 \begin{pf}
 \begin{enumerate}[label={(\arabic*)}]
-\item Since \(h\) is
-\((\mathcal{B}(\R^{d_{\vect{z}}}),\mathcal{B}(\R))\)-measurable
-and \(\vect{Z}\) is \((\sigma(\vect{Z}),\mathcal{B}(\R^{d}))\)-measurable,
-by \labelcref{it:meas-compo-meas} we know \(h(\vect{Z})\) is
-\(\sigma(Z)\)-measurable.
+\item It can be shown that \(h\) is
+\((\mathcal{B}(\R^{d_{\vect{z}}}),\mathcal{B}(\R))\)-measurable (see
+\textcite[Section 10.3]{resnick2014probability} for more details), hence
+\((\mathcal{B}(\R^{d_{\vect{z}}}),\sigma(\vect{Z}))\)-measurable.  Together
+with the assumption that \(\vect{Z}\) is
+\((\sigma(\vect{Z}),\mathcal{B}(\R^{d}))\)-measurable, by
+\labelcref{it:meas-compo-meas} we know \(h(\vect{Z})\) is
+\(\sigma(\vect{Z})\)-measurable.
 \item Fix any \(A\in\sigma(\vect{Z})\). Then, we can write \(A=\vect{Z}^{-1}(B)\)
 for some \(B\in\mathcal{B}(\R^{d_{\vect{z}}})\). With this expression,
 we note that \(\indic_{A}(\omega)=\indic_{\vect{Z}^{-1}(B)}(\omega)
@@ -1280,15 +1294,15 @@ _{\expv{g(\vect{X},\vect{z})}=h(\vect{z})}
 \end{enumerate}
 \end{pf}
 
-\begin{remark}
-\item \emph{(Practical usage)} Based on \Cref{prp:fact-indp}, we can compute
-conditional expectation of the form \(\expv{g(\vect{X},\vect{Z})|\vect{Z}}\),
-where \(\vect{X}\) and \(\vect{Z}\) are independent, by first computing
+\begin{note}
+Based on \Cref{prp:fact-indp}, we can compute conditional expectation of the
+form \(\expv{g(\vect{X},\vect{Z})|\vect{Z}}\), where \(\vect{X}\) and
+\(\vect{Z}\) are independent, by first computing
 \(h(\vect{z})=\expv{g(\vect{X},\vect{z})}\) \emph{(replacing \(\vect{Z}\) by
-\(\vect{z}\) in the expression and removing the condition)}, and then
-conclude that the conditional expectation is \(h(\vect{Z})\) \emph{(replacing
-every \(\vect{z}\) by \(\vect{Z}\) in the final expression)}.
-\end{remark}
+\(\vect{z}\) in the expression and removing the condition)}, and then conclude
+that the conditional expectation is \(h(\vect{Z})\) \emph{(replacing every
+\(\vect{z}\) by \(\vect{Z}\) in the final expression)}.
+\end{note}
 \end{enumerate}
 \subsection{Applications of Conditional Expectation}
 \begin{enumerate}
@@ -1340,6 +1354,7 @@ F_{\vect{X}|\vect{Z}}(\vect{x}|\widetilde{\vect{z}})
 \odif{F_{\vect{Z}}(\widetilde{\vect{z}})}.
 \end{align*}
 \end{pf}
+
 \item \textbf{Law of total variance.} Apart from the \emph{law of total
 expectation} (\Cref{prp:cond-exp-prop}), there is also the \emph{law of total
 variance}, but the formula is slightly more complex. The following lemma,
@@ -1446,7 +1461,7 @@ each \(n\in\N_0\). Then, we have
 \overset{\text{(independence)}}{=}\sum_{n=1}^{\infty}\expv{S_n^{2}}\prob{N=n} \\
 &=\sum_{n=1}^{\infty}(\vari{S_n}+\expv{S_n}^{2})\prob{N=n}
 \underset{\text{\orc{(linearity)}}}{\overset{\text{\vc{(independence)}}}{=}}
-\sum_{n=1}^{\infty}(\vc{n\vari{X_1}}+\orc{n^{2}\expv{X_1}^{2}})\prob{N=n} \\
+\sum_{n=1}^{\infty}(\vc{n\vari{X_1}}+(\orc{n\expv{X_1}})^{2})\prob{N=n} \\
 &=\expv{N}\vari{X_1}+\expv{N^{2}}\expv{X_1}^{2}<\infty,
 \end{align*}
 which implies that \(S\in L^{2}\).
@@ -1508,7 +1523,8 @@ Note first that
 &=\underbrace{\expv{(X-\expv{X|\mathcal{G}})^{2}}}_{\text{does not depend on \(Y\)}}
 +2\expv{(X-\expv{X|\mathcal{G}})(\expv{X|\mathcal{G}}-Y)}
 +\underbrace{\expv{(\expv{X|\mathcal{G}}-Y)^{2}}}
-_{\mathclap{\text{smallest \((=0)\) iff \(Y\eqas \expv{X|\mathcal{G}}\)}}}.
+_{\mathclap{\text{smallest \((=0)\) iff \(Y\eqas \expv{X|\mathcal{G}}\)
+by \labelcref{it:nonneg-leb-int-prop}}}}.
 \end{align*}
 Therefore, it suffices to show that
 \(\expv{(X-\expv{X|\mathcal{G}})(\expv{X|\mathcal{G}}-Y)}=0\) for every \(Y\in
@@ -1533,7 +1549,7 @@ L^{2}(\Omega,\vc{\mathcal{G}},\pr)\):
 More geometrically, the conditional expectation \(\expv{X|\mathcal{G}}\) can
 actually be interpreted as the \emph{orthogonal projection} of \(X\) onto the
 closed subspace \(L^{2}(\Omega,\mathcal{G},\pr)\) of the Hilbert space
-\(L^{2}(\Omega,\mathcal{F},\pr)\) equipped with inner product \(\inner{X}{Y}:=
+\(L^{2}(\Omega,\mathcal{F},\pr)\) equipped with the inner product \(\inner{X}{Y}:=
 \expv{XY}\). Here, such orthogonal projection is given by
 \[
 \argmin_{Y\in L^{2}(\Omega,\mathcal{G},\pr)}\expv{(X-Y)^{2}}

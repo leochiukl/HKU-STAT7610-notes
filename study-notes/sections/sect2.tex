@@ -15,7 +15,7 @@ Let \(\mathcal{F}\) be a \(\sigma\)-algebra on \(\Omega\). Then the pair
 \((\Omega,\mathcal{F})\) is a \defn{measurable space} and every set in \(\mathcal{F}\) is called \defn{measurable set}.
 A \defn{measure} \(\mu\) on \((\Omega,\mathcal{F})\) is a function such that:
 \begin{enumerate}[label={(\arabic*)}]
-\item \emph{(nonnegativity)} \(\mu\) is a function from \(\mathcal{F}\) (domain) to \([0,\infty]\) (codomain).
+\item \emph{(Nonnegativity)} \(\mu\) is a function from \(\mathcal{F}\) (domain) to \([0,\infty]\) (codomain).
 \item \(\mu(\varnothing)=0\).
 \item \emph{(\defn{\(\sigma\)-additivity})} \(A_1,A_2,\dotsc\in\mathcal{F}\text{
 pairwise disjoint} \implies
@@ -25,7 +25,7 @@ pairwise disjoint} \implies
 \item Informally, \(\sigma\)-additivity allows us to ``pull \(\biguplus\) out of
 \(\mu\) and make it \(\sum_{}^{}\)'' (explaining why there is a
 ``\(+\)'' in the notation ``\(\biguplus\)'').
-\item \emph{(finite additivity)} By taking
+\item \emph{(Finite additivity)} By taking
 \(A_{n+1}=A_{n+2}=\dotsb=\varnothing\), we can show also the \emph{finite
 additivity}: \(A_1,\dotsc,A_n\in\mathcal{F}\text{ pairwise disjoint}\implies
 \mu(\biguplus_{i=1}^{n}A_i)=\sum_{i=1}^{n}\mu(A_i)\).
@@ -34,8 +34,8 @@ additivity}: \(A_1,\dotsc,A_n\in\mathcal{F}\text{ pairwise disjoint}\implies
 The triplet \((\Omega,\mathcal{F},\mu)\) is called a \defn{measure space} (not
 to be confused with ``measurable space'' above \warn{}).  If we can write
 \(\Omega=\bigcup_{i=1}^{\infty}A_i\) with \(A_1,A_2,\dotsc\in\mathcal{F}\)
-where \(\mu(A_i)\) is finite for each \(i\in\N\), then \(\mu\) is called a
-\defn{\(\sigma\)-finite}. If \(\mu(\Omega)\) is finite, then \(\mu\) is called
+where \(\mu(A_i)<\infty\) for each \(i\in\N\), then \(\mu\) is called a
+\defn{\(\sigma\)-finite}. If we have \(\mu(\Omega)<\infty\), then \(\mu\) is called
 \defn{finite}. A measure \(\mu\) on \(\mathcal{F}=\mathcal{B}(\R^d)\) is said
 to be a \defn{Borel measure on \(\R^d\)}.
 
@@ -103,7 +103,7 @@ A}^{}f(\omega)~\forall A\in\mathcal{F}\).
 \end{enumerate}
 \end{pf}
 
-\emph{Special cases.}
+\emph{Special cases:}
 \begin{itemize}
 \item If \(f\equiv 1\), then we have \(\mu(A)=|A|~\forall A\in\mathcal{F}\).
 Such measure is said to be the \defn{counting measure}.
@@ -123,11 +123,11 @@ Let \((\Omega,\mathcal{F},\mu)\) be a measure space.  In the following, let
 \(A\), \(B\), \(A_i\)'s, and \(B_i\)'s be sets in \(\mathcal{F}\).
 
 \begin{enumerate}
-\item \label{it:union-plus-int} \emph{(\(\text{union}+\text{intersection}=\text{individual sum}\))}
+\item \label{it:union-plus-int} \emph{(\(\text{Union}+\text{intersection}=\text{individual sum}\))}
 \(\mu(A\cup B)+\mu(A\cap B)=\mu(A)+\mu(B)\). If \(\mu\) is finite, then
 we further have \(\mu(A\cup B)=\mu(A)+\mu(B)-\mu(A\cap B)\).
-\item \emph{(monotonicity)} \(A\subseteq B\implies \mu(A)\le\mu(B)\).
-\item \emph{(subtractivity)} If \(A\subseteq B\) \vc{and \(\mu(A)<\infty\)},
+\item \emph{(Monotonicity)} \(A\subseteq B\implies \mu(A)\le\mu(B)\).
+\item \emph{(Subtractivity)} If \(A\subseteq B\) \vc{and \(\mu(A)<\infty\)},
 then \(\mu(B\setminus A)=\mu(B)-\mu(A)\).
 \item \emph{(\(\sigma\)-subadditivity)}
 \(\mu(\bigcup_{i=1}^{\infty}A_i)\le\sum_{i=1}^{\infty}\mu(A_i)\).
@@ -135,7 +135,7 @@ then \(\mu(B\setminus A)=\mu(B)-\mu(A)\).
 By taking \(A_{n+1}=A_{n+2}=\dotsb=\varnothing\), we can get the
 \emph{finite subadditivity}: \(\mu(\bigcup_{i=1}^{n}A_i)\le\sum_{i=1}^{n}\mu(A_i)\).
 \end{note}
-\item \emph{(inclusion-exclusion principle)} For every integer \(n\ge 2\), let
+\item \emph{(Inclusion-exclusion principle)} For every integer \(n\ge 2\), let
 \(S_{i,n}:=\sum_{I\subseteq \{1,\dotsc,n\}: |I|=i}^{}\mu(\bigcap_{j\in
 I}^{}A_j)\) (summing over all combinations of \(i\) indices) for all
 \(i=1,\dotsc,n\). Suppose \(\mu\) is finite. Then
@@ -143,11 +143,11 @@ I}^{}A_j)\) (summing over all combinations of \(i\) indices) for all
 \mu\left(\bigcup_{i=1}^{n}A_i\right)
 =\sum_{i=1}^{n}(-1)^{i-1}S_{i,n}.
 \]
-\item \emph{(continuity from below)} If \(A_n\nearrow\), then
+\item \emph{(Continuity from below)} If \(A_n\nearrow\), then
 \(\mu(\lim_{n\to\infty}A_n)=\lim_{n\to\infty}\mu(A_n)\).
-\item \emph{(continuity from above)} If \(A_n\searrow\) \vc{and \(\mu(A_1)<\infty\)}, then
+\item \emph{(Continuity from above)} If \(A_n\searrow\) \vc{and \(\mu(A_1)<\infty\)}, then
 \(\mu(\lim_{n\to\infty}A_n)=\lim_{n\to\infty}\mu(A_n)\).
-\item \emph{(law of total measure)} If \(\{B_{i}:i\in\N\}\) is a partition of
+\item \emph{(Law of total measure)} If \(\{B_{i}:i\in\N\}\) is a partition of
 \(\Omega\), then \(\mu(A)=\sum_{i=1}^{\infty}\mu(A\cap B_i)\).
 \begin{note}
 If \(\{B_1,\dotsc,B_n\}\) is a partition of \(\Omega\), we can apply this
@@ -203,7 +203,7 @@ By (iii), we have \(\bigcup_{i=1}^{\infty}A_i
 \mu\left(\bigcup_{i=1}^{\infty}A_i\right)
 =\mu\left(\biguplus_{i=1}^{\infty}B_i\right)
 =\sum_{i=1}^{\infty}\mu(B_i)
-\overset{\text{(ii), monotonicity}}{\le}\sum_{i=1}^{\infty}\mu(A_i).
+\overset{\text{((ii), monotonicity)}}{\le}\sum_{i=1}^{\infty}\mu(A_i).
 \]
 \item We prove by induction. Firstly, the base case with \(n=2\) follows from
 \labelcref{it:union-plus-int} as we can write
@@ -214,8 +214,9 @@ Then, consider:
 \begin{align*}
 \mu\left(\bigcup_{i=1}^{n+1}A_i\right)
 &=\mu\left(\left(\bigcup_{i=1}^{n}A_i\right)\cup A_{n+1}\right) \\
-&=\vc{\mu\left(\bigcup_{i=1}^{n}A_i\right)}+\mu(A_{n+1})
--\brc{\mu\left(\left(\bigcup_{i=1}^{n}A_i\right)\cap A_{n+1}\right)}\quad\text{(\labelcref{it:union-plus-int})} \\
+\overset{\text{(\labelcref{it:union-plus-int})}}&{=}
+\vc{\mu\left(\bigcup_{i=1}^{n}A_i\right)}+\mu(A_{n+1})
+-\brc{\mu\left(\left(\bigcup_{i=1}^{n}A_i\right)\cap A_{n+1}\right)} \\
 &=\underbrace{\vc{\sum_{i=1}^{n}(-1)^{i-1}S_{i,n}}}_{\mathclap{\mgc{S_{1,n}}+\sum_{i=2}^{n}(-1)^{i-1}S_{i,n}}}
 +\mgc{\mu(A_{n+1})}
 -\brc{\mu\left(\bigcup_{i=1}^{n}(A_i\cap A_{n+1})\right)}\\
@@ -233,7 +234,7 @@ have \(\bigcup_{i=1}^{\infty}A_i=\lim_{n\to\infty}\bigcup_{i=1}^{n}A_i
 =\lim_{n\to\infty}\biguplus_{i=1}^{n}B_i=\biguplus_{i=1}^{\infty}B_i\), and thus
 \begin{align*}
 \mu\left(\lim_{n\to \infty}A_n\right)
-&\overset{\text{\labelcref{it:lim-mono-sets}}}{=}
+\overset{\text{\labelcref{it:lim-mono-sets}}}&{=}
 \mu\left(\bigcup_{i=1}^{\infty}A_i\right)
 =\mu\left(\biguplus_{i=1}^{\infty}B_i\right)
 =\sum_{i=1}^{\infty}\mu(B_i)
@@ -245,7 +246,7 @@ have \(\bigcup_{i=1}^{\infty}A_i=\lim_{n\to\infty}\bigcup_{i=1}^{n}A_i
 \(A_n\searrow\), we have \(B_n\nearrow\). Note also that
 \(
 \lim_{n\to\infty}B_n=\bigcup_{i=1}^{\infty}B_i=\bigcup_{i=1}^{\infty}(A_1\cap A_i^{c})
-=A_1\cap\bigcup_{i=1}^{\infty}A_i^{c}\overset{\text{DM}}{=}
+=A_1\cap\bigcup_{i=1}^{\infty}A_i^{c}\overset{\text{(DM)}}{=}
 A_1\cap(\bigcap_{i=1}^{\infty}A_i)^c=A_1\setminus \bigcap_{i=1}^{\infty}A_i\).
 Since we have \(\mu(A_1)<\infty\), by subtractivity we have
 \begin{align*}
@@ -360,7 +361,7 @@ Note that \(\brc{A_i}\in\mathcal{A}\) with \(\mu(\brc{A_i})<\infty\) for all
 \mu(A\cap A_n')
 &=\mu\left(\biguplus_{i=1}^{n}(A\cap \brc{A_i})\right)
 =\sum_{i=1}^{n}\mu(A\cap \brc{A_i}) \\
-&\overset{\text{(prev.~result with \(B=A_i\))}}{=}\sum_{i=1}^{n}\nu(A\cap\brc{A_i})
+\overset{\text{(prev.\ result with \(B=A_i\))}}&{=}\sum_{i=1}^{n}\nu(A\cap\brc{A_i})
 \overset{\text{(same argument as before)}}{=}\nu(A\cap A_n').
 \end{align*}
 Since \(A_n'\nearrow\Omega\), we have \((A\cap A_n)\nearrow A\cap\Omega\) also.
@@ -419,7 +420,7 @@ Since \(\biguplus_{i=1}^{\infty}A_i=\biguplus_{i=1}^{\infty}\prod_{j=1}^{d}A_{ij
 &=\mu\left(\vc{\prod_{j=1}^{d}\biguplus_{i=1}^{\infty}A_{ij}}\right)
 =\prod_{j=1}^{d}\mu_j\left(\biguplus_{i=1}^{\infty}A_{ij}\right)
 =\prod_{j=1}^{d}\sum_{i=1}^{\infty}\mu_j\left(A_{ij}\right) \\
-&\overset{\text{(distributivity)}}{=}\sum_{i=1}^{\infty}\prod_{j=1}^{d}\mu_j\left(A_{ij}\right)
+\overset{\text{(distributivity)}}&{=}\sum_{i=1}^{\infty}\prod_{j=1}^{d}\mu_j\left(A_{ij}\right)
 =\sum_{i=1}^{\infty}\mu\left(\prod_{j=1}^{d}A_{ij}\right)
 =\sum_{i=1}^{\infty}\mu(A_i).
 \end{align*}
@@ -505,15 +506,15 @@ that \(\vc{A\cap N'}=\varnothing\) and \orc{\(A\cap N^c=A\)}. Also note that
 \bar{A}&=\orc{A}\cup \blc{N'}
 =\left[\orc{(A\cap N^c)}\cup\underbrace{\vc{(A\cap N')}}_{\varnothing}\right]\cup
 \left[\underbrace{(N\cap N^c)}_{\varnothing}\cup \blc{(N\cap N')}\right] \\
-&\overset{\text{(distributivity)}}{=}
+\overset{\text{(distributivity)}}&{=}
 \left[A\cap \mgc{(N^c\cup N')}\right]\cup\left[N\cap \mgc{(N^c\cup N')}\right] \\
-&\overset{\text{(distributivity)}}{=}
+\overset{\text{(distributivity)}}&{=}
 (A\cup N)\cap\mgc{(N^c\cup N')},
 \end{align*}
 which implies that
 \[
 (\bar{A})^c=\left[(A\cup N)\cap(N^c\cup N')\right]^{c}
-\overset{\text{DM}}{=}
+\overset{\text{(DM)}}{=}
 \overbrace{(A\cup N)^{c}}^{
 \mathclap{\text{\(\in\mathcal{F}\) as \(A\in\mathcal{F}\) and \(N\in\mathcal{N}\subseteq \mathcal{F}\)}}}
 \cup \underbrace{(N\setminus N')}_{\subseteq N\in\mathcal{N}}
@@ -628,7 +629,7 @@ preliminary terms: premeasures and outer measures. Let \(\Omega\) be a set.
 \item \emph{Premeasure:} Let \(\mathcal{A}\) be a semiring on \(\Omega\). A
 \defn{premeasure} \(\mu_0\) on \(\mathcal{A}\) is a function such that:
 \begin{enumerate}[label={(\arabic*)}]
-\item \emph{(nonnegativity)} \(\mu_0\) is a function from \(\mathcal{A}\) to \([0,\infty]\).
+\item \emph{(Nonnegativity)} \(\mu_0\) is a function from \(\mathcal{A}\) to \([0,\infty]\).
 \item \(\mu_0(\varnothing)=0\).
 \item \emph{(\(\sigma\)-additivity)} \(\text{\(A_1,A_2,\dotsc\in\mathcal{A}\)
 pairwise disjoint \vc{and \(\biguplus_{i=1}^{\infty}A_i\in\mathcal{A}\)}}
@@ -637,7 +638,7 @@ pairwise disjoint \vc{and \(\biguplus_{i=1}^{\infty}A_i\in\mathcal{A}\)}}
 \item The condition \vc{\(\biguplus_{i=1}^{\infty}A_i\in\mathcal{A}\)} is needed as
 \(\mathcal{A}\) is just a semiring, which may not be closed under countable
 unions.
-\item \emph{(finite additivity)} Like before, by setting
+\item \emph{(Finite additivity)} Like before, by setting
 \(A_{n+1}=A_{n+2}=\dotsb=\varnothing\), we can show finite additivity:
 \(\text{\(A_1,A_2,\dotsc,A_n\in\mathcal{A}\)
 pairwise disjoint \vc{and \(\biguplus_{i=1}^{n}A_i\in\mathcal{A}\)}}
@@ -652,7 +653,7 @@ then \(\mu_0\) is called \defn{\(\sigma\)-finite}.
 \(\mu^*:\orc{\mathcal{P}(\Omega)}\to[0,\infty]\) satisfying
 \begin{enumerate}[label={(\arabic*)}]
 \item \(\mu^*(\varnothing)=0\).
-\item \emph{(monotonicity)} \(A\subseteq B\implies \mu^*(A)\le\mu^*(B)\)
+\item \emph{(Monotonicity)} \(A\subseteq B\implies \mu^*(A)\le\mu^*(B)\)
 \item \emph{(\(\sigma\)-subadditivity)} \(\mu^*(\bigcup_{i=1}^{\infty}A_i)\le\sum_{i=1}^{\infty}\mu^*(A_i)\).
 \begin{note}
 Like above, it implies \emph{finite subadditivity} by setting
@@ -663,9 +664,9 @@ Like above, it implies \emph{finite subadditivity} by setting
 It is called \underline{outer} measure since it is used for
 \emph{approximating} ``volumes''/measures from
 ``\underline{out}side''/``above''; the inequalities appearing in the definition
-would be helpful for the approximation.
+are helpful for the approximation.
 \end{itemize}
-\item The following lemma will be used for proving Carath\'eodory extension
+\item The following lemma will be used for proving the Carath\'eodory extension
 theorem.
 \begin{lemma}[Representing set differences in terms of disjoint union]
 \label{lma:diff-mult-sets}
@@ -685,7 +686,7 @@ A\setminus \biguplus_{i=1}^{k+1}A_i
 &=\left(\vc{A\setminus \biguplus_{i=1}^{k}A_i}\right)\setminus A_{k+1}
 =\left(\vc{\biguplus_{j=1}^{m}B_j}\right)\setminus A_{k+1}
 =\biguplus_{j=1}^{m}(\orc{B_j\setminus A_{k+1}}) \\
-&\overset{\text{(``stability'' under set differences)}}{=}
+\overset{\text{(``stability'' under set differences)}}&{=}
 \biguplus_{j=1}^{m}\orc{\bigcup_{\ell=1}^{m_j}\underbrace{B_{j\ell}}_{\in\mathcal{A}}},
 \end{align*}
 which is a finite disjoint union of sets in \(\mathcal{A}\), so the case
@@ -887,7 +888,7 @@ By (iii), we have \(\bigcup_{i=1}^{\infty}A_i
 \mu\left(\bigcup_{i=1}^{\infty}A_i\right)
 =\mu\left(\biguplus_{i=1}^{\infty}B_i\right)
 =\sum_{i=1}^{\infty}\mu(B_i)
-\overset{\text{(ii), monotonicity}}{\le}\sum_{i=1}^{\infty}\mu(A_i).
+\overset{\text{((ii), monotonicity)}}{\le}\sum_{i=1}^{\infty}\mu(A_i).
 \]
 \end{itemize}
 \textbf{Showing that \(\mu^*\) extends \(\mu_0\) on \(\mathcal{A}\).} Fix any
@@ -949,12 +950,13 @@ Thus, we have:
 Hence,
 \begin{align*}
 \mu^*(B\cap A)+\mu^*(B\setminus A)
-&\overset{\text{(monotonicity)}}{\le}
+\overset{\text{(monotonicity)}}&{\le}
 \mu^*\left(\orc{\bigcup_{i=1}^{\infty}E_i}\right)
 +\mu^*\left(\bigcup_{i=1}^{\infty}\vc{\biguplus_{j=1}^{n_i}B_{ij}}\right) \\
-&\overset{\text{(\(\sigma\)-subadditivity)}}{\le}
+\overset{\text{(\(\sigma\)-subadditivity)}}&{\le}
 \sum_{i=1}^{\infty}\mu^*(E_i)+\sum_{i=1}^{\infty}\sum_{j=1}^{n_i}\mu^*(B_{ij}) \\
-&\overset{\text{(\(\mu^*\) extends \(\mu\) on \(\mathcal{A}\))}}{=}\sum_{i=1}^{\infty}\mu_0(E_i)+\sum_{i=1}^{\infty}\sum_{j=1}^{n_i}\mu_0(B_{ij}) \\
+\overset{\text{(\(\mu^*\) extends \(\mu\) on \(\mathcal{A}\))}}&{=}
+\sum_{i=1}^{\infty}\mu_0(E_i)+\sum_{i=1}^{\infty}\sum_{j=1}^{n_i}\mu_0(B_{ij}) \\
 &=\sum_{i=1}^{\infty}\left(\mu_0(E_i)+\sum_{j=1}^{n_i}\mu_0(B_{ij})\right)
 =\sum_{i=1}^{\infty}\mu\left(E_i\uplus\vc{\bigcup_{j=1}^{n_i}B_{ij}}\right)
 =\sum_{i=1}^{\infty}\mu_0(A_i)
@@ -988,18 +990,18 @@ A_2)}\uplus \blc{(A_1\cap A_2^c)}\uplus \orc{(A_1^c\cap A_2^c)} \).
 Hence, we have
 \begin{align*}
 &\mu^*(B\cap\gc{(A_1\cap A_2)})+\mu^*(B\cap\gc{(A_1\cap A_2)^{c}}) \\
-&\quad=\mu^*(B\cap A_1\cap A_2)
+&=\mu^*(B\cap A_1\cap A_2)
 +\mu^*(B\cap(\mgc{(A_1^c\cap A_2)}\uplus \blc{(A_1\cap A_2^c)}\uplus \orc{(A_1^c\cap A_2^c)})) \\
-&\quad\overset{\text{(finite subadditivity)}}{\le}
+\overset{\text{(finite subadditivity)}}&{\le}
 \mu^*(B\cap A_1\cap A_2)
 +\mu^*(B\cap\mgc{A_1^c\cap A_2})
 +\mu^*(B\cap\blc{A_1\cap A_2^c})
 +\mu^*(B\cap\orc{A_1^c\cap A_2^c}) \\
-&\quad=\mu^*(\vc{B\cap A_2}\cap A_1)
-+\mu^*(\vc{B\cap A_2}\cap A_1^c)
-+\mu^*(\brc{B\cap A_2^c}\cap A_1)
-+\mu^*(\brc{B\cap A_2^c}\cap A_1^c) \\
-&\quad\underset{(B\cap A_2,\; B\cap A_2^c\subseteq \Omega)}{\overset{(A_1\in\mathcal{A}^*)}{=}}
+&=\mu^*(\vc{B\cap A_2}\cap A_1)
++\mu^*(\vc{B\cap A_2}\cap A_1^c) \\
+&\quad+\mu^*(\brc{B\cap A_2^c}\cap A_1)
++\mu^*(\brc{B\cap A_2^c}\cap A_1^c)
+\underset{(B\cap A_2,\; B\cap A_2^c\subseteq \Omega)}{\overset{(A_1\in\mathcal{A}^*)}{=}}
 \mu^*(\vc{B\cap A_2})+\mu^*(\brc{B\cap A_2^c})
 =\mu^*(B).
 \end{align*}
@@ -1037,7 +1039,7 @@ Then consider, for all \(n\in\N\),
 &=\mu^*(B)
 \overset{(\widetilde{A}_{n}\in\mathcal{A}^*)}{=}
 \mu^*(B\cap\widetilde{A}_n)+\mgc{\mu^*(B\cap\widetilde{A}_n^{c})} \\
-&\overset{\text{(monotonicity)}}{\ge}
+\overset{\text{(monotonicity)}}&{\ge}
 \orc{\mu^*(B\cap\widetilde{A}_n)}+\mgc{\mu^*(B\cap\widetilde{A}_{\infty}^{c})} \\
 &=\orc{\sum_{i=1}^{n}\mu^*(B\cap A_i)}+\mu^*(B\cap\widetilde{A}_{\infty}^{c}).
 \end{align*}
@@ -1045,9 +1047,9 @@ As this holds for all \(n\in\N\), taking limit \(n\to\infty\) gives
 \begin{align}
 \label{eq:mu-star-geq-sum}\mu^*((B\cap\widetilde{A}_{\infty})\cup(B\cap\widetilde{A}_{\infty}^{c}))
 &\ge\orc{\sum_{i=1}^{\infty}\mu^*(B\cap A_i)}+\mu^*(B\cap\widetilde{A}_{\infty}^{c}) \\
-\nonumber&\overset{\text{(\(\sigma\)-subadditivity)}}{\ge}
+\nonumber\overset{\text{(\(\sigma\)-subadditivity)}}&{\ge}
 \mu^*\left(\biguplus_{i=1}^{\infty}(B\cap A_i)\right)+\mu^*(B\cap\widetilde{A}_{\infty}^{c}) \\
-\nonumber&\overset{\text{(distributivity)}}{=}\mu^*(B\cap\widetilde{A}_{\infty})+\mu^*(B\cap\widetilde{A}_{\infty}^{c}).
+\nonumber\overset{\text{(distributivity)}}&{=}\mu^*(B\cap\widetilde{A}_{\infty})+\mu^*(B\cap\widetilde{A}_{\infty}^{c}).
 \end{align}
 On the other hand, by finite subadditivity we have
 \[
@@ -1117,6 +1119,13 @@ be used in the construction. A function \(F:\R^d\to\R\) is:
 \begin{itemize}
 \item \defn{right-continuous} if \(F(\vect{x})=\lim_{\vect{h}\to
 \vect{0}^{+}}F(\vect{x}+\vect{h})=:F(\vect{x}+)\) for all \(\vect{x}\in\R^d\).
+
+\begin{note}
+``\(F(\vect{x})=\lim_{\vect{h}\to \vect{0}^{+}}F(\vect{x}+\vect{h})\)'' means
+that for every sequence \(\{\vect{h}_n\}\to\vect{0}\) with
+\(\vect{h}_n\ge\vect{0}\) for each \(n\in\N\), we have \(\lim_{\vect{h}_n\to
+\vect{0}}F(\vect{x}+\vect{h}_n)=F(\vect{x})\).
+\end{note}
 \item \defn{grounded} if \(\lim_{x_j\to -\infty}F(\vect{x})=0\) (with
 \(\vect{x}=(x_1,\dotsc,x_n)\)) for all \(j=1,\dotsc,d\).
 \item \defn{\(d\)-increasing} if \(\Delta_{(\vect{a},\vect{b}]}F\ge 0\) for all
@@ -1204,20 +1213,20 @@ y_j&\text{if \(j\in J\)}.
 above may not be intuitive. So to understand it better, we will study some of
 its properties. Let \(F:\R^d\to\R\) be a function.
 \begin{enumerate}
-\item\label{it:f-vol-permut} \emph{(permutation of first-order differences)} We
+\item\label{it:f-vol-permut} \emph{(Permutation of first-order differences)} We
 have \(\Delta_{(\vect{a},\vect{b}]}F
 =\Delta_{(a_d,b_d]}\dotsb\Delta_{(a_1,b_1]}F(x_1,\dotsc,x_d)\) (or just
 \(\Delta_{(a_d,b_d]}\dotsb\Delta_{(a_1,b_1]}F\)), and the order of
 ``\(\Delta\)''s can be freely changed.
-\item\label{it:f-vol-mono} \emph{(monotonicity)} If \(F\) is \(d\)-increasing, then
+\item\label{it:f-vol-mono} \emph{(Monotonicity)} If \(F\) is \(d\)-increasing, then
 \((\vect{a},\vect{b}]\subseteq (\vect{\alpha},\vect{\beta}]\implies \Delta_{(\vect{a},\vect{b}]}F
 \le\Delta_{(\vect{\alpha},\vect{\beta}]}F\).
-\item\label{it:f-vol-prod-diff} \emph{(product of differences)} If \(F(\vect{x})=\prod_{j=1}^{d}F_j(x_j)\), then
+\item\label{it:f-vol-prod-diff} \emph{(Product of differences)} If \(F(\vect{x})=\prod_{j=1}^{d}F_j(x_j)\), then
 \(\Delta_{(\vect{a},\vect{b}]}F=\prod_{j=1}^{d}(F_{j}(b_j)-F_{j}(a_j))\).
 \item\label{it:ground-lim} If \(F\) is grounded, then
 \(\lim_{\vect{a}\to\vect{-\infty}}\Delta_{(\vect{a},\vect{x}]}F=:\Delta_{(\vect{-\infty},\vect{x}]}F=F(\vect{x})\)
 for all \(\vect{x}\in\R^d\).
-\item\label{it:f-vol-nonneg} \emph{(nonnegativity)} If \(F\) is grounded and \(d\)-increasing, and
+\item\label{it:f-vol-nonneg} \emph{(Nonnegativity)} If \(F\) is grounded and \(d\)-increasing, and
 \(J\) is strictly between \(\varnothing\) and \(\{1,\dotsc,d\}\) (i.e,
 \(\varnothing\subsetneq J\subsetneq \{1,\dotsc,d\}\)), then
 \(\Delta_{(\vect{a}_{J},\vect{b}_{J}]}F(\vect{x})\ge 0\) for all
@@ -1374,7 +1383,8 @@ Now we define \(\mu_0\) on \(\mathcal{A}\) by
 \(\mu_0((\vect{a},\vect{b}]):=\Delta_{(\vect{a},\vect{b}]}F\) for all
 \(\vect{a}\le\vect{b}\).
 
-\textbf{Showing the (finite) additivity, superadditivity, and subadditivity of \(\mu_0\).}
+\textbf{Showing the (finite) additivity, ``superadditivity'', and
+``subadditivity'' of \(\mu_0\).}
 \begin{itemize}
 \item \emph{Additivity:} Fix any pairwise disjoint \((\vect{a}_1,\vect{b}_1]
 ,\dotsc,(\vect{a}_n,\vect{b}_n]\in\mathcal{A}\) with
@@ -1387,9 +1397,10 @@ Then, we have
 \overset{\text{(telescoping sums)}}{=}\sum_{i=1}^{n}\Delta_{(\vect{a}_i,\vect{b}_i]}F
 =\sum_{i=1}^{n}\mu_0(\vect{a}_i,\vect{b}_i]).
 \]
-\item \emph{Superadditivity:} Fix any pairwise disjoint \((\vect{a}_1,\vect{b}_1]
+\item \emph{``Superadditivity'':} Fix any pairwise disjoint \((\vect{a}_1,\vect{b}_1]
 ,\dotsc,(\vect{a}_n,\vect{b}_n]\in\mathcal{A}\) with
-\(\biguplus_{i=1}^{n}(\vect{a}_i,\vect{b}_i]\subseteq (\vect{a},\vect{b}]\in\mathcal{A}\).
+\(\biguplus_{i=1}^{n}(\vect{a}_i,\vect{b}_i]\vc{\subseteq} (\vect{a},\vect{b}]\in\mathcal{A}\)
+(not ``\(=(\vect{a},\vect{b}]\)'' here!).
 Note that \((\vect{a},\vect{b}]\setminus \biguplus_{i=1}^{n}(\vect{a}_i,\vect{b}_i]
 \overset{\text{(\Cref{lma:diff-mult-sets})}}{=}
 \biguplus_{j=1}^{m}(\vect{c}_j,\vect{d}_j]\)
@@ -1404,10 +1415,11 @@ previously shown additivity that
 +\underbrace{\sum_{j=1}^{m}\mu_0((\vect{c}_j,\vect{d}_j])}_{\mathclap{\text{\(\ge 0\) due to \(d\)-increasing}}}
 \ge\sum_{i=1}^{n}\mu_0((\vect{a}_i,\vect{b}_i]),
 \]
-establishing the superadditivity.
-\item \emph{Subadditivity:} Fix any
+establishing the ``superadditivity''.
+\item \emph{``Subadditivity'':} Fix any
 \((\vect{a}_1,\vect{b}_1],\dotsc,(\vect{a}_n,\vect{b}_n]\in\mathcal{A}\) with
-\((\vect{a},\vect{b}]\subseteq \bigcup_{i=1}^{n}(\vect{a}_i,\vect{b}_i]\).
+\((\vect{a},\vect{b}]\vc{\subseteq} \bigcup_{i=1}^{n}(\vect{a}_i,\vect{b}_i]\)
+(not \(=(\vect{a},\vect{b}]\)'' here!).
 Letting \((\vect{c}_i,\vect{d}_i]=(\vect{a}_i,\vect{b}_i]\setminus
 \bigcup_{k=1}^{i-1}(\vect{a}_k,\vect{b}_k]\) for all \(i=1,\dotsc,n\), we have
 \((\vect{a},\vect{b}]\subseteq \bigcup_{i=1}^{n}(\vect{a}_i,\vect{b}_i]
@@ -1424,7 +1436,7 @@ where \(\vect{-\infty}<\vect{c}\le\vect{d}<\vect{\infty}\). Thus, we have
 \overset{\text{\labelcref{it:f-vol-mono}}}{\le}\sum_{i=1}^{n}\Delta_{(\vect{a}_i,\vect{b}_i]}F
 =\sum_{i=1}^{n}\mu_0((\vect{a}_i,\vect{b}_i]),
 \end{align*}
-establishing the subadditivity.
+establishing the ``subadditivity''.
 \end{itemize}
 \textbf{Showing that \(\mu_0\) is a \(\sigma\)-finite premeasure on
 \(\mathcal{A}\).}
@@ -1528,7 +1540,7 @@ only do that in \labelcref{it:lebesgue-set-not-borel-set}.
 
 \item \label{it:lebesgue-meas-prop} \textbf{Properties of the Lebesgue measure.}
 \begin{enumerate}
-\item \emph{(agreeing with our usual notion of ``volume'')} The Lebesgue
+\item \emph{(Agreeing with our usual notion of ``volume'')} The Lebesgue
 measure \(\lambda\) satisfies
 \(\lambda((\vect{a},\vect{b}])=\prod_{j=1}^{d}(b_j-a_j)\) for all
 \(\vect{a}\le\vect{b}\).
@@ -1540,9 +1552,9 @@ interpreted as assigning hypercubes their volumes that are \emph{distorted by \(
 \item The Lebesgue measure \(\lambda\) is invariant with respect to
 translations, rotations, and reflections.
 
-\item \emph{(coinciding with the product measure of Lebesgue measure on
+\item \emph{(Coinciding with the product measure of Lebesgue measure on
 \(\R\))} The Lebesgue measure \(\lambda\) on \(\R^d\) coincides with the
-product measure of (\(d\) copies of) the Lebesgue measure on \(\R\).
+product measure of \(d\) copies of the Lebesgue measure on \(\R\).
 \end{enumerate}
 \begin{pf}
 \begin{enumerate}
@@ -1593,7 +1605,7 @@ Therefore, we cannot apply \Cref{thm:construct-borel-meas-rd} on this function
 null set}. Here we will explore some examples of Lebesgue null sets:
 \begin{itemize}
 \item[] \textbf{Lebesgue null sets in \(\R\)}
-\item \emph{(singleton)} For every \(x\in\R\), the singleton \(\{x\}\subseteq
+\item \emph{(Singleton)} For every \(x\in\R\), the singleton \(\{x\}\subseteq
 \R\) is a Lebesgue null set since \(\lambda(\{x\})
 =\lambda(\bigcap_{n=1}^{\infty}(x-1/n,x])
 \underset{(\lambda((x-1,x])<\infty)}{\overset{\text{(continuity from above)}}{=}}
@@ -1601,11 +1613,11 @@ null set}. Here we will explore some examples of Lebesgue null sets:
 =\lim_{n\to\infty}(x-(x-1/n))
 =0
 \).
-\item \emph{(countable set)} Every countable subset \(S\) of \(\R\) is a
+\item \emph{(Countable set)} Every countable subset \(S\) of \(\R\) is a
 Lebesgue null set since it can be expressed as
 \(S=\bigcup_{i=1}^{\infty}\{s_i\}\) where \(s_i\in S\) for every \(i\in\N\),
 and so by \Cref{lma:count-union-null} we know \(S\) is a null set.
-\item \emph{(uncountable set)} The \defn{Cantor set} \(\mathcal{C}\), defined
+\item \emph{(Uncountable set)} The \defn{Cantor set} \(\mathcal{C}\), defined
 by \(\mathcal{C}:=\bigcap_{i=1}^{\infty}C_i\) with \(C_0=[0,1]\) and
 \(C_i=\frac{1}{3}C_{i-1}\cup\left(\frac{2}{3}+\frac{C_{i-1}}{3}\right)\)\footnote{
 Here the notation \(a+bS\) refers to the set \(\{a+bs:s\in S\}\).} for every
@@ -1637,7 +1649,7 @@ pieces'', corresponding to the digit \(1\)).
 
 \begin{pf}
 \begin{itemize}
-\item \underline{\(\mathcal{C}\) is uncountable}: Assume to the contrary that
+\item \emph{\(\mathcal{C}\) is uncountable:} Assume to the contrary that
 \(\mathcal{C}\) is countable and can be expressed as
 \(\mathcal{C}=\{c_i:i\in\N\}\). List the \(c_i\)'s in the following way:
 \begin{itemize}
@@ -1653,7 +1665,7 @@ is guaranteed to be \emph{different} from every \(c_i\) in the list by
 construction, meaning that \(c\notin\mathcal{C}\). However, we can certainly
 write \(c=\sum_{i=1}^{\infty}a_i3^{-i}\) where \(a_i\in\{0,2\}\) for all
 \(i\in\N\), contradiction.
-\item \underline{\(\mathcal{C}\) is a Lebesgue null set}: Note that for every
+\item \emph{\(\mathcal{C}\) is a Lebesgue null set:} Note that for every
 \(i\in\N\), the set \(\mathcal{C}_i\) is obtained by removing \(2^{i-1}\)
 intervals of length \(3^{-i}\) each from \(C_{i-1}\). Therefore, the length of
 all the removed intervals is
@@ -1704,21 +1716,22 @@ in \(\R^3\).
 space. A \defn{probability measure} \(\pr\) on \(\mathcal{F}\) (or
 \((\Omega,\mathcal{F})\)) is a function such that:
 \begin{enumerate}[label={(\arabic*)}]
-\item \emph{(nonnegativity)} \(\pr\) is a function from \(\mathcal{F}\) to \([0,\infty]\).
-\item \emph{(unitarity)} \(\prob{\Omega}=1\).
+\item \emph{(Nonnegativity)} \(\pr\) is a function from \(\mathcal{F}\) to \([0,\infty]\).
+\item \emph{(Unitarity)} \(\prob{\Omega}=1\).
 \item \emph{(\(\sigma\)-additivity)} \(A_1,A_2,\dotsc\in\mathcal{F}\text{
 pairwise disjoint}\implies
 \prob{\biguplus_{i=1}^{\infty}A_i}=\sum_{i=1}^{\infty}\prob{A_i}\).
 \end{enumerate}
 The triple \((\Omega,\mathcal{F},\pr)\) is called a \defn{probability space},
 \(\Omega\) is called a \defn{sample space}, and each outcome
-\(\omega\in\Omega\) is called a \defn{sample point}. If \(\Omega\) is countable
-(finite resp.), then \((\Omega,\mathcal{F},\pr)\) is said to be \defn{discrete}
-(\defn{finite} resp.).  Every \(A\in\mathcal{F}\) is called an \defn{event}.
+\(\omega\in\Omega\) is called a \defn{sample point}. If \(\Omega\) is a
+countable (finite resp.)\ set, then \((\Omega,\mathcal{F},\pr)\) is said to be
+\defn{discrete} (\defn{finite} resp.).  Every \(A\in\mathcal{F}\) is called an
+\defn{event}.
 
 \item\label{it:prob-meas-prop} \textbf{Properties of probability measure.}
 \begin{enumerate}
-\item \emph{(probability measure is a measure)} We have
+\item \emph{(Probability measure is a measure)} We have
 \(\prob{\varnothing}=0\), so the probability measure \(\pr\) is indeed a
 measure.
 
@@ -1733,12 +1746,12 @@ have \(\Omega=\biguplus_{i=1}^{\infty}A_i\), thus
 which implies that \(\sum_{i=2}^{\infty}\prob{\varnothing}=0\), forcing that
 \(\prob{\varnothing}=0\).
 \end{pf}
-\item \emph{(numerous properties of measure)} Since \(\pr\) is a finite
-measure, all properties in \labelcref{it:meas-prop} hold.
+\item \emph{(Numerous properties of measure)} Since \(\pr\) is a finite
+measure, all properties in \labelcref{it:meas-prop} apply.
 \end{enumerate}
 \item \textbf{Examples of probability measures.}
 \begin{enumerate}
-\item\label{it:comb-prob} \emph{(combinatorial probability)} Let \(\Omega\) be
+\item\label{it:comb-prob} \emph{(Combinatorial probability)} Let \(\Omega\) be
 a nonempty finite sample space with \(\mathcal{F}=\mathcal{P}(\Omega)\).  Then
 we can define \(\prob{A}:=|A|/|\Omega|\) for all \(A\in\mathcal{F}\), which is
 indeed a probability measure on \(\mathcal{F}\).
@@ -1758,7 +1771,7 @@ indeed a probability measure on \(\mathcal{F}\).
 \]
 \end{enumerate}
 \end{pf}
-\item \emph{(defined via mass function)} Let \(\Omega\) be a countable sample
+\item \emph{(Defined via mass function)} Let \(\Omega\) be a countable sample
 space with \(\mathcal{F}=\mathcal{P}(\Omega)\). Then any \defn{mass function}
 \(f:\Omega\to[0,1]\) with \(\sum_{\omega\in\Omega}^{}f(\omega)=1\) induces a
 \defn{discrete probability measure} \(\pr\) on \(\mathcal{F}\) by
@@ -1770,7 +1783,7 @@ space with \(\mathcal{F}=\mathcal{P}(\Omega)\). Then any \defn{mass function}
 \item The argument for showing such \(\pr\) is indeed a probability measure is
 analogous to that in \labelcref{it:meas-sum-fn}.
 \end{remark}
-\item \emph{(geometric probability space)} Let the sample space \(\Omega\) be a
+\item \emph{(Geometric probability space)} Let the sample space \(\Omega\) be a
 subset of \(\R^d\) with \(\lambda(\Omega)<\infty\) and
 \(\mathcal{F}=\bar{\mathcal{B}}(\Omega)\). Define
 \(\prob{A}=\lambda(A)/\lambda(\Omega)\) for all \(A\in\mathcal{F}\)
@@ -1992,7 +2005,7 @@ can view \(\Delta_{(\vect{x}-\vect{h},\vect{x}]}F\) as the probability
 While the domain of the distribution function \(F\) is \(\R^d\), often we are
 only interested in its behaviour in the support \(\supp{F}\); the values taken
 outside \(\supp{F}\) should always be \(1\) in the ``upper-right'' part
-(corresponding the \emph{normalization} condition), and \(0\) in the other
+(corresponding to the \emph{normalization} condition), and \(0\) in the other
 parts (corresponding to the \emph{groundedness} condition). Functions defined
 on subsets of \(\R^d\) may then be treated as ``distribution function'' with
 the understanding that they are to be extended in this way to make their
@@ -2035,7 +2048,7 @@ continuous function with \(\pdv{}{\vect{x}}F(\vect{x})=0\) almost everywhere.
 \end{itemize}
 \item\label{it:dist-fn-fmla} \textbf{Formulas for distribution functions.}
 \begin{enumerate}
-\item \emph{(absolutely continuous distribution function)} If \(F\) is
+\item \emph{(Absolutely continuous distribution function)} If \(F\) is
 absolutely continuous with density \(f\), then
 \(\prob{(\vect{a},\vect{b}]}=\int_{(\vect{a},\vect{b}]}^{}f(\vect{t})\odif{\vect{t}}\)
 (this should be somewhat familiar to you already \faIcon[regular]{grin-wink}).
@@ -2051,7 +2064,7 @@ We have
 =\int_{(\vect{a},\vect{b}]}^{}f(\vect{t})\odif{\vect{t}}.
 \end{align*}
 \end{pf}
-\item \emph{(mixture representation)} Every distribution function \(F\) admits
+\item \emph{(Mixture representation)} Every distribution function \(F\) admits
 the following mixture representation
 \[
 F(\vect{x})=p_{\mathrm{d}}F_{\mathrm{d}}(\vect{x})+
@@ -2071,7 +2084,7 @@ Distribution function with at least two of
 \begin{pf}
 Omitted.
 \end{pf}
-\item \emph{(margins of distribution functions)} For every \(J\subseteq
+\item \emph{(Margins of distribution functions)} For every \(J\subseteq
 \{1,\dotsc,d\}\), the \defn{\(J\)-margin} of \(F\) is given by
 \(F_J(\vect{x}_J):=\lim_{\vect{x}_{J^c}\to\vect{\infty}}F(\vect{x})\).  In the
 special case where \(J=\{j\}\) for some \(j=1,\dotsc,d\), it is further called
@@ -2172,7 +2185,7 @@ distribution function that is not absolutely continuous.} While we know from
 \labelcref{it:abs-cts-df-cts} that absolutely continuous distribution functions
 are always continuous, the converse does not hold. A standard counterexample is
 the \emph{Cantor distribution function}, a.k.a.\ the \emph{devil's staircase}.
-(See \href{https://en.wikipedia.org/wiki/Cantor_function}{here} for a picture
+(See \url{https://en.wikipedia.org/wiki/Cantor_function} for a picture
 of its graph, which indeed looks like a staircase.)
 
 Recall the Cantor set \(\mathcal{C}=\{x\in[0,1]:x=\sum_{i=1}^{\infty}a_i3^{-i},
@@ -2259,22 +2272,22 @@ we will just assume that \(F\) is increasing unless otherwise specified. Also,
 we write \(F(-\infty):=\lim_{x\to -\infty}F(x)\) and \(F(\infty):=\lim_{x\to
 \infty}F(x)\).
 \begin{enumerate}
-\item \emph{(behaviour of \(F^{-1}\))}
+\item \emph{(Behaviour of \(F^{-1}\))}
 \begin{enumerate}
-\item \emph{(increasing)} \(F^{-1}\) is increasing.
-\item \emph{(left-continuous)} If \(-\infty<F^{-1}(y)<\infty\), then \(F^{-1}\)
+\item \emph{(Increasing)} \(F^{-1}\) is increasing.
+\item \emph{(Left-continuous)} If \(-\infty<F^{-1}(y)<\infty\), then \(F^{-1}\)
 is left-continuous at \(y\).
 \end{enumerate}
-\item \emph{(sufficient condition for coinciding with ordinary inverse)} If the
+\item \emph{(Sufficient condition for coinciding with ordinary inverse)} If the
 underlying function \(F\) is \emph{strictly} increasing and continuous, then
 the generalized inverse \(F^{-1}\) coincides with the ordinary inverse of
 \(F\) on \(\ran{F}\).
-\item \emph{(behaviour of \(F^{-1}(F(\cdot))\))}
+\item \emph{(Behaviour of \(F^{-1}(F(\cdot))\))}
 \begin{enumerate}
 \item \emph{(``\(\le x\)'')} Generally, we have \(F^{-1}(F(x))\le x\).
 \item \emph{(``\(=x\)'')} If \(F\) is \emph{strictly} increasing, then we have \(F^{-1}(F(x))=x\).
 \end{enumerate}
-\item \emph{(behaviour of \(F(F^{-1}(\cdot))\))} Suppose that \(F\) is
+\item \emph{(Behaviour of \(F(F^{-1}(\cdot))\))} Suppose that \(F\) is
 right-continuous.
 \begin{enumerate}
 \item \emph{(``\(\ge y\)'')} If \(F^{-1}(y)<\infty\), then \(F(F^{-1}(y))\ge y\).
@@ -2282,14 +2295,14 @@ right-continuous.
 \item \emph{(``\(> y\)'')} If \(y<\inf\ran{F}\), then \(F(F^{-1}(y))>y\).
 \item \emph{(``\(< y\)'')} If \(y>\sup\ran{F}\), then \(F(F^{-1}(y))<y\).
 \end{enumerate}
-\item \emph{(inequalities about generalized inverse)}
+\item \emph{(Inequalities about generalized inverse)}
 \begin{enumerate}
-\item \emph{(``applying'' \(F^{-1}\) preserves ``\(\ge\)'')} If \(F(x)\ge y\), then \(x\ge F^{-1}(y)\).
-\item \emph{(``iff'' for ``\(\ge\)'' under right-continuity)} Suppose that
+\item \emph{(``Applying'' \(F^{-1}\) preserves ``\(\ge\)'')} If \(F(x)\ge y\), then \(x\ge F^{-1}(y)\).
+\item \emph{(``Iff'' for ``\(\ge\)'' under right-continuity)} Suppose that
 \(F\) is right-continuous. Then, \(F(x)\ge y\) iff \(x\ge F^{-1}(y)\).
-\item \emph{(``applying'' \(F^{-1}\) turns ``\(<\)'' to ``\(\le\)'')} If \(F(x)<y\), then \(x\le F^{-1}(y)\).
+\item \emph{(``Applying'' \(F^{-1}\) turns ``\(<\)'' to ``\(\le\)'')} If \(F(x)<y\), then \(x\le F^{-1}(y)\).
 \end{enumerate}
-\item \emph{(relationship between continuity and strict increasingness)}
+\item \emph{(Relationship between continuity and strict increasingness)}
 \begin{enumerate}
 \item \(F\) is continuous iff \(F^{-1}\) is strictly increasing on \([\inf\ran{F},\sup\ran{F}]\).
 \item \(F\) is strictly increasing iff \(F^{-1}\) is continuous on \(\ran{F}\).

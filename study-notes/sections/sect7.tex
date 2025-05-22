@@ -39,7 +39,7 @@ function.
 \item \(\phi_{\vect{X}}(\vect{0})=1\).
 \item\label{it:cf-unif-cts} \emph{(Uniform continuity)} The characteristic function
 \(\phi_{\vect{X}}\) is uniformly continuous.
-\item \emph{(Effect after linear operations)}
+\item \emph{(Effects after linear operations)}
 We have \(\phi_{A\vect{x}+\vect{b}}(\vect{t})=e^{i\vect{t}^{T}\vect{b}}
 \phi_{\vect{X}}(A^{T}\vect{t})\) for all \(\vect{t}\in\R^{d}\).
 \item \emph{(Factorization under independence)} If \(X_1,\dotsc,X_d\) are
@@ -117,7 +117,7 @@ for all \(\vect{t}\in\R^{d}\). Particularly, for all \(t\in\R\) we have
 \end{pf}
 \item \textbf{L\'evy's continuity theorem.} An important result that relates
 the \emph{convergence in distribution} and the limit of characteristic functions
-is the \emph{L\'evy's continuity theorem}. It is a very powerful tool in many
+is the \emph{L\'evy's continuity theorem}. It is a very helpful tool for many
 proofs involving characteristic functions, notably the \emph{central limit
 theorem}.
 
@@ -223,8 +223,8 @@ formula} for \(d=1\), i.e., a formula that expresses the \emph{distribution
 function} in terms of the \emph{characteristic function}, which is the other
 way round as the usual expression of characteristic function as an expectation,
 which can in turn be expressed in terms of distribution function.
-Here, we skip all the technical details in the derivation, and it turns
-out that the inversion formula is given by
+Here, we skip all the technical details in the derivation, and just directly
+provide the inversion formula:
 \begin{equation}
 \label{eq:char-fn-invers-fmla}
 F(b)-F(a)+\frac{\prob{X=a}}{2}-\frac{\prob{X=b}}{2}
@@ -469,7 +469,7 @@ function of \(Z\) is \(\phi_{Z}(t)=e^{-t^{2}/2}\), which is the one for
 \item \emph{(Sample sum form)} The form of CLT is expressed in terms of
 \emph{sample mean}. By multiplying both the numerator and denominator by \(n\),
 we can get the \emph{sample sum} form:
-t\((\sum_{i=1}^{n}X_i-n\mu)/(\sqrt{n}\sigma)\tod \ndist{0,1}\).
+\((\sum_{i=1}^{n}X_i-n\mu)/(\sqrt{n}\sigma)\tod \ndist{0,1}\).
 \item \emph{(Role of the factor \(\sqrt{n}\))} Intuitively, the factor
 \(\sqrt{n}\) multiplied to the expression serves for ``amplifying'' the
 difference between sample mean and the true mean, adjusted by \(\sigma\):

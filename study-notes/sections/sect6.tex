@@ -172,7 +172,7 @@ n}\|\vect{X}_k-\vect{X}\| >\varepsilon}~\forall \varepsilon>0\), forcing that
 \(\lim_{n\to\infty}\prob{\|\vect{X}_n-\vect{X}\| >\varepsilon}=0~\forall
 \varepsilon>0\). Therefore, \(\vect{X}_n\topr\vect{X}\).
 \item Note that \(\vect{X}_n\topr\vect{X}\implies \|\vect{X}_n-\vect{X}\|\topr
-0\).  Also, by the monotonicity of \(\{\vect{X}_n\}\) we have \(\sup_{k\ge
+0\).  Also, since \(\vect{X}_n\netopr\vect{X}\), we have \(\sup_{k\ge
 n}\|\vect{X}_k-\vect{X}\|\eqas\|\vect{X}_n-\vect{X}\|\topr 0\). This implies
 that \(\sup_{k\ge n}\|\vect{X}_k-\vect{X}\|\topr 0\), and hence
 by \Cref{thm:as-conv-char-ip} we have \(\vect{X}_n\toas\vect{X}\).
@@ -246,7 +246,7 @@ widening its applicability.
 \label{cor:dct-ip-version}
 Let \((\Omega,\mathcal{F},\pr)\) be a probability space.  Let \(X_n\in
 L^{1}(\Omega,\mathcal{F},\pr)\) for every \(n\in\N\), and \(X:\Omega\to\R\) be
-measurable.  If \(X_n\topr X\) and \(|X_n|\le Y\) a.s.\ for all \(n\in\N\), for
+measurable.  If \vc{\(X_n\topr X\)} and \(|X_n|\le Y\) a.s.\ for all \(n\in\N\), for
 some \(Y\in L^{1}\) \emph{(domination)}, then \(X\in L^{1}\) and
 \(\lim_{n\to\infty}\expv{X_n}=\expv{X}\).
 \end{corollary}
@@ -395,7 +395,7 @@ For all \(x>0\), we have
 \begin{align*}
 \prob{|X|\ge x}\overset{\text{(\(h\) strictly increasing)}}&{=}\prob{h(|X|)\ge h(x)} \\
 &=\expv{\indicset{h(|X|)\ge h(x)}}
-\underset{\vc{h(|X|)/h(x)}\ge 1 \text{ if }h(|X|)\ge h(x)}
+\underset{(\vc{h(|X|)/h(x)}\ge 1 \text{ if }h(|X|)\ge h(x))}
 {\overset{\text{(monotonicity)}}{\le}}
 \expv{\vc{\frac{h(|X|)}{h(x)}}\indicset{h(|X|)\ge h(x)}} \\
 \overset{\text{(monotonicity)}}&{\le}
@@ -415,11 +415,11 @@ as the \defn{Chebyshev's inequality}.
 \label{prp:conv-lp-prop}
 \hfill
 \begin{enumerate}
-\item \emph{(higher order convergence implies lower order convergence)} For all \(1\le
+\item \emph{(Higher order convergence implies lower order convergence)} For all \(1\le
 p<q\le \infty\), we have \(X_n\tox{n}{L^q}X\implies X_n\tolp X\).
-\item \emph{(stronger than convergence in probability)} For all \(p\in
+\item \emph{(Stronger than convergence in probability)} For all \(p\in
 [1,\infty]\), we have \(X_n\tolp X\implies X_n\topr X\).
-\item \emph{(convergence of \(L^p\) norms)} For all \(p\in [1,\infty]\), we
+\item \emph{(Convergence of \(L^p\) norms)} For all \(p\in [1,\infty]\), we
 have \(X_n\tolp X\implies \lim_{n\to\infty}\|X_n\|_{p}=\|X\|_{p}\).
 \end{enumerate}
 \end{proposition}
@@ -515,7 +515,7 @@ have \(F(\vect{x})
 This establishes the uniqueness.
 \end{pf}
 \item \textbf{Portmanteau theorem.} To work with convergence in distribution,
-we often rely on the \emph{Portmanteau theorem}, which provides us a
+we often rely on the \emph{Portmanteau theorem}, which provides a useful
 characterization of convergence in distribution.
 
 \begin{theorem}[Portmanteau]
@@ -841,10 +841,13 @@ integrability is and looking at some examples.
 I}\subseteq L^1\) is said to be \defn{uniformly integrable} if \(
 \lim_{a\to\infty}\sup_{i\in I}\expv{|X_i|\indicset{|X_i|>a}}=0\).
 
-Intuitively, uniform integrability suggests that the ``tail'' part of \(|X_i|\)
+\begin{intuition}
+Uniform integrability suggests that the ``tail'' part of \(|X_i|\)
 (indicated by \(\indicset{|X_i|>a}\)) would not ``explode'' and hence we have
 the \underline{integrability}. The word ``\underline{uniform}'' refers to the
 fact that we are considering the supremum over all \(i\in I\) in the definition.
+\end{intuition}
+
 To better understand uniform integrability, consider the properties in
 \labelcref{it:ui-prop}.
 
@@ -881,8 +884,8 @@ establishing results about uniform integrability.
 A collection \(\{X_i\}_{i\in I}\subseteq L^1\) is uniformly integrable iff
 \begin{enumerate}
 \item \emph{(uniform bounded first absolute moments)} \(\sup_{i\in
-I}\expv{|X_i|}<\infty\)
-\item \emph{(uniform absolute continuity)} For all \(\varepsilon>0\), there
+I}\expv{|X_i|}<\infty\), and
+\item \emph{(uniform absolute continuity)} for all \(\varepsilon>0\), there
 exists \(\delta>0\) such that \(\sup_{i\in I}\expv{|X_i|\indic_{A}}<\varepsilon\) for every \(A\in\mathcal{F}\) with \(\prob{A}<\delta\).
 \end{enumerate}
 \end{theorem}
@@ -898,7 +901,7 @@ I}\expv{|X_i|\indicset{|X_i|>a}}~\forall a\in (0,\infty)\).
 Taking \(A=\Omega\) gives (a). Next, fix any \(\varepsilon>0\).
 By the uniform integrability we have \\
 \(\lim_{a\to\infty}\sup_{i\in I}\expv{|X_i|\indicset{|X_i|>a}}=0\), so there
-exists sufficiently large \(a\) such that \(\sup_{i\in
+exists sufficiently large \(a>0\) such that\\ \(\sup_{i\in
 I}\expv{|X_i|\indicset{|X_i|>a}}<\varepsilon/2\). We then choose
 \(\delta=\varepsilon/2a\). With this \(\delta\), for every \(A\)
 with \vc{\(\prob{A}<\delta\)}, we have \(\sup_{i\in I}\expv{|X_i|\indic_{A}}
@@ -1012,7 +1015,8 @@ we have \(\expv{|X_n-X|^{p}}<\varepsilon+2^p\varepsilon+2^p
 \begin{enumerate}
 \item Apart from the \emph{continuous mapping theorem}, another crucial result
 for working with modes of convergence is the \emph{Slutsky's theorem}, which
-suggests conditions under which we can ``add'' individual convergence together.
+suggests conditions under which we can ``combine'' individual convergences
+together.
 
 Based on the CMT, we have \((\vect{X}_n,\vect{Y}_n)\tod (\vect{X},\vect{Y})\implies 
 \vect{h}(\vect{X}_n,\vect{Y}_n)\tod \vect{h}(\vect{X},\vect{Y})\) for every
@@ -1137,9 +1141,10 @@ corollary of \Cref{thm:cond-joint-conv-d} (but is a more well-known result).
 \label{thm:slutsky}
 If \(\vect{X}_n\tod\vect{X}\) and \(\vect{Y}_n\tod\vect{c}\) where
 \(\vect{c}\in\R^d\) is a constant, then \(\vect{X}_n+\vect{Y}_n\tod
-\vect{X}+\vect{c}\) and \(\vect{X}_n\vect{Y}_n\tod \vect{c}\vect{X}\); here,
-the \(\vect{X}\)'s and \(\vect{Y}\)'s both take values from \(\R^d\), and the
-``multiplications'' of vectors are interpreted as componentwise ones.
+\vect{X}+\vect{c}\) and \(\vect{X}_n\vect{Y}_n\tod \vect{c}\vect{X}\), where
+the \(\vect{X}\)'s and \(\vect{Y}\)'s are assumed to all take values from
+\(\R^d\), and the ``multiplications'' of vectors are interpreted in
+the componentwise sense.
 \end{theorem}
 \begin{pf}
 The result follows by applying \Cref{thm:cond-joint-conv-d} and the continuous
@@ -1157,7 +1162,7 @@ The implications between the major modes of convergence can be
 summarized in the picture below. Naturally, we would also like to investigate
 whether the converse of each implication holds. In
 \Cref{subsect:counterexamples}, we will provide counterexamples to illustrate
-that the converse indeed does not hold.
+that the converse indeed does not hold (without additional assumptions).
 \begin{center}
 \begin{tikzpicture}
 \node[] (cas) at (-2,1.5) {\(\vect{X}_n\toas \vect{X}\)};
@@ -1303,9 +1308,9 @@ For the famous \emph{central limit theorem}, we will discuss it in
 \item \textbf{Convergence of quantile functions.}
 \begin{proposition}
 \label{prp:conv-quant-fun}
-If \(\lim_{n\to\infty}F_n(x)=F(x)~\forall x\in C(F)\) \emph{(corresponding to
-convergence in distribution)}, then
-\(\lim_{n\to\infty}F_n^{-1}(u)=F^{-1}(u)~\forall u\in (0,1)\cap C(F^{-1})\).
+If \(\lim_{n\to\infty}F_n(x)=F(x)~\forall x\in C(F)\) \emph{(convergence in
+distribution)}, then \(\lim_{n\to\infty}F_n^{-1}(u)=F^{-1}(u)~\forall u\in
+(0,1)\cap C(F^{-1})\).
 \end{proposition}
 \begin{pf}
 Fix any \(u\in (0,1)\cap C(F^{-1})\).
@@ -1348,11 +1353,11 @@ as desired.
 \begin{theorem}[Laws of large numbers]
 \label{thm:lln}\hfill
 \begin{enumerate}
-\item \emph{(weak law of large numbers (WLLN))} Let \(\{X_n\}\subseteq L^2\) be iid
+\item \emph{(Weak law of large numbers (WLLN))} Let \(\{X_n\}\subseteq L^2\) be iid
 with mean \(\mu=\expv{X_1}\) and variance \(\sigma^2=\vari{X_1}\) (\(<\infty\)
 as the random variables are in \(L^2\)). Then,
 \(\bar{X}_n:=\frac{1}{n}\sum_{i=1}^{n}X_i\topr \mu\).
-\item \emph{(strong law of large numbers (SLLN))}
+\item \emph{(Strong law of large numbers (SLLN))}
 Let \(\{X_n\}\subseteq L^1\) be iid with mean \(\mu=\expv{X_1}\). Then,
 \(\bar{X}_n:=\frac{1}{n}\sum_{i=1}^{n}X_i\toas \mu\).
 \end{enumerate}
@@ -1378,10 +1383,10 @@ Letting \(n\to\infty\) then gives \(\lim_{n\to\infty}
 \end{pf}
 \item \textbf{Glivenko-Cantelli theorem.} The Glivenko-Cantelli theorem is
 about convergence of \emph{empirical distribution functions}.  Let
-\(\{\vect{X}_n\}_{n\in\N}\) be iid. With any fixed \(\vect{x}\in\R^d\), the
-collection \(\{\indicset{\vect{X}_n\le\vect{x}}\}_{n\in\N}\) would contain iid
+\(\{\vect{X}_n\}_{n\in\N}\) be iid. For every fixed \(\vect{x}\in\R^d\), the
+collection \(\{\indicset{\vect{X}_n\le\vect{x}}\}_{n\in\N}\) contains iid
 random variables in \(L^1\). So, by the SLLN, for the
-empirical distribution functions
+empirical distribution function
 \(F_n(\vect{x})=\frac{1}{n}\sum_{i=1}^{n}\indicset{\vect{X}_i\le\vect{x}}\), we
 have the \emph{pointwise} almost sure convergence:
 \[F_n(\vect{x})\toas
@@ -1399,7 +1404,8 @@ If \(\vect{X}_1,\dotsc,\vect{X}_n\iid F\), then
 
 
 \begin{pf}
-We only prove the case with \(d=1\) here.
+We only prove the case with \(d=1\) here. For the case with \(d\ge 2\), see,
+e.g., \textcite{kiefer1958deviations}.
 
 \textbf{Upper bounding \(|F_n(x)-F(x)|\).} Fix any \(x\in [a,b)\). Since each
 \(F_n\) and \(F\) are increasing, we have
@@ -1460,7 +1466,7 @@ implying that \(\sup_{\vect{x}\in\R^d}|F_n(\vect{x})-F(\vect{x})|\toas 0\).
 is equivalent to \(|F_n(\vect{x})-F(\vect{x})|\toas 0\). So the statement is
 suggesting \(F_n(\vect{x})\) is converging almost surely to \(F(\vect{x})\) at
 an ``uniform rate'' for all \(\vect{x}\in\R^d\).
-\item \emph{(rate of convergence)} The rate of convergence for
+\item \emph{(Rate of convergence)} The rate of convergence for
 \(\sup_{\vect{x}\in\R^d}|F_n(\vect{x})-F(\vect{x})|\) is quantified by the
 \emph{Dvoretzky-Kiefer-Wolfowitz (DKW) inequality}: For all \(\varepsilon>0\),
 we have
